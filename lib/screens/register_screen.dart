@@ -1,4 +1,6 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -6,6 +8,9 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  File? _image;
+  final ImagePicker _picker = ImagePicker();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,6 +33,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
               padding: EdgeInsets.symmetric(horizontal: 80),
               child: TextField(
                 textAlign: TextAlign.center,
+                decoration: InputDecoration(
+                  hintText: '名称：セキセイインコ',
+                ),
               ),
             ),
             SizedBox(height: 30),
@@ -35,11 +43,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
               children: [
                 CircleAvatar(
                   backgroundColor: Colors.black,
-                  backgroundImage: AssetImage('assets/images/picture.jpg'),
+                  backgroundImage: _displaySelectionImageOrDefaultImage(),
                   radius: 100,
                 ),
                 RawMaterialButton(
-                  onPressed: () {},
+                  onPressed: () => _getImageFromGallery(),
                   shape: const CircleBorder(),
                   elevation: 0,
                   child: const SizedBox(
@@ -77,7 +85,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 50),
       child: TextField(
         decoration: InputDecoration(
-          hintText: 'ハト',
+          hintText: '種類：鳥類',
         ),
         keyboardType: TextInputType.text,
         textAlign: TextAlign.center,
@@ -90,7 +98,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 50),
       child: TextField(
         decoration: InputDecoration(
-          hintText: '家の近くの公園',
+          hintText: '発見場所：家の近くの公園',
         ),
         textAlign: TextAlign.center,
       ),
@@ -102,7 +110,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 50),
       child: TextField(
         decoration: InputDecoration(
-          hintText: '15センチ',
+          hintText: 'サイズ：10センチ',
         ),
         textAlign: TextAlign.center,
       ),
@@ -116,7 +124,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         keyboardType: TextInputType.multiline,
         maxLines: 6,
         decoration: InputDecoration(
-          hintText: '家族になりたそうにこちらを見ていて可愛かった',
+          hintText: 'メモ：家族になりたそうにこちらを見ていて可愛かった',
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
               color: Colors.blue,
@@ -127,4 +135,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
+  _displaySelectionImageOrDefaultImage() {
+    if (_image == null) {
+      return AssetImage('assets/images/picture.jpg');
+    } else {
+      return Image.file(_image!, fit: BoxFit.cover);
+    }
+  }
+
+  Future _getImageFromGallery() async {
+    final _pickedFile = await _picker.pickImage(
+      source: ImageSource.gallery,
+    );
+    setState(() {
+      if (_pickedFile != null) {
+        _image = File(_pickedFile.path);
+      }
+    });
+  }
 }
