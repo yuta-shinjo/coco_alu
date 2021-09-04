@@ -39,23 +39,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
             ),
             SizedBox(height: 30),
-            Stack(
-              children: [
-                CircleAvatar(
-                  backgroundColor: Colors.black,
-                  backgroundImage: _displaySelectionImageOrDefaultImage(),
-                  radius: 100,
-                ),
-                RawMaterialButton(
-                  onPressed: () => _getImageFromGallery(),
-                  shape: const CircleBorder(),
-                  elevation: 0,
-                  child: const SizedBox(
-                    width: 200,
-                    height: 200,
+            Center(
+              child: Stack(
+                children: [
+                  CircleAvatar(
+                    backgroundColor: Colors.black,
+                    foregroundImage: _displaySelectionImageOrDefaultImage(),
+                    backgroundImage: AssetImage('assets/images/picture.jpg'),
+                    radius: 100,
                   ),
-                ),
-              ],
+                  RawMaterialButton(
+                    onPressed: () => _getImageFromGallery(),
+                    shape: const CircleBorder(),
+                    elevation: 0,
+                    child: const SizedBox(
+                      width: 200,
+                      height: 200,
+                    ),
+                  ),
+                ],
+              ),
             ),
             Divider(
               height: 80,
@@ -66,9 +69,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
             Column(
               children: [
                 _raceInputPart(),
-                SizedBox(height: 20),
+                SizedBox(height: 15),
                 _locationInputPart(),
-                SizedBox(height: 20),
+                SizedBox(height: 15),
                 _sizeInputPart(),
                 SizedBox(height: 20),
                 _featureInputPart(),
@@ -83,12 +86,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget _raceInputPart() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 50),
-      child: TextField(
-        decoration: InputDecoration(
-          hintText: '種類：鳥類',
+      child: SingleChildScrollView(
+        child: TextField(
+          decoration: InputDecoration(
+            hintText: '種類：鳥類',
+          ),
+          keyboardType: TextInputType.text,
+          textAlign: TextAlign.center,
         ),
-        keyboardType: TextInputType.text,
-        textAlign: TextAlign.center,
       ),
     );
   }
@@ -96,11 +101,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget _locationInputPart() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 50),
-      child: TextField(
-        decoration: InputDecoration(
-          hintText: '発見場所：家の近くの公園',
+      child: SingleChildScrollView(
+        child: TextField(
+          decoration: InputDecoration(
+            hintText: '発見場所：家の近くの公園',
+          ),
+          textAlign: TextAlign.center,
         ),
-        textAlign: TextAlign.center,
       ),
     );
   }
@@ -108,26 +115,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget _sizeInputPart() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 50),
-      child: TextField(
-        decoration: InputDecoration(
-          hintText: 'サイズ：10センチ',
+      child: SingleChildScrollView(
+        child: TextField(
+          decoration: InputDecoration(
+            hintText: 'サイズ：10センチ',
+          ),
+          textAlign: TextAlign.center,
         ),
-        textAlign: TextAlign.center,
       ),
     );
   }
 
   Widget _featureInputPart() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 50),
-      child: TextField(
-        keyboardType: TextInputType.multiline,
-        maxLines: 6,
-        decoration: InputDecoration(
-          hintText: 'メモ：家族になりたそうにこちらを見ていて可愛かった',
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.blue,
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 50),
+        child: TextField(
+          keyboardType: TextInputType.multiline,
+          maxLines: 4,
+          decoration: InputDecoration(
+            hintText: 'メモ：家族になりたそうにこちらを見ていて可愛かった',
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Colors.blue,
+              ),
             ),
           ),
         ),
@@ -135,16 +146,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  _displaySelectionImageOrDefaultImage() {
+  ImageProvider? _displaySelectionImageOrDefaultImage() {
     if (_image == null) {
-      return AssetImage('assets/images/picture.jpg');
+      return null;
     } else {
-      return Image.file(_image!, fit: BoxFit.cover);
+      return Image.file(_image!, fit: BoxFit.cover).image;
     }
   }
 
   Future _getImageFromGallery() async {
-    final _pickedFile = await _picker.pickImage(
+    final _pickedFile = await _picker.getImage(
       source: ImageSource.gallery,
     );
     setState(() {

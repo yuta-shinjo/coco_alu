@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_collection/screens/register_screen.dart';
+import 'package:my_collection/register_screen.dart';
 
-import 'list_screen.dart';
+import 'list_screen/list_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
