@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_collection/register_screen.dart';
 
+import 'add_creature/add_creature_screen.dart';
 import 'list_screen/list_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -14,7 +14,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Widget> _pageList = [
     ListScreen(),
-    RegisterScreen(),
+    AddCreatureScreen(),
   ];
 
   @override

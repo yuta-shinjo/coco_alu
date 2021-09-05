@@ -4,14 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'list_screen_model.dart';
 
-class ListScreen extends StatefulWidget {
-  @override
-  _ListScreenState createState() => _ListScreenState();
-}
-
-class _ListScreenState extends State<ListScreen> {
-  final items = List<String>.generate(20, (index) => 'Item $index');
-
+class ListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<ListScreenModel>(
@@ -29,30 +22,33 @@ class _ListScreenState extends State<ListScreen> {
           ],
         ),
         body: Center(
-          child: Consumer<ListScreenModel>(builder: (context, model, child) {
-            final List<Creature>? creatures = model.creatures;
+          child: Consumer<ListScreenModel>(
+            builder: (context, model, child) {
+              final List<Creature>? creatures = model.creatures;
 
-            if (creatures == null) {
-              return CircularProgressIndicator();
-            }
+              if (creatures == null) {
+                return CircularProgressIndicator();
+              }
 
-            final List<Widget> widgets = creatures
-                .map(
-                  (creature) => ListTile(
-                    leading: CircleAvatar(
-                      radius: 30,
-                      backgroundImage: AssetImage('assets/images/picture.jpg'),
+              final List<Widget> widgets = creatures
+                  .map(
+                    (creature) => ListTile(
+                      leading: CircleAvatar(
+                        radius: 30,
+                        backgroundImage:
+                            AssetImage('assets/images/picture.jpg'),
+                      ),
+                      title: Text(creature.name),
+                      subtitle: Text(creature.kinds),
+                      onTap: () {},
                     ),
-                    title: Text(creature.name),
-                    subtitle: Text(creature.kinds),
-                    onTap: () {},
-                  ),
-                )
-                .toList();
-            return ListView(
-              children: widgets,
-            );
-          }),
+                  )
+                  .toList();
+              return ListView(
+                children: widgets,
+              );
+            },
+          ),
         ),
       ),
     );
