@@ -15,10 +15,19 @@ class ListScreenModel extends ChangeNotifier {
         Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
         final String name = data['name'];
         final String kinds = data['kinds'];
-        return Creature(name, kinds);
+        final String id = document.id;
+        final String imgURL = data['imgURL'];
+        return Creature(name, kinds, id, imgURL);
       }).toList();
       this.creatures = creatures;
       notifyListeners();
     });
+  }
+
+  Future<void> delete(Creature creature) {
+    return FirebaseFirestore.instance
+        .collection('creatures')
+        .doc(creature.id)
+        .delete();
   }
 }

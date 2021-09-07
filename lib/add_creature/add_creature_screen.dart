@@ -1,9 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:my_collection/add_creature/add_creature_model.dart';
+import 'package:my_collection/domain/creature.dart';
 import 'package:provider/provider.dart';
 
+enum AddStatus { ADD, EDIT }
+
 class AddCreatureScreen extends StatelessWidget {
+  AddCreatureScreen({required this.status, this.word});
+
+  final AddStatus status;
+  //TODO wordのクラスが分からない
+  final Creature? word;
+
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController kindsController = TextEditingController();
+  final TextEditingController locationController = TextEditingController();
+  final TextEditingController sizeController = TextEditingController();
+  final TextEditingController memoController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<AddCreatureModel>(
@@ -12,13 +27,18 @@ class AddCreatureScreen extends StatelessWidget {
         builder: (context, model, child) {
           return Scaffold(
             appBar: AppBar(
-              title: Text('My図鑑に登録'),
+              title: Text('図鑑に登録'),
               centerTitle: true,
               actions: [
                 IconButton(
                   onPressed: () async {
                     try {
                       await model.addCreature();
+                      nameController.clear();
+                      kindsController.clear();
+                      locationController.clear();
+                      sizeController.clear();
+                      memoController.clear();
                       Fluttertoast.showToast(
                         msg: '${model.name}を保存しました',
                         toastLength: Toast.LENGTH_LONG,
@@ -50,6 +70,7 @@ class AddCreatureScreen extends StatelessWidget {
                       onChanged: (text) {
                         model.name = text;
                       },
+                      controller: nameController,
                     ),
                   ),
                   SizedBox(height: 30),
@@ -94,6 +115,7 @@ class AddCreatureScreen extends StatelessWidget {
                             },
                             keyboardType: TextInputType.text,
                             textAlign: TextAlign.center,
+                            controller: kindsController,
                           ),
                         ),
                       ),
@@ -109,6 +131,7 @@ class AddCreatureScreen extends StatelessWidget {
                               model.location = text;
                             },
                             textAlign: TextAlign.center,
+                            controller: locationController,
                           ),
                         ),
                       ),
@@ -124,6 +147,7 @@ class AddCreatureScreen extends StatelessWidget {
                               model.size = text;
                             },
                             textAlign: TextAlign.center,
+                            controller: sizeController,
                           ),
                         ),
                       ),
@@ -134,6 +158,7 @@ class AddCreatureScreen extends StatelessWidget {
                           child: TextField(
                             keyboardType: TextInputType.multiline,
                             maxLines: 4,
+                            controller: memoController,
                             onChanged: (text) {
                               model.memo = text;
                             },

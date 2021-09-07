@@ -14,7 +14,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Widget> _pageList = [
     ListScreen(),
-    AddCreatureScreen(),
+    AddCreatureScreen(status: AddStatus.ADD),
   ];
 
   @override
