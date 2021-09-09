@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:my_collection/add_creature/add_creature_model.dart';
 import 'package:my_collection/common/constants.dart';
 import 'package:my_collection/widget/index.dart';
 import 'package:provider/provider.dart';
 
-class AddCreatureScreen extends StatelessWidget {
+import 'edit_creature_model.dart';
+
+class EditCreatureScreen extends StatelessWidget {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController kindsController = TextEditingController();
   final TextEditingController locationController = TextEditingController();
@@ -14,13 +15,13 @@ class AddCreatureScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<AddCreatureModel>(
-      create: (_) => AddCreatureModel(),
-      child: Consumer<AddCreatureModel>(
+    return ChangeNotifierProvider<EditCreatureModel>(
+      create: (_) => EditCreatureModel(),
+      child: Consumer<EditCreatureModel>(
         builder: (context, model, child) {
           return Scaffold(
             appBar: AppBar(
-              title: Text('図鑑を保存する'),
+              title: Text('図鑑を編集する'),
               centerTitle: true,
               actions: [
                 IconButton(
@@ -44,7 +45,7 @@ class AddCreatureScreen extends StatelessWidget {
                     }
                   },
                   icon: Icon(Icons.check),
-                  tooltip: '保存',
+                  tooltip: '編集',
                 ),
               ],
             ),

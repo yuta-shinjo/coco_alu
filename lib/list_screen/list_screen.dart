@@ -1,6 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:my_collection/common/constants.dart';
 import 'package:my_collection/domain/creature.dart';
+import 'package:my_collection/edit_creature/edit_creature_screen.dart';
+import 'package:my_collection/widget/index.dart';
 import 'package:provider/provider.dart';
 
 import 'list_screen_model.dart';
@@ -35,26 +39,24 @@ class ListScreen extends StatelessWidget {
                   .map((creature) => Slidable(
                         actionPane: SlidableDrawerActionPane(),
                         child: ListTile(
-                          leading: CircleAvatar(
+                          leading: CreatureImage(
+                            backgroundImage: creature.imgURL != null
+                                ? Image.network(creature.imgURL!).image
+                                : Image.asset(kDefaultImageURL).image,
                             radius: 30,
-                            backgroundImage:
-                                AssetImage('assets/images/picture.jpg'),
                           ),
+
                           title: Text(creature.name),
                           subtitle: Text(creature.kinds),
-                          onTap: () {},
                           //TODO 図鑑編集のコード修正
-                          // onPressed: (Creature selectedWord) {
-                          //   Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //       builder: (context) => AddCreatureScreen(
-                          //         status: AddStatus.EDIT,
-                          //         word: selectedWord,
-                          //       ),
-                          //     ),
-                          //   );
-                          // },,
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EditCreatureScreen(),
+                              ),
+                            );
+                          },
                         ),
                         secondaryActions: [
                           IconSlideAction(
@@ -62,7 +64,8 @@ class ListScreen extends StatelessWidget {
                             color: Colors.red,
                             icon: Icons.delete,
                             onTap: () async {
-                              await displayDialog(context, creature, model);
+                              await model.displayDialog(
+                                  context, creature, model);
                             },
                           ),
                         ],
@@ -75,36 +78,6 @@ class ListScreen extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  Future displayDialog(
-    BuildContext context,
-    Creature creature,
-    ListScreenModel model,
-  ) {
-    return showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (_) {
-        return AlertDialog(
-          title: Text("削除の確認"),
-          content: Text("『${creature.name}』を削除してもよろしいですか？"),
-          actions: [
-            TextButton(
-              child: Text("はい"),
-              onPressed: () async {
-                await model.delete(creature);
-                Navigator.pop(context);
-              },
-            ),
-            TextButton(
-              child: Text("いいえ"),
-              onPressed: () => Navigator.pop(context),
-            ),
-          ],
-        );
-      },
     );
   }
 }

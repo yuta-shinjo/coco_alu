@@ -5,7 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class AddCreatureModel extends ChangeNotifier {
+class EditCreatureModel extends ChangeNotifier {
   String? name;
   String? kinds;
   String? location;

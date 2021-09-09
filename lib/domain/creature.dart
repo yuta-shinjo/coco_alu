@@ -4,5 +4,5 @@ class Creature {
   String name;
   String kinds;
   String id;
-  String imgURL;
+  String? imgURL;
 }
