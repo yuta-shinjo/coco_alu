@@ -6,6 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddCreatureModel extends ChangeNotifier {
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController kindsController = TextEditingController();
+  final TextEditingController locationController = TextEditingController();
+  final TextEditingController sizeController = TextEditingController();
+  final TextEditingController memoController = TextEditingController();
+
   String? name;
   String? kinds;
   String? location;
@@ -15,6 +21,16 @@ class AddCreatureModel extends ChangeNotifier {
   File? imageFile;
 
   final picker = ImagePicker();
+
+  void setName(String name) {
+    this.name = name;
+    notifyListeners();
+  }
+
+  void setKinds(String kinds) {
+    this.kinds = kinds;
+    notifyListeners();
+  }
 
   void startLoading() {
     isLoading = true;
@@ -26,11 +42,15 @@ class AddCreatureModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool isAdd() {
+    return name != null && name != '' && kinds != null && kinds != '';
+  }
+
   Future<void> addCreature() async {
     if (name == null || name == '') {
       throw '名称の部分が入力されていません';
     }
-    if (kinds == '') {
+    if (kinds == null) {
       throw '種類の部分が入力されていません';
     }
 
@@ -50,10 +70,10 @@ class AddCreatureModel extends ChangeNotifier {
     await doc.set({
       'name': name,
       'kinds': kinds,
-      'location': location,
-      'size': size,
-      'memo': memo,
-      'imgURL': imgURL,
+      'location': location ?? '',
+      'size': size ?? '',
+      'memo': memo ?? '',
+      'imgURL': imgURL ?? '',
     });
   }
 

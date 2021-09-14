@@ -6,12 +6,6 @@ import 'package:my_collection/widget/index.dart';
 import 'package:provider/provider.dart';
 
 class AddCreatureScreen extends StatelessWidget {
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController kindsController = TextEditingController();
-  final TextEditingController locationController = TextEditingController();
-  final TextEditingController sizeController = TextEditingController();
-  final TextEditingController memoController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<AddCreatureModel>(
@@ -20,82 +14,90 @@ class AddCreatureScreen extends StatelessWidget {
         builder: (context, model, child) {
           return Scaffold(
             appBar: AppBar(
-              title: Text('図鑑を保存する'),
+              title: Text('図鑑を登録する'),
               centerTitle: true,
               actions: [
                 IconButton(
-                  onPressed: () async {
-                    try {
-                      model.startLoading();
-                      await model.addCreature();
-
-                      Fluttertoast.showToast(
-                        msg: '${model.name}を編集しました',
-                        toastLength: Toast.LENGTH_LONG,
-                      );
-                      Navigator.pop(context);
-                    } catch (e) {
-                      Fluttertoast.showToast(
-                        msg: '$e',
-                        toastLength: Toast.LENGTH_LONG,
-                      );
-                    } finally {
-                      model.endLoading();
-                    }
-                  },
+                  onPressed: model.isAdd()
+                      ? () async {
+                          try {
+                            model.startLoading();
+                            await model.addCreature();
+                            Fluttertoast.showToast(
+                              msg: '${model.name}を登録しました',
+                              toastLength: Toast.LENGTH_LONG,
+                            );
+                            model.nameController.clear();
+                            model.kindsController.clear();
+                            model.locationController.clear();
+                            model.sizeController.clear();
+                            model.memoController.clear();
+                            model.imageFile = null;
+                          } catch (e) {
+                            print('エラー：$e');
+                            Fluttertoast.showToast(
+                              msg: '$e',
+                              toastLength: Toast.LENGTH_LONG,
+                            );
+                          } finally {
+                            model.endLoading();
+                          }
+                        }
+                      : null,
                   icon: Icon(Icons.check),
-                  tooltip: '保存',
+                  tooltip: '登録',
                 ),
               ],
             ),
-            body: Center(
-              child: Stack(
+            body: SingleChildScrollView(
+              child: Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        SizedBox(height: 10),
-                        Container(
-                          width: double.infinity,
-                          padding: EdgeInsets.symmetric(horizontal: 40),
-                          child: TextFieldArea(
-                            textAlign: TextAlign.center,
-                            decoration: kTitleDecoration,
-                            onChanged: (text) {
-                              model.name = text;
-                            },
-                            controller: nameController,
-                          ),
-                        ),
-                        SizedBox(height: 30),
-                        Center(
-                          child: Stack(
-                            children: [
-                              CreatureImage(
-                                backgroundImage: model.imageFile != null
-                                    ? Image.file(model.imageFile!).image
-                                    : Image.asset(kDefaultImageURL).image,
-                                radius: 80,
-                              ),
-                              PressedButton(
-                                onPressed: () async {
-                                  await model.pickImage();
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
-                        kDivider,
-                        Column(
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
                           children: [
+                            SizedBox(height: 10),
+                            Container(
+                              width: double.infinity,
+                              padding: EdgeInsets.symmetric(horizontal: 40),
+                              child: TextFieldArea(
+                                textAlign: TextAlign.center,
+                                decoration: kTitleDecoration,
+                                onChanged: (text) {
+                                  model.setName(text);
+                                },
+                                controller: model.nameController,
+                              ),
+                            ),
+                            SizedBox(height: 30),
+                            Center(
+                              child: Stack(
+                                children: [
+                                  CreatureImage(
+                                    backgroundImage: model.imageFile != null
+                                        ? Image.file(model.imageFile!).image
+                                        : Image.asset(kDefaultImageURL).image,
+                                    radius: 80,
+                                  ),
+                                  PressedButton(
+                                    onPressed: () async {
+                                      await model.pickImage();
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                            kDivider,
                             TextFieldArea(
                               textAlign: TextAlign.center,
                               decoration: kKindsDecoration,
                               onChanged: (text) {
-                                model.kinds = text;
+                                model.setKinds(text);
                               },
-                              controller: kindsController,
+                              controller: model.kindsController,
                             ),
                             SizedBox(height: 15),
                             TextFieldArea(
@@ -104,7 +106,7 @@ class AddCreatureScreen extends StatelessWidget {
                               onChanged: (text) {
                                 model.location = text;
                               },
-                              controller: locationController,
+                              controller: model.locationController,
                             ),
                             SizedBox(height: 15),
                             TextFieldArea(
@@ -113,7 +115,7 @@ class AddCreatureScreen extends StatelessWidget {
                               onChanged: (text) {
                                 model.size = text;
                               },
-                              controller: sizeController,
+                              controller: model.sizeController,
                             ),
                             SizedBox(height: 25),
                             TextFieldArea(
@@ -122,16 +124,16 @@ class AddCreatureScreen extends StatelessWidget {
                               onChanged: (text) {
                                 model.memo = text;
                               },
-                              controller: memoController,
+                              controller: model.memoController,
                               keyboardType: TextInputType.multiline,
                               maxLines: 4,
                             ),
                           ],
-                        )
-                      ],
-                    ),
+                        ),
+                      ),
+                      if (model.isLoading) CircleIndicator(),
+                    ],
                   ),
-                  if (model.isLoading) CircleIndicator(),
                 ],
               ),
             ),

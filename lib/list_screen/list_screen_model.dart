@@ -26,8 +26,8 @@ class ListScreenModel extends ChangeNotifier {
               child: Text("はい"),
               onPressed: () async {
                 await model.delete(creature);
-                await model.deleteStorage(creature);
                 Navigator.pop(context);
+                await model.deleteStorage(creature);
               },
             ),
             TextButton(
@@ -47,11 +47,17 @@ class ListScreenModel extends ChangeNotifier {
         Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
         final String name = data['name'];
         final String kinds = data['kinds'];
+        final String? location = data['location'];
+        final String? size = data['size'];
+        final String? memo = data['memo'];
         final String id = document.id;
         final String? imgURL = data['imgURL'];
         return Creature(
           name,
           kinds,
+          location,
+          size,
+          memo,
           id,
           imgURL,
         );
@@ -68,8 +74,7 @@ class ListScreenModel extends ChangeNotifier {
         .delete();
   }
 
-  //TODO storageに入った画像を消したい
   Future<void> deleteStorage(Creature creature) {
-    return FirebaseStorage.instance.ref('creatures/').delete();
+    return FirebaseStorage.instance.ref('creatures/${creature.id}').delete();
   }
 }

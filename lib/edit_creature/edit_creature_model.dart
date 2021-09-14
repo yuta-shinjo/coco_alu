@@ -1,20 +1,44 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:my_collection/domain/creature.dart';
 
 class EditCreatureModel extends ChangeNotifier {
+  EditCreatureModel(this.creature) {
+    nameController.text = creature.name;
+    kindsController.text = creature.kinds;
+    locationController.text = creature.location!;
+    sizeController.text = creature.size!;
+    memoController.text = creature.memo!;
+  }
+
+  final Creature creature;
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController kindsController = TextEditingController();
+  final TextEditingController locationController = TextEditingController();
+  final TextEditingController sizeController = TextEditingController();
+  final TextEditingController memoController = TextEditingController();
+
   String? name;
   String? kinds;
   String? location;
   String? size;
   String? memo;
+  String? imgURL;
   bool isLoading = false;
   File? imageFile;
 
-  final picker = ImagePicker();
+  void setName(String name) {
+    this.name = name;
+    notifyListeners();
+  }
+
+  void setKinds(String kinds) {
+    this.kinds = kinds;
+    notifyListeners();
+  }
 
   void startLoading() {
     isLoading = true;
@@ -26,28 +50,19 @@ class EditCreatureModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> addCreature() async {
-    if (name == null || name == '') {
-      throw '名称の部分が入力されていません';
-    }
-    if (kinds == '') {
-      throw '種類の部分が入力されていません';
-    }
+  bool isUpdate() {
+    return name != null || kinds != null;
+  }
 
-    final doc = FirebaseFirestore.instance.collection('creatures').doc();
-    String? imgURL;
+  Future<void> update() async {
+    this.name = nameController.text;
+    this.kinds = kindsController.text;
+    this.location = locationController.text;
+    this.size = sizeController.text;
+    this.memo = memoController.text;
+    this.imgURL = '';
 
-    //firestoreに追加前にstorageに写真を追加する
-    if (imageFile != null) {
-      final task = await FirebaseStorage.instance
-          .ref('creatures/${doc.id}')
-          .putFile(imageFile!);
-
-      imgURL = await task.ref.getDownloadURL();
-    }
-
-    //  上のif文をくぐり抜けたらfirestoreに追加
-    await doc.set({
+    await FirebaseFirestore.instance.doc(creature.id).update({
       'name': name,
       'kinds': kinds,
       'location': location,
@@ -57,7 +72,9 @@ class EditCreatureModel extends ChangeNotifier {
     });
   }
 
-  Future pickImage() async {
+  final picker = ImagePicker();
+
+  Future editImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       imageFile = File(pickedFile.path);

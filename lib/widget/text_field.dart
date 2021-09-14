@@ -21,15 +21,13 @@ class TextFieldArea extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 50),
-      child: SingleChildScrollView(
-        child: TextField(
-          decoration: decoration,
-          onChanged: onChanged,
-          controller: controller,
-          textAlign: textAlign,
-          maxLines: maxLines,
-          keyboardType: keyboardType,
-        ),
+      child: TextField(
+        decoration: decoration,
+        onChanged: onChanged,
+        controller: controller,
+        textAlign: textAlign,
+        maxLines: maxLines,
+        keyboardType: keyboardType,
       ),
     );
   }

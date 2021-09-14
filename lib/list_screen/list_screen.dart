@@ -12,8 +12,8 @@ import 'list_screen_model.dart';
 class ListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<ListScreenModel>(
-      create: (_) => ListScreenModel()..fetchCreatureList(),
+    return ChangeNotifierProvider<ListScreenModel>.value(
+      value:  ListScreenModel()..fetchCreatureList(),
       child: Scaffold(
         appBar: AppBar(
           title: Text('図鑑一覧'),
@@ -40,7 +40,7 @@ class ListScreen extends StatelessWidget {
                         actionPane: SlidableDrawerActionPane(),
                         child: ListTile(
                           leading: CreatureImage(
-                            backgroundImage: creature.imgURL != null
+                            backgroundImage: creature.imgURL != ''
                                 ? Image.network(creature.imgURL!).image
                                 : Image.asset(kDefaultImageURL).image,
                             radius: 30,
@@ -53,7 +53,8 @@ class ListScreen extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => EditCreatureScreen(),
+                                builder: (context) =>
+                                    EditCreatureScreen(creature),
                               ),
                             );
                           },
