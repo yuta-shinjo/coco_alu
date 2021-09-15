@@ -13,7 +13,7 @@ class ListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<ListScreenModel>.value(
-      value:  ListScreenModel()..fetchCreatureList(),
+      value: ListScreenModel()..fetchCreatureList(),
       child: Scaffold(
         appBar: AppBar(
           title: Text('図鑑一覧'),
@@ -41,14 +41,12 @@ class ListScreen extends StatelessWidget {
                         child: ListTile(
                           leading: CreatureImage(
                             backgroundImage: creature.imgURL != ''
-                                ? Image.network(creature.imgURL!).image
+                                ? NetworkImage(creature.imgURL!)
                                 : Image.asset(kDefaultImageURL).image,
                             radius: 30,
                           ),
-
                           title: Text(creature.name),
                           subtitle: Text(creature.kinds),
-                          //TODO 図鑑編集のコード修正
                           onTap: () {
                             Navigator.push(
                               context,
@@ -65,8 +63,21 @@ class ListScreen extends StatelessWidget {
                             color: Colors.red,
                             icon: Icons.delete,
                             onTap: () async {
-                              await model.displayDialog(
-                                  context, creature, model);
+                             await showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (_) {
+                                  return DisplayDialog(
+                                    title: "削除の確認",
+                                    content: "『${creature.name}』を削除してもよろしいですか？",
+                                    onPressed: () async {
+                                      await model.delete(creature);
+                                      Navigator.pop(context);
+                                      await model.deleteStorage(creature);
+                                    },
+                                  );
+                                },
+                              );
                             },
                           ),
                         ],

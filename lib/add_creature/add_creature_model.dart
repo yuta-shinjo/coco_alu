@@ -62,7 +62,6 @@ class AddCreatureModel extends ChangeNotifier {
       final task = await FirebaseStorage.instance
           .ref('creatures/${doc.id}')
           .putFile(imageFile!);
-
       imgURL = await task.ref.getDownloadURL();
     }
 
@@ -81,6 +80,7 @@ class AddCreatureModel extends ChangeNotifier {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       imageFile = File(pickedFile.path);
+      print('取得：$imageFile');
       notifyListeners();
     }
   }

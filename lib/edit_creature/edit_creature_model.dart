@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:my_collection/common/constants.dart';
 import 'package:my_collection/domain/creature.dart';
 
 class EditCreatureModel extends ChangeNotifier {
@@ -28,6 +29,7 @@ class EditCreatureModel extends ChangeNotifier {
   String? memo;
   String? imgURL;
   bool isLoading = false;
+  bool changedFlag = false;
   File? imageFile;
 
   void setName(String name) {
@@ -50,8 +52,24 @@ class EditCreatureModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool isUpdate() {
-    return name != null || kinds != null;
+  ImageProvider displayImage() {
+    if (imageFile != null) {
+      return Image.file(imageFile!).image;
+    }
+    if (creature.imgURL != '') {
+      return NetworkImage(creature.imgURL!);
+    }
+    return Image.asset(kDefaultImageURL).image;
+  }
+
+  deleteImage() {
+    if (creature.imgURL != '') {
+       creature.imgURL = '';
+    }
+    if (imageFile != null){
+      imageFile = null;
+    }
+    notifyListeners();
   }
 
   Future<void> update() async {
@@ -60,9 +78,23 @@ class EditCreatureModel extends ChangeNotifier {
     this.location = locationController.text;
     this.size = sizeController.text;
     this.memo = memoController.text;
-    this.imgURL = '';
+    this.imgURL = creature.imgURL;
 
-    await FirebaseFirestore.instance.doc(creature.id).update({
+    //TODO 編集の機能
+    // final doc = FirebaseFirestore.instance.collection('creatures').doc();
+    //
+    // //firestoreに追加前にstorageの写真をアップデートする
+    // if (imageFile != null) {
+    //   final task = await FirebaseStorage.instance
+    //       .ref('creatures/${doc.id}')
+    //       .putFile(imageFile!);
+    //   imgURL = await task.ref.getDownloadURL();
+    // }
+
+    await FirebaseFirestore.instance
+        .collection("creatures")
+        .doc(creature.id)
+        .update({
       'name': name,
       'kinds': kinds,
       'location': location,

@@ -9,37 +9,6 @@ class ListScreenModel extends ChangeNotifier {
 
   List<Creature>? creatures;
 
-  Future displayDialog(
-    BuildContext context,
-    Creature creature,
-    ListScreenModel model,
-  ) {
-    return showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (_) {
-        return AlertDialog(
-          title: Text("削除の確認"),
-          content: Text("『${creature.name}』を削除してもよろしいですか？"),
-          actions: [
-            TextButton(
-              child: Text("はい"),
-              onPressed: () async {
-                await model.delete(creature);
-                Navigator.pop(context);
-                await model.deleteStorage(creature);
-              },
-            ),
-            TextButton(
-              child: Text("いいえ"),
-              onPressed: () => Navigator.pop(context),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   void fetchCreatureList() {
     _creatureStream.listen((QuerySnapshot snapshot) {
       final List<Creature> creatures =
