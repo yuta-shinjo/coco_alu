@@ -46,4 +46,11 @@ class ListScreenModel extends ChangeNotifier {
   Future<void> deleteStorage(Creature creature) {
     return FirebaseStorage.instance.ref('creatures/${creature.id}').delete();
   }
+
+  endOnReOrder() {
+    creatures!
+      ..clear()
+      ..addAll(creatures!);
+    notifyListeners();
+  }
 }

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_collection/common/constants.dart';
@@ -21,6 +22,8 @@ class EditCreatureModel extends ChangeNotifier {
   final TextEditingController locationController = TextEditingController();
   final TextEditingController sizeController = TextEditingController();
   final TextEditingController memoController = TextEditingController();
+
+  final doc = FirebaseFirestore.instance.collection('creatures').doc();
 
   String? name;
   String? kinds;
@@ -64,12 +67,16 @@ class EditCreatureModel extends ChangeNotifier {
 
   deleteImage() {
     if (creature.imgURL != '') {
-       creature.imgURL = '';
+      creature.imgURL = '';
     }
-    if (imageFile != null){
+    if (imageFile != null) {
       imageFile = null;
     }
     notifyListeners();
+  }
+
+  Future<void> deleteStorage() {
+    return FirebaseStorage.instance.ref('creatures/${creature.id}').delete();
   }
 
   Future<void> update() async {
@@ -80,16 +87,21 @@ class EditCreatureModel extends ChangeNotifier {
     this.memo = memoController.text;
     this.imgURL = creature.imgURL;
 
-    //TODO 編集の機能
-    // final doc = FirebaseFirestore.instance.collection('creatures').doc();
-    //
-    // //firestoreに追加前にstorageの写真をアップデートする
-    // if (imageFile != null) {
-    //   final task = await FirebaseStorage.instance
-    //       .ref('creatures/${doc.id}')
-    //       .putFile(imageFile!);
-    //   imgURL = await task.ref.getDownloadURL();
-    // }
+    if (imageFile == null) {
+      await deleteStorage();
+    }
+
+    //firestoreに追加前にstorageの写真をアップデートする
+    if (imageFile != null) {
+      if (imgURL != '') {
+        await deleteStorage();
+      }
+
+      final task = await FirebaseStorage.instance
+          .ref('creatures/${creature.id}') //creature.idはfirestoreに追加した時のid
+          .putFile(imageFile!);
+      imgURL = await task.ref.getDownloadURL();
+    }
 
     await FirebaseFirestore.instance
         .collection("creatures")

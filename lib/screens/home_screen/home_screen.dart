@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_collection/add_creature/add_creature_screen.dart';
-import 'package:my_collection/list_screen/list_screen.dart';
+import 'package:my_collection/screens/add_creature_screen/add_creature_screen.dart';
+import 'package:my_collection/screens/list_screen/list_screen.dart';
+import 'package:my_collection/widget/screens/home_screen/home_screen_bottom_navigation_bar.dart';
 import 'package:provider/provider.dart';
 
 import 'home_screen_model.dart';
@@ -18,20 +19,7 @@ class HomePageScreen extends StatelessWidget {
       child: Consumer<HomeScreenModel>(
         builder: (context, model, child) {
           return Scaffold(
-            bottomNavigationBar: BottomNavigationBar(
-              items: [
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.auto_stories),
-                  label: '一覧',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.drive_file_rename_outline),
-                  label: '登録',
-                ),
-              ],
-              currentIndex: model.selectedIndex,
-              onTap: model.onItemTaped,
-            ),
+            bottomNavigationBar: HomeScreenBottomNavigationBar(model: model),
             body: PageView(
               controller: model.pageController,
               onPageChanged: model.onPageChanged,
