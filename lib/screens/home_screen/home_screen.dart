@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_collection/screens/add_creature_screen/add_creature_screen.dart';
+import 'package:my_collection/screens/list_detail_screen/list_detail_screen.dart';
 import 'package:my_collection/screens/list_screen/list_screen.dart';
 import 'package:my_collection/widget/screens/home_screen/home_screen_bottom_navigation_bar.dart';
 import 'package:provider/provider.dart';
@@ -8,6 +9,7 @@ import 'home_screen_model.dart';
 
 class HomePageScreen extends StatelessWidget {
   final List<Widget> _pageList = [
+    ListDetailScreen(),
     ListScreen(),
     AddCreatureScreen(),
   ];

@@ -19,6 +19,10 @@ class HomeScreenBottomNavigationBar extends StatelessWidget {
           label: '一覧',
         ),
         BottomNavigationBarItem(
+          icon: Icon(Icons.app_registration),
+          label: '編集',
+        ),
+        BottomNavigationBarItem(
           icon: Icon(Icons.drive_file_rename_outline),
           label: '登録',
         ),

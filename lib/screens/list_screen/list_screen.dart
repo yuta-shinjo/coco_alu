@@ -21,7 +21,7 @@ class ListScreen extends StatelessWidget {
 
         return Scaffold(
           appBar: AppBar(
-            title: Text('図鑑一覧'),
+            title: Text('図鑑に変更を加える'),
             centerTitle: true,
           ),
           body: ListScreenBody(creatures: creatures, model: model),
