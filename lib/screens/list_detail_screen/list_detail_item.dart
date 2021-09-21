@@ -65,7 +65,6 @@ class ListDetailItem extends StatelessWidget {
       image: creature.imgURL != ''
           ? NetworkImage(creature.imgURL!)
           : Image.asset(kDefaultImageURL).image,
-      //TODO widgetの高さに合わせてimageの大きさにしたい(現在はデバイスの大きさ)
       height: (MediaQuery.of(context).size.height / 5) * resizeFactor,
       width: double.infinity,
       fit: BoxFit.cover,
