@@ -49,7 +49,10 @@ class _DetailScreenState extends State<DetailScreen>
             title: Text(widget.creature.name),
             leading: CloseButton(),
           ),
-          body: DetailScreenBody(creature: widget.creature,controller: _controller,),
+          body: DetailScreenBody(
+            creature: widget.creature,
+            controller: _controller,
+          ),
         ),
       ],
     );

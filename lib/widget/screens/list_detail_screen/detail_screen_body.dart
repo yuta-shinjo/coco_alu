@@ -16,7 +16,11 @@ class DetailScreenBody extends StatelessWidget {
         children: [
           Hero(
             tag: "image_${creature.name}",
-            child: _image(context),
+            child: Column(
+              children: [
+                _image(context),
+              ],
+            ),
           ),
           AnimatedBuilder(
             animation: controller,
@@ -31,6 +35,7 @@ class DetailScreenBody extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
+                  Divider(color: Colors.black),
                   _kindsText(),
                   SizedBox(height: 15),
                   _locationText(),

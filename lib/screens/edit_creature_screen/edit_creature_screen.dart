@@ -17,15 +17,21 @@ class EditCreatureScreen extends StatelessWidget {
       create: (_) => EditCreatureModel(creature),
       child: Consumer<EditCreatureModel>(
         builder: (context, model, child) {
-          return Scaffold(
-            appBar: AppBar(
-              title: Text('図鑑を編集する'),
-              centerTitle: true,
-              actions: [
-                _iconButton(context, model),
-              ],
+          return Focus(
+            focusNode: FocusNode(),
+            child: GestureDetector(
+              onTap: FocusScope.of(context).unfocus,
+              child: Scaffold(
+                appBar: AppBar(
+                  title: Text('図鑑を編集する'),
+                  centerTitle: true,
+                  actions: [
+                    _iconButton(context, model),
+                  ],
+                ),
+                body: EditCreatureScreenBody(model: model),
+              ),
             ),
-            body: EditCreatureScreenBody(model: model),
           );
         },
       ),

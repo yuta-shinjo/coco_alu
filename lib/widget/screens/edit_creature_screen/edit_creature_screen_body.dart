@@ -25,7 +25,7 @@ class EditCreatureScreenBody extends StatelessWidget {
                 child: Column(
                   children: [
                     SizedBox(height: 10),
-                    _nameTextField(),
+                    _nameTextField(context),
                     SizedBox(height: 30),
                     _imageArea(context),
                     kDivider,
@@ -88,11 +88,11 @@ class EditCreatureScreenBody extends StatelessWidget {
     );
   }
 
-  Widget _nameTextField() {
+  Widget _nameTextField(BuildContext context) {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: 40),
-      child: TextFieldArea(
+      child: TextFormField(
         textAlign: TextAlign.center,
         decoration: kTitleDecoration,
         onChanged: (text) {
@@ -105,7 +105,7 @@ class EditCreatureScreenBody extends StatelessWidget {
   }
 
   Widget _kindsTextField() {
-    return TextFieldArea(
+    return TextFormField(
       textAlign: TextAlign.center,
       decoration: kKindsDecoration,
       onChanged: (text) {
@@ -117,7 +117,7 @@ class EditCreatureScreenBody extends StatelessWidget {
   }
 
   Widget _locationTextField() {
-    return TextFieldArea(
+    return TextFormField(
       textAlign: TextAlign.center,
       decoration: kLocationDecoration,
       onChanged: (text) {
@@ -129,7 +129,7 @@ class EditCreatureScreenBody extends StatelessWidget {
   }
 
   Widget _sizeTextField() {
-    return TextFieldArea(
+    return TextFormField(
       textAlign: TextAlign.center,
       decoration: kSizeDecoration,
       onChanged: (text) {
@@ -141,7 +141,7 @@ class EditCreatureScreenBody extends StatelessWidget {
   }
 
   Widget _memoTextField() {
-    return TextFieldArea(
+    return TextFormField(
       textAlign: TextAlign.start,
       decoration: kMemoDecoration,
       onChanged: (text) {

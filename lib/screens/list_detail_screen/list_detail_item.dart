@@ -76,7 +76,7 @@ class ListDetailItem extends StatelessWidget {
       creature.name,
       textAlign: TextAlign.center,
       style: TextStyle(
-        fontSize: 20 * resizeFactor,
+        fontSize: 18 * resizeFactor,
         fontWeight: FontWeight.w600,
       ),
     );
