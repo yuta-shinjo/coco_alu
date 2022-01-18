@@ -26,12 +26,16 @@ class _$CreatureTearOff {
       {String name = '',
       String kinds = '',
       String size = '',
-      String memo = ''}) {
+      String location = '',
+      String memo = '',
+      String imageUrl = ''}) {
     return _Creature(
       name: name,
       kinds: kinds,
       size: size,
+      location: location,
       memo: memo,
+      imageUrl: imageUrl,
     );
   }
 
@@ -48,7 +52,9 @@ mixin _$Creature {
   String get name => throw _privateConstructorUsedError;
   String get kinds => throw _privateConstructorUsedError;
   String get size => throw _privateConstructorUsedError;
+  String get location => throw _privateConstructorUsedError;
   String get memo => throw _privateConstructorUsedError;
+  String get imageUrl => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -60,7 +66,13 @@ mixin _$Creature {
 abstract class $CreatureCopyWith<$Res> {
   factory $CreatureCopyWith(Creature value, $Res Function(Creature) then) =
       _$CreatureCopyWithImpl<$Res>;
-  $Res call({String name, String kinds, String size, String memo});
+  $Res call(
+      {String name,
+      String kinds,
+      String size,
+      String location,
+      String memo,
+      String imageUrl});
 }
 
 /// @nodoc
@@ -76,7 +88,9 @@ class _$CreatureCopyWithImpl<$Res> implements $CreatureCopyWith<$Res> {
     Object? name = freezed,
     Object? kinds = freezed,
     Object? size = freezed,
+    Object? location = freezed,
     Object? memo = freezed,
+    Object? imageUrl = freezed,
   }) {
     return _then(_value.copyWith(
       name: name == freezed
@@ -91,9 +105,17 @@ class _$CreatureCopyWithImpl<$Res> implements $CreatureCopyWith<$Res> {
           ? _value.size
           : size // ignore: cast_nullable_to_non_nullable
               as String,
+      location: location == freezed
+          ? _value.location
+          : location // ignore: cast_nullable_to_non_nullable
+              as String,
       memo: memo == freezed
           ? _value.memo
           : memo // ignore: cast_nullable_to_non_nullable
+              as String,
+      imageUrl: imageUrl == freezed
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -104,7 +126,13 @@ abstract class _$CreatureCopyWith<$Res> implements $CreatureCopyWith<$Res> {
   factory _$CreatureCopyWith(_Creature value, $Res Function(_Creature) then) =
       __$CreatureCopyWithImpl<$Res>;
   @override
-  $Res call({String name, String kinds, String size, String memo});
+  $Res call(
+      {String name,
+      String kinds,
+      String size,
+      String location,
+      String memo,
+      String imageUrl});
 }
 
 /// @nodoc
@@ -121,7 +149,9 @@ class __$CreatureCopyWithImpl<$Res> extends _$CreatureCopyWithImpl<$Res>
     Object? name = freezed,
     Object? kinds = freezed,
     Object? size = freezed,
+    Object? location = freezed,
     Object? memo = freezed,
+    Object? imageUrl = freezed,
   }) {
     return _then(_Creature(
       name: name == freezed
@@ -136,9 +166,17 @@ class __$CreatureCopyWithImpl<$Res> extends _$CreatureCopyWithImpl<$Res>
           ? _value.size
           : size // ignore: cast_nullable_to_non_nullable
               as String,
+      location: location == freezed
+          ? _value.location
+          : location // ignore: cast_nullable_to_non_nullable
+              as String,
       memo: memo == freezed
           ? _value.memo
           : memo // ignore: cast_nullable_to_non_nullable
+              as String,
+      imageUrl: imageUrl == freezed
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -148,7 +186,12 @@ class __$CreatureCopyWithImpl<$Res> extends _$CreatureCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Creature implements _Creature {
   const _$_Creature(
-      {this.name = '', this.kinds = '', this.size = '', this.memo = ''});
+      {this.name = '',
+      this.kinds = '',
+      this.size = '',
+      this.location = '',
+      this.memo = '',
+      this.imageUrl = ''});
 
   factory _$_Creature.fromJson(Map<String, dynamic> json) =>
       _$$_CreatureFromJson(json);
@@ -164,11 +207,17 @@ class _$_Creature implements _Creature {
   final String size;
   @JsonKey()
   @override
+  final String location;
+  @JsonKey()
+  @override
   final String memo;
+  @JsonKey()
+  @override
+  final String imageUrl;
 
   @override
   String toString() {
-    return 'Creature(name: $name, kinds: $kinds, size: $size, memo: $memo)';
+    return 'Creature(name: $name, kinds: $kinds, size: $size, location: $location, memo: $memo, imageUrl: $imageUrl)';
   }
 
   @override
@@ -179,7 +228,9 @@ class _$_Creature implements _Creature {
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.kinds, kinds) &&
             const DeepCollectionEquality().equals(other.size, size) &&
-            const DeepCollectionEquality().equals(other.memo, memo));
+            const DeepCollectionEquality().equals(other.location, location) &&
+            const DeepCollectionEquality().equals(other.memo, memo) &&
+            const DeepCollectionEquality().equals(other.imageUrl, imageUrl));
   }
 
   @override
@@ -188,7 +239,9 @@ class _$_Creature implements _Creature {
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(kinds),
       const DeepCollectionEquality().hash(size),
-      const DeepCollectionEquality().hash(memo));
+      const DeepCollectionEquality().hash(location),
+      const DeepCollectionEquality().hash(memo),
+      const DeepCollectionEquality().hash(imageUrl));
 
   @JsonKey(ignore: true)
   @override
@@ -203,7 +256,12 @@ class _$_Creature implements _Creature {
 
 abstract class _Creature implements Creature {
   const factory _Creature(
-      {String name, String kinds, String size, String memo}) = _$_Creature;
+      {String name,
+      String kinds,
+      String size,
+      String location,
+      String memo,
+      String imageUrl}) = _$_Creature;
 
   factory _Creature.fromJson(Map<String, dynamic> json) = _$_Creature.fromJson;
 
@@ -214,7 +272,11 @@ abstract class _Creature implements Creature {
   @override
   String get size;
   @override
+  String get location;
+  @override
   String get memo;
+  @override
+  String get imageUrl;
   @override
   @JsonKey(ignore: true)
   _$CreatureCopyWith<_Creature> get copyWith =>

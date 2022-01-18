@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:my_collection/common/constants.dart';
 import 'package:my_collection/domain/creature.dart';
 
-class DetailPageBody extends StatelessWidget {
-  DetailPageBody({required this.creature, required this.controller});
+class CreatureDetailPageBody extends StatelessWidget {
+  CreatureDetailPageBody({required this.creature, required this.controller});
 
   final Creature creature;
   final AnimationController controller;

@@ -1,13 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:my_collection/domain/creature.dart';
 
-class ListPageModel extends ChangeNotifier {
+class PictureBookModel extends ChangeNotifier {
   final Stream<QuerySnapshot> _creatureStream =
       FirebaseFirestore.instance.collection('creatures').snapshots();
 
+  PageController? controller;
+
   List<Creature>? creatures;
+
+  _pageListener() {
+    notifyListeners();
+  }
+
+  initialized() {
+    controller = PageController(viewportFraction: 0.6);
+    controller!.addListener(_pageListener);
+  }
 
   void fetchCreatureList() {
     _creatureStream.listen((QuerySnapshot snapshot) {
@@ -34,23 +44,5 @@ class ListPageModel extends ChangeNotifier {
       this.creatures = creatures;
       notifyListeners();
     });
-  }
-
-  Future<void> delete(Creature creature) {
-    return FirebaseFirestore.instance
-        .collection('creatures')
-        .doc(creature.id)
-        .delete();
-  }
-
-  Future<void> deleteStorage(Creature creature) {
-    return FirebaseStorage.instance.ref('creatures/${creature.id}').delete();
-  }
-
-  endOnReOrder() {
-    creatures!
-      ..clear()
-      ..addAll(creatures!);
-    notifyListeners();
   }
 }

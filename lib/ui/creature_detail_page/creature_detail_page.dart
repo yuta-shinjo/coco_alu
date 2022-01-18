@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:my_collection/domain/creature.dart';
 
-import 'src/detail_page_body.dart';
+import 'src/creature_detail_page_body.dart';
 
-class DetailPage extends StatefulWidget {
+class CreatureDetailPage extends StatefulWidget {
   final Creature creature;
 
-  const DetailPage({
+  const CreatureDetailPage({
     Key? key,
     required this.creature,
   }) : super(key: key);
 
   @override
-  _DetailPageState createState() => _DetailPageState();
+  _CreatureDetailPageState createState() => _CreatureDetailPageState();
 }
 
-class _DetailPageState extends State<DetailPage>
+class _CreatureDetailPageState extends State<CreatureDetailPage>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
@@ -50,7 +50,7 @@ class _DetailPageState extends State<DetailPage>
             title: Text(widget.creature.name),
             leading: CloseButton(),
           ),
-          body: DetailPageBody(
+          body: CreatureDetailPageBody(
             creature: widget.creature,
             controller: _controller,
           ),

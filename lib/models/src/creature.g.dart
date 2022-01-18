@@ -10,7 +10,9 @@ _$_Creature _$$_CreatureFromJson(Map<String, dynamic> json) => _$_Creature(
       name: json['name'] as String? ?? '',
       kinds: json['kinds'] as String? ?? '',
       size: json['size'] as String? ?? '',
+      location: json['location'] as String? ?? '',
       memo: json['memo'] as String? ?? '',
+      imageUrl: json['imageUrl'] as String? ?? '',
     );
 
 Map<String, dynamic> _$$_CreatureToJson(_$_Creature instance) =>
@@ -18,5 +20,7 @@ Map<String, dynamic> _$$_CreatureToJson(_$_Creature instance) =>
       'name': instance.name,
       'kinds': instance.kinds,
       'size': instance.size,
+      'location': instance.location,
       'memo': instance.memo,
+      'imageUrl': instance.imageUrl,
     };

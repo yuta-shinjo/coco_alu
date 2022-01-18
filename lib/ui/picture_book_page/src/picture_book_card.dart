@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:my_collection/common/constants.dart';
 import 'package:my_collection/domain/creature.dart';
 
-class ListDetailItem extends StatelessWidget {
-  ListDetailItem({
+class PictureBookCard extends StatelessWidget {
+  PictureBookCard({
     required this.creature,
     required this.resizeFactor,
     required this.onTap,

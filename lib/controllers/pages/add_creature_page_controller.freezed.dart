@@ -19,13 +19,23 @@ class _$AddCreaturePageStateTearOff {
   const _$AddCreaturePageStateTearOff();
 
   _AddCreaturePageState call(
-      {String loginEmail = '',
-      String loginPassword = '',
-      String infoText = ''}) {
+      {String name = '',
+      String kinds = '',
+      String location = '',
+      String size = '',
+      String memo = '',
+      bool isLoading = false,
+      String creatureImageUrl = '',
+      File? imageFile}) {
     return _AddCreaturePageState(
-      loginEmail: loginEmail,
-      loginPassword: loginPassword,
-      infoText: infoText,
+      name: name,
+      kinds: kinds,
+      location: location,
+      size: size,
+      memo: memo,
+      isLoading: isLoading,
+      creatureImageUrl: creatureImageUrl,
+      imageFile: imageFile,
     );
   }
 }
@@ -35,9 +45,14 @@ const $AddCreaturePageState = _$AddCreaturePageStateTearOff();
 
 /// @nodoc
 mixin _$AddCreaturePageState {
-  String get loginEmail => throw _privateConstructorUsedError;
-  String get loginPassword => throw _privateConstructorUsedError;
-  String get infoText => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  String get kinds => throw _privateConstructorUsedError;
+  String get location => throw _privateConstructorUsedError;
+  String get size => throw _privateConstructorUsedError;
+  String get memo => throw _privateConstructorUsedError;
+  bool get isLoading => throw _privateConstructorUsedError;
+  String get creatureImageUrl => throw _privateConstructorUsedError;
+  File? get imageFile => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AddCreaturePageStateCopyWith<AddCreaturePageState> get copyWith =>
@@ -49,7 +64,15 @@ abstract class $AddCreaturePageStateCopyWith<$Res> {
   factory $AddCreaturePageStateCopyWith(AddCreaturePageState value,
           $Res Function(AddCreaturePageState) then) =
       _$AddCreaturePageStateCopyWithImpl<$Res>;
-  $Res call({String loginEmail, String loginPassword, String infoText});
+  $Res call(
+      {String name,
+      String kinds,
+      String location,
+      String size,
+      String memo,
+      bool isLoading,
+      String creatureImageUrl,
+      File? imageFile});
 }
 
 /// @nodoc
@@ -63,23 +86,48 @@ class _$AddCreaturePageStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? loginEmail = freezed,
-    Object? loginPassword = freezed,
-    Object? infoText = freezed,
+    Object? name = freezed,
+    Object? kinds = freezed,
+    Object? location = freezed,
+    Object? size = freezed,
+    Object? memo = freezed,
+    Object? isLoading = freezed,
+    Object? creatureImageUrl = freezed,
+    Object? imageFile = freezed,
   }) {
     return _then(_value.copyWith(
-      loginEmail: loginEmail == freezed
-          ? _value.loginEmail
-          : loginEmail // ignore: cast_nullable_to_non_nullable
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
               as String,
-      loginPassword: loginPassword == freezed
-          ? _value.loginPassword
-          : loginPassword // ignore: cast_nullable_to_non_nullable
+      kinds: kinds == freezed
+          ? _value.kinds
+          : kinds // ignore: cast_nullable_to_non_nullable
               as String,
-      infoText: infoText == freezed
-          ? _value.infoText
-          : infoText // ignore: cast_nullable_to_non_nullable
+      location: location == freezed
+          ? _value.location
+          : location // ignore: cast_nullable_to_non_nullable
               as String,
+      size: size == freezed
+          ? _value.size
+          : size // ignore: cast_nullable_to_non_nullable
+              as String,
+      memo: memo == freezed
+          ? _value.memo
+          : memo // ignore: cast_nullable_to_non_nullable
+              as String,
+      isLoading: isLoading == freezed
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      creatureImageUrl: creatureImageUrl == freezed
+          ? _value.creatureImageUrl
+          : creatureImageUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      imageFile: imageFile == freezed
+          ? _value.imageFile
+          : imageFile // ignore: cast_nullable_to_non_nullable
+              as File?,
     ));
   }
 }
@@ -91,7 +139,15 @@ abstract class _$AddCreaturePageStateCopyWith<$Res>
           $Res Function(_AddCreaturePageState) then) =
       __$AddCreaturePageStateCopyWithImpl<$Res>;
   @override
-  $Res call({String loginEmail, String loginPassword, String infoText});
+  $Res call(
+      {String name,
+      String kinds,
+      String location,
+      String size,
+      String memo,
+      bool isLoading,
+      String creatureImageUrl,
+      File? imageFile});
 }
 
 /// @nodoc
@@ -107,23 +163,48 @@ class __$AddCreaturePageStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? loginEmail = freezed,
-    Object? loginPassword = freezed,
-    Object? infoText = freezed,
+    Object? name = freezed,
+    Object? kinds = freezed,
+    Object? location = freezed,
+    Object? size = freezed,
+    Object? memo = freezed,
+    Object? isLoading = freezed,
+    Object? creatureImageUrl = freezed,
+    Object? imageFile = freezed,
   }) {
     return _then(_AddCreaturePageState(
-      loginEmail: loginEmail == freezed
-          ? _value.loginEmail
-          : loginEmail // ignore: cast_nullable_to_non_nullable
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
               as String,
-      loginPassword: loginPassword == freezed
-          ? _value.loginPassword
-          : loginPassword // ignore: cast_nullable_to_non_nullable
+      kinds: kinds == freezed
+          ? _value.kinds
+          : kinds // ignore: cast_nullable_to_non_nullable
               as String,
-      infoText: infoText == freezed
-          ? _value.infoText
-          : infoText // ignore: cast_nullable_to_non_nullable
+      location: location == freezed
+          ? _value.location
+          : location // ignore: cast_nullable_to_non_nullable
               as String,
+      size: size == freezed
+          ? _value.size
+          : size // ignore: cast_nullable_to_non_nullable
+              as String,
+      memo: memo == freezed
+          ? _value.memo
+          : memo // ignore: cast_nullable_to_non_nullable
+              as String,
+      isLoading: isLoading == freezed
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      creatureImageUrl: creatureImageUrl == freezed
+          ? _value.creatureImageUrl
+          : creatureImageUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      imageFile: imageFile == freezed
+          ? _value.imageFile
+          : imageFile // ignore: cast_nullable_to_non_nullable
+              as File?,
     ));
   }
 }
@@ -132,21 +213,42 @@ class __$AddCreaturePageStateCopyWithImpl<$Res>
 
 class _$_AddCreaturePageState implements _AddCreaturePageState {
   const _$_AddCreaturePageState(
-      {this.loginEmail = '', this.loginPassword = '', this.infoText = ''});
+      {this.name = '',
+      this.kinds = '',
+      this.location = '',
+      this.size = '',
+      this.memo = '',
+      this.isLoading = false,
+      this.creatureImageUrl = '',
+      this.imageFile});
 
   @JsonKey()
   @override
-  final String loginEmail;
+  final String name;
   @JsonKey()
   @override
-  final String loginPassword;
+  final String kinds;
   @JsonKey()
   @override
-  final String infoText;
+  final String location;
+  @JsonKey()
+  @override
+  final String size;
+  @JsonKey()
+  @override
+  final String memo;
+  @JsonKey()
+  @override
+  final bool isLoading;
+  @JsonKey()
+  @override
+  final String creatureImageUrl;
+  @override
+  final File? imageFile;
 
   @override
   String toString() {
-    return 'AddCreaturePageState(loginEmail: $loginEmail, loginPassword: $loginPassword, infoText: $infoText)';
+    return 'AddCreaturePageState(name: $name, kinds: $kinds, location: $location, size: $size, memo: $memo, isLoading: $isLoading, creatureImageUrl: $creatureImageUrl, imageFile: $imageFile)';
   }
 
   @override
@@ -154,19 +256,28 @@ class _$_AddCreaturePageState implements _AddCreaturePageState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _AddCreaturePageState &&
+            const DeepCollectionEquality().equals(other.name, name) &&
+            const DeepCollectionEquality().equals(other.kinds, kinds) &&
+            const DeepCollectionEquality().equals(other.location, location) &&
+            const DeepCollectionEquality().equals(other.size, size) &&
+            const DeepCollectionEquality().equals(other.memo, memo) &&
+            const DeepCollectionEquality().equals(other.isLoading, isLoading) &&
             const DeepCollectionEquality()
-                .equals(other.loginEmail, loginEmail) &&
-            const DeepCollectionEquality()
-                .equals(other.loginPassword, loginPassword) &&
-            const DeepCollectionEquality().equals(other.infoText, infoText));
+                .equals(other.creatureImageUrl, creatureImageUrl) &&
+            const DeepCollectionEquality().equals(other.imageFile, imageFile));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(loginEmail),
-      const DeepCollectionEquality().hash(loginPassword),
-      const DeepCollectionEquality().hash(infoText));
+      const DeepCollectionEquality().hash(name),
+      const DeepCollectionEquality().hash(kinds),
+      const DeepCollectionEquality().hash(location),
+      const DeepCollectionEquality().hash(size),
+      const DeepCollectionEquality().hash(memo),
+      const DeepCollectionEquality().hash(isLoading),
+      const DeepCollectionEquality().hash(creatureImageUrl),
+      const DeepCollectionEquality().hash(imageFile));
 
   @JsonKey(ignore: true)
   @override
@@ -177,16 +288,31 @@ class _$_AddCreaturePageState implements _AddCreaturePageState {
 
 abstract class _AddCreaturePageState implements AddCreaturePageState {
   const factory _AddCreaturePageState(
-      {String loginEmail,
-      String loginPassword,
-      String infoText}) = _$_AddCreaturePageState;
+      {String name,
+      String kinds,
+      String location,
+      String size,
+      String memo,
+      bool isLoading,
+      String creatureImageUrl,
+      File? imageFile}) = _$_AddCreaturePageState;
 
   @override
-  String get loginEmail;
+  String get name;
   @override
-  String get loginPassword;
+  String get kinds;
   @override
-  String get infoText;
+  String get location;
+  @override
+  String get size;
+  @override
+  String get memo;
+  @override
+  bool get isLoading;
+  @override
+  String get creatureImageUrl;
+  @override
+  File? get imageFile;
   @override
   @JsonKey(ignore: true)
   _$AddCreaturePageStateCopyWith<_AddCreaturePageState> get copyWith =>

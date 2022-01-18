@@ -41,7 +41,7 @@ class FireUsersService {
   ) async {
     if (imageFile != null) {
       final task = await _fireStorage
-          .ref('users/${_auth.currentUser?.uid}')
+          .ref('users/profiles/${_auth.currentUser?.uid}')
           .putFile(imageFile);
       profileImageUrl = await task.ref.getDownloadURL();
     }
@@ -53,7 +53,7 @@ class FireUsersService {
         .doc(_auth.currentUser?.uid)
         .set({
       FieldName.name: name,
-      FieldName.profileImageUrl: profileImageUrl,
+      FieldName.imageUrl: profileImageUrl,
     });
   }
 
@@ -104,7 +104,7 @@ class FireUsersService {
         .doc(_auth.currentUser?.uid)
         .update({
       FieldName.name: name,
-      FieldName.profileImageUrl: profileImageUrl,
+      FieldName.imageUrl: profileImageUrl,
     });
   }
 }

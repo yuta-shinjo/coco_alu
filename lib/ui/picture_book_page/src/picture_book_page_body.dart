@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:my_collection/domain/creature.dart';
-import 'package:my_collection/ui/list_detail_page/detail_page.dart';
-import 'package:my_collection/ui/list_detail_page/list_detail_item.dart';
-import 'package:my_collection/ui/list_detail_page/list_detail_model.dart';
+import 'package:my_collection/ui/creature_detail_page/creature_detail_page.dart';
+import 'package:my_collection/ui/picture_book_page/src/picture_book_card.dart';
+import 'package:my_collection/ui/picture_book_page/picture_book_model.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../widget/index.dart';
 
-class ListDetailPageBody extends StatelessWidget {
+class PictureBookPageBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<ListDetailModel>.value(
-      value: ListDetailModel()..fetchCreatureList(),
-      child: Consumer<ListDetailModel>(
+    return ChangeNotifierProvider<PictureBookModel>.value(
+      value: PictureBookModel()..fetchCreatureList(),
+      child: Consumer<PictureBookModel>(
         builder: (context, model, child) {
           model.initialized();
           final List<Creature>? creatures = model.creatures;
@@ -33,7 +33,7 @@ class ListDetailPageBody extends StatelessWidget {
               final num resizeFactor =
                   (1 - (((currentPage! - index).abs() * 0.2).clamp(0, 1.0)));
               final currentCreature = creatures[index];
-              return ListDetailItem(
+              return PictureBookCard(
                 creature: currentCreature,
                 resizeFactor: resizeFactor as double,
                 onTap: () => _goToDetail(context, currentCreature),
@@ -46,7 +46,7 @@ class ListDetailPageBody extends StatelessWidget {
   }
 
   _goToDetail(BuildContext context, Creature creature) {
-    final page = DetailPage(creature: creature);
+    final page = CreatureDetailPage(creature: creature);
     Navigator.of(context).push(
       PageRouteBuilder<Null>(
         pageBuilder: (BuildContext context, Animation<double> animation,
