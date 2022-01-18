@@ -30,12 +30,12 @@ class PictureBookPageBody extends StatelessWidget {
                 currentPage = model.controller!.page;
               } catch (_) {}
 
-              final num resizeFactor =
-                  (1 - (((currentPage! - index).abs() * 0.2).clamp(0, 1.0)));
+              final double resizeFactor =
+                  (1 - (((currentPage! - index).abs() * 0.13).clamp(0, 1.0)));
               final currentCreature = creatures[index];
               return PictureBookCard(
                 creature: currentCreature,
-                resizeFactor: resizeFactor as double,
+                resizeFactor: resizeFactor ,
                 onTap: () => _goToDetail(context, currentCreature),
               );
             },

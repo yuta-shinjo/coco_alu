@@ -66,9 +66,11 @@ class EditListPageBody extends StatelessWidget {
                           .firstWhere((imageUrl) => imageUrl == imageUrl)
                           .imageUrl !=
                       ''
-                  ? NetworkImage(creatures
-                      .firstWhere((imageUrl) => imageUrl == imageUrl)
-                      .imageUrl)
+                  ? NetworkImage(
+                      creatures
+                          .firstWhere((imageUrl) => imageUrl == imageUrl)
+                          .imageUrl,
+                    )
                   : Image.asset(kDefaultImageURL).image,
               radius: 30,
             ),

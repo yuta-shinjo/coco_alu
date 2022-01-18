@@ -169,3 +169,30 @@ class ButtonText extends StatelessWidget {
     );
   }
 }
+
+class CardText extends StatelessWidget {
+  const CardText(
+    this.text, {
+    Key? key,
+    this.bottomPadding = 2,
+  }) : super(key: key);
+
+  final String? text;
+  final double bottomPadding;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: bottomPadding),
+      child: Text(
+        text ?? '',
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: const TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
+    );
+  }
+}

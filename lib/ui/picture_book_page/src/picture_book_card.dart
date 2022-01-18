@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_collection/common/constants.dart';
 import 'package:my_collection/domain/creature.dart';
+import 'package:my_collection/themes/app_colors.dart';
+import 'package:my_collection/ui/components/components.dart';
 
 class PictureBookCard extends StatelessWidget {
   PictureBookCard({
@@ -44,20 +46,39 @@ class PictureBookCard extends StatelessWidget {
   }
 
   Widget _card(BuildContext context) {
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      elevation: 10,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: Column(
-        children: [
-          _inkImage(context),
-          SizedBox(height: 10),
-          _text(),
-        ],
+    return GestureDetector(
+      //TODO riverpod化の時に修正する　→CreatureDetailPageに飛ぶようにする
+      onTap: () => print('押したよ'),
+      child: Card(
+        clipBehavior: Clip.antiAlias,
+        elevation: 10,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Column(
+          children: [
+            _inkImage(context),
+            _divider(),
+            _text(),
+          ],
+        ),
       ),
     );
+  }
+
+  Widget _divider() {
+    if (creature.imgURL == '') {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Column(
+          children: [
+            Divider(color: Colors.black),
+            SizedBox(height: 10),
+          ],
+        ),
+      );
+    }
+    return SizedBox(height: 25);
   }
 
   Widget _inkImage(BuildContext context) {
@@ -72,13 +93,9 @@ class PictureBookCard extends StatelessWidget {
   }
 
   Widget _text() {
-    return Text(
-      creature.name,
-      textAlign: TextAlign.center,
-      style: TextStyle(
-        fontSize: 18 * resizeFactor,
-        fontWeight: FontWeight.w600,
-      ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: CardText(creature.name),
     );
   }
 }
