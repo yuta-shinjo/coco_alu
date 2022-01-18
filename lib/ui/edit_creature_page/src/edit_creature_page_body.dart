@@ -3,10 +3,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_collection/common/constants.dart';
 import 'package:my_collection/controllers/pages/edit_creature_page_controller.dart';
+import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/edit_creature_page/src/simple_dialog.dart';
 import 'package:my_collection/widget/circleIndicator.dart';
-import 'package:my_collection/widget/circle_avatar.dart';
-import 'package:my_collection/widget/pressed_button.dart';
 
 class EditCreaturePageBody extends StatelessWidget {
   @override
@@ -31,7 +30,7 @@ class EditCreaturePageBody extends StatelessWidget {
                         SizedBox(height: 10),
                         _nameTextField(context),
                         SizedBox(height: 30),
-                        _imageArea(context),
+                        _creaturePicture(),
                         kDivider,
                         _kindsTextField(),
                         SizedBox(height: 15),
@@ -53,60 +52,65 @@ class EditCreaturePageBody extends StatelessWidget {
     );
   }
 
-  //TODO imageAreaを変更する
-  Widget _imageArea(BuildContext context) {
+  Widget _creaturePicture() {
     return Consumer(
       builder: (context, ref, _) {
-        return Center(
-          child: Stack(
-            children: [
-              CreatureImage(
-                backgroundImage:
-                    ref.read(editCreaturePageProvider.notifier).displayImage(),
-                radius: 80,
+        final imageFile =
+            ref.watch(editCreaturePageProvider.select((s) => s.imageFile));
+        return Stack(
+          children: [
+            CircleAvatar(
+              radius: 100,
+              backgroundColor: AppColors.circleBorder,
+              child: CircleAvatar(
+                radius: 98,
+                backgroundImage: imageFile != null
+                    ? Image.file(imageFile, fit: BoxFit.cover).image
+                    : Image.asset(kDefaultImageURL).image,
               ),
-              _imageButton(context),
-            ],
-          ),
+            ),
+            RawMaterialButton(
+              onPressed: () async {
+                await showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (_) {
+                    return _dialog();
+                  },
+                );
+              },
+              child: const SizedBox(
+                width: 200,
+                height: 200,
+              ),
+              shape: const CircleBorder(),
+              elevation: 0,
+            ),
+          ],
         );
       },
     );
   }
 
-  Widget _imageButton(BuildContext context) {
-    return PressedButton(
-      onPressed: () async {
-        await showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (_) {
-            return _dialog(context);
-          },
-        );
-      },
-    );
-  }
-
-  Widget _dialog(BuildContext context) {
+  Widget _dialog() {
     return Consumer(builder: (context, ref, _) {
+      final profileImageUrl =
+          ref.watch(editCreaturePageProvider.select((s) => s.creatureImageUrl));
       final imageFile =
           ref.watch(editCreaturePageProvider.select((s) => s.imageFile));
-      final imageUrl =
-          ref.watch(editCreaturePageProvider.select((s) => s.creatureImageUrl));
       return SelectDialog(
         selectPicture: () async {
           final image =
               await ImagePicker().pickImage(source: ImageSource.gallery);
           await ref
               .read(editCreaturePageProvider.notifier)
-              .pickImage(image, imageUrl);
+              .pickImage(image, profileImageUrl);
           Navigator.pop(context);
         },
         deletePicture: () {
-          ref.read(editCreaturePageProvider.notifier).deleteImage(
-                imageUrl,
-                imageFile,
-              );
+          ref
+              .read(editCreaturePageProvider.notifier)
+              .deleteImage(profileImageUrl, imageFile);
           Navigator.pop(context);
         },
       );

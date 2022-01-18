@@ -31,7 +31,7 @@ class PictureBookPageBody extends StatelessWidget {
               } catch (_) {}
 
               final double resizeFactor =
-                  (1 - (((currentPage! - index).abs() * 0.13).clamp(0, 1.0)));
+                  (1 - (((currentPage! - index).abs() * 0.12).clamp(0, 1.0)));
               final currentCreature = creatures[index];
               return PictureBookCard(
                 creature: currentCreature,

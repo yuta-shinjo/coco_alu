@@ -12,7 +12,7 @@ const kMemoDecoration = InputDecoration(
 );
 
 const kDivider =
-    Divider(height: 80, indent: 10, endIndent: 10, color: Colors.white);
+    Divider(height: 30, indent: 10, endIndent: 10, color: Colors.white);
 
 const kTextStyle =
     TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.w400);

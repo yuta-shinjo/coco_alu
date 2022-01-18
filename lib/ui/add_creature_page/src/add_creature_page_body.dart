@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_collection/common/constants.dart';
 import 'package:my_collection/controllers/pages/add_creature_page_controller.dart';
+import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/widget/index.dart';
 
 class AddCreaturePageBody extends StatelessWidget {
@@ -23,20 +24,13 @@ class AddCreaturePageBody extends StatelessWidget {
                 alignment: Alignment.center,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 25),
                     child: Column(
                       children: [
                         SizedBox(height: 10),
                         _nameTextField(),
                         SizedBox(height: 30),
-                        Center(
-                          child: Stack(
-                            children: [
-                              _imageArea(),
-                              _imageButton(),
-                            ],
-                          ),
-                        ),
+                        _creaturePicture(),
                         kDivider,
                         _kindsTextField(),
                         SizedBox(height: 15),
@@ -58,35 +52,41 @@ class AddCreaturePageBody extends StatelessWidget {
     );
   }
 
-  //TODO imageAreaをregisterProfileのpicker部分に変更する
-  Widget _imageArea() {
+  Widget _creaturePicture() {
     return Consumer(
       builder: (context, ref, _) {
         final imageFile =
             ref.watch(addCreaturePageProvider.select((s) => s.imageFile));
-        return CreatureImage(
-          backgroundImage: imageFile != null
-              ? Image.file(imageFile).image
-              : Image.asset(kDefaultImageURL).image,
-          radius: 80,
-        );
-      },
-    );
-  }
-
-  Widget _imageButton() {
-    return Consumer(
-      builder: (context, ref, _) {
-        final imageUrl = ref
+        final profileImageUrl = ref
             .watch(addCreaturePageProvider.select((s) => s.creatureImageUrl));
-        return PressedButton(
-          onPressed: () async {
-            final image =
-                await ImagePicker().pickImage(source: ImageSource.gallery);
-            await ref
-                .read(addCreaturePageProvider.notifier)
-                .pickImage(image, imageUrl);
-          },
+        return Stack(
+          children: [
+            CircleAvatar(
+              radius: 100,
+              backgroundColor: AppColors.circleBorder,
+              child: CircleAvatar(
+                radius: 98,
+                backgroundImage: imageFile != null
+                    ? Image.file(imageFile, fit: BoxFit.cover).image
+                    : Image.asset(kDefaultImageURL).image,
+              ),
+            ),
+            RawMaterialButton(
+              onPressed: () async {
+                final image =
+                    await ImagePicker().pickImage(source: ImageSource.gallery);
+                await ref
+                    .read(addCreaturePageProvider.notifier)
+                    .pickImage(image, profileImageUrl);
+              },
+              child: const SizedBox(
+                width: 200,
+                height: 200,
+              ),
+              shape: const CircleBorder(),
+              elevation: 0,
+            ),
+          ],
         );
       },
     );
@@ -169,19 +169,21 @@ class AddCreaturePageBody extends StatelessWidget {
   }
 
   Widget _memoTextField() {
-    return Consumer(builder: (context, ref, _) {
-      final controller =
-          ref.read(addCreaturePageProvider.notifier).memoController;
-      return TextFormField(
-        textAlign: TextAlign.start,
-        decoration: kMemoDecoration,
-        onChanged: (text) {
-          ref.read(addCreaturePageProvider.notifier).inputMemo(text);
-        },
-        controller: controller,
-        keyboardType: TextInputType.multiline,
-        maxLines: 4,
-      );
-    });
+    return Consumer(
+      builder: (context, ref, _) {
+        final controller =
+            ref.read(addCreaturePageProvider.notifier).memoController;
+        return TextFormField(
+          textAlign: TextAlign.start,
+          decoration: kMemoDecoration,
+          onChanged: (text) {
+            ref.read(addCreaturePageProvider.notifier).inputMemo(text);
+          },
+          controller: controller,
+          keyboardType: TextInputType.multiline,
+          maxLines: 4,
+        );
+      },
+    );
   }
 }

@@ -9,9 +9,9 @@ class EditListPage extends StatelessWidget {
     return Consumer(
       builder: (context, ref, _) {
         final creatures =
-            ref.watch(editListPageProvider.select((s) => s.creatures));
+            ref.watch(editListPageProvider.select((s) => s.creatures)) ?? [];
 
-        if (creatures == null) {
+        if (creatures == []) {
           return Center(child: CircularProgressIndicator());
 
           //TODO 数秒後にメッセージに変換できるようにしたい

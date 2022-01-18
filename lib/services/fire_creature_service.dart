@@ -31,15 +31,16 @@ class FireCreatureService {
   //   });
   // }
 
-  Future<List<Creature>> fetchCreatureList({required Function(List<Creature>) onValueChanged}) async {
+  Future<List<Creature>> fetchCreatureList(
+      {required Function(List<Creature>) onValueChanged}) async {
     final usersPublicStadiumsCollectionRef = _fireStore
         .collection('users')
         .doc(_auth.currentUser?.uid)
         .collection('creatures');
     final snapShot = await usersPublicStadiumsCollectionRef.get();
-    final List<Creature> creatures =
+    final List<Creature>? creatures =
         snapShot.docs.map((e) => Creature.fromJson(e.data())).toList();
-    return onValueChanged(creatures);
+    return onValueChanged(creatures!);
   }
 
   Future<void> addCreature(

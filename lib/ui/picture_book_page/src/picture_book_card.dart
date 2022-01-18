@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_collection/common/constants.dart';
 import 'package:my_collection/domain/creature.dart';
-import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/components.dart';
 
 class PictureBookCard extends StatelessWidget {
