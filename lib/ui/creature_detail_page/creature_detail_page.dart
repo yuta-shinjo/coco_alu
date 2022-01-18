@@ -3,6 +3,37 @@ import 'package:my_collection/domain/creature.dart';
 
 import 'src/creature_detail_page_body.dart';
 
+// class CreatureDetailPage extends StatelessWidget {
+//   const CreatureDetailPage({Key? key}) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Stack(
+//       children: [
+//         Hero(
+//           tag: "background_${widget.creature.name}",
+//           child: Container(
+//             color: Colors.white,
+//           ),
+//         ),
+//         Scaffold(
+//           backgroundColor: Colors.transparent,
+//           appBar: AppBar(
+//             elevation: 0,
+//             title: Text(widget.creature.name),
+//             leading: CloseButton(),
+//           ),
+//           body: CreatureDetailPageBody(
+//             creature: widget.creature,
+//             controller: _controller,
+//           ),
+//         ),
+//       ],
+//     );
+//   }
+// }
+
+
 class CreatureDetailPage extends StatefulWidget {
   final Creature creature;
 

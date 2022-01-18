@@ -58,6 +58,7 @@ class CreatureDetailPageBody extends StatelessWidget {
           ? NetworkImage(creature.imgURL!)
           : Image.asset(kDefaultImageURL).image,
       height: MediaQuery.of(context).size.height / 2,
+      width: double.infinity,
       fit: BoxFit.cover,
     );
   }
