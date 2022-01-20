@@ -1,10 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:my_collection/domain/creature.dart';
+import 'package:firebase_auth/firebase_auth.dart' as firebase;
 
 class PictureBookModel extends ChangeNotifier {
-  final Stream<QuerySnapshot> _creatureStream =
-      FirebaseFirestore.instance.collection('creatures').snapshots();
+  // final Stream<QuerySnapshot> _creatureStream =
+  //     FirebaseFirestore.instance.collection('users').snapshots();
+  final Stream<QuerySnapshot> _creatureStream = FirebaseFirestore.instance
+      .collection('users')
+      .doc(firebase.FirebaseAuth.instance.currentUser?.uid)
+      .collection('creatures')
+      .snapshots();
 
   PageController? controller;
 
@@ -30,7 +36,7 @@ class PictureBookModel extends ChangeNotifier {
         final String? size = data['size'];
         final String? memo = data['memo'];
         final String id = document.id;
-        final String? imgURL = data['imgURL'];
+        final String? imageUrl = data['imageUrl'];
         return Creature(
           name,
           kinds,
@@ -38,7 +44,7 @@ class PictureBookModel extends ChangeNotifier {
           size,
           memo,
           id,
-          imgURL,
+          imageUrl,
         );
       }).toList();
       this.creatures = creatures;

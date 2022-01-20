@@ -55,8 +55,8 @@ class CreatureDetailPageBody extends StatelessWidget {
     return Column(
       children: [
         Image(
-          image: creature.imgURL != ''
-              ? NetworkImage(creature.imgURL!)
+          image: creature.imageUrl != ''
+              ? NetworkImage(creature.imageUrl!)
               : Image.asset(kDefaultImageURL).image,
           height: MediaQuery.of(context).size.height / 2,
           width: double.infinity,
@@ -71,7 +71,7 @@ class CreatureDetailPageBody extends StatelessWidget {
   }
 
   Widget _divider() {
-    if (creature.imgURL == '') {
+    if (creature.imageUrl == '') {
       return Divider(color: Colors.black);
     }
     return SizedBox();

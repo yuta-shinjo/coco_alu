@@ -84,7 +84,7 @@ class PictureBookCard extends StatelessWidget {
   }
 
   Widget _divider() {
-    if (creature.imgURL == '') {
+    if (creature.imageUrl == '') {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
@@ -100,8 +100,8 @@ class PictureBookCard extends StatelessWidget {
 
   Widget _inkImage(BuildContext context) {
     return Ink.image(
-      image: creature.imgURL != ''
-          ? NetworkImage(creature.imgURL!)
+      image: creature.imageUrl != ''
+          ? NetworkImage(creature.imageUrl!)
           : Image.asset(kDefaultImageURL).image,
       height: (MediaQuery.of(context).size.height / 5) * resizeFactor,
       width: double.infinity,
