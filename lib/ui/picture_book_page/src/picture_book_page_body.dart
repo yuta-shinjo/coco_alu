@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:my_collection/domain/creature.dart';
-import 'package:my_collection/ui/creature_detail_page/creature_detail_page.dart';
 import 'package:my_collection/ui/picture_book_page/src/picture_book_card.dart';
 import 'package:my_collection/ui/picture_book_page/picture_book_model.dart';
 import 'package:provider/provider.dart';
@@ -35,33 +34,11 @@ class PictureBookPageBody extends StatelessWidget {
               final currentCreature = creatures[index];
               return PictureBookCard(
                 creature: currentCreature,
-                resizeFactor: resizeFactor ,
-                onTap: () => _goToDetail(context, currentCreature),
+                resizeFactor: resizeFactor,
               );
             },
           );
         },
-      ),
-    );
-  }
-
-  _goToDetail(BuildContext context, Creature creature) {
-    final page = CreatureDetailPage(creature: creature);
-    Navigator.of(context).push(
-      PageRouteBuilder<Null>(
-        pageBuilder: (BuildContext context, Animation<double> animation,
-            Animation<double> secondaryAnimation) {
-          return AnimatedBuilder(
-            animation: animation,
-            builder: (BuildContext context, Widget? child) {
-              return Opacity(
-                opacity: animation.value,
-                child: page,
-              );
-            },
-          );
-        },
-        transitionDuration: Duration(milliseconds: 400),
       ),
     );
   }

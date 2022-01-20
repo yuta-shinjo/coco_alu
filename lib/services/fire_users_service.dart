@@ -15,11 +15,42 @@ class FireUsersService {
 
   User? user;
 
+  Future<bool> isExisted({required String id}) async {
+    final docSnapshot = await _fireStore
+        .collection('users')
+        .doc('v1')
+        .collection('private')
+        .doc(id)
+        .get();
+    return docSnapshot.data() != null;
+  }
+
+  StreamSubscription listen(
+      {required String id, required Function(User) onValueChanged}) {
+    return _fireStore
+        .collection('users')
+        .doc(_auth.currentUser?.uid)
+        .collection('profile')
+        .doc(_auth.currentUser?.uid)
+        .snapshots()
+        .listen((snapshot) {
+      final data = snapshot.data();
+      if (data != null) {
+        final user = User.fromJson(data);
+        onValueChanged(user);
+      }
+    });
+  }
+
   Future<void> login(String email, String password) async {
     await _auth.signInWithEmailAndPassword(
       email: email,
       password: password,
     );
+  }
+
+  Future<void> signOut() async {
+    await _auth.signOut();
   }
 
   Future<void> registerUser(String newEmail, String newPassword) async {

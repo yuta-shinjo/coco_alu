@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_collection/models/src/creature.dart';
 import 'package:my_collection/services/fire_creature_service.dart';
+import 'package:my_collection/services/fire_users_service.dart';
 
 part 'picture_book_page_controller.freezed.dart';
 
@@ -26,6 +27,7 @@ class PictureBookPageController extends StateNotifier<PictureBookPageState> {
 
   PageController? controller;
   final _fireCreatureService = FireCreatureService();
+  final _fireUsersService = FireUsersService();
 
   void _init() {
     _fireCreatureService.fetchCreatureList(
@@ -37,5 +39,9 @@ class PictureBookPageController extends StateNotifier<PictureBookPageState> {
 
   void initialized() {
     controller = PageController(viewportFraction: 0.6);
+  }
+
+  Future<void> isSignOut() async {
+    await _fireUsersService.signOut();
   }
 }

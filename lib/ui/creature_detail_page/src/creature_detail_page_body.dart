@@ -35,7 +35,6 @@ class CreatureDetailPageBody extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Divider(color: Colors.black),
                   _kindsText(),
                   SizedBox(height: 15),
                   _locationText(),
@@ -53,14 +52,29 @@ class CreatureDetailPageBody extends StatelessWidget {
   }
 
   Widget _image(BuildContext context) {
-    return Image(
-      image: creature.imgURL != ''
-          ? NetworkImage(creature.imgURL!)
-          : Image.asset(kDefaultImageURL).image,
-      height: MediaQuery.of(context).size.height / 2,
-      width: double.infinity,
-      fit: BoxFit.cover,
+    return Column(
+      children: [
+        Image(
+          image: creature.imgURL != ''
+              ? NetworkImage(creature.imgURL!)
+              : Image.asset(kDefaultImageURL).image,
+          height: MediaQuery.of(context).size.height / 2,
+          width: double.infinity,
+          fit: BoxFit.cover,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: _divider(),
+        ),
+      ],
     );
+  }
+
+  Widget _divider() {
+    if (creature.imgURL == '') {
+      return Divider(color: Colors.black);
+    }
+    return SizedBox();
   }
 
   Widget _kindsText() {

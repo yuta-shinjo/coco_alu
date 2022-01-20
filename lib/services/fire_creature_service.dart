@@ -12,25 +12,6 @@ class FireCreatureService {
   final _fireStorage = FirebaseStorage.instance;
   final _auth = firebase.FirebaseAuth.instance;
 
-  // //TODO jsのstudium_page_controllerのfetchUserStadiumsを参考にしてみる
-  // StreamSubscription fetchCreatureList(
-  //     {required Function(Creature) onValueChanged}) {
-  //   return _fireStore
-  //       .collection('users')
-  //       .doc(_auth.currentUser?.uid)
-  //       .collection('creatures')
-  //       //TODO ランダムのidを取得できるようにしたい
-  //       .doc(_auth.currentUser?.uid)
-  //       .snapshots()
-  //       .listen((snapshot) {
-  //     final data = snapshot.data();
-  //     if (data != null) {
-  //       final creature = Creature.fromJson(data);
-  //       onValueChanged(creature);
-  //     }
-  //   });
-  // }
-
   Future<List<Creature>> fetchCreatureList(
       {required Function(List<Creature>) onValueChanged}) async {
     final usersPublicStadiumsCollectionRef = _fireStore

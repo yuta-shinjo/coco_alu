@@ -2,24 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:my_collection/common/constants.dart';
 import 'package:my_collection/domain/creature.dart';
 import 'package:my_collection/ui/components/components.dart';
+import 'package:my_collection/ui/creature_detail_page/creature_detail_page.dart';
 
 class PictureBookCard extends StatelessWidget {
   PictureBookCard({
     required this.creature,
     required this.resizeFactor,
-    required this.onTap,
   });
 
   final Creature creature;
   final double resizeFactor;
-  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height * 0.4;
     double width = MediaQuery.of(context).size.width * 0.85;
     return InkWell(
-      onTap: onTap,
       child: Align(
         alignment: Alignment.topCenter,
         child: Container(
@@ -34,7 +32,7 @@ class PictureBookCard extends StatelessWidget {
                 bottom: 0,
                 child: Hero(
                   tag: "background_${creature.name}",
-                  child: _card(context),
+                  child: _card(context,),
                 ),
               ),
             ],
@@ -46,8 +44,7 @@ class PictureBookCard extends StatelessWidget {
 
   Widget _card(BuildContext context) {
     return GestureDetector(
-      //TODO riverpod化の時に修正する　→CreatureDetailPageに飛ぶようにする
-      onTap: () => print('押したよ'),
+      onTap: () => _goToDetail(context, creature),
       child: Card(
         clipBehavior: Clip.antiAlias,
         elevation: 10,
@@ -61,6 +58,27 @@ class PictureBookCard extends StatelessWidget {
             _text(),
           ],
         ),
+      ),
+    );
+  }
+
+  _goToDetail(BuildContext context, Creature creature) {
+    final page = CreatureDetailPage(creature: creature);
+    Navigator.of(context).push(
+      PageRouteBuilder<Null>(
+        pageBuilder: (BuildContext context, Animation<double> animation,
+            Animation<double> secondaryAnimation) {
+          return AnimatedBuilder(
+            animation: animation,
+            builder: (BuildContext context, Widget? child) {
+              return Opacity(
+                opacity: animation.value,
+                child: page,
+              );
+            },
+          );
+        },
+        transitionDuration: Duration(milliseconds: 400),
       ),
     );
   }

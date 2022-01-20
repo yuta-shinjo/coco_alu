@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_collection/themes/app_theme.dart';
 import 'package:my_collection/ui/login_page/login_page.dart';
+import 'package:my_collection/ui/splash_page/splash_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,7 +27,8 @@ class MainApp extends StatelessWidget {
       navigatorObservers: [
         FirebaseAnalyticsObserver(analytics: analytics),
       ],
-      home: const LoginPage(),
+      home: const SplashPage(),
+      // home: const LoginPage(),
       // home: RootPage(),
     );
   }
