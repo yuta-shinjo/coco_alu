@@ -96,39 +96,42 @@ class RegisterProfilePageBody extends StatelessWidget {
   }
 
   Widget _registerButton() {
-    return Consumer(builder: (context, ref, _) {
-      final name = ref.watch(registerProfilePageProvider.select((s) => s.name));
-      final profileImageUrl = ref
-          .watch(registerProfilePageProvider.select((s) => s.profileImageUrl));
-      final imageFile =
-          ref.watch(registerProfilePageProvider.select((s) => s.imageFile));
-      final controller =
-          ref.watch(registerProfilePageProvider.notifier).btnController;
-      return LoadingButton(
-        primaryColor: AppColors.primary,
-        controller: controller,
-        onPressed: () async {
-          if (name != '') {
-            loadingSuccess(controller);
-            try {
-              ref
-                  .read(registerProfilePageProvider.notifier)
-                  .createProfile(name, profileImageUrl, imageFile);
-              ref
-                  .read(registerProfilePageProvider.notifier)
-                  .profileName
-                  .clear();
-              Navigator.pushReplacement(context, RootPage.route());
-              profileSuccessMassage;
-            } catch (e) {
-              errorMassage(controller, e);
+    return Consumer(
+      builder: (context, ref, _) {
+        final name =
+            ref.watch(registerProfilePageProvider.select((s) => s.name));
+        final profileImageUrl = ref.watch(
+            registerProfilePageProvider.select((s) => s.profileImageUrl));
+        final imageFile =
+            ref.watch(registerProfilePageProvider.select((s) => s.imageFile));
+        final controller =
+            ref.watch(registerProfilePageProvider.notifier).btnController;
+        return LoadingButton(
+          primaryColor: AppColors.primary,
+          controller: controller,
+          onPressed: () async {
+            if (name != '') {
+              loadingSuccess(controller);
+              try {
+                ref
+                    .read(registerProfilePageProvider.notifier)
+                    .createProfile(name, profileImageUrl, imageFile);
+                ref
+                    .read(registerProfilePageProvider.notifier)
+                    .profileName
+                    .clear();
+                Navigator.pushReplacement(context, RootPage.route());
+                profileSuccessMassage;
+              } catch (e) {
+                errorMassage(controller, e);
+              }
+            } else {
+              nameErrorMassage(controller);
             }
-          } else {
-            nameErrorMassage(controller);
-          }
-        },
-        text: const ButtonText('作成する'),
-      );
-    });
+          },
+          text: const ButtonText('作成する'),
+        );
+      },
+    );
   }
 }

@@ -6,7 +6,7 @@ class Creature {
     this.size,
     this.memo,
     this.id,
-    this.imgURL,
+    this.imageUrl,
   );
 
   String name;
@@ -15,5 +15,5 @@ class Creature {
   String? size;
   String? memo;
   String id;
-  String? imgURL;
+  String? imageUrl;
 }

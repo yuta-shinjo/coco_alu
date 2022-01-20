@@ -4,6 +4,7 @@ import 'package:my_collection/ui/components/src/theme_text.dart';
 import 'package:my_collection/ui/login_page/src/login_page_body.dart';
 import 'package:my_collection/ui/projects/elevated_button.dart';
 import 'package:my_collection/ui/register_page/register_page.dart';
+import 'package:page_transition/page_transition.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -11,6 +12,15 @@ class LoginPage extends StatelessWidget {
   static Route<T> route<T>() {
     return MaterialPageRoute<T>(
       builder: (_) => const LoginPage(),
+      settings: const RouteSettings(name: 'login_page'),
+    );
+  }
+
+
+  static Route<T> fadeInRoute<T>() {
+    return PageTransition<T>(
+      child: LoginPage(),
+      type: PageTransitionType.fade,
       settings: const RouteSettings(name: 'login_page'),
     );
   }
