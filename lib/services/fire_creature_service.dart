@@ -6,13 +6,14 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase;
 import 'package:my_collection/models/src/creature.dart';
 import 'package:my_collection/services/src/field_name.dart';
+import 'package:my_collection/widget/circleIndicator.dart';
 
 class FireCreatureService {
   final _fireStore = FirebaseFirestore.instance;
   final _fireStorage = FirebaseStorage.instance;
   final _auth = firebase.FirebaseAuth.instance;
 
-  Future<List<Creature>> fetchCreatureList(
+  Future fetchCreatureList(
       {required Function(List<Creature>) onValueChanged}) async {
     final usersPublicStadiumsCollectionRef = _fireStore
         .collection('users')
@@ -21,7 +22,10 @@ class FireCreatureService {
     final snapShot = await usersPublicStadiumsCollectionRef.get();
     final List<Creature>? creatures =
         snapShot.docs.map((e) => Creature.fromJson(e.data())).toList();
-    return onValueChanged(creatures!);
+    if (creatures == null) {
+      return CircleIndicator();
+    }
+    return onValueChanged(creatures);
   }
 
   Future<void> addCreature(

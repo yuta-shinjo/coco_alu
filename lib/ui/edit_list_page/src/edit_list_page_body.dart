@@ -27,12 +27,13 @@ class EditListPageBody extends StatelessWidget {
             onReorderFinished: (creature, from, to, newItems) =>
                 ref.read(editListPageProvider.notifier).endOnReOrder(),
             itemBuilder: (context, itemAnimation, creature, index) {
+              final creature = creatures[index];
               return Reorderable(
                 key: ValueKey(index),
                 builder: (context, dragAnimation, inDrag) {
                   return Material(
                     type: MaterialType.transparency,
-                    child: _slidable(),
+                    child: _slidable(creature),
                   );
                 },
               );
@@ -43,45 +44,37 @@ class EditListPageBody extends StatelessWidget {
     );
   }
 
-  Widget _slidable() {
+  Widget _slidable(Creature creature) {
     return Slidable(
       actionPane: SlidableDrawerActionPane(),
-      child: _handle(),
+      child: _handle(creature),
       secondaryActions: [
         _iconSlideAction(),
       ],
     );
   }
 
-  Widget _handle() {
+  Widget _handle(Creature creature) {
     return Consumer(
       builder: (context, ref, _) {
-        final creatures =
-            ref.watch(editListPageProvider.select((s) => s.creatures));
         return Handle(
           delay: Duration(milliseconds: 800),
           child: ListTile(
             leading: CreatureImage(
-              backgroundImage: creatures!
-                          .firstWhere((imageUrl) => imageUrl == imageUrl)
-                          .imageUrl !=
-                      ''
+              backgroundImage: creature.imageUrl != ''
                   ? NetworkImage(
-                      creatures
-                          .firstWhere((imageUrl) => imageUrl == imageUrl)
-                          .imageUrl,
+                      creature.imageUrl,
                     )
                   : Image.asset(kDefaultImageURL).image,
               radius: 30,
             ),
-            title: Text(creatures.firstWhere((name) => name == name).name),
-            subtitle:
-                Text(creatures.firstWhere((kinds) => kinds == kinds).kinds),
+            title: Text(creature.name),
+            subtitle: Text(creature.kinds),
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => EditCreaturePage(),
+                  builder: (context) => EditCreaturePage(creature: creature),
                 ),
               );
             },

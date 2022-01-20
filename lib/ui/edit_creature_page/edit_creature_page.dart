@@ -2,9 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_collection/controllers/pages/edit_creature_page_controller.dart';
+import 'package:my_collection/models/src/creature.dart';
 import 'package:my_collection/ui/edit_creature_page/src/edit_creature_page_body.dart';
 
 class EditCreaturePage extends StatelessWidget {
+  const EditCreaturePage({
+    Key? key,
+    required this.creature,
+  }) : super(key: key);
+
+  final Creature creature;
+
   @override
   Widget build(BuildContext context) {
     return Focus(
@@ -19,7 +27,7 @@ class EditCreaturePage extends StatelessWidget {
               _iconButton(context),
             ],
           ),
-          body: EditCreaturePageBody(),
+          body: EditCreaturePageBody(creature: creature),
         ),
       ),
     );
