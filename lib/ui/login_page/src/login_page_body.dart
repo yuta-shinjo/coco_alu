@@ -15,7 +15,7 @@ class LoginPageBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           _email(),
           _password(),
@@ -74,8 +74,11 @@ class LoginPageBody extends StatelessWidget {
       final controller = ref.watch(loginPageProvider.notifier).btnController;
       return ButtonTheme(
         child: LoadingButton(
-          primaryColor: AppColors.primary,
-          text: const ButtonText('ログイン'),
+          primaryColor: AppColors.active,
+          text: const ButtonText(
+            'ログイン',
+            color: AppColors.active,
+          ),
           controller: controller,
           onPressed: () async {
             if (loginEmail != '' &&

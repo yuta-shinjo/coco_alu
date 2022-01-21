@@ -8,13 +8,13 @@ ThemeData theme(BuildContext context) => ThemeData(
       backgroundColor: AppColors.background,
       appBarTheme: const AppBarTheme(
         color: AppColors.primary,
-        iconTheme: IconThemeData(color: Colors.black),
-        actionsIconTheme: IconThemeData(color: Colors.black),
+        iconTheme: IconThemeData(color: AppColors.black),
+        actionsIconTheme: IconThemeData(color: AppColors.black),
         centerTitle: true,
         titleTextStyle: TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.bold,
-          color: AppColors.white,
+          color: AppColors.black,
         ),
       ),
       fontFamily: 'NotoSerifJP',

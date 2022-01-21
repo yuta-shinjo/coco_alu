@@ -15,7 +15,7 @@ class RegisterPageBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Text(
             '新規アカウントの作成',
@@ -24,6 +24,7 @@ class RegisterPageBody extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
+          SizedBox(height: 30),
           _email(),
           _password(),
           _registerButton(),
@@ -81,7 +82,7 @@ class RegisterPageBody extends StatelessWidget {
       final controller = ref.watch(registerPageProvider.notifier).btnController;
       return ButtonTheme(
         child: LoadingButton(
-          primaryColor: AppColors.primary,
+          primaryColor: AppColors.active,
           text: const ButtonText('登録'),
           controller: controller,
           onPressed: () async {

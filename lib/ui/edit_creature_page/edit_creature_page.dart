@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_collection/controllers/pages/edit_creature_page_controller.dart';
 import 'package:my_collection/models/src/creature.dart';
 import 'package:my_collection/ui/edit_creature_page/src/edit_creature_page_body.dart';
+import 'package:my_collection/ui/projects/closed_button.dart';
 
 class EditCreaturePage extends StatelessWidget {
   const EditCreaturePage({
@@ -32,6 +33,7 @@ class EditCreaturePage extends StatelessWidget {
           appBar: AppBar(
             title: Text('図鑑を編集する'),
             centerTitle: true,
+            leading: ClosedButton(),
             actions: [
               _iconButton(context),
             ],

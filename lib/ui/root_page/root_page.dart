@@ -45,8 +45,8 @@ class RootPage extends ConsumerWidget {
       builder: (context, ref, _) {
         return BottomNavigationBar(
           unselectedItemColor: AppColors.noActive,
-          selectedItemColor: AppColors.white,
-          backgroundColor: AppColors.primary,
+          selectedItemColor: AppColors.active,
+          backgroundColor: AppColors.white,
           type: BottomNavigationBarType.fixed,
           onTap: ref.read(rootPageProvider.notifier).onTabTap,
           currentIndex: currentIndex,

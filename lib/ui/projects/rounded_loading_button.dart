@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/src/theme_text.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
@@ -19,7 +20,8 @@ class LoadingButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RoundedLoadingButton(
-      color: primaryColor,
+      successColor: AppColors.active,
+      color: AppColors.active,
       successIcon: Icons.check,
       failedIcon: Icons.close,
       child: text,

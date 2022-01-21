@@ -8,7 +8,7 @@ class RegisterBackButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      color: AppColors.white,
+      color: AppColors.black,
       icon: const Icon(Icons.close),
       onPressed: () {
         Navigator.pushReplacement(context, LoginPage.route());

@@ -65,7 +65,8 @@ class EditCreaturePageBody extends StatelessWidget {
       builder: (context, ref, _) {
         final imageFile =
             ref.watch(editCreaturePageProvider.select((s) => s.imageFile));
-        print(imageFile);
+        final imageUrl = ref
+            .watch(editCreaturePageProvider.select((s) => s.creatureImageUrl));
         return Stack(
           children: [
             CircleAvatar(
