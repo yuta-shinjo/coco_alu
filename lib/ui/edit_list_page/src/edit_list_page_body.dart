@@ -33,7 +33,7 @@ class EditListPageBody extends StatelessWidget {
                 builder: (context, dragAnimation, inDrag) {
                   return Material(
                     type: MaterialType.transparency,
-                    child: _slidable(creature),
+                    child: _slidable(context, ref, creature),
                   );
                 },
               );
@@ -44,12 +44,12 @@ class EditListPageBody extends StatelessWidget {
     );
   }
 
-  Widget _slidable(Creature creature) {
+  Widget _slidable(BuildContext context, WidgetRef ref, Creature creature) {
     return Slidable(
       actionPane: SlidableDrawerActionPane(),
       child: _handle(creature),
       secondaryActions: [
-        _iconSlideAction(creature),
+        _iconSlideAction(context, ref, creature),
       ],
     );
   }
@@ -72,11 +72,7 @@ class EditListPageBody extends StatelessWidget {
             subtitle: Text(creature.kinds),
             onTap: () {
               Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => EditCreaturePage(creature: creature),
-                ),
-              );
+                  context, EditCreaturePage(creature: creature).route());
             },
           ),
         );
@@ -84,31 +80,33 @@ class EditListPageBody extends StatelessWidget {
     );
   }
 
-  Widget _iconSlideAction(Creature creature) {
-    return Consumer(
-      builder: (context, ref, _) {
-        return IconSlideAction(
-          caption: '削除',
-          color: Colors.red,
-          icon: Icons.delete,
-          onTap: () async {
-            await showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (_) {
-                return DisplayDialog(
-                  title: "削除の確認",
-                  content: "『${creature.name}』を削除してもよろしいですか？",
-                  onPressed: () async {
-                    await ref
-                        .read(editListPageProvider.notifier)
-                        .deleteCreature(creature);
-                    await ref
-                        .read(editListPageProvider.notifier)
-                        .deleteStorage(creature.id);
-                    Navigator.pop(context);
-                  },
-                );
+  Widget _iconSlideAction(
+    BuildContext context,
+    WidgetRef ref,
+    Creature creature,
+  ) {
+    return IconSlideAction(
+      caption: '削除',
+      color: Colors.red,
+      icon: Icons.delete,
+      onTap: () async {
+        await showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (_) {
+            return DisplayDialog(
+              title: "削除の確認",
+              content: "『${creature.name}』を削除してもよろしいですか？",
+              onPressed: () async {
+                await ref
+                    .read(editListPageProvider.notifier)
+                    .deleteCreature(creature);
+                if (creature.imageUrl != '') {
+                  await ref
+                      .read(editListPageProvider.notifier)
+                      .deleteStorage(creature.id);
+                }
+                Navigator.pop(context);
               },
             );
           },

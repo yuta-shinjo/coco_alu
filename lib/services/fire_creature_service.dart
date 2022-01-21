@@ -81,33 +81,35 @@ class FireCreatureService {
     String? location,
     String? size,
     String? memo,
-    String? imgUrl,
+    String? imageUrl,
     File? imageFile,
     Creature creature,
   ) async {
     if (imageFile == null) {
-      imgUrl == '';
+      imageUrl == '';
+      deleteStorage(creature.id);
     }
-    if (imageFile != null) {
-      if (imgUrl != '') {
-        await deleteStorage(creature.id);
-      }
 
+    if (imageFile != null) {
       final task = await _fireStorage
-          .ref('users/${_auth.currentUser?.uid}')
+          .ref('users/${_auth.currentUser?.uid}/creatures/${creature.id}')
           .putFile(imageFile);
-      imgUrl = await task.ref.getDownloadURL();
+      imageUrl = await task.ref.getDownloadURL();
     }
 
     await _fireStore
         .collection("users")
         .doc(_auth.currentUser?.uid)
-        .collection('profile')
+        .collection('creatures')
         .doc(creature.id)
         .update(
       {
-        FieldName.name: name,
-        FieldName.imageUrl: imgUrl,
+        FieldName.name: name != '' ? name : creature.name,
+        FieldName.imageUrl: imageUrl != '' ? imageUrl : creature.imageUrl,
+        FieldName.kinds: kinds != '' ? kinds : creature.kinds,
+        FieldName.location: location != '' ? location : creature.location,
+        FieldName.size: size != '' ? size : creature.size,
+        FieldName.memo: memo != '' ? memo : creature.memo,
       },
     );
   }

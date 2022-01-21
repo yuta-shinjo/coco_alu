@@ -67,6 +67,9 @@ class EditCreaturePageController extends StateNotifier<EditCreaturePageState> {
       state = state.copyWith(creatureImageUrl: '');
     }
     if (state.imageFile != null) {
+      if (state.creatureImageUrl != '') {
+        state = state.copyWith(creatureImageUrl: '');
+      }
       state = state.copyWith(imageFile: null);
     }
   }

@@ -13,6 +13,15 @@ class EditCreaturePage extends StatelessWidget {
 
   final Creature creature;
 
+  Route<T> route<T>() {
+    return MaterialPageRoute<T>(
+      builder: (_) => EditCreaturePage(
+        creature: creature,
+      ),
+      settings: const RouteSettings(name: 'edit_creature_page'),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Focus(

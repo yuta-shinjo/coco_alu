@@ -32,13 +32,13 @@ class EditCreaturePageBody extends StatelessWidget {
               Stack(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    padding: const EdgeInsets.symmetric(horizontal: 25),
                     child: Column(
                       children: [
                         SizedBox(height: 10),
                         _nameTextField(context),
                         SizedBox(height: 30),
-                        _creaturePicture(),
+                        _creaturePicture(creature),
                         kDivider,
                         _kindsTextField(),
                         SizedBox(height: 15),
@@ -60,11 +60,12 @@ class EditCreaturePageBody extends StatelessWidget {
     );
   }
 
-  Widget _creaturePicture() {
+  Widget _creaturePicture(Creature creature) {
     return Consumer(
       builder: (context, ref, _) {
         final imageFile =
             ref.watch(editCreaturePageProvider.select((s) => s.imageFile));
+        print(imageFile);
         return Stack(
           children: [
             CircleAvatar(

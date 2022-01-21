@@ -40,6 +40,7 @@ class EditListPageController extends StateNotifier<EditListPageState> {
   Future<void> deleteStorage(String id) async =>
       await _fireCreatureService.deleteStorage(id);
 
+
   //TODO
   void endOnReOrder() {
     // state.creatures.clear()..addAll(state.creatures);
