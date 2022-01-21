@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:my_collection/models/src/creature.dart';
 import 'package:my_collection/services/fire_creature_service.dart';
 
 part 'add_creature_page_controller.freezed.dart';
@@ -18,6 +19,8 @@ class AddCreaturePageState with _$AddCreaturePageState {
     @Default('') String memo,
     @Default(false) bool isLoading,
     @Default('') String creatureImageUrl,
+    @Default('') String id,
+    @Default(Creature()) Creature creature,
     File? imageFile,
   }) = _AddCreaturePageState;
 }
@@ -72,8 +75,9 @@ class AddCreaturePageController extends StateNotifier<AddCreaturePageState> {
     String? location,
     String? size,
     String? memo,
-    String? imgUrl,
+    String? imageUrl,
     File? imageFile,
+    Creature creature,
   ) async {
     await _fireUsersService.addCreature(
       name,
@@ -81,8 +85,9 @@ class AddCreaturePageController extends StateNotifier<AddCreaturePageState> {
       location,
       size,
       memo,
-      imgUrl,
+      imageUrl,
       imageFile,
+      creature: creature,
     );
   }
 

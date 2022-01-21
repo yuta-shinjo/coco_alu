@@ -13,6 +13,7 @@ class Creature with _$Creature {
     @Default('') String location,
     @Default('') String memo,
     @Default('') String imageUrl,
+    @Default('') String id,
   }) = _Creature;
 
   factory Creature.fromJson(Map<String, dynamic> json) => _$CreatureFromJson(json);

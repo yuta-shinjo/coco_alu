@@ -53,7 +53,6 @@ class LoginPageBody extends StatelessWidget {
           textInputAction: TextInputAction.next,
           onTap: () => controller.reset(),
           maxLengthEnforcement: MaxLengthEnforcement.none,
-          keyboardType: TextInputType.number,
           decoration: const InputDecoration(labelText: "パスワード（8～20文字）"),
           obscureText: true,
           maxLength: 20,

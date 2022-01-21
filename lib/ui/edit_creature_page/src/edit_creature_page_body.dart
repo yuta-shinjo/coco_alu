@@ -27,36 +27,33 @@ class EditCreaturePageBody extends StatelessWidget {
         final isLoading =
             ref.watch(editCreaturePageProvider.select((s) => s.isLoading));
         return SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              children: [
-                Stack(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          SizedBox(height: 10),
-                          _nameTextField(context),
-                          SizedBox(height: 30),
-                          _creaturePicture(),
-                          kDivider,
-                          _kindsTextField(),
-                          SizedBox(height: 15),
-                          _locationTextField(),
-                          SizedBox(height: 15),
-                          _sizeTextField(),
-                          SizedBox(height: 25),
-                          _memoTextField(),
-                        ],
-                      ),
+          child: Column(
+            children: [
+              Stack(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Column(
+                      children: [
+                        SizedBox(height: 10),
+                        _nameTextField(context),
+                        SizedBox(height: 30),
+                        _creaturePicture(),
+                        kDivider,
+                        _kindsTextField(),
+                        SizedBox(height: 15),
+                        _locationTextField(),
+                        SizedBox(height: 15),
+                        _sizeTextField(),
+                        SizedBox(height: 25),
+                        _memoTextField(),
+                      ],
                     ),
-                    if (isLoading) CircleIndicator(),
-                  ],
-                ),
-              ],
-            ),
+                  ),
+                  if (isLoading) CircleIndicator(),
+                ],
+              ),
+            ],
           ),
         );
       },
@@ -76,7 +73,7 @@ class EditCreaturePageBody extends StatelessWidget {
               child: CircleAvatar(
                 radius: 98,
                 backgroundImage: imageFile != null
-                    ? Image.file(imageFile, fit: BoxFit.cover).image
+                    ? Image.file(imageFile).image
                     : Image.asset(kDefaultImageURL).image,
               ),
             ),
@@ -121,7 +118,7 @@ class EditCreaturePageBody extends StatelessWidget {
         deletePicture: () {
           ref
               .read(editCreaturePageProvider.notifier)
-              .deleteImage(profileImageUrl, imageFile);
+              .deleteImage(creature.imageUrl, imageFile);
           Navigator.pop(context);
         },
       );

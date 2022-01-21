@@ -59,7 +59,6 @@ class RegisterPageBody extends StatelessWidget {
         child: TextFormField(
           textInputAction: TextInputAction.done,
           onTap: () => controller.reset(),
-          keyboardType: TextInputType.number,
           maxLengthEnforcement: MaxLengthEnforcement.none,
           decoration: const InputDecoration(labelText: "パスワード（8～20文字）"),
           obscureText: true,

@@ -59,6 +59,7 @@ class EditCreaturePage extends StatelessWidget {
                     memo,
                     imgUrl,
                     imageFile,
+                    creature,
                   );
               Fluttertoast.showToast(
                 msg: '$nameを更新しました',

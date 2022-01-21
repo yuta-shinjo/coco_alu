@@ -57,7 +57,7 @@ class AddCreaturePageBody extends StatelessWidget {
       builder: (context, ref, _) {
         final imageFile =
             ref.watch(addCreaturePageProvider.select((s) => s.imageFile));
-        final profileImageUrl = ref
+        final creatureImageUrl = ref
             .watch(addCreaturePageProvider.select((s) => s.creatureImageUrl));
         return Stack(
           children: [
@@ -77,7 +77,7 @@ class AddCreaturePageBody extends StatelessWidget {
                     await ImagePicker().pickImage(source: ImageSource.gallery);
                 await ref
                     .read(addCreaturePageProvider.notifier)
-                    .pickImage(image, profileImageUrl);
+                    .pickImage(image, creatureImageUrl);
               },
               child: const SizedBox(
                 width: 200,

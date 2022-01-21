@@ -72,7 +72,7 @@ class FireUsersService {
   ) async {
     if (imageFile != null) {
       final task = await _fireStorage
-          .ref('users/profiles/${_auth.currentUser?.uid}')
+          .ref('users/${_auth.currentUser?.uid}/profiles/${_auth.currentUser?.uid}')
           .putFile(imageFile);
       profileImageUrl = await task.ref.getDownloadURL();
     }

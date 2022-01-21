@@ -49,7 +49,7 @@ class EditListPageBody extends StatelessWidget {
       actionPane: SlidableDrawerActionPane(),
       child: _handle(creature),
       secondaryActions: [
-        _iconSlideAction(),
+        _iconSlideAction(creature),
       ],
     );
   }
@@ -84,11 +84,9 @@ class EditListPageBody extends StatelessWidget {
     );
   }
 
-  Widget _iconSlideAction() {
+  Widget _iconSlideAction(Creature creature) {
     return Consumer(
       builder: (context, ref, _) {
-        final creatures =
-            ref.watch(editListPageProvider.select((s) => s.creatures)) ?? [];
         return IconSlideAction(
           caption: '削除',
           color: Colors.red,
@@ -100,16 +98,15 @@ class EditListPageBody extends StatelessWidget {
               builder: (_) {
                 return DisplayDialog(
                   title: "削除の確認",
-                  content:
-                      "『${creatures.firstWhere((name) => name == name).name}』を削除してもよろしいですか？",
+                  content: "『${creature.name}』を削除してもよろしいですか？",
                   onPressed: () async {
                     await ref
                         .read(editListPageProvider.notifier)
-                        .deleteCreature();
-                    Navigator.pop(context);
+                        .deleteCreature(creature);
                     await ref
                         .read(editListPageProvider.notifier)
-                        .deleteStorage();
+                        .deleteStorage(creature.id);
+                    Navigator.pop(context);
                   },
                 );
               },

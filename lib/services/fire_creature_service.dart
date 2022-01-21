@@ -34,28 +34,29 @@ class FireCreatureService {
     String? location,
     String? size,
     String? memo,
-    String? imgUrl,
-    File? imageFile,
-  ) async {
-    if (imageFile != null) {
-      final task = await _fireStorage
-          .ref('users/creatures/${_auth.currentUser?.uid}')
-          .putFile(imageFile);
-      imgUrl = await task.ref.getDownloadURL();
-    }
-
-    await _fireStore
+    String? imageUrl,
+    File? imageFile, {
+    required Creature creature,
+  }) async {
+    final collectionRef = _fireStore
         .collection('users')
         .doc(_auth.currentUser?.uid)
-        .collection('creatures')
-        .doc(_auth.currentUser?.uid)
-        .set({
+        .collection('creatures');
+    final id = collectionRef.doc().id;
+    if (imageFile != null) {
+      final task = await _fireStorage
+          .ref('users/${_auth.currentUser?.uid}/creatures/$id')
+          .putFile(imageFile);
+      imageUrl = await task.ref.getDownloadURL();
+    }
+    await collectionRef.doc(id).set({
       FieldName.name: name,
       FieldName.kinds: kinds,
       FieldName.location: location ?? '',
       FieldName.size: size ?? '',
       FieldName.memo: memo ?? '',
-      FieldName.imageUrl: imgUrl ?? '',
+      FieldName.imageUrl: imageUrl ?? '',
+      FieldName.id: id,
     });
   }
 
@@ -64,14 +65,13 @@ class FireCreatureService {
         .collection('users')
         .doc(_auth.currentUser?.uid)
         .collection('creatures')
-        //TODO ランダムに生成したidを指定したい
-        .doc(_auth.currentUser?.uid)
+        .doc(creature.id)
         .delete();
   }
 
-  Future<void> deleteStorage() {
+  Future<void> deleteStorage(String id) {
     return _fireStorage
-        .ref('users/creatures/${_auth.currentUser?.uid}')
+        .ref('users/${_auth.currentUser?.uid}/creatures/$id')
         .delete();
   }
 
@@ -83,13 +83,14 @@ class FireCreatureService {
     String? memo,
     String? imgUrl,
     File? imageFile,
+    Creature creature,
   ) async {
     if (imageFile == null) {
       imgUrl == '';
     }
     if (imageFile != null) {
       if (imgUrl != '') {
-        await deleteStorage();
+        await deleteStorage(creature.id);
       }
 
       final task = await _fireStorage
@@ -102,7 +103,7 @@ class FireCreatureService {
         .collection("users")
         .doc(_auth.currentUser?.uid)
         .collection('profile')
-        .doc(_auth.currentUser?.uid)
+        .doc(creature.id)
         .update(
       {
         FieldName.name: name,

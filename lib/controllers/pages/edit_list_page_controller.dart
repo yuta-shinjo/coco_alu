@@ -34,11 +34,11 @@ class EditListPageController extends StateNotifier<EditListPageState> {
     );
   }
 
-  Future<void> deleteCreature() async =>
-      await _fireCreatureService.deleteCreature(state.creature);
+  Future<void> deleteCreature(Creature creature) async =>
+      await _fireCreatureService.deleteCreature(creature);
 
-  Future<void> deleteStorage() async =>
-      await _fireCreatureService.deleteStorage();
+  Future<void> deleteStorage(String id) async =>
+      await _fireCreatureService.deleteStorage(id);
 
   //TODO
   void endOnReOrder() {

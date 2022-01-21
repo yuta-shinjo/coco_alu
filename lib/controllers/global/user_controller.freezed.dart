@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'user_controller.dart';
@@ -112,7 +113,7 @@ class __$UserStateCopyWithImpl<$Res> extends _$UserStateCopyWithImpl<$Res>
 class _$_UserState implements _UserState {
   const _$_UserState({this.user = const User()});
 
-  @JsonKey(defaultValue: const User())
+  @JsonKey()
   @override
   final User user;
 
@@ -124,14 +125,14 @@ class _$_UserState implements _UserState {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _UserState &&
-            (identical(other.user, user) ||
-                const DeepCollectionEquality().equals(other.user, user)));
+        (other.runtimeType == runtimeType &&
+            other is _UserState &&
+            const DeepCollectionEquality().equals(other.user, user));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(user);
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(user));
 
   @JsonKey(ignore: true)
   @override
@@ -143,7 +144,7 @@ abstract class _UserState implements UserState {
   const factory _UserState({User user}) = _$_UserState;
 
   @override
-  User get user => throw _privateConstructorUsedError;
+  User get user;
   @override
   @JsonKey(ignore: true)
   _$UserStateCopyWith<_UserState> get copyWith =>

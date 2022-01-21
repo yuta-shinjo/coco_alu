@@ -26,6 +26,8 @@ class _$AddCreaturePageStateTearOff {
       String memo = '',
       bool isLoading = false,
       String creatureImageUrl = '',
+      String id = '',
+      Creature creature = const Creature(),
       File? imageFile}) {
     return _AddCreaturePageState(
       name: name,
@@ -35,6 +37,8 @@ class _$AddCreaturePageStateTearOff {
       memo: memo,
       isLoading: isLoading,
       creatureImageUrl: creatureImageUrl,
+      id: id,
+      creature: creature,
       imageFile: imageFile,
     );
   }
@@ -52,6 +56,8 @@ mixin _$AddCreaturePageState {
   String get memo => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   String get creatureImageUrl => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
+  Creature get creature => throw _privateConstructorUsedError;
   File? get imageFile => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -72,7 +78,11 @@ abstract class $AddCreaturePageStateCopyWith<$Res> {
       String memo,
       bool isLoading,
       String creatureImageUrl,
+      String id,
+      Creature creature,
       File? imageFile});
+
+  $CreatureCopyWith<$Res> get creature;
 }
 
 /// @nodoc
@@ -93,6 +103,8 @@ class _$AddCreaturePageStateCopyWithImpl<$Res>
     Object? memo = freezed,
     Object? isLoading = freezed,
     Object? creatureImageUrl = freezed,
+    Object? id = freezed,
+    Object? creature = freezed,
     Object? imageFile = freezed,
   }) {
     return _then(_value.copyWith(
@@ -124,11 +136,26 @@ class _$AddCreaturePageStateCopyWithImpl<$Res>
           ? _value.creatureImageUrl
           : creatureImageUrl // ignore: cast_nullable_to_non_nullable
               as String,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      creature: creature == freezed
+          ? _value.creature
+          : creature // ignore: cast_nullable_to_non_nullable
+              as Creature,
       imageFile: imageFile == freezed
           ? _value.imageFile
           : imageFile // ignore: cast_nullable_to_non_nullable
               as File?,
     ));
+  }
+
+  @override
+  $CreatureCopyWith<$Res> get creature {
+    return $CreatureCopyWith<$Res>(_value.creature, (value) {
+      return _then(_value.copyWith(creature: value));
+    });
   }
 }
 
@@ -147,7 +174,12 @@ abstract class _$AddCreaturePageStateCopyWith<$Res>
       String memo,
       bool isLoading,
       String creatureImageUrl,
+      String id,
+      Creature creature,
       File? imageFile});
+
+  @override
+  $CreatureCopyWith<$Res> get creature;
 }
 
 /// @nodoc
@@ -170,6 +202,8 @@ class __$AddCreaturePageStateCopyWithImpl<$Res>
     Object? memo = freezed,
     Object? isLoading = freezed,
     Object? creatureImageUrl = freezed,
+    Object? id = freezed,
+    Object? creature = freezed,
     Object? imageFile = freezed,
   }) {
     return _then(_AddCreaturePageState(
@@ -201,6 +235,14 @@ class __$AddCreaturePageStateCopyWithImpl<$Res>
           ? _value.creatureImageUrl
           : creatureImageUrl // ignore: cast_nullable_to_non_nullable
               as String,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      creature: creature == freezed
+          ? _value.creature
+          : creature // ignore: cast_nullable_to_non_nullable
+              as Creature,
       imageFile: imageFile == freezed
           ? _value.imageFile
           : imageFile // ignore: cast_nullable_to_non_nullable
@@ -220,6 +262,8 @@ class _$_AddCreaturePageState implements _AddCreaturePageState {
       this.memo = '',
       this.isLoading = false,
       this.creatureImageUrl = '',
+      this.id = '',
+      this.creature = const Creature(),
       this.imageFile});
 
   @JsonKey()
@@ -243,12 +287,18 @@ class _$_AddCreaturePageState implements _AddCreaturePageState {
   @JsonKey()
   @override
   final String creatureImageUrl;
+  @JsonKey()
+  @override
+  final String id;
+  @JsonKey()
+  @override
+  final Creature creature;
   @override
   final File? imageFile;
 
   @override
   String toString() {
-    return 'AddCreaturePageState(name: $name, kinds: $kinds, location: $location, size: $size, memo: $memo, isLoading: $isLoading, creatureImageUrl: $creatureImageUrl, imageFile: $imageFile)';
+    return 'AddCreaturePageState(name: $name, kinds: $kinds, location: $location, size: $size, memo: $memo, isLoading: $isLoading, creatureImageUrl: $creatureImageUrl, id: $id, creature: $creature, imageFile: $imageFile)';
   }
 
   @override
@@ -264,6 +314,8 @@ class _$_AddCreaturePageState implements _AddCreaturePageState {
             const DeepCollectionEquality().equals(other.isLoading, isLoading) &&
             const DeepCollectionEquality()
                 .equals(other.creatureImageUrl, creatureImageUrl) &&
+            const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality().equals(other.creature, creature) &&
             const DeepCollectionEquality().equals(other.imageFile, imageFile));
   }
 
@@ -277,6 +329,8 @@ class _$_AddCreaturePageState implements _AddCreaturePageState {
       const DeepCollectionEquality().hash(memo),
       const DeepCollectionEquality().hash(isLoading),
       const DeepCollectionEquality().hash(creatureImageUrl),
+      const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(creature),
       const DeepCollectionEquality().hash(imageFile));
 
   @JsonKey(ignore: true)
@@ -295,6 +349,8 @@ abstract class _AddCreaturePageState implements AddCreaturePageState {
       String memo,
       bool isLoading,
       String creatureImageUrl,
+      String id,
+      Creature creature,
       File? imageFile}) = _$_AddCreaturePageState;
 
   @override
@@ -311,6 +367,10 @@ abstract class _AddCreaturePageState implements AddCreaturePageState {
   bool get isLoading;
   @override
   String get creatureImageUrl;
+  @override
+  String get id;
+  @override
+  Creature get creature;
   @override
   File? get imageFile;
   @override

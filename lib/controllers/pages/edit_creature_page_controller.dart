@@ -5,6 +5,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_collection/common/constants.dart';
+import 'package:my_collection/models/src/creature.dart';
 import 'package:my_collection/services/fire_creature_service.dart';
 
 part 'edit_creature_page_controller.freezed.dart';
@@ -63,7 +64,7 @@ class EditCreaturePageController extends StateNotifier<EditCreaturePageState> {
 
   void deleteImage(String profileImageUrl, File? imageFile) {
     if (state.creatureImageUrl != '') {
-      profileImageUrl = '';
+      state = state.copyWith(creatureImageUrl: '');
     }
     if (state.imageFile != null) {
       state = state.copyWith(imageFile: null);
@@ -80,6 +81,7 @@ class EditCreaturePageController extends StateNotifier<EditCreaturePageState> {
     String? memo,
     String? imgUrl,
     File? imageFile,
+    Creature creature,
   ) async {
     await _fireUsersService.updateCreature(
       name,
@@ -89,6 +91,7 @@ class EditCreaturePageController extends StateNotifier<EditCreaturePageState> {
       memo,
       imgUrl,
       imageFile,
+      creature,
     );
   }
 

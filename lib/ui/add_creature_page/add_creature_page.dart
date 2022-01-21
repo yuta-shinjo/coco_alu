@@ -35,10 +35,12 @@ class AddCreaturePage extends StatelessWidget {
             ref.watch(addCreaturePageProvider.select((s) => s.location));
         final size = ref.watch(addCreaturePageProvider.select((s) => s.size));
         final memo = ref.watch(addCreaturePageProvider.select((s) => s.memo));
-        final imgUrl = ref
+        final imageUrl = ref
             .watch(addCreaturePageProvider.select((s) => s.creatureImageUrl));
         var imageFile =
             ref.watch(addCreaturePageProvider.select((s) => s.imageFile));
+        final creature =
+            ref.watch(addCreaturePageProvider.select((s) => s.creature));
         return IconButton(
           onPressed: () async {
             if (name != '' && kinds != '') {
@@ -50,8 +52,9 @@ class AddCreaturePage extends StatelessWidget {
                       location,
                       size,
                       memo,
-                      imgUrl,
+                      imageUrl,
                       imageFile,
+                      creature,
                     );
                 Fluttertoast.showToast(
                   msg: '$nameを登録しました',
@@ -79,7 +82,7 @@ class AddCreaturePage extends StatelessWidget {
                     .clear();
                 ref
                     .read(addCreaturePageProvider.notifier)
-                    .deleteImage(imgUrl, imageFile);
+                    .deleteImage(imageUrl, imageFile);
               } catch (e) {
                 print('エラー：$e');
                 Fluttertoast.showToast(

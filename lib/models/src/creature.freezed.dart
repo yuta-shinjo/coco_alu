@@ -28,7 +28,8 @@ class _$CreatureTearOff {
       String size = '',
       String location = '',
       String memo = '',
-      String imageUrl = ''}) {
+      String imageUrl = '',
+      String id = ''}) {
     return _Creature(
       name: name,
       kinds: kinds,
@@ -36,6 +37,7 @@ class _$CreatureTearOff {
       location: location,
       memo: memo,
       imageUrl: imageUrl,
+      id: id,
     );
   }
 
@@ -55,6 +57,7 @@ mixin _$Creature {
   String get location => throw _privateConstructorUsedError;
   String get memo => throw _privateConstructorUsedError;
   String get imageUrl => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -72,7 +75,8 @@ abstract class $CreatureCopyWith<$Res> {
       String size,
       String location,
       String memo,
-      String imageUrl});
+      String imageUrl,
+      String id});
 }
 
 /// @nodoc
@@ -91,6 +95,7 @@ class _$CreatureCopyWithImpl<$Res> implements $CreatureCopyWith<$Res> {
     Object? location = freezed,
     Object? memo = freezed,
     Object? imageUrl = freezed,
+    Object? id = freezed,
   }) {
     return _then(_value.copyWith(
       name: name == freezed
@@ -117,6 +122,10 @@ class _$CreatureCopyWithImpl<$Res> implements $CreatureCopyWith<$Res> {
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
               as String,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -132,7 +141,8 @@ abstract class _$CreatureCopyWith<$Res> implements $CreatureCopyWith<$Res> {
       String size,
       String location,
       String memo,
-      String imageUrl});
+      String imageUrl,
+      String id});
 }
 
 /// @nodoc
@@ -152,6 +162,7 @@ class __$CreatureCopyWithImpl<$Res> extends _$CreatureCopyWithImpl<$Res>
     Object? location = freezed,
     Object? memo = freezed,
     Object? imageUrl = freezed,
+    Object? id = freezed,
   }) {
     return _then(_Creature(
       name: name == freezed
@@ -178,6 +189,10 @@ class __$CreatureCopyWithImpl<$Res> extends _$CreatureCopyWithImpl<$Res>
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
               as String,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -191,7 +206,8 @@ class _$_Creature implements _Creature {
       this.size = '',
       this.location = '',
       this.memo = '',
-      this.imageUrl = ''});
+      this.imageUrl = '',
+      this.id = ''});
 
   factory _$_Creature.fromJson(Map<String, dynamic> json) =>
       _$$_CreatureFromJson(json);
@@ -214,10 +230,13 @@ class _$_Creature implements _Creature {
   @JsonKey()
   @override
   final String imageUrl;
+  @JsonKey()
+  @override
+  final String id;
 
   @override
   String toString() {
-    return 'Creature(name: $name, kinds: $kinds, size: $size, location: $location, memo: $memo, imageUrl: $imageUrl)';
+    return 'Creature(name: $name, kinds: $kinds, size: $size, location: $location, memo: $memo, imageUrl: $imageUrl, id: $id)';
   }
 
   @override
@@ -230,7 +249,8 @@ class _$_Creature implements _Creature {
             const DeepCollectionEquality().equals(other.size, size) &&
             const DeepCollectionEquality().equals(other.location, location) &&
             const DeepCollectionEquality().equals(other.memo, memo) &&
-            const DeepCollectionEquality().equals(other.imageUrl, imageUrl));
+            const DeepCollectionEquality().equals(other.imageUrl, imageUrl) &&
+            const DeepCollectionEquality().equals(other.id, id));
   }
 
   @override
@@ -241,7 +261,8 @@ class _$_Creature implements _Creature {
       const DeepCollectionEquality().hash(size),
       const DeepCollectionEquality().hash(location),
       const DeepCollectionEquality().hash(memo),
-      const DeepCollectionEquality().hash(imageUrl));
+      const DeepCollectionEquality().hash(imageUrl),
+      const DeepCollectionEquality().hash(id));
 
   @JsonKey(ignore: true)
   @override
@@ -261,7 +282,8 @@ abstract class _Creature implements Creature {
       String size,
       String location,
       String memo,
-      String imageUrl}) = _$_Creature;
+      String imageUrl,
+      String id}) = _$_Creature;
 
   factory _Creature.fromJson(Map<String, dynamic> json) = _$_Creature.fromJson;
 
@@ -277,6 +299,8 @@ abstract class _Creature implements Creature {
   String get memo;
   @override
   String get imageUrl;
+  @override
+  String get id;
   @override
   @JsonKey(ignore: true)
   _$CreatureCopyWith<_Creature> get copyWith =>
