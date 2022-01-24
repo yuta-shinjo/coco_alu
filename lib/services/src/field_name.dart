@@ -7,4 +7,7 @@ class FieldName {
   static const name = 'name';
   static const memo = 'memo';
   static const size = 'size';
+
+  static const content = 'content';
+  static const imgUrl = 'imgUrl';
 }

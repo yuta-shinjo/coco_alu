@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase;
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:my_collection/models/src/user.dart';
+import 'package:my_collection/widget/alert_dialog.dart';
 
 import 'src/field_name.dart';
 
@@ -72,7 +73,8 @@ class FireUsersService {
   ) async {
     if (imageFile != null) {
       final task = await _fireStorage
-          .ref('users/${_auth.currentUser?.uid}/profiles/${_auth.currentUser?.uid}')
+          .ref(
+              'users/${_auth.currentUser?.uid}/profiles/${_auth.currentUser?.uid}')
           .putFile(imageFile);
       profileImageUrl = await task.ref.getDownloadURL();
     }
@@ -137,5 +139,10 @@ class FireUsersService {
       FieldName.name: name,
       FieldName.imageUrl: profileImageUrl,
     });
+  }
+
+
+  Future<void> fetchAccount() async {
+    
   }
 }
