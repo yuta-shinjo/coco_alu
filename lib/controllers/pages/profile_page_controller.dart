@@ -35,7 +35,7 @@ class ProfilePageController extends StateNotifier<ProfilePageState> {
   final _fireUsersService = FireUsersService();
 
   Future<void> _init() async {
-    // final fetchProfile = _fireUsersService.fetchUserProfile();
+    // final fetchProfile = _fireUsersService.fetchUserProfile(onValueChanged: state.user);
     // final profiles = [...fetchProfile];
     // state = state.copyWith(profiles: profiles);
   }

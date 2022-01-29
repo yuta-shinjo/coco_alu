@@ -164,7 +164,7 @@ class ButtonText extends StatelessWidget {
         maxLines: maxLines,
         textAlign: textAlign,
         overflow: overflow,
-        style: const TextStyle(color: AppColors.primary),
+        style: const TextStyle(color: AppColors.white),
       ),
     );
   }

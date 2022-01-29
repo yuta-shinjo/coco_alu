@@ -18,6 +18,9 @@ class AddAlbumPageState with _$AddAlbumPageState {
     @Default('') String imgUrl,
     List<Album>? album,
     @Default(false) bool isLoading,
+    @Default(false) bool isTravel,
+    @Default(false) bool isFood,
+    @Default(false) bool isFamily,
     @Default(false) bool isSelected,
     File? imgFile,
   }) = _AddAlbumPageState;
@@ -60,12 +63,12 @@ class AddAlbumPageController extends StateNotifier<AddAlbumPageState> {
 
   Future<void> addAlbum(
     String content,
-    String imgUrl,
+    String imgUrls,
     File? imgFile,
   ) async {
     await _fireAlbumService.addAlbum(
       content,
-      imgUrl,
+      imgUrls,
       imgFile,
     );
   }
@@ -73,7 +76,25 @@ class AddAlbumPageController extends StateNotifier<AddAlbumPageState> {
   final contentController = TextEditingController();
   final btnController = RoundedLoadingButtonController();
 
-  void toggleSelected(bool selected) {
+  void loadingSuccess(RoundedLoadingButtonController controller) {
+    controller.success();
+  }
+
+  void loadingError(RoundedLoadingButtonController controller) {
+    controller.error();
+  }
+
+  void travelSelect(bool selected) {
     state = state.copyWith(isSelected: selected);
   }
+
+  void foodSelect(bool selected) {
+    state = state.copyWith(isFood: selected);
+  }
+
+  void familySelect(bool selected) {
+    state = state.copyWith(isFamily: selected);
+  }
+
+  
 }

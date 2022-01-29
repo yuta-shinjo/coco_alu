@@ -27,8 +27,6 @@ class MainApp extends StatelessWidget {
         FirebaseAnalyticsObserver(analytics: analytics),
       ],
       home: const SplashPage(),
-      // home: const LoginPage(),
-      // home: RootPage(),
     );
   }
 }

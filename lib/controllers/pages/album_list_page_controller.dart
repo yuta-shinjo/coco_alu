@@ -1,7 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_collection/models/src/album.dart';
-import 'package:my_collection/models/src/creature.dart';
 import 'package:my_collection/services/fire_album_service.dart';
 
 part 'album_list_page_controller.freezed.dart';
@@ -10,7 +9,6 @@ part 'album_list_page_controller.freezed.dart';
 class AlbumListPageState with _$AlbumListPageState {
   const factory AlbumListPageState({
     List<Album>? albums,
-    @Default(Creature()) Creature creature,
   }) = _AlbumListPageState;
 }
 

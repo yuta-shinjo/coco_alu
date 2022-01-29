@@ -20,8 +20,8 @@ class LoadingButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RoundedLoadingButton(
-      successColor: AppColors.active,
-      color: AppColors.active,
+      successColor: AppColors.primary,
+      color: AppColors.primary,
       successIcon: Icons.check,
       failedIcon: Icons.close,
       child: text,

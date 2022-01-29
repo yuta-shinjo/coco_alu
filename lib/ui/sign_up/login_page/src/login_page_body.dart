@@ -74,10 +74,10 @@ class LoginPageBody extends StatelessWidget {
       final controller = ref.watch(loginPageProvider.notifier).btnController;
       return ButtonTheme(
         child: LoadingButton(
-          primaryColor: AppColors.active,
+          primaryColor: AppColors.primary,
           text: const ButtonText(
             'ログイン',
-            color: AppColors.active,
+            color: AppColors.primary,
           ),
           controller: controller,
           onPressed: () async {
@@ -89,7 +89,7 @@ class LoginPageBody extends StatelessWidget {
               try {
                 await ref
                     .read(loginPageProvider.notifier)
-                    .isLogin(loginEmail, loginPassword);
+                    .emailLogin(loginEmail, loginPassword);
                 Navigator.pushReplacement(context, RootPage.route());
                 loginSuccessMassage();
               } catch (e) {

@@ -82,7 +82,7 @@ class RegisterPageBody extends StatelessWidget {
       final controller = ref.watch(registerPageProvider.notifier).btnController;
       return ButtonTheme(
         child: LoadingButton(
-          primaryColor: AppColors.active,
+          primaryColor: AppColors.primary,
           text: const ButtonText('登録'),
           controller: controller,
           onPressed: () async {

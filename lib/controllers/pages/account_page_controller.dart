@@ -17,6 +17,7 @@ class AccountPageState with _$AccountPageState {
     @Default(User()) User user,
     @Default('') String name,
     @Default('') String profileImageUrl,
+    @Default('') String email,
     File? imageFile,
   }) = _AccountPageState;
 }
@@ -28,17 +29,9 @@ final accountPageProvider =
 });
 
 class AccountPageController extends StateNotifier<AccountPageState> {
-  AccountPageController() : super(const AccountPageState()) {
-    _init();
-  }
+  AccountPageController() : super(const AccountPageState());
 
   final _fireUsersService = FireUsersService();
-
-  Future<void> _init() async {
-    // final fetchProfile = _fireUsersService.fetchUserProfile();
-    // final profiles = [...fetchProfile];
-    // state = state.copyWith(profiles: profiles);
-  }
 
   final profileName = TextEditingController();
 
@@ -70,7 +63,12 @@ class AccountPageController extends StateNotifier<AccountPageState> {
 
   final btnController = RoundedLoadingButtonController();
 
-  Future<void> fetchAccount() async {
-    await _fireUsersService.fetchAccount();
+
+  Future<void> fechUserProfile() async {
+    
+  }
+
+  Future<void> isSignOut() async {
+    await _fireUsersService.signOut();
   }
 }

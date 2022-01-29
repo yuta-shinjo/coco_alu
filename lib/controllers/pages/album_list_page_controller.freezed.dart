@@ -18,11 +18,9 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$AlbumListPageStateTearOff {
   const _$AlbumListPageStateTearOff();
 
-  _AlbumListPageState call(
-      {List<Album>? albums, Creature creature = const Creature()}) {
+  _AlbumListPageState call({List<Album>? albums}) {
     return _AlbumListPageState(
       albums: albums,
-      creature: creature,
     );
   }
 }
@@ -33,7 +31,6 @@ const $AlbumListPageState = _$AlbumListPageStateTearOff();
 /// @nodoc
 mixin _$AlbumListPageState {
   List<Album>? get albums => throw _privateConstructorUsedError;
-  Creature get creature => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AlbumListPageStateCopyWith<AlbumListPageState> get copyWith =>
@@ -45,9 +42,7 @@ abstract class $AlbumListPageStateCopyWith<$Res> {
   factory $AlbumListPageStateCopyWith(
           AlbumListPageState value, $Res Function(AlbumListPageState) then) =
       _$AlbumListPageStateCopyWithImpl<$Res>;
-  $Res call({List<Album>? albums, Creature creature});
-
-  $CreatureCopyWith<$Res> get creature;
+  $Res call({List<Album>? albums});
 }
 
 /// @nodoc
@@ -62,25 +57,13 @@ class _$AlbumListPageStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? albums = freezed,
-    Object? creature = freezed,
   }) {
     return _then(_value.copyWith(
       albums: albums == freezed
           ? _value.albums
           : albums // ignore: cast_nullable_to_non_nullable
               as List<Album>?,
-      creature: creature == freezed
-          ? _value.creature
-          : creature // ignore: cast_nullable_to_non_nullable
-              as Creature,
     ));
-  }
-
-  @override
-  $CreatureCopyWith<$Res> get creature {
-    return $CreatureCopyWith<$Res>(_value.creature, (value) {
-      return _then(_value.copyWith(creature: value));
-    });
   }
 }
 
@@ -91,10 +74,7 @@ abstract class _$AlbumListPageStateCopyWith<$Res>
           _AlbumListPageState value, $Res Function(_AlbumListPageState) then) =
       __$AlbumListPageStateCopyWithImpl<$Res>;
   @override
-  $Res call({List<Album>? albums, Creature creature});
-
-  @override
-  $CreatureCopyWith<$Res> get creature;
+  $Res call({List<Album>? albums});
 }
 
 /// @nodoc
@@ -111,17 +91,12 @@ class __$AlbumListPageStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? albums = freezed,
-    Object? creature = freezed,
   }) {
     return _then(_AlbumListPageState(
       albums: albums == freezed
           ? _value.albums
           : albums // ignore: cast_nullable_to_non_nullable
               as List<Album>?,
-      creature: creature == freezed
-          ? _value.creature
-          : creature // ignore: cast_nullable_to_non_nullable
-              as Creature,
     ));
   }
 }
@@ -129,17 +104,14 @@ class __$AlbumListPageStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_AlbumListPageState implements _AlbumListPageState {
-  const _$_AlbumListPageState({this.albums, this.creature = const Creature()});
+  const _$_AlbumListPageState({this.albums});
 
   @override
   final List<Album>? albums;
-  @JsonKey()
-  @override
-  final Creature creature;
 
   @override
   String toString() {
-    return 'AlbumListPageState(albums: $albums, creature: $creature)';
+    return 'AlbumListPageState(albums: $albums)';
   }
 
   @override
@@ -147,15 +119,12 @@ class _$_AlbumListPageState implements _AlbumListPageState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _AlbumListPageState &&
-            const DeepCollectionEquality().equals(other.albums, albums) &&
-            const DeepCollectionEquality().equals(other.creature, creature));
+            const DeepCollectionEquality().equals(other.albums, albums));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(albums),
-      const DeepCollectionEquality().hash(creature));
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(albums));
 
   @JsonKey(ignore: true)
   @override
@@ -164,13 +133,11 @@ class _$_AlbumListPageState implements _AlbumListPageState {
 }
 
 abstract class _AlbumListPageState implements AlbumListPageState {
-  const factory _AlbumListPageState({List<Album>? albums, Creature creature}) =
+  const factory _AlbumListPageState({List<Album>? albums}) =
       _$_AlbumListPageState;
 
   @override
   List<Album>? get albums;
-  @override
-  Creature get creature;
   @override
   @JsonKey(ignore: true)
   _$AlbumListPageStateCopyWith<_AlbumListPageState> get copyWith =>

@@ -7,7 +7,7 @@ ThemeData theme(BuildContext context) => ThemeData(
       scaffoldBackgroundColor: AppColors.background,
       backgroundColor: AppColors.background,
       appBarTheme: const AppBarTheme(
-        color: AppColors.primary,
+        color: AppColors.white,
         iconTheme: IconThemeData(color: AppColors.black),
         actionsIconTheme: IconThemeData(color: AppColors.black),
         centerTitle: true,

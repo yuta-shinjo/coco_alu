@@ -4,10 +4,9 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase;
+import 'package:flutter/material.dart';
 import 'package:my_collection/models/src/album.dart';
-import 'package:my_collection/models/src/creature.dart';
 import 'package:my_collection/services/src/field_name.dart';
-import 'package:my_collection/widget/circleIndicator.dart';
 
 class FireAlbumService {
   final _fireStore = FirebaseFirestore.instance;
@@ -23,14 +22,14 @@ class FireAlbumService {
     final List<Album>? albums =
         snapShot.docs.map((e) => Album.fromJson(e.data())).toList();
     if (albums == null) {
-      return CircleIndicator();
+      return Center(child: CircularProgressIndicator());
     }
     return onValueChanged(albums);
   }
 
   Future<void> addAlbum(
     String content,
-    String imgUrl,
+    String imgUrls,
     File? imgFile,
   ) async {
     final collectionRef = _fireStore
@@ -42,11 +41,11 @@ class FireAlbumService {
       final task = await _fireStorage
           .ref('users/${_auth.currentUser?.uid}/albums/$id')
           .putFile(imgFile);
-      imgUrl = await task.ref.getDownloadURL();
+      imgUrls = await task.ref.getDownloadURL();
     }
     await collectionRef.doc(id).set({
       FieldName.content: content,
-      FieldName.imgUrl: imgUrl,
+      FieldName.imgUrls: imgUrls,
       FieldName.id: id,
     });
   }
@@ -67,40 +66,31 @@ class FireAlbumService {
   }
 
   Future<void> updateCreature(
-    String? name,
-    String? kinds,
-    String? location,
-    String? size,
-    String? memo,
-    String? imageUrl,
+    String? content,
+    String? imgUrls,
     File? imageFile,
-    Creature creature,
+    Album album,
   ) async {
     if (imageFile == null) {
-      imageUrl == '';
-      deleteStorage(creature.id);
+      imgUrls == '';
+      deleteStorage(album.id);
     }
 
     if (imageFile != null) {
       final task = await _fireStorage
-          .ref('users/${_auth.currentUser?.uid}/creatures/${creature.id}')
+          .ref('users/${_auth.currentUser?.uid}/albums/${album.id}')
           .putFile(imageFile);
-      imageUrl = await task.ref.getDownloadURL();
+      imgUrls = await task.ref.getDownloadURL();
     }
 
     await _fireStore
         .collection("users")
         .doc(_auth.currentUser?.uid)
-        .collection('creatures')
-        .doc(creature.id)
+        .collection('albums')
+        .doc(album.id)
         .update(
       {
-        FieldName.name: name != '' ? name : creature.name,
-        FieldName.imageUrl: imageUrl != '' ? imageUrl : creature.imageUrl,
-        FieldName.kinds: kinds != '' ? kinds : creature.kinds,
-        FieldName.location: location != '' ? location : creature.location,
-        FieldName.size: size != '' ? size : creature.size,
-        FieldName.memo: memo != '' ? memo : creature.memo,
+        FieldName.content: content != '' ? content : album.content,
       },
     );
   }

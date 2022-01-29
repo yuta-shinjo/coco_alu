@@ -23,12 +23,14 @@ class _$AccountPageStateTearOff {
       User user = const User(),
       String name = '',
       String profileImageUrl = '',
+      String email = '',
       File? imageFile}) {
     return _AccountPageState(
       profiles: profiles,
       user: user,
       name: name,
       profileImageUrl: profileImageUrl,
+      email: email,
       imageFile: imageFile,
     );
   }
@@ -43,6 +45,7 @@ mixin _$AccountPageState {
   User get user => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get profileImageUrl => throw _privateConstructorUsedError;
+  String get email => throw _privateConstructorUsedError;
   File? get imageFile => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -60,6 +63,7 @@ abstract class $AccountPageStateCopyWith<$Res> {
       User user,
       String name,
       String profileImageUrl,
+      String email,
       File? imageFile});
 
   $UserCopyWith<$Res> get user;
@@ -80,6 +84,7 @@ class _$AccountPageStateCopyWithImpl<$Res>
     Object? user = freezed,
     Object? name = freezed,
     Object? profileImageUrl = freezed,
+    Object? email = freezed,
     Object? imageFile = freezed,
   }) {
     return _then(_value.copyWith(
@@ -98,6 +103,10 @@ class _$AccountPageStateCopyWithImpl<$Res>
       profileImageUrl: profileImageUrl == freezed
           ? _value.profileImageUrl
           : profileImageUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      email: email == freezed
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
               as String,
       imageFile: imageFile == freezed
           ? _value.imageFile
@@ -126,6 +135,7 @@ abstract class _$AccountPageStateCopyWith<$Res>
       User user,
       String name,
       String profileImageUrl,
+      String email,
       File? imageFile});
 
   @override
@@ -149,6 +159,7 @@ class __$AccountPageStateCopyWithImpl<$Res>
     Object? user = freezed,
     Object? name = freezed,
     Object? profileImageUrl = freezed,
+    Object? email = freezed,
     Object? imageFile = freezed,
   }) {
     return _then(_AccountPageState(
@@ -168,6 +179,10 @@ class __$AccountPageStateCopyWithImpl<$Res>
           ? _value.profileImageUrl
           : profileImageUrl // ignore: cast_nullable_to_non_nullable
               as String,
+      email: email == freezed
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
       imageFile: imageFile == freezed
           ? _value.imageFile
           : imageFile // ignore: cast_nullable_to_non_nullable
@@ -184,6 +199,7 @@ class _$_AccountPageState implements _AccountPageState {
       this.user = const User(),
       this.name = '',
       this.profileImageUrl = '',
+      this.email = '',
       this.imageFile});
 
   @override
@@ -197,12 +213,15 @@ class _$_AccountPageState implements _AccountPageState {
   @JsonKey()
   @override
   final String profileImageUrl;
+  @JsonKey()
+  @override
+  final String email;
   @override
   final File? imageFile;
 
   @override
   String toString() {
-    return 'AccountPageState(profiles: $profiles, user: $user, name: $name, profileImageUrl: $profileImageUrl, imageFile: $imageFile)';
+    return 'AccountPageState(profiles: $profiles, user: $user, name: $name, profileImageUrl: $profileImageUrl, email: $email, imageFile: $imageFile)';
   }
 
   @override
@@ -215,6 +234,7 @@ class _$_AccountPageState implements _AccountPageState {
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality()
                 .equals(other.profileImageUrl, profileImageUrl) &&
+            const DeepCollectionEquality().equals(other.email, email) &&
             const DeepCollectionEquality().equals(other.imageFile, imageFile));
   }
 
@@ -225,6 +245,7 @@ class _$_AccountPageState implements _AccountPageState {
       const DeepCollectionEquality().hash(user),
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(profileImageUrl),
+      const DeepCollectionEquality().hash(email),
       const DeepCollectionEquality().hash(imageFile));
 
   @JsonKey(ignore: true)
@@ -239,6 +260,7 @@ abstract class _AccountPageState implements AccountPageState {
       User user,
       String name,
       String profileImageUrl,
+      String email,
       File? imageFile}) = _$_AccountPageState;
 
   @override
@@ -249,6 +271,8 @@ abstract class _AccountPageState implements AccountPageState {
   String get name;
   @override
   String get profileImageUrl;
+  @override
+  String get email;
   @override
   File? get imageFile;
   @override

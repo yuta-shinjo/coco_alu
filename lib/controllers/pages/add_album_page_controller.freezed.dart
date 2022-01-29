@@ -24,6 +24,9 @@ class _$AddAlbumPageStateTearOff {
       String imgUrl = '',
       List<Album>? album,
       bool isLoading = false,
+      bool isTravel = false,
+      bool isFood = false,
+      bool isFamily = false,
       bool isSelected = false,
       File? imgFile}) {
     return _AddAlbumPageState(
@@ -32,6 +35,9 @@ class _$AddAlbumPageStateTearOff {
       imgUrl: imgUrl,
       album: album,
       isLoading: isLoading,
+      isTravel: isTravel,
+      isFood: isFood,
+      isFamily: isFamily,
       isSelected: isSelected,
       imgFile: imgFile,
     );
@@ -48,6 +54,9 @@ mixin _$AddAlbumPageState {
   String get imgUrl => throw _privateConstructorUsedError;
   List<Album>? get album => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
+  bool get isTravel => throw _privateConstructorUsedError;
+  bool get isFood => throw _privateConstructorUsedError;
+  bool get isFamily => throw _privateConstructorUsedError;
   bool get isSelected => throw _privateConstructorUsedError;
   File? get imgFile => throw _privateConstructorUsedError;
 
@@ -67,6 +76,9 @@ abstract class $AddAlbumPageStateCopyWith<$Res> {
       String imgUrl,
       List<Album>? album,
       bool isLoading,
+      bool isTravel,
+      bool isFood,
+      bool isFamily,
       bool isSelected,
       File? imgFile});
 }
@@ -87,6 +99,9 @@ class _$AddAlbumPageStateCopyWithImpl<$Res>
     Object? imgUrl = freezed,
     Object? album = freezed,
     Object? isLoading = freezed,
+    Object? isTravel = freezed,
+    Object? isFood = freezed,
+    Object? isFamily = freezed,
     Object? isSelected = freezed,
     Object? imgFile = freezed,
   }) {
@@ -110,6 +125,18 @@ class _$AddAlbumPageStateCopyWithImpl<$Res>
       isLoading: isLoading == freezed
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isTravel: isTravel == freezed
+          ? _value.isTravel
+          : isTravel // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isFood: isFood == freezed
+          ? _value.isFood
+          : isFood // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isFamily: isFamily == freezed
+          ? _value.isFamily
+          : isFamily // ignore: cast_nullable_to_non_nullable
               as bool,
       isSelected: isSelected == freezed
           ? _value.isSelected
@@ -136,6 +163,9 @@ abstract class _$AddAlbumPageStateCopyWith<$Res>
       String imgUrl,
       List<Album>? album,
       bool isLoading,
+      bool isTravel,
+      bool isFood,
+      bool isFamily,
       bool isSelected,
       File? imgFile});
 }
@@ -158,6 +188,9 @@ class __$AddAlbumPageStateCopyWithImpl<$Res>
     Object? imgUrl = freezed,
     Object? album = freezed,
     Object? isLoading = freezed,
+    Object? isTravel = freezed,
+    Object? isFood = freezed,
+    Object? isFamily = freezed,
     Object? isSelected = freezed,
     Object? imgFile = freezed,
   }) {
@@ -182,6 +215,18 @@ class __$AddAlbumPageStateCopyWithImpl<$Res>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      isTravel: isTravel == freezed
+          ? _value.isTravel
+          : isTravel // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isFood: isFood == freezed
+          ? _value.isFood
+          : isFood // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isFamily: isFamily == freezed
+          ? _value.isFamily
+          : isFamily // ignore: cast_nullable_to_non_nullable
+              as bool,
       isSelected: isSelected == freezed
           ? _value.isSelected
           : isSelected // ignore: cast_nullable_to_non_nullable
@@ -203,6 +248,9 @@ class _$_AddAlbumPageState implements _AddAlbumPageState {
       this.imgUrl = '',
       this.album,
       this.isLoading = false,
+      this.isTravel = false,
+      this.isFood = false,
+      this.isFamily = false,
       this.isSelected = false,
       this.imgFile});
 
@@ -222,13 +270,22 @@ class _$_AddAlbumPageState implements _AddAlbumPageState {
   final bool isLoading;
   @JsonKey()
   @override
+  final bool isTravel;
+  @JsonKey()
+  @override
+  final bool isFood;
+  @JsonKey()
+  @override
+  final bool isFamily;
+  @JsonKey()
+  @override
   final bool isSelected;
   @override
   final File? imgFile;
 
   @override
   String toString() {
-    return 'AddAlbumPageState(id: $id, content: $content, imgUrl: $imgUrl, album: $album, isLoading: $isLoading, isSelected: $isSelected, imgFile: $imgFile)';
+    return 'AddAlbumPageState(id: $id, content: $content, imgUrl: $imgUrl, album: $album, isLoading: $isLoading, isTravel: $isTravel, isFood: $isFood, isFamily: $isFamily, isSelected: $isSelected, imgFile: $imgFile)';
   }
 
   @override
@@ -241,6 +298,9 @@ class _$_AddAlbumPageState implements _AddAlbumPageState {
             const DeepCollectionEquality().equals(other.imgUrl, imgUrl) &&
             const DeepCollectionEquality().equals(other.album, album) &&
             const DeepCollectionEquality().equals(other.isLoading, isLoading) &&
+            const DeepCollectionEquality().equals(other.isTravel, isTravel) &&
+            const DeepCollectionEquality().equals(other.isFood, isFood) &&
+            const DeepCollectionEquality().equals(other.isFamily, isFamily) &&
             const DeepCollectionEquality()
                 .equals(other.isSelected, isSelected) &&
             const DeepCollectionEquality().equals(other.imgFile, imgFile));
@@ -254,6 +314,9 @@ class _$_AddAlbumPageState implements _AddAlbumPageState {
       const DeepCollectionEquality().hash(imgUrl),
       const DeepCollectionEquality().hash(album),
       const DeepCollectionEquality().hash(isLoading),
+      const DeepCollectionEquality().hash(isTravel),
+      const DeepCollectionEquality().hash(isFood),
+      const DeepCollectionEquality().hash(isFamily),
       const DeepCollectionEquality().hash(isSelected),
       const DeepCollectionEquality().hash(imgFile));
 
@@ -270,6 +333,9 @@ abstract class _AddAlbumPageState implements AddAlbumPageState {
       String imgUrl,
       List<Album>? album,
       bool isLoading,
+      bool isTravel,
+      bool isFood,
+      bool isFamily,
       bool isSelected,
       File? imgFile}) = _$_AddAlbumPageState;
 
@@ -283,6 +349,12 @@ abstract class _AddAlbumPageState implements AddAlbumPageState {
   List<Album>? get album;
   @override
   bool get isLoading;
+  @override
+  bool get isTravel;
+  @override
+  bool get isFood;
+  @override
+  bool get isFamily;
   @override
   bool get isSelected;
   @override
