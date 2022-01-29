@@ -7,14 +7,14 @@ ThemeData theme(BuildContext context) => ThemeData(
       scaffoldBackgroundColor: AppColors.background,
       backgroundColor: AppColors.background,
       appBarTheme: const AppBarTheme(
-        color: AppColors.primary,
-        iconTheme: IconThemeData(color: Colors.black),
-        actionsIconTheme: IconThemeData(color: Colors.black),
+        color: AppColors.white,
+        iconTheme: IconThemeData(color: AppColors.black),
+        actionsIconTheme: IconThemeData(color: AppColors.black),
         centerTitle: true,
         titleTextStyle: TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.bold,
-          color: AppColors.white,
+          color: AppColors.black,
         ),
       ),
       fontFamily: 'NotoSerifJP',

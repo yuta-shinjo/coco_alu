@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_collection/services/fire_users_service.dart';
@@ -36,8 +37,10 @@ class LoginPageController extends StateNotifier<LoginPageState> {
 
   final _fireUsersService = FireUsersService();
 
-  Future<void> isLogin(String loginEmail, String loginPassword) async =>
-      _fireUsersService.login(loginEmail, loginPassword);
+  Future<void> emailLogin(String loginEmail, String loginPassword) async =>
+      _fireUsersService.emailLogin(loginEmail, loginPassword);
+
+  Future<UserCredential> googleLogin() async => _fireUsersService.googleLogin();
 
   final authError = AuthenticationError();
 

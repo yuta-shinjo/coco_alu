@@ -196,3 +196,71 @@ class CardText extends StatelessWidget {
     );
   }
 }
+
+class OverlineText extends StatelessWidget {
+  const OverlineText(
+    this.text, {
+    Key? key,
+    this.color,
+    this.maxLines,
+    this.textAlign,
+    this.overflow,
+    this.bottomPadding = 1,
+  }) : super(key: key);
+
+  final String? text;
+  final Color? color;
+  final int? maxLines;
+  final TextAlign? textAlign;
+  final TextOverflow? overflow;
+  final double bottomPadding;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: bottomPadding),
+      child: Text(
+        text ?? '',
+        textAlign: textAlign,
+        overflow: overflow,
+        maxLines: maxLines,
+        style: _getTheme(context).overline?.copyWith(color: color),
+      ),
+    );
+  }
+}
+
+class AppBarText extends StatelessWidget {
+  const AppBarText(
+      this.text, {
+        Key? key,
+        this.color,
+        this.maxLines,
+        this.textAlign,
+        this.overflow,
+        this.bottomPadding = 2,
+      }) : super(key: key);
+
+  final String? text;
+  final Color? color;
+  final int? maxLines;
+  final TextAlign? textAlign;
+  final TextOverflow? overflow;
+  final double bottomPadding;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: bottomPadding),
+      child: Text(
+        text ?? '',
+        maxLines: maxLines,
+        textAlign: textAlign,
+        overflow: overflow,
+        style: const TextStyle(fontWeight: FontWeight.w600),
+      ),
+    );
+  }
+}
+
+

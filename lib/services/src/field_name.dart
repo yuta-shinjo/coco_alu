@@ -1,9 +1,6 @@
 class FieldName {
+  static const content = 'content';
+  static const id = 'id';
+  static const imgUrls = 'imgUrls';
   static const name = 'name';
-  static const kinds = 'kinds';
-  static const location = 'location';
-  static const size = 'size';
-  static const memo = 'memo';
-  static const imageUrl = 'imageUrl';
-  static const capsule = 'capsule';
 }

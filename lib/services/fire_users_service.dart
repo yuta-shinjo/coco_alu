@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase;
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:my_collection/models/src/user.dart';
 
 import 'src/field_name.dart';
@@ -42,11 +43,26 @@ class FireUsersService {
     });
   }
 
-  Future<void> login(String email, String password) async {
+  Future<void> emailLogin(String email, String password) async {
     await _auth.signInWithEmailAndPassword(
       email: email,
       password: password,
     );
+  }
+
+  Future<firebase.UserCredential> googleLogin()  async{
+    final googleUser = await GoogleSignIn(scopes: [
+      'email',
+    ]).signIn();
+    // リクエストから、認証情報を取得
+    final googleAuth = await googleUser?.authentication;
+    // クレデンシャルを新しく作成
+    final credential = firebase.GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+    // サインインしたら、UserCredentialを返す
+    return _auth.signInWithCredential(credential);
   }
 
   Future<void> signOut() async {
@@ -72,7 +88,8 @@ class FireUsersService {
   ) async {
     if (imageFile != null) {
       final task = await _fireStorage
-          .ref('users/profiles/${_auth.currentUser?.uid}')
+          .ref(
+              'users/${_auth.currentUser?.uid}/profiles/${_auth.currentUser?.uid}')
           .putFile(imageFile);
       profileImageUrl = await task.ref.getDownloadURL();
     }
@@ -84,7 +101,7 @@ class FireUsersService {
         .doc(_auth.currentUser?.uid)
         .set({
       FieldName.name: name,
-      FieldName.imageUrl: profileImageUrl,
+      FieldName.imgUrls: profileImageUrl,
     });
   }
 
@@ -135,7 +152,10 @@ class FireUsersService {
         .doc(_auth.currentUser?.uid)
         .update({
       FieldName.name: name,
-      FieldName.imageUrl: profileImageUrl,
+      FieldName.imgUrls: profileImageUrl,
     });
+  }
+
+  Future<void> fetchAccount() async {
   }
 }
