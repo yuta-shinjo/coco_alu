@@ -115,7 +115,7 @@ class RegisterProfilePageBody extends StatelessWidget {
               try {
                 ref
                     .read(registerProfilePageProvider.notifier)
-                    .createProfile(name, profileImageUrl, imageFile);
+                    .createEmailUserProfile(name, profileImageUrl, imageFile);
                 ref
                     .read(registerProfilePageProvider.notifier)
                     .profileName

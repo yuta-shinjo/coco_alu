@@ -30,7 +30,7 @@ class UserController extends StateNotifier<UserState> {
 
   String get name => state.user.name;
 
-  String? get imageUrl => state.user.profileImageUrl;
+  String? get imageUrl => state.user.imgUrls;
 
   Future<void> login() async {
     final userCredential = await _auth.signInAnonymously();

@@ -29,7 +29,15 @@ final accountPageProvider =
 });
 
 class AccountPageController extends StateNotifier<AccountPageState> {
-  AccountPageController() : super(const AccountPageState());
+  AccountPageController() : super(const AccountPageState()) {
+    _init();
+  }
+
+  void _init() async {
+    final fechProfile = await _fireUsersService.fetchUserProfile();
+    final profiles = [...fechProfile];
+    state = state.copyWith(profiles: profiles);
+  }
 
   final _fireUsersService = FireUsersService();
 
@@ -43,30 +51,26 @@ class AccountPageController extends StateNotifier<AccountPageState> {
 
   void inputName(String name) => state = state.copyWith(name: name);
 
-  void deleteImage(String profileImageUrl, File? imageFile) {
-    if (state.profileImageUrl != '') {
-      profileImageUrl = '';
-    }
+  void deleteImage(String imgUrl, File? imageFile) {
     if (state.imageFile != null) {
       state = state.copyWith(imageFile: null);
+    }
+    if (state.profiles?.firstWhere((imgUrl) => imgUrl == imgUrl).imgUrls !=
+        '') {
+      print(state.profiles?.firstWhere((imgUrl) => imgUrl == imgUrl).imgUrls);
     }
   }
 
   Future<void> updateProfile(
-      File? imageFile, String profileImageUrl, String name) async {
+      File? imageFile, String imgUrls, String name) async {
     await _fireUsersService.update(
       state.imageFile,
-      state.profileImageUrl,
+      state.profiles!.first.imgUrls,
       state.name,
     );
   }
 
   final btnController = RoundedLoadingButtonController();
-
-
-  Future<void> fechUserProfile() async {
-    
-  }
 
   Future<void> isSignOut() async {
     await _fireUsersService.signOut();

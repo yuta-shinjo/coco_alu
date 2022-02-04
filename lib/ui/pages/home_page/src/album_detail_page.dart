@@ -24,28 +24,35 @@ class AlbumDetailPage extends ConsumerWidget {
           appBar: AppBar(
             leading: CloseButton(),
           ),
-          body: _albumDetailPageBody(),
+          body: _albumDetailPageBody(context),
         ),
       ],
     );
   }
 
-  Widget _albumDetailPageBody() {
+  Widget _albumDetailPageBody(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         children: [
           Hero(
             tag: "image_${album.content}",
             child: Container(
+              height: MediaQuery.of(context).size.height / 2,
+              width: double.infinity,
               child: UniversalImage(
                 album.imgUrls,
+                fit: BoxFit.cover,
               ),
             ),
           ),
-          Hero(
-            tag: "background_${album.content}",
-            child: Container(
-              child: Subtitle2Text(album.content),
+          const SizedBox(height: 30),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Hero(
+              tag: "background_${album.content}",
+              child: Container(
+                child: Subtitle2Text(album.content),
+              ),
             ),
           ),
         ],

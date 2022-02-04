@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_collection/controllers/pages/login_page_controller.dart';
+import 'package:my_collection/controllers/pages/register_profile_page_controller.dart';
 import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/src/theme_text.dart';
 import 'package:my_collection/ui/pages/root_page/root_page.dart';
@@ -38,13 +39,13 @@ class LoginPage extends StatelessWidget {
         child: Scaffold(
           resizeToAvoidBottomInset: false,
           body: const LoginPageBody(),
-          bottomNavigationBar: _createAccount(),
+          bottomNavigationBar: _otherLosingMethod(),
         ),
       ),
     );
   }
 
-  Widget _createAccount() {
+  Widget _otherLosingMethod() {
     return Consumer(builder: (context, ref, _) {
       return Padding(
         padding: const EdgeInsets.only(bottom: 80),
@@ -56,10 +57,19 @@ class LoginPage extends StatelessWidget {
               // TODO ログインした後に戻るボタンがあるのが気になる
               onPressed: () async {
                 try {
-                  ref.read(loginPageProvider.notifier).googleLogin().then(
-                        (value) => Navigator.pushReplacement(
-                            context, RootPage.route()),
-                      );
+                  ref
+                      .read(loginPageProvider.notifier)
+                      .googleLogin()
+                      .then((value) {
+                    Navigator.pushReplacement(context, RootPage.route());
+                    // 初回ログインのみfirebaseにprofileを作成する
+                    if (value.additionalUserInfo?.isNewUser == true) {
+                      ref
+                          .read(registerProfilePageProvider.notifier)
+                          .createGoogleUserProfile(
+                              value.user?.displayName, value.user?.photoURL);
+                    }
+                  });
                 } on FirebaseAuthException catch (e) {
                   print('FirebaseAuthException');
                   print('${e.code}');

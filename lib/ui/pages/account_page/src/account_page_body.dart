@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_collection/controllers/pages/account_page_controller.dart';
 import 'package:my_collection/controllers/pages/album_list_page_controller.dart';
-import 'package:my_collection/models/src/album.dart';
 import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/components.dart';
 import 'package:my_collection/ui/pages/account_page/src/edit_profile_page.dart';
@@ -17,25 +16,19 @@ class AccountPageBody extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // TODO riverpodに直す
     final user = FirebaseAuth.instance.currentUser;
-    final email = user?.email;
-    final displayName = user?.displayName;
-    final displayImgUrl = user?.photoURL;
-    final albumNum =
-        ref.watch(albumListPageProvider.select((s) => s.albums)) ?? [];
-    final account = ref.watch(accountPageProvider.select((s) => s.profiles));
-
-    if (displayName == null || displayImgUrl == null) {
+    if (user == null) {
       return Center(
         child: CircularProgressIndicator(),
       );
     }
+    final email = user.email;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: SingleChildScrollView(
         child: Column(
           children: [
             const SizedBox(height: 50),
-            _profileDisplay(displayImgUrl, context, displayName, albumNum),
+            _profileDisplay(),
             const Divider(color: AppColors.grey),
             const SizedBox(height: 60),
             Column(
@@ -67,12 +60,13 @@ class AccountPageBody extends ConsumerWidget {
                           title: "ログアウト",
                           content: "本当にログアウトしてもよろしいですか？",
                           onPressed: () {
+                            Navigator.pop(context);
                             try {
                               ref
                                   .read(accountPageProvider.notifier)
                                   .isSignOut();
-                              Navigator.of(context).pushReplacement<void, void>(
-                                  LoginPage.fadeInRoute());
+                              Navigator.pushReplacement(
+                                  context, LoginPage.fadeInRoute());
                             } catch (e) {
                               print(e);
                             }
@@ -95,44 +89,62 @@ class AccountPageBody extends ConsumerWidget {
     );
   }
 
-  Widget _profileDisplay(String displayImgUrl, BuildContext context, String displayName, List<Album> albumNum) {
-    return Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 10,
+  Widget _profileDisplay() {
+    return Consumer(builder: (context, ref, _) {
+      final album =
+          ref.watch(albumListPageProvider.select((s) => s.albums)) ?? [];
+      final profile = ref.watch(accountPageProvider.select((s) => s.profiles));
+      if (profile == null) {
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      }
+      return Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 10,
+        ),
+        child: Row(
+          children: [
+            CircleAvatar(
+              radius: 50,
+              backgroundImage:
+                  profile.firstWhere((imgUrl) => imgUrl == imgUrl).imgUrls != ''
+                      ? NetworkImage(
+                          profile
+                              .firstWhere((imgUrl) => imgUrl == imgUrl)
+                              .imgUrls,
+                        )
+                      : const NetworkImage(
+                          //netのURLのため注意
+                          'https://itojisan.xyz/wp-content/uploads/2016/09/acount-300x300.png',
+                        ),
             ),
-            child: Row(
+            const SizedBox(width: 20),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CircleAvatar(
-                  radius: 50,
-                  backgroundImage: NetworkImage(
-                    displayImgUrl,
+                Container(
+                  padding: const EdgeInsets.only(left: 12),
+                  width: MediaQuery.of(context).size.width / 2.5,
+                  child: Text(
+                    profile.firstWhere((name) => name == name).name,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(fontSize: 20),
                   ),
                 ),
-                const SizedBox(width: 20),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.only(left: 12),
-                      width: MediaQuery.of(context).size.width / 2.5,
-                      child: Text(
-                        displayName,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(fontSize: 20),
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.only(left: 12),
-                      child: OverlineText(
-                        'アルバム数: ${albumNum.length}',
-                      ),
-                    ),
-                  ],
+                Container(
+                  padding: const EdgeInsets.only(left: 12),
+                  child: OverlineText(
+                    'アルバム数: ${album.length}',
+                  ),
                 ),
               ],
             ),
-          );
+          ],
+        ),
+      );
+    });
   }
 }

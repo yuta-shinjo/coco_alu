@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:my_collection/ui/pages/profile_page/src/edit_profile_page_body.dart';
+import 'package:my_collection/ui/pages/account_page/src/edit_profile_page_body.dart';
 import 'package:my_collection/ui/projects/closed_button.dart';
 
 class EditProfilePage extends ConsumerWidget {

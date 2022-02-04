@@ -5,6 +5,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_collection/models/src/album.dart';
+import 'package:my_collection/models/src/tag.dart';
 import 'package:my_collection/services/fire_album_service.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
@@ -17,6 +18,7 @@ class AddAlbumPageState with _$AddAlbumPageState {
     @Default('') String content,
     @Default('') String imgUrl,
     List<Album>? album,
+    List<Tags>? tag,
     @Default(false) bool isLoading,
     @Default(false) bool isTravel,
     @Default(false) bool isFood,
@@ -74,6 +76,7 @@ class AddAlbumPageController extends StateNotifier<AddAlbumPageState> {
   }
 
   final contentController = TextEditingController();
+  final tagTextFieldCntroller = TextEditingController();
   final btnController = RoundedLoadingButtonController();
 
   void loadingSuccess(RoundedLoadingButtonController controller) {
@@ -95,6 +98,4 @@ class AddAlbumPageController extends StateNotifier<AddAlbumPageState> {
   void familySelect(bool selected) {
     state = state.copyWith(isFamily: selected);
   }
-
-  
 }

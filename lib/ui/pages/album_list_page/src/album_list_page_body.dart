@@ -14,7 +14,11 @@ class AlbumListPageBody extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final albums =
         ref.watch(albumListPageProvider.select((s) => s.albums)) ?? [];
-
+    if (albums.length == 0) {
+      return Center(
+        child: Text('登録画面からアルバムを作成しましょう！'),
+      );
+    }
     return ListView.separated(
       itemCount: albums.length,
       separatorBuilder: (context, index) => const Divider(
@@ -40,7 +44,10 @@ class AlbumListPageBody extends ConsumerWidget {
               child: Row(
                 children: [
                   _albumImage(album, context),
-                  _albumText(),
+                  Container(
+                    width: MediaQuery.of(context).size.width / 1.6,
+                    child: _albumText(album),
+                  ),
                 ],
               ),
             ),
@@ -96,42 +103,14 @@ class AlbumListPageBody extends ConsumerWidget {
     );
   }
 
-  Widget _albumText() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        // TODO 表示するものを決めたらそれを表示させる
-        Container(
-          padding: const EdgeInsets.only(left: 12),
-          child: const Subtitle1Text(
-            '四国旅行',
-            maxLines: 3,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-        Container(
-          padding: const EdgeInsets.only(left: 12),
-          child: const Subtitle1Text(
-            '楽しかった',
-            maxLines: 3,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-        Container(
-          padding: const EdgeInsets.only(left: 12),
-          child: Row(
-            children: const [
-              OverlineText('楽しかった'),
-              SizedBox(width: 10),
-              OverlineText(
-                '2022/01/31',
-                color: Colors.grey,
-              ),
-            ],
-          ),
-        ),
-      ],
+  Widget _albumText(Album album) {
+    return Container(
+      padding: const EdgeInsets.only(left: 12),
+      child: Subtitle2Text(
+        album.content,
+        maxLines: 3,
+        overflow: TextOverflow.ellipsis,
+      ),
     );
   }
 }

@@ -23,6 +23,7 @@ class _$AddAlbumPageStateTearOff {
       String content = '',
       String imgUrl = '',
       List<Album>? album,
+      List<Tags>? tag,
       bool isLoading = false,
       bool isTravel = false,
       bool isFood = false,
@@ -34,6 +35,7 @@ class _$AddAlbumPageStateTearOff {
       content: content,
       imgUrl: imgUrl,
       album: album,
+      tag: tag,
       isLoading: isLoading,
       isTravel: isTravel,
       isFood: isFood,
@@ -53,6 +55,7 @@ mixin _$AddAlbumPageState {
   String get content => throw _privateConstructorUsedError;
   String get imgUrl => throw _privateConstructorUsedError;
   List<Album>? get album => throw _privateConstructorUsedError;
+  List<Tags>? get tag => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   bool get isTravel => throw _privateConstructorUsedError;
   bool get isFood => throw _privateConstructorUsedError;
@@ -75,6 +78,7 @@ abstract class $AddAlbumPageStateCopyWith<$Res> {
       String content,
       String imgUrl,
       List<Album>? album,
+      List<Tags>? tag,
       bool isLoading,
       bool isTravel,
       bool isFood,
@@ -98,6 +102,7 @@ class _$AddAlbumPageStateCopyWithImpl<$Res>
     Object? content = freezed,
     Object? imgUrl = freezed,
     Object? album = freezed,
+    Object? tag = freezed,
     Object? isLoading = freezed,
     Object? isTravel = freezed,
     Object? isFood = freezed,
@@ -122,6 +127,10 @@ class _$AddAlbumPageStateCopyWithImpl<$Res>
           ? _value.album
           : album // ignore: cast_nullable_to_non_nullable
               as List<Album>?,
+      tag: tag == freezed
+          ? _value.tag
+          : tag // ignore: cast_nullable_to_non_nullable
+              as List<Tags>?,
       isLoading: isLoading == freezed
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -162,6 +171,7 @@ abstract class _$AddAlbumPageStateCopyWith<$Res>
       String content,
       String imgUrl,
       List<Album>? album,
+      List<Tags>? tag,
       bool isLoading,
       bool isTravel,
       bool isFood,
@@ -187,6 +197,7 @@ class __$AddAlbumPageStateCopyWithImpl<$Res>
     Object? content = freezed,
     Object? imgUrl = freezed,
     Object? album = freezed,
+    Object? tag = freezed,
     Object? isLoading = freezed,
     Object? isTravel = freezed,
     Object? isFood = freezed,
@@ -211,6 +222,10 @@ class __$AddAlbumPageStateCopyWithImpl<$Res>
           ? _value.album
           : album // ignore: cast_nullable_to_non_nullable
               as List<Album>?,
+      tag: tag == freezed
+          ? _value.tag
+          : tag // ignore: cast_nullable_to_non_nullable
+              as List<Tags>?,
       isLoading: isLoading == freezed
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -247,6 +262,7 @@ class _$_AddAlbumPageState implements _AddAlbumPageState {
       this.content = '',
       this.imgUrl = '',
       this.album,
+      this.tag,
       this.isLoading = false,
       this.isTravel = false,
       this.isFood = false,
@@ -265,6 +281,8 @@ class _$_AddAlbumPageState implements _AddAlbumPageState {
   final String imgUrl;
   @override
   final List<Album>? album;
+  @override
+  final List<Tags>? tag;
   @JsonKey()
   @override
   final bool isLoading;
@@ -285,7 +303,7 @@ class _$_AddAlbumPageState implements _AddAlbumPageState {
 
   @override
   String toString() {
-    return 'AddAlbumPageState(id: $id, content: $content, imgUrl: $imgUrl, album: $album, isLoading: $isLoading, isTravel: $isTravel, isFood: $isFood, isFamily: $isFamily, isSelected: $isSelected, imgFile: $imgFile)';
+    return 'AddAlbumPageState(id: $id, content: $content, imgUrl: $imgUrl, album: $album, tag: $tag, isLoading: $isLoading, isTravel: $isTravel, isFood: $isFood, isFamily: $isFamily, isSelected: $isSelected, imgFile: $imgFile)';
   }
 
   @override
@@ -297,6 +315,7 @@ class _$_AddAlbumPageState implements _AddAlbumPageState {
             const DeepCollectionEquality().equals(other.content, content) &&
             const DeepCollectionEquality().equals(other.imgUrl, imgUrl) &&
             const DeepCollectionEquality().equals(other.album, album) &&
+            const DeepCollectionEquality().equals(other.tag, tag) &&
             const DeepCollectionEquality().equals(other.isLoading, isLoading) &&
             const DeepCollectionEquality().equals(other.isTravel, isTravel) &&
             const DeepCollectionEquality().equals(other.isFood, isFood) &&
@@ -313,6 +332,7 @@ class _$_AddAlbumPageState implements _AddAlbumPageState {
       const DeepCollectionEquality().hash(content),
       const DeepCollectionEquality().hash(imgUrl),
       const DeepCollectionEquality().hash(album),
+      const DeepCollectionEquality().hash(tag),
       const DeepCollectionEquality().hash(isLoading),
       const DeepCollectionEquality().hash(isTravel),
       const DeepCollectionEquality().hash(isFood),
@@ -332,6 +352,7 @@ abstract class _AddAlbumPageState implements AddAlbumPageState {
       String content,
       String imgUrl,
       List<Album>? album,
+      List<Tags>? tag,
       bool isLoading,
       bool isTravel,
       bool isFood,
@@ -347,6 +368,8 @@ abstract class _AddAlbumPageState implements AddAlbumPageState {
   String get imgUrl;
   @override
   List<Album>? get album;
+  @override
+  List<Tags>? get tag;
   @override
   bool get isLoading;
   @override

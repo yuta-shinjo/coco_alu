@@ -232,14 +232,14 @@ class OverlineText extends StatelessWidget {
 
 class AppBarText extends StatelessWidget {
   const AppBarText(
-      this.text, {
-        Key? key,
-        this.color,
-        this.maxLines,
-        this.textAlign,
-        this.overflow,
-        this.bottomPadding = 2,
-      }) : super(key: key);
+    this.text, {
+    Key? key,
+    this.color,
+    this.maxLines,
+    this.textAlign,
+    this.overflow,
+    this.bottomPadding = 2,
+  }) : super(key: key);
 
   final String? text;
   final Color? color;
@@ -262,5 +262,3 @@ class AppBarText extends StatelessWidget {
     );
   }
 }
-
-

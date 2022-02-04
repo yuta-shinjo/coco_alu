@@ -6,9 +6,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:my_collection/controllers/pages/add_album_page_controller.dart';
 import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/components.dart';
+import 'package:my_collection/ui/pages/add_album_page/src/tag_chips_page.dart';
 import 'package:my_collection/ui/projects/rounded_loading_button.dart';
-
-import 'default_chip.dart';
 
 class AddAlbumPgeBody extends ConsumerWidget {
   const AddAlbumPgeBody({Key? key}) : super(key: key);
@@ -61,7 +60,7 @@ class AddAlbumPgeBody extends ConsumerWidget {
                 ),
               ),
               const Divider(color: AppColors.grey),
-              DefaultChip(),
+              TagChip(),
               const SizedBox(height: 40),
               ButtonTheme(
                 child: LoadingButton(

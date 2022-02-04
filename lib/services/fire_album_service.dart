@@ -65,21 +65,21 @@ class FireAlbumService {
         .delete();
   }
 
-  Future<void> updateCreature(
+  Future<void> updateAlbum(
     String? content,
     String? imgUrls,
-    File? imageFile,
+    File? imgFile,
     Album album,
   ) async {
-    if (imageFile == null) {
+    if (imgFile == null) {
       imgUrls == '';
       deleteStorage(album.id);
     }
 
-    if (imageFile != null) {
+    if (imgFile != null) {
       final task = await _fireStorage
           .ref('users/${_auth.currentUser?.uid}/albums/${album.id}')
-          .putFile(imageFile);
+          .putFile(imgFile);
       imgUrls = await task.ref.getDownloadURL();
     }
 

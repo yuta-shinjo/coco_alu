@@ -11,6 +11,7 @@ class Album with _$Album {
     @Default('') String id,
     @Default('') String content,
     @Default('') String imgUrls,
+    @Default('') String tag,
     @FireTimestampConverterNonNull() DateTime? created,
   }) = _Album;
 

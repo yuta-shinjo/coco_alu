@@ -12,7 +12,7 @@ ThemeData theme(BuildContext context) => ThemeData(
         actionsIconTheme: IconThemeData(color: AppColors.black),
         centerTitle: true,
         titleTextStyle: TextStyle(
-          fontSize: 20,
+          fontSize: 18,
           fontWeight: FontWeight.bold,
           color: AppColors.black,
         ),

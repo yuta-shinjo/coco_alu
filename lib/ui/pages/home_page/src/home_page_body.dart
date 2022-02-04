@@ -12,6 +12,7 @@ class HomePageBody extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final albums = ref.watch(homePageProvider.select((s) => s.albums)) ?? [];
+
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -20,7 +21,7 @@ class HomePageBody extends ConsumerWidget {
             const SizedBox(height: 30),
             _tagsList(),
             const Divider(color: AppColors.grey),
-            _albumList(albums),
+            _albumList(albums, context),
           ],
         ),
       ),
@@ -76,7 +77,15 @@ class HomePageBody extends ConsumerWidget {
     );
   }
 
-  Widget _albumList(List<Album> albums) {
+  Widget _albumList(List<Album> albums, BuildContext context) {
+    if (albums.length == 0) {
+      return Container(
+        height: MediaQuery.of(context).size.height / 2,
+        child: Center(
+          child: Text('登録画面からアルバムを作成しましょう！'),
+        ),
+      );
+    }
     return GridView.builder(
       physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
