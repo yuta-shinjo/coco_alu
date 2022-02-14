@@ -10,7 +10,9 @@ _$_Album _$$_AlbumFromJson(Map<String, dynamic> json) => _$_Album(
       id: json['id'] as String? ?? '',
       content: json['content'] as String? ?? '',
       imgUrls: json['imgUrls'] as String? ?? '',
-      tag: json['tag'] as String? ?? '',
+      tags:
+          (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+              const <String>[],
       created: json['created'] == null
           ? null
           : DateTime.parse(json['created'] as String),
@@ -20,6 +22,6 @@ Map<String, dynamic> _$$_AlbumToJson(_$_Album instance) => <String, dynamic>{
       'id': instance.id,
       'content': instance.content,
       'imgUrls': instance.imgUrls,
-      'tag': instance.tag,
+      'tags': instance.tags,
       'created': instance.created?.toIso8601String(),
     };

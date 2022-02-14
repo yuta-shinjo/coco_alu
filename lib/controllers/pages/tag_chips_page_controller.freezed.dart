@@ -19,10 +19,10 @@ class _$TagChipsPageStateTearOff {
   const _$TagChipsPageStateTearOff();
 
   _TagChipsPageState call(
-      {List<Chip>? chipList, int keyNumber = 0, String tagTitle = ''}) {
+      {List<Chip>? chipList, List<String>? labelList, String tagTitle = ''}) {
     return _TagChipsPageState(
       chipList: chipList,
-      keyNumber: keyNumber,
+      labelList: labelList,
       tagTitle: tagTitle,
     );
   }
@@ -34,7 +34,7 @@ const $TagChipsPageState = _$TagChipsPageStateTearOff();
 /// @nodoc
 mixin _$TagChipsPageState {
   List<Chip>? get chipList => throw _privateConstructorUsedError;
-  int get keyNumber => throw _privateConstructorUsedError;
+  List<String>? get labelList => throw _privateConstructorUsedError;
   String get tagTitle => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -47,7 +47,7 @@ abstract class $TagChipsPageStateCopyWith<$Res> {
   factory $TagChipsPageStateCopyWith(
           TagChipsPageState value, $Res Function(TagChipsPageState) then) =
       _$TagChipsPageStateCopyWithImpl<$Res>;
-  $Res call({List<Chip>? chipList, int keyNumber, String tagTitle});
+  $Res call({List<Chip>? chipList, List<String>? labelList, String tagTitle});
 }
 
 /// @nodoc
@@ -62,7 +62,7 @@ class _$TagChipsPageStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? chipList = freezed,
-    Object? keyNumber = freezed,
+    Object? labelList = freezed,
     Object? tagTitle = freezed,
   }) {
     return _then(_value.copyWith(
@@ -70,10 +70,10 @@ class _$TagChipsPageStateCopyWithImpl<$Res>
           ? _value.chipList
           : chipList // ignore: cast_nullable_to_non_nullable
               as List<Chip>?,
-      keyNumber: keyNumber == freezed
-          ? _value.keyNumber
-          : keyNumber // ignore: cast_nullable_to_non_nullable
-              as int,
+      labelList: labelList == freezed
+          ? _value.labelList
+          : labelList // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
       tagTitle: tagTitle == freezed
           ? _value.tagTitle
           : tagTitle // ignore: cast_nullable_to_non_nullable
@@ -89,7 +89,7 @@ abstract class _$TagChipsPageStateCopyWith<$Res>
           _TagChipsPageState value, $Res Function(_TagChipsPageState) then) =
       __$TagChipsPageStateCopyWithImpl<$Res>;
   @override
-  $Res call({List<Chip>? chipList, int keyNumber, String tagTitle});
+  $Res call({List<Chip>? chipList, List<String>? labelList, String tagTitle});
 }
 
 /// @nodoc
@@ -106,7 +106,7 @@ class __$TagChipsPageStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? chipList = freezed,
-    Object? keyNumber = freezed,
+    Object? labelList = freezed,
     Object? tagTitle = freezed,
   }) {
     return _then(_TagChipsPageState(
@@ -114,10 +114,10 @@ class __$TagChipsPageStateCopyWithImpl<$Res>
           ? _value.chipList
           : chipList // ignore: cast_nullable_to_non_nullable
               as List<Chip>?,
-      keyNumber: keyNumber == freezed
-          ? _value.keyNumber
-          : keyNumber // ignore: cast_nullable_to_non_nullable
-              as int,
+      labelList: labelList == freezed
+          ? _value.labelList
+          : labelList // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
       tagTitle: tagTitle == freezed
           ? _value.tagTitle
           : tagTitle // ignore: cast_nullable_to_non_nullable
@@ -130,20 +130,19 @@ class __$TagChipsPageStateCopyWithImpl<$Res>
 
 class _$_TagChipsPageState implements _TagChipsPageState {
   const _$_TagChipsPageState(
-      {this.chipList, this.keyNumber = 0, this.tagTitle = ''});
+      {this.chipList, this.labelList, this.tagTitle = ''});
 
   @override
   final List<Chip>? chipList;
-  @JsonKey()
   @override
-  final int keyNumber;
+  final List<String>? labelList;
   @JsonKey()
   @override
   final String tagTitle;
 
   @override
   String toString() {
-    return 'TagChipsPageState(chipList: $chipList, keyNumber: $keyNumber, tagTitle: $tagTitle)';
+    return 'TagChipsPageState(chipList: $chipList, labelList: $labelList, tagTitle: $tagTitle)';
   }
 
   @override
@@ -152,7 +151,7 @@ class _$_TagChipsPageState implements _TagChipsPageState {
         (other.runtimeType == runtimeType &&
             other is _TagChipsPageState &&
             const DeepCollectionEquality().equals(other.chipList, chipList) &&
-            const DeepCollectionEquality().equals(other.keyNumber, keyNumber) &&
+            const DeepCollectionEquality().equals(other.labelList, labelList) &&
             const DeepCollectionEquality().equals(other.tagTitle, tagTitle));
   }
 
@@ -160,7 +159,7 @@ class _$_TagChipsPageState implements _TagChipsPageState {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(chipList),
-      const DeepCollectionEquality().hash(keyNumber),
+      const DeepCollectionEquality().hash(labelList),
       const DeepCollectionEquality().hash(tagTitle));
 
   @JsonKey(ignore: true)
@@ -172,13 +171,13 @@ class _$_TagChipsPageState implements _TagChipsPageState {
 abstract class _TagChipsPageState implements TagChipsPageState {
   const factory _TagChipsPageState(
       {List<Chip>? chipList,
-      int keyNumber,
+      List<String>? labelList,
       String tagTitle}) = _$_TagChipsPageState;
 
   @override
   List<Chip>? get chipList;
   @override
-  int get keyNumber;
+  List<String>? get labelList;
   @override
   String get tagTitle;
   @override

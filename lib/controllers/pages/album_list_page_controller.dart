@@ -32,8 +32,11 @@ class AlbumListPageController extends StateNotifier<AlbumListPageState> {
     );
   }
 
-  Future<void> deleteAlbum(Album album) async =>
-      await _fireAlbumService.deleteAlbum(album);
+  Future<void> deleteAlbum(Album album) async {
+    final albums = [...?state.albums];
+    await _fireAlbumService.deleteAlbum(album);
+    state = state.copyWith(albums: albums);
+  }
 
   Future<void> deleteStorage(String id) async =>
       await _fireAlbumService.deleteStorage(id);

@@ -121,7 +121,7 @@ class RegisterProfilePageBody extends StatelessWidget {
                     .profileName
                     .clear();
                 Navigator.pushReplacement(context, RootPage.route());
-                profileSuccessMassage;
+                profileSuccessMassage();
               } catch (e) {
                 errorMassage(controller, e);
               }

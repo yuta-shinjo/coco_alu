@@ -46,7 +46,7 @@ class AddAlbumPageController extends StateNotifier<AddAlbumPageState> {
     state = state.copyWith(isLoading: false);
   }
 
-  void deleteImage(String imgUrl, File? imgFile) {
+  void deleteImage(String imgUrl, File? imgFile) async {
     if (state.imgUrl != '') {
       imgUrl = '';
     }
@@ -67,11 +67,21 @@ class AddAlbumPageController extends StateNotifier<AddAlbumPageState> {
     String content,
     String imgUrls,
     File? imgFile,
+    List<String> tags,
   ) async {
     await _fireAlbumService.addAlbum(
       content,
       imgUrls,
       imgFile,
+      tags,
+    );
+  }
+
+  Future<void> addTags(
+    List<String> tags,
+  ) async {
+    await _fireAlbumService.addTags(
+      tags,
     );
   }
 

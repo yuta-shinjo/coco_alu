@@ -16,7 +16,7 @@ class AlbumListPageBody extends ConsumerWidget {
         ref.watch(albumListPageProvider.select((s) => s.albums)) ?? [];
     if (albums.length == 0) {
       return Center(
-        child: Text('登録画面からアルバムを作成しましょう！'),
+        child: Text('登録画面からアルバムを作成しましょう!'),
       );
     }
     return ListView.separated(
@@ -31,25 +31,30 @@ class AlbumListPageBody extends ConsumerWidget {
           secondaryActions: [
             IconSlideAction(
               caption: '削除',
-              color: Colors.red,
+              color: AppColors.red,
               icon: Icons.delete,
               onTap: () async => await _showDialog(context, ref, album),
             ),
           ],
           actionExtentRatio: 1 / 5,
-          child: GestureDetector(
-            onTap: () {},
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-              child: Row(
-                children: [
-                  _albumImage(album, context),
-                  Container(
-                    width: MediaQuery.of(context).size.width / 1.6,
-                    child: _albumText(album),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            child: Row(
+              children: [
+                _albumImage(album, context),
+                Container(
+                  height: 110,
+                  width: MediaQuery.of(context).size.width / 2,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      _albumText(album),
+                      _tags(album),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         );
@@ -82,8 +87,8 @@ class AlbumListPageBody extends ConsumerWidget {
 
   Widget _albumImage(Album album, BuildContext context) {
     return SizedBox(
-      height: 100,
-      width: 100,
+      height: 120,
+      width: 120,
       child: Card(
         clipBehavior: Clip.antiAlias,
         elevation: 0,
@@ -104,12 +109,35 @@ class AlbumListPageBody extends ConsumerWidget {
   }
 
   Widget _albumText(Album album) {
+    print(album.tags);
     return Container(
       padding: const EdgeInsets.only(left: 12),
       child: Subtitle2Text(
         album.content,
         maxLines: 3,
         overflow: TextOverflow.ellipsis,
+      ),
+    );
+  }
+
+  Widget _tags(Album album) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: [
+          for (int i = 0; i < album.tags.length; i++)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 3),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+                decoration: BoxDecoration(
+                  color: AppColors.grey,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: OverlineText(album.tags[i], color: AppColors.white),
+              ),
+            ),
+        ],
       ),
     );
   }

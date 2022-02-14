@@ -135,6 +135,7 @@ class EditProfilePageBody extends StatelessWidget {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: TextFormField(
+          onTap: () => controller.reset(),
           initialValue: profile?.firstWhere((name) => name == name).name,
           textAlign: TextAlign.center,
           onChanged: (text) {

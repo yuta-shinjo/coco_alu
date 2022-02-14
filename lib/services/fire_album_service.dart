@@ -31,6 +31,7 @@ class FireAlbumService {
     String content,
     String imgUrls,
     File? imgFile,
+    List<String> tags,
   ) async {
     final collectionRef = _fireStore
         .collection('users')
@@ -47,6 +48,19 @@ class FireAlbumService {
       FieldName.content: content,
       FieldName.imgUrls: imgUrls,
       FieldName.id: id,
+      FieldName.tags: tags.map((e) => e).toList(),
+    });
+  }
+  Future<void> addTags(
+    List<String> tags,
+  ) async {
+    final collectionRef = _fireStore
+        .collection('tags')
+        .doc(_auth.currentUser?.uid)
+        .collection('tags')
+        .doc(_auth.currentUser?.uid);
+    await collectionRef.set({
+      FieldName.tags: tags.map((e) => e).toList(),
     });
   }
 

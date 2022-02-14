@@ -3,4 +3,5 @@ class FieldName {
   static const id = 'id';
   static const imgUrls = 'imgUrls';
   static const name = 'name';
+  static const tags = 'tags';
 }

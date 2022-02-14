@@ -34,4 +34,5 @@ class HomePageController extends StateNotifier<HomePageState> {
       },
     );
   }
+
 }

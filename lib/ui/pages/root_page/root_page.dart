@@ -64,7 +64,7 @@ class RootPage extends ConsumerWidget {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.drive_file_rename_outline),
-              label: '登録',
+              label: '作成',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person),

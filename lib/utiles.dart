@@ -29,6 +29,13 @@ void editProfileSuccessMassage() {
   );
 }
 
+void createAlbumSuccessMassage() {
+  Fluttertoast.showToast(
+    msg: '作成しました',
+    toastLength: Toast.LENGTH_LONG,
+  );
+}
+
 void errorMassage(RoundedLoadingButtonController controller, Object e) {
   loadingError(controller);
   Fluttertoast.showToast(
@@ -57,6 +64,14 @@ void nameErrorMassage(RoundedLoadingButtonController controller) {
   loadingError(controller);
   Fluttertoast.showToast(
     msg: '名前を入力してください',
+    toastLength: Toast.LENGTH_LONG,
+  );
+}
+
+void pictureErrorMassage(RoundedLoadingButtonController controller) {
+  loadingError(controller);
+  Fluttertoast.showToast(
+    msg: '写真を選択してください',
     toastLength: Toast.LENGTH_LONG,
   );
 }

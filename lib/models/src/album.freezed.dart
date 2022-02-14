@@ -26,13 +26,13 @@ class _$AlbumTearOff {
       {String id = '',
       String content = '',
       String imgUrls = '',
-      String tag = '',
+      List<String> tags = const <String>[],
       @FireTimestampConverterNonNull() DateTime? created}) {
     return _Album(
       id: id,
       content: content,
       imgUrls: imgUrls,
-      tag: tag,
+      tags: tags,
       created: created,
     );
   }
@@ -50,7 +50,7 @@ mixin _$Album {
   String get id => throw _privateConstructorUsedError;
   String get content => throw _privateConstructorUsedError;
   String get imgUrls => throw _privateConstructorUsedError;
-  String get tag => throw _privateConstructorUsedError;
+  List<String> get tags => throw _privateConstructorUsedError;
   @FireTimestampConverterNonNull()
   DateTime? get created => throw _privateConstructorUsedError;
 
@@ -67,7 +67,7 @@ abstract class $AlbumCopyWith<$Res> {
       {String id,
       String content,
       String imgUrls,
-      String tag,
+      List<String> tags,
       @FireTimestampConverterNonNull() DateTime? created});
 }
 
@@ -84,7 +84,7 @@ class _$AlbumCopyWithImpl<$Res> implements $AlbumCopyWith<$Res> {
     Object? id = freezed,
     Object? content = freezed,
     Object? imgUrls = freezed,
-    Object? tag = freezed,
+    Object? tags = freezed,
     Object? created = freezed,
   }) {
     return _then(_value.copyWith(
@@ -100,10 +100,10 @@ class _$AlbumCopyWithImpl<$Res> implements $AlbumCopyWith<$Res> {
           ? _value.imgUrls
           : imgUrls // ignore: cast_nullable_to_non_nullable
               as String,
-      tag: tag == freezed
-          ? _value.tag
-          : tag // ignore: cast_nullable_to_non_nullable
-              as String,
+      tags: tags == freezed
+          ? _value.tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       created: created == freezed
           ? _value.created
           : created // ignore: cast_nullable_to_non_nullable
@@ -121,7 +121,7 @@ abstract class _$AlbumCopyWith<$Res> implements $AlbumCopyWith<$Res> {
       {String id,
       String content,
       String imgUrls,
-      String tag,
+      List<String> tags,
       @FireTimestampConverterNonNull() DateTime? created});
 }
 
@@ -139,7 +139,7 @@ class __$AlbumCopyWithImpl<$Res> extends _$AlbumCopyWithImpl<$Res>
     Object? id = freezed,
     Object? content = freezed,
     Object? imgUrls = freezed,
-    Object? tag = freezed,
+    Object? tags = freezed,
     Object? created = freezed,
   }) {
     return _then(_Album(
@@ -155,10 +155,10 @@ class __$AlbumCopyWithImpl<$Res> extends _$AlbumCopyWithImpl<$Res>
           ? _value.imgUrls
           : imgUrls // ignore: cast_nullable_to_non_nullable
               as String,
-      tag: tag == freezed
-          ? _value.tag
-          : tag // ignore: cast_nullable_to_non_nullable
-              as String,
+      tags: tags == freezed
+          ? _value.tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       created: created == freezed
           ? _value.created
           : created // ignore: cast_nullable_to_non_nullable
@@ -174,7 +174,7 @@ class _$_Album implements _Album {
       {this.id = '',
       this.content = '',
       this.imgUrls = '',
-      this.tag = '',
+      this.tags = const <String>[],
       @FireTimestampConverterNonNull() this.created});
 
   factory _$_Album.fromJson(Map<String, dynamic> json) =>
@@ -191,14 +191,14 @@ class _$_Album implements _Album {
   final String imgUrls;
   @JsonKey()
   @override
-  final String tag;
+  final List<String> tags;
   @override
   @FireTimestampConverterNonNull()
   final DateTime? created;
 
   @override
   String toString() {
-    return 'Album(id: $id, content: $content, imgUrls: $imgUrls, tag: $tag, created: $created)';
+    return 'Album(id: $id, content: $content, imgUrls: $imgUrls, tags: $tags, created: $created)';
   }
 
   @override
@@ -209,7 +209,7 @@ class _$_Album implements _Album {
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.content, content) &&
             const DeepCollectionEquality().equals(other.imgUrls, imgUrls) &&
-            const DeepCollectionEquality().equals(other.tag, tag) &&
+            const DeepCollectionEquality().equals(other.tags, tags) &&
             const DeepCollectionEquality().equals(other.created, created));
   }
 
@@ -219,7 +219,7 @@ class _$_Album implements _Album {
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(content),
       const DeepCollectionEquality().hash(imgUrls),
-      const DeepCollectionEquality().hash(tag),
+      const DeepCollectionEquality().hash(tags),
       const DeepCollectionEquality().hash(created));
 
   @JsonKey(ignore: true)
@@ -238,7 +238,7 @@ abstract class _Album implements Album {
       {String id,
       String content,
       String imgUrls,
-      String tag,
+      List<String> tags,
       @FireTimestampConverterNonNull() DateTime? created}) = _$_Album;
 
   factory _Album.fromJson(Map<String, dynamic> json) = _$_Album.fromJson;
@@ -250,7 +250,7 @@ abstract class _Album implements Album {
   @override
   String get imgUrls;
   @override
-  String get tag;
+  List<String> get tags;
   @override
   @FireTimestampConverterNonNull()
   DateTime? get created;

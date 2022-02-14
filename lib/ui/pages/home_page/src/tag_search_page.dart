@@ -1,38 +1,21 @@
 import 'package:filter_list/filter_list.dart';
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/components.dart';
 
-import 'package:my_collection/ui/pages/home_page/src/home_page_body.dart';
-
-class HomePage extends ConsumerWidget {
-  const HomePage({Key? key}) : super(key: key);
+class OpenFilterDialog extends StatefulWidget {
+  const OpenFilterDialog({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const AppBarText('アルバム一覧'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () => _openFilterDialog(context),
-            tooltip: 'タグ検索',
-          ),
-        ],
-      ),
-      body: HomePageBody(),
-    );
-  }
+  _OpenFilterDialogState createState() => _OpenFilterDialogState();
+}
 
-  void _openFilterDialog(BuildContext context) async {
-    List<User>? selectedUserList = [];
+class _OpenFilterDialogState extends State<OpenFilterDialog> {
+  List<User>? selectedUserList = [];
 
+  void _openFilterDialog() async {
     await FilterListDialog.display<User>(
       context,
       hideSelectedTextCount: true,
-      themeData: FilterListThemeData(context),
       height: 500,
       listData: userList,
       selectedListData: selectedUserList,
@@ -40,37 +23,52 @@ class HomePage extends ConsumerWidget {
       validateSelectedItem: (list, val) => list!.contains(val),
       controlButtons: [ContolButtonType.All, ContolButtonType.Reset],
       onItemSearch: (user, query) {
-        /// When search query change in search bar then this method will be called
-        ///
-        /// Check if items contains query
+        // When search query change in search bar then this method will be called
+        // Check if items contains query
         return user.name!.toLowerCase().contains(query.toLowerCase());
       },
+
       onApplyButtonClick: (list) {
-        // setState(() {
-        //   selectedUserList = List.from(list!);
-        // });
+        setState(() {
+          selectedUserList = List.from(list!);
+        });
         Navigator.pop(context);
       },
+
+      // uncomment below code to create custom choice chip
       choiceChipBuilder: (context, item, isSelected) {
-        return Padding(
-          padding: const EdgeInsets.all(8),
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-            decoration: BoxDecoration(
-                color: isSelected! ? AppColors.primary : Colors.grey[300]!,
-                border: Border.all(
-                  color: isSelected ? AppColors.primary : Colors.grey[300]!,
-                ),
-                borderRadius: BorderRadius.circular(30)),
-            child: Text(
-              item.name,
-              style: TextStyle(
-                color: isSelected ? AppColors.white : AppColors.black,
-              ),
-            ),
+        return Container(
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          decoration: BoxDecoration(
+              border: Border.all(
+            color: isSelected! ? Colors.red[300]! : Colors.grey[300]!,
+          )),
+          child: Subtitle1Text(
+            item.name,
+            
           ),
         );
       },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        TextButton(
+          onPressed: _openFilterDialog,
+          child: Text(
+            "Filter Dialog",
+            style: TextStyle(color: Colors.white),
+          ),
+          style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(Colors.blue)),
+          // color: Colors.blue,
+        ),
+      ],
     );
   }
 }
@@ -81,8 +79,8 @@ class User {
   User({this.name, this.avatar});
 }
 
-/// Creating a global list for example purpose.
-/// Generally it should be within data class or where ever you want
+// Creating a global list for example purpose.
+// Generally it should be within data class or where ever you want
 List<User> userList = [
   User(name: "Abigail", avatar: "user.png"),
   User(name: "Audrey", avatar: "user.png"),
@@ -123,5 +121,5 @@ List<User> userList = [
   User(name: "Wanda", avatar: "user.png"),
   User(name: "Wendy", avatar: "user.png"),
   User(name: "Yvonne", avatar: "user.png"),
-  User(name: "あ", avatar: "user.png"),
+  User(name: "Zoe", avatar: "user.png"),
 ];
