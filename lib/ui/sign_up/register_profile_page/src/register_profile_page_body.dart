@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
@@ -37,59 +38,67 @@ class RegisterProfilePageBody extends StatelessWidget {
             registerProfilePageProvider.select((s) => s.profileImageUrl));
         return Stack(
           children: [
-            CircleAvatar(
-              radius: 120,
-              backgroundColor: AppColors.circleBorder,
-              child: CircleAvatar(
-                radius: 118,
-                backgroundImage: imageFile != null
-                    ? Image.file(imageFile, fit: BoxFit.cover).image
-                    : const AssetImage('assets/images/avatar.jpg'),
-              ),
-            ),
-            RawMaterialButton(
-              onPressed: () async {
-                final image =
-                    await ImagePicker().pickImage(source: ImageSource.gallery);
-                await ref
-                    .read(registerProfilePageProvider.notifier)
-                    .pickImage(image, profileImageUrl);
-              },
-              child: const SizedBox(
-                width: 240,
-                height: 240,
-              ),
-              shape: const CircleBorder(),
-              elevation: 0,
-            ),
+            _userProfile(imageFile),
+            _effectButton(ref, profileImageUrl),
           ],
         );
       },
     );
   }
 
+  Widget _userProfile(File? imageFile) {
+    return CircleAvatar(
+      radius: 120,
+      backgroundColor: AppColors.circleBorder,
+      child: CircleAvatar(
+        radius: 118,
+        backgroundImage: imageFile != null
+            ? Image.file(imageFile, fit: BoxFit.cover).image
+            : const AssetImage('assets/images/avatar.jpg'),
+      ),
+    );
+  }
+
+  Widget _effectButton(WidgetRef ref, String profileImageUrl) {
+    return RawMaterialButton(
+      onPressed: () async {
+        final image =
+            await ImagePicker().pickImage(source: ImageSource.gallery);
+        await ref
+            .read(registerProfilePageProvider.notifier)
+            .pickImage(image, profileImageUrl);
+      },
+      child: const SizedBox(
+        width: 240,
+        height: 240,
+      ),
+      shape: const CircleBorder(),
+      elevation: 0,
+    );
+  }
+
   Widget _registerName() {
-    return Consumer(builder: (context, ref, _) {
-      final controller =
-          ref.watch(registerProfilePageProvider.notifier).btnController;
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: TextField(
-          textInputAction: TextInputAction.done,
-          onTap: () => controller.reset(),
-          textAlign: TextAlign.center,
-          onChanged: (text) {
-            ref.read(registerProfilePageProvider.notifier).inputName(text);
-            controller.reset();
-          },
-          controller:
-              ref.read(registerProfilePageProvider.notifier).profileName,
-          decoration: const InputDecoration(
-            hintText: '名前を入力してください',
+    return Consumer(
+      builder: (context, ref, _) {
+        final controller =
+            ref.watch(registerProfilePageProvider.notifier).btnController;
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: TextField(
+            textInputAction: TextInputAction.done,
+            onTap: () => controller.reset(),
+            textAlign: TextAlign.center,
+            onChanged: (text) {
+              ref.read(registerProfilePageProvider.notifier).inputName(text);
+              controller.reset();
+            },
+            controller:
+                ref.read(registerProfilePageProvider.notifier).profileName,
+            decoration: const InputDecoration(hintText: '名前を入力してください'),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 
   Widget _registerButton() {

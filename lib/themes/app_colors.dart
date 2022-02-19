@@ -9,4 +9,5 @@ class AppColors {
   static const Color grey = Colors.grey;
   static const Color textDisable = Color(0xffABABAB);
   static const Color circleBorder = Colors.black12;
+  static const Color transparent = Colors.transparent;
 }

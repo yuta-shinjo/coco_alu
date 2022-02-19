@@ -20,7 +20,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'diaground',
+      title: 'myCollection',
       theme: theme(context),
       debugShowCheckedModeBanner: false,
       navigatorObservers: [

@@ -68,43 +68,45 @@ class LoginPageBody extends StatelessWidget {
   }
 
   Widget _loginButton() {
-    return Consumer(builder: (context, ref, _) {
-      final loginEmail =
-          ref.watch(loginPageProvider.select((s) => s.loginEmail));
-      final loginPassword =
-          ref.watch(loginPageProvider.select((s) => s.loginPassword));
-      final controller = ref.watch(loginPageProvider.notifier).btnController;
-      return ButtonTheme(
-        child: LoadingButton(
-          primaryColor: AppColors.primary,
-          text: const ButtonText(
-            'ログイン',
-            color: AppColors.primary,
-          ),
-          controller: controller,
-          onPressed: () async {
-            if (loginEmail != '' &&
-                ref
-                    .read(loginPageProvider.notifier)
-                    .ablePassword(loginPassword)) {
-              loadingSuccess(controller);
-              try {
-                await ref
-                    .read(loginPageProvider.notifier)
-                    .emailLogin(loginEmail, loginPassword);
-                Navigator.pushReplacement(context, RootPage.route());
-                loginSuccessMassage();
-              } catch (e) {
-                errorMassage(controller, e);
+    return Consumer(
+      builder: (context, ref, _) {
+        final loginEmail =
+            ref.watch(loginPageProvider.select((s) => s.loginEmail));
+        final loginPassword =
+            ref.watch(loginPageProvider.select((s) => s.loginPassword));
+        final controller = ref.watch(loginPageProvider.notifier).btnController;
+        return ButtonTheme(
+          child: LoadingButton(
+            primaryColor: AppColors.primary,
+            text: const ButtonText(
+              'ログイン',
+              color: AppColors.primary,
+            ),
+            controller: controller,
+            onPressed: () async {
+              if (loginEmail != '' &&
+                  ref
+                      .read(loginPageProvider.notifier)
+                      .ablePassword(loginPassword)) {
+                loadingSuccess(controller);
+                try {
+                  await ref
+                      .read(loginPageProvider.notifier)
+                      .emailLogin(loginEmail, loginPassword);
+                  Navigator.pushReplacement(context, RootPage.route());
+                  loginSuccessMassage();
+                } catch (e) {
+                  errorMassage(controller, e);
+                }
+              } else if (loginEmail == '') {
+                emailErrorMassage(controller);
+              } else {
+                passwordErrorMassage(controller);
               }
-            } else if (loginEmail == '') {
-              emailErrorMassage(controller);
-            } else {
-              passwordErrorMassage(controller);
-            }
-          },
-        ),
-      );
-    });
+            },
+          ),
+        );
+      },
+    );
   }
 }

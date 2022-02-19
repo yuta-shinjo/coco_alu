@@ -30,41 +30,45 @@ class AlbumListPageBody extends ConsumerWidget {
         return Slidable(
           actionPane: SlidableBehindActionPane(),
           secondaryActions: [
-            IconSlideAction(
-              caption: '削除',
-              color: AppColors.red,
-              icon: Icons.delete,
-              onTap: () async => await _showDialog(
-                context,
-                ref,
-                album,
-                index,
-              ),
-            ),
+            _removeAlbum(context, ref, album, index),
           ],
           actionExtentRatio: 1 / 5,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-            child: Row(
+          child: _detailAlbum(album, context),
+        );
+      },
+    );
+  }
+
+  Widget _removeAlbum(
+      BuildContext context, WidgetRef ref, Album album, int index) {
+    return IconSlideAction(
+      caption: '削除',
+      color: AppColors.red,
+      icon: Icons.delete,
+      onTap: () async => await _showDialog(context, ref, album, index),
+    );
+  }
+
+  Widget _detailAlbum(Album album, BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      child: Row(
+        children: [
+          _albumImage(album, context),
+          Container(
+            height: 110,
+            width: MediaQuery.of(context).size.width / 2,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _albumImage(album, context),
-                Container(
-                  height: 110,
-                  width: MediaQuery.of(context).size.width / 2,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      _albumText(album),
-                      _tags(album),
-                    ],
-                  ),
-                ),
+                _albumText(album),
+                _tagArea(album),
               ],
             ),
           ),
-        );
-      },
+        ],
+      ),
     );
   }
 
@@ -130,28 +134,30 @@ class AlbumListPageBody extends ConsumerWidget {
     );
   }
 
-  Widget _tags(Album album) {
+  Widget _tagArea(Album album) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Padding(
         padding: const EdgeInsets.only(left: 12),
         child: Row(
           children: [
-            for (int i = 0; i < album.tags.length; i++)
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 3),
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
-                  decoration: BoxDecoration(
-                    color: AppColors.grey,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: OverlineText(album.tags[i], color: AppColors.white),
-                ),
-              ),
+            for (int i = 0; i < album.tags.length; i++) _tagChip(album, i),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _tagChip(Album album, int i) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 3),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+        decoration: BoxDecoration(
+          color: AppColors.grey,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: OverlineText(album.tags[i], color: AppColors.white),
       ),
     );
   }

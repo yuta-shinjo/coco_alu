@@ -48,6 +48,7 @@ class AddAlbumPageController extends StateNotifier<AddAlbumPageState> {
     state = state.copyWith(isLoading: false);
   }
 
+  // 投稿後に投稿ページに写真を残さないようにするため
   void deleteImage(String imgUrls, File? imgFile) async {
     if (state.imgUrls != '') {
       imgUrls = '';
@@ -83,14 +84,6 @@ class AddAlbumPageController extends StateNotifier<AddAlbumPageState> {
       imgFile,
       tags,
       imgTag,
-    );
-  }
-
-  Future<void> addTags(
-    List<String> tags,
-  ) async {
-    await _fireAlbumService.addTags(
-      tags,
     );
   }
 

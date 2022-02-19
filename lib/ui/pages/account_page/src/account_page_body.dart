@@ -31,31 +31,7 @@ class AccountPageBody extends ConsumerWidget {
             _profileDisplay(),
             const Divider(color: AppColors.grey),
             const SizedBox(height: 60),
-            Column(
-              children: [
-                editProfile(context),
-                const Divider(color: AppColors.grey),
-                emailAdless(email),
-                const Divider(color: AppColors.grey),
-                ListTile(
-                  title: const Subtitle2Text('ログアウト'),
-                  onTap: () async {
-                    await showDialog(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (_) {
-                        return displayDialog();
-                      },
-                    );
-                  },
-                  trailing: const Icon(
-                    Icons.arrow_forward_ios,
-                    color: AppColors.primary,
-                  ),
-                ),
-                const Divider(color: AppColors.grey),
-              ],
-            ),
+            _settingAccount(context, email),
           ],
         ),
       ),
@@ -129,6 +105,57 @@ class AccountPageBody extends ConsumerWidget {
     );
   }
 
+  Widget _settingAccount(BuildContext context, String? email) {
+    return Column(
+      children: [
+        editProfile(context),
+        const Divider(color: AppColors.grey),
+        emailAdless(email),
+        const Divider(color: AppColors.grey),
+        ListTile(
+          title: const Subtitle2Text('ログアウト'),
+          onTap: () async {
+            await showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (_) {
+                return displayDialog();
+              },
+            );
+          },
+          trailing: const Icon(
+            Icons.arrow_forward_ios,
+            color: AppColors.primary,
+          ),
+        ),
+        const Divider(color: AppColors.grey),
+      ],
+    );
+  }
+
+  Widget editProfile(BuildContext context) {
+    return Consumer(builder: (context, ref, _) {
+      return ListTile(
+        title: const Subtitle2Text('プロフィールを編集'),
+        onTap: () {
+          ref.read(accountPageProvider.notifier).resetProfile();
+          Navigator.push(context, EditProfilePage.route());
+        },
+        trailing: const Icon(
+          Icons.arrow_forward_ios,
+          color: AppColors.primary,
+        ),
+      );
+    });
+  }
+
+  ListTile emailAdless(String? email) {
+    return ListTile(
+      title: const Subtitle2Text('メールアドレス'),
+      trailing: Subtitle1Text(email, color: AppColors.textDisable),
+    );
+  }
+
   Widget displayDialog() {
     return Consumer(
       builder: (context, ref, _) {
@@ -146,26 +173,6 @@ class AccountPageBody extends ConsumerWidget {
           },
         );
       },
-    );
-  }
-
-  ListTile emailAdless(String? email) {
-    return ListTile(
-      title: const Subtitle2Text('メールアドレス'),
-      trailing: Subtitle1Text(email, color: AppColors.textDisable),
-    );
-  }
-
-  ListTile editProfile(BuildContext context) {
-    return ListTile(
-      title: const Subtitle2Text('プロフィールを編集'),
-      onTap: () {
-        Navigator.push(context, EditProfilePage.route());
-      },
-      trailing: const Icon(
-        Icons.arrow_forward_ios,
-        color: AppColors.primary,
-      ),
     );
   }
 }

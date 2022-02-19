@@ -1,17 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:my_collection/controllers/pages/login_page_controller.dart';
-import 'package:my_collection/controllers/pages/register_profile_page_controller.dart';
 import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/src/theme_text.dart';
-import 'package:my_collection/ui/pages/root_page/root_page.dart';
 import 'package:my_collection/ui/projects/elevated_button.dart';
 import 'package:my_collection/ui/sign_up/login_page/src/login_page_body.dart';
 import 'package:my_collection/ui/sign_up/register_page/register_page.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
-// import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -92,7 +86,6 @@ class LoginPage extends StatelessWidget {
             //     },
             //   ),
             // ),
-            SizedBox(height: 8),
             ButtonTheme(
               child: PressedButton(
                 primaryColor: AppColors.primary,

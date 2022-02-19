@@ -33,30 +33,34 @@ class HomePageBody extends ConsumerWidget {
       itemCount: albums.length,
       itemBuilder: (BuildContext context, int index) {
         final album = albums[index];
-        return GestureDetector(
-          onTap: () => _goToDetail(context, album),
-          child: Padding(
-            padding: const EdgeInsets.all(4),
-            child: Card(
-              clipBehavior: Clip.antiAlias,
-              elevation: 5,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: Ink.image(
-                image: album.imgUrls != ''
-                    ? Image.network(album.imgUrls).image
-                    : Image.asset('assets/images/photo.jpg').image,
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-        );
+        return _albumImage(context, album);
       },
     );
   }
 
-  _goToDetail(BuildContext context, Album album) {
+  Widget _albumImage(BuildContext context, Album album) {
+    return GestureDetector(
+      onTap: () => _goToDetail(context, album),
+      child: Padding(
+        padding: const EdgeInsets.all(4),
+        child: Card(
+          clipBehavior: Clip.antiAlias,
+          elevation: 5,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Ink.image(
+            image: album.imgUrls != ''
+                ? Image.network(album.imgUrls).image
+                : Image.asset('assets/images/photo.jpg').image,
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _goToDetail(BuildContext context, Album album) {
     final page = AlbumDetailPage(album: album);
     Navigator.of(context).push(
       PageRouteBuilder<Null>(

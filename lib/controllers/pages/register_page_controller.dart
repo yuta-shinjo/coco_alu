@@ -41,7 +41,5 @@ class RegisterPageController extends StateNotifier<RegisterPageState> {
   Future<void> isRegister(String newEmail, String newPassword) async =>
       _fireUsersService.registerUser(newEmail, newPassword);
 
-  final authError = AuthenticationError();
-
   final btnController = RoundedLoadingButtonController();
 }

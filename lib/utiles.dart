@@ -68,6 +68,14 @@ void nameErrorMassage(RoundedLoadingButtonController controller) {
   );
 }
 
+void profileEditErrorMassage(RoundedLoadingButtonController controller) {
+  loadingError(controller);
+  Fluttertoast.showToast(
+    msg: 'ユーザー名またはプロフィール画像を変更してください',
+    toastLength: Toast.LENGTH_LONG,
+  );
+}
+
 void pictureErrorMassage(RoundedLoadingButtonController controller) {
   loadingError(controller);
   Fluttertoast.showToast(

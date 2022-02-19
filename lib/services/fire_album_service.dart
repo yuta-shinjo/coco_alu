@@ -56,19 +56,6 @@ class FireAlbumService {
     });
   }
 
-  Future<void> addTags(
-    List<String> tags,
-  ) async {
-    final collectionRef = _fireStore
-        .collection('tags')
-        .doc(_auth.currentUser?.uid)
-        .collection('tags')
-        .doc(_auth.currentUser?.uid);
-    await collectionRef.set({
-      FieldName.tags: tags.map((e) => e).toList(),
-    });
-  }
-
   Future<void> deleteAlbum(Album album) {
     return _fireStore
         .collection('users')

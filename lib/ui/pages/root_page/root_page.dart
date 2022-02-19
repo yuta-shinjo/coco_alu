@@ -57,7 +57,6 @@ class _RootPageState extends ConsumerState<RootPage>
     ];
     
     return Scaffold(
-      // body: _tabs[currentIndex],
       body: IndexedStack(children: _tabs, index: currentIndex),
       bottomNavigationBar: _bottomNavigation(context, currentIndex),
     );

@@ -39,6 +39,26 @@ class AccountPageController extends StateNotifier<AccountPageState> {
     }
   }
 
+  // プロフィールを編集した時に時にリアルタイムに反映させるようにするため
+  Future<void> fetchUserProfile() async {
+    final profile = await _fireUsersService.fetchUserProfile();
+    if (profile != null) {
+      state = state.copyWith(profile: profile);
+    }
+  }
+
+  // 編集ページで呼び出さないのは、変更ボタンを押さずにaccount_pageに戻った後、
+  // 再度変更ボタンを押すと前回の内容が反映されてしまうためaccount_pageで実装した
+  // 登録後に入力した内容を削除するため
+  void resetProfile() {
+    if (state.name != '') {
+      state = state.copyWith(name: '');
+    }
+    if (state.imageFile != null) {
+      state = state.copyWith(imageFile: null);
+    }
+  }
+
   final _fireUsersService = FireUsersService();
 
   final profileName = TextEditingController();
@@ -55,8 +75,7 @@ class AccountPageController extends StateNotifier<AccountPageState> {
     if (state.imageFile != null) {
       state = state.copyWith(imageFile: null);
     }
-    if (state.profile.imgUrls != '') {
-    }
+    if (state.profile.imgUrls != '') {}
   }
 
   Future<void> updateProfile(

@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_collection/models/src/album.dart';
+import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/src/theme_text.dart';
 import 'package:my_collection/ui/components/src/universal.dart';
 
-class AlbumDetailPage extends ConsumerWidget {
+class AlbumDetailPage extends StatelessWidget {
   const AlbumDetailPage({Key? key, required this.album}) : super(key: key);
 
   final Album album;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return Stack(
       children: [
         Hero(
           tag: "background_${album.content}",
           child: Container(
-            color: Colors.white,
+            color: AppColors.white,
           ),
         ),
         Scaffold(
-          backgroundColor: Colors.transparent,
+          backgroundColor: AppColors.transparent,
           appBar: AppBar(
             leading: CloseButton(),
           ),
@@ -34,28 +34,24 @@ class AlbumDetailPage extends ConsumerWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          Hero(
-            tag: "image_${album.content}",
-            child: Container(
-              height: MediaQuery.of(context).size.height / 2,
-              width: double.infinity,
-              child: UniversalImage(
-                album.imgUrls,
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
+          _displayImage(context),
           const SizedBox(height: 30),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Hero(
-              tag: "background_${album.content}",
-              child: Container(
-                child: Subtitle2Text(album.content),
-              ),
-            ),
+            child: Subtitle2Text(album.content),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _displayImage(BuildContext context) {
+    return Hero(
+      tag: "image_${album.content}",
+      child: Container(
+        height: MediaQuery.of(context).size.height / 2,
+        width: double.infinity,
+        child: UniversalImage(album.imgUrls, fit: BoxFit.cover),
       ),
     );
   }

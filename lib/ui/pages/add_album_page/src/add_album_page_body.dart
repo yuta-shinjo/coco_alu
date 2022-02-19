@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:exif/exif.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
@@ -23,7 +22,7 @@ class AddAlbumPgeBody extends ConsumerWidget {
     final imgUrls = ref.watch(addAlbumPageProvider.select((s) => s.imgUrls));
     final content = ref.watch(addAlbumPageProvider.select((s) => s.content));
     final btnController = ref.read(addAlbumPageProvider.notifier).btnController;
-    final controller =
+    final contentController =
         ref.read(addAlbumPageProvider.notifier).contentController;
     final tags =
         ref.watch(tagChipsPageProvider.select((s) => s.labelList)) ?? [];
@@ -36,28 +35,14 @@ class AddAlbumPgeBody extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              GestureDetector(
-                onTap: () async {
-                  final image = await ImagePicker()
-                      .pickImage(source: ImageSource.gallery);
-                  await ref
-                      .read(addAlbumPageProvider.notifier)
-                      .pickImage(image, imgUrls);
-                  btnController.reset();
-                },
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.height / 3,
-                  width: double.infinity,
-                  child: _imgArea(imgFile),
-                ),
-              ),
+              _selectImage(ref, imgUrls, btnController, context, imgFile),
               const Divider(color: AppColors.grey),
               const Padding(
                 padding: EdgeInsets.only(left: 16, top: 18),
                 child: Subtitle2Text('キャプション', color: AppColors.textDisable),
               ),
               const Divider(color: AppColors.grey),
-              _contentArea(controller, btnController),
+              _contentArea(contentController, btnController),
               const Divider(color: AppColors.grey),
               const Padding(
                 padding: EdgeInsets.only(left: 16, top: 16),
@@ -66,64 +51,85 @@ class AddAlbumPgeBody extends ConsumerWidget {
               const Divider(color: AppColors.grey),
               TagChip(btnController: btnController),
               const SizedBox(height: 40),
-              ButtonTheme(
-                child: LoadingButton(
-                  primaryColor: AppColors.primary,
-                  text: ButtonText('作成'),
-                  controller: btnController,
-                  onPressed: () async {
-                    // if (imgFile != null) {
-                      try {
-                        ref.read(addAlbumPageProvider.notifier).startLoading();
-                        ref
-                            .read(addAlbumPageProvider.notifier)
-                            .loadingSuccess(btnController);
-                        await ref.read(addAlbumPageProvider.notifier).addAlbum(
-                              content,
-                              imgUrls,
-                              imgFile,
-                              tags,
-                              imgTag,
-                            );
-                        if (tags != []) {
-                          await ref
-                              .read(addAlbumPageProvider.notifier)
-                              .addTags(tags);
-                        }
-                        createAlbumSuccessMassage();
-                        ref
-                            .read(addAlbumPageProvider.notifier)
-                            .contentController
-                            .clear();
-                        ref
-                            .read(addAlbumPageProvider.notifier)
-                            .deleteImage(imgUrls, imgFile);
-                        ref.read(tagChipsPageProvider.notifier).clearChips();
-                      } catch (e) {
-                        ref
-                            .read(addAlbumPageProvider.notifier)
-                            .loadingError(btnController);
-                        print(e);
-                      } finally {
-                        ref.read(addAlbumPageProvider.notifier).endLoading();
-                        btnController.reset();
-                        ref.read(homePageProvider.notifier).fetchAlbumList();
-                        ref.read(albumListPageProvider.notifier).fetchAlbumList();
-                      }
-                    // } else {
-                    //   ref
-                    //       .read(addAlbumPageProvider.notifier)
-                    //       .btnController
-                    //       .error();
-                    //   pictureErrorMassage(btnController);
-                    // }
-                  },
-                ),
-              ),
+              _createdButton(
+                  btnController, ref, content, imgUrls, imgFile, tags, imgTag),
               SizedBox(height: 30),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _createdButton(
+    RoundedLoadingButtonController btnController,
+    WidgetRef ref,
+    String content,
+    String imgUrls,
+    File? imgFile,
+    List<String> tags,
+    String imgTag,
+  ) {
+    return ButtonTheme(
+      child: LoadingButton(
+        primaryColor: AppColors.primary,
+        text: ButtonText('作成'),
+        controller: btnController,
+        onPressed: () async {
+          // if (imgFile != null) {
+          try {
+            ref.read(addAlbumPageProvider.notifier).startLoading();
+            ref
+                .read(addAlbumPageProvider.notifier)
+                .loadingSuccess(btnController);
+            await ref
+                .read(addAlbumPageProvider.notifier)
+                .addAlbum(content, imgUrls, imgFile, tags, imgTag);
+            createAlbumSuccessMassage();
+            ref.read(addAlbumPageProvider.notifier).contentController.clear();
+            ref
+                .read(addAlbumPageProvider.notifier)
+                .deleteImage(imgUrls, imgFile);
+            ref.read(tagChipsPageProvider.notifier).clearChips();
+          } catch (e) {
+            ref.read(addAlbumPageProvider.notifier).loadingError(btnController);
+            print(e);
+          } finally {
+            ref.read(addAlbumPageProvider.notifier).endLoading();
+            btnController.reset();
+            ref.read(homePageProvider.notifier).fetchAlbumList();
+            ref.read(albumListPageProvider.notifier).fetchAlbumList();
+          }
+          // } else {
+          //   ref
+          //       .read(addAlbumPageProvider.notifier)
+          //       .btnController
+          //       .error();
+          //   pictureErrorMassage(btnController);
+          // }
+        },
+      ),
+    );
+  }
+
+  Widget _selectImage(
+    WidgetRef ref,
+    String imgUrls,
+    RoundedLoadingButtonController btnController,
+    BuildContext context,
+    File? imgFile,
+  ) {
+    return GestureDetector(
+      onTap: () async {
+        final image =
+            await ImagePicker().pickImage(source: ImageSource.gallery);
+        await ref.read(addAlbumPageProvider.notifier).pickImage(image, imgUrls);
+        btnController.reset();
+      },
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height / 3,
+        width: double.infinity,
+        child: _imgArea(imgFile),
       ),
     );
   }
@@ -140,7 +146,7 @@ class AddAlbumPgeBody extends ConsumerWidget {
   }
 
   Widget _contentArea(
-    TextEditingController controller,
+    TextEditingController contentController,
     RoundedLoadingButtonController btnController,
   ) {
     return Consumer(
@@ -157,7 +163,7 @@ class AddAlbumPgeBody extends ConsumerWidget {
           onChanged: (text) {
             ref.read(addAlbumPageProvider.notifier).inputContent(text);
           },
-          controller: controller,
+          controller: contentController,
         );
       },
     );
