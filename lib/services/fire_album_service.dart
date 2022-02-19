@@ -32,6 +32,7 @@ class FireAlbumService {
     String imgUrls,
     File? imgFile,
     List<String> tags,
+    String imgTag,
   ) async {
     final collectionRef = _fireStore
         .collection('users')
@@ -49,8 +50,12 @@ class FireAlbumService {
       FieldName.imgUrls: imgUrls,
       FieldName.id: id,
       FieldName.tags: tags.map((e) => e).toList(),
+      FieldName.public: false,
+      FieldName.created: FieldValue.serverTimestamp(),
+      FieldName.imgTag: imgTag,
     });
   }
+
   Future<void> addTags(
     List<String> tags,
   ) async {

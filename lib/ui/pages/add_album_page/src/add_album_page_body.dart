@@ -1,9 +1,11 @@
 import 'dart:io';
+import 'package:exif/exif.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_collection/controllers/pages/add_album_page_controller.dart';
+import 'package:my_collection/controllers/pages/album_list_page_controller.dart';
+import 'package:my_collection/controllers/pages/home_page_controller.dart';
 import 'package:my_collection/controllers/pages/tag_chips_page_controller.dart';
 import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/components.dart';
@@ -18,13 +20,14 @@ class AddAlbumPgeBody extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final imgFile = ref.watch(addAlbumPageProvider.select((s) => s.imgFile));
-    final imgUrls = ref.watch(addAlbumPageProvider.select((s) => s.imgUrl));
+    final imgUrls = ref.watch(addAlbumPageProvider.select((s) => s.imgUrls));
     final content = ref.watch(addAlbumPageProvider.select((s) => s.content));
     final btnController = ref.read(addAlbumPageProvider.notifier).btnController;
     final controller =
         ref.read(addAlbumPageProvider.notifier).contentController;
     final tags =
         ref.watch(tagChipsPageProvider.select((s) => s.labelList)) ?? [];
+    final imgTag = ref.watch(addAlbumPageProvider.select((s) => s.imgTag));
     return Focus(
       focusNode: FocusNode(),
       child: GestureDetector(
@@ -48,6 +51,7 @@ class AddAlbumPgeBody extends ConsumerWidget {
                   child: _imgArea(imgFile),
                 ),
               ),
+              const Divider(color: AppColors.grey),
               const Padding(
                 padding: EdgeInsets.only(left: 16, top: 18),
                 child: Subtitle2Text('キャプション', color: AppColors.textDisable),
@@ -68,16 +72,19 @@ class AddAlbumPgeBody extends ConsumerWidget {
                   text: ButtonText('作成'),
                   controller: btnController,
                   onPressed: () async {
-                    if (imgFile != null) {
-                      print(tags);
+                    // if (imgFile != null) {
                       try {
                         ref.read(addAlbumPageProvider.notifier).startLoading();
                         ref
                             .read(addAlbumPageProvider.notifier)
                             .loadingSuccess(btnController);
-                        await ref
-                            .read(addAlbumPageProvider.notifier)
-                            .addAlbum(content, imgUrls, imgFile, tags);
+                        await ref.read(addAlbumPageProvider.notifier).addAlbum(
+                              content,
+                              imgUrls,
+                              imgFile,
+                              tags,
+                              imgTag,
+                            );
                         if (tags != []) {
                           await ref
                               .read(addAlbumPageProvider.notifier)
@@ -99,13 +106,17 @@ class AddAlbumPgeBody extends ConsumerWidget {
                         print(e);
                       } finally {
                         ref.read(addAlbumPageProvider.notifier).endLoading();
+                        btnController.reset();
+                        ref.read(homePageProvider.notifier).fetchAlbumList();
+                        ref.read(albumListPageProvider.notifier).fetchAlbumList();
                       }
-                    } else {
-                      ref
-                          .read(addAlbumPageProvider.notifier)
-                          .btnController
-                          .error();
-                    }
+                    // } else {
+                    //   ref
+                    //       .read(addAlbumPageProvider.notifier)
+                    //       .btnController
+                    //       .error();
+                    //   pictureErrorMassage(btnController);
+                    // }
                   },
                 ),
               ),
@@ -121,8 +132,8 @@ class AddAlbumPgeBody extends ConsumerWidget {
     return Image(
       image: imgFile != null
           ? Image.file(imgFile, fit: BoxFit.cover).image
-          : NetworkImage(
-              'https://www.tsuzukiblog.org/_wu/2020/03/shutterstock_1005938026.jpg',
+          : AssetImage(
+              'assets/images/photo.jpg',
             ),
       fit: BoxFit.cover,
     );

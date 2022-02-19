@@ -14,13 +14,13 @@ class HomePage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const AppBarText('アルバム一覧'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () => _openFilterDialog(context),
-            tooltip: 'タグ検索',
-          ),
-        ],
+        // actions: [
+        //   IconButton(
+        //     icon: Icon(Icons.search),
+        //     onPressed: () => _openFilterDialog(context),
+        //     tooltip: 'タグ検索',
+        //   ),
+        // ],
       ),
       body: HomePageBody(),
     );

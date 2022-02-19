@@ -44,10 +44,7 @@ class RegisterProfilePageBody extends StatelessWidget {
                 radius: 118,
                 backgroundImage: imageFile != null
                     ? Image.file(imageFile, fit: BoxFit.cover).image
-                    : const NetworkImage(
-                        //netのURLのため注意
-                        'https://itojisan.xyz/wp-content/uploads/2016/09/acount-300x300.png',
-                      ),
+                    : const AssetImage('assets/images/avatar.jpg'),
               ),
             ),
             RawMaterialButton(

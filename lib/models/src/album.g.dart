@@ -13,9 +13,13 @@ _$_Album _$$_AlbumFromJson(Map<String, dynamic> json) => _$_Album(
       tags:
           (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList() ??
               const <String>[],
-      created: json['created'] == null
-          ? null
-          : DateTime.parse(json['created'] as String),
+      public: json['public'] as bool? ?? false,
+      latitudeRef: json['latitudeRef'] as String? ?? '',
+      latitude: json['latitude'] as String? ?? '',
+      longitudeRef: json['longitudeRef'] as String? ?? '',
+      longitude: json['longitude'] as String? ?? '',
+      imgLocation: json['imgLocation'] as String? ?? '',
+      created: const FireTimestampConverterNonNull().fromJson(json['created']),
     );
 
 Map<String, dynamic> _$$_AlbumToJson(_$_Album instance) => <String, dynamic>{
@@ -23,5 +27,11 @@ Map<String, dynamic> _$$_AlbumToJson(_$_Album instance) => <String, dynamic>{
       'content': instance.content,
       'imgUrls': instance.imgUrls,
       'tags': instance.tags,
-      'created': instance.created?.toIso8601String(),
+      'public': instance.public,
+      'latitudeRef': instance.latitudeRef,
+      'latitude': instance.latitude,
+      'longitudeRef': instance.longitudeRef,
+      'longitude': instance.longitude,
+      'imgLocation': instance.imgLocation,
+      'created': const FireTimestampConverterNonNull().toJson(instance.created),
     };

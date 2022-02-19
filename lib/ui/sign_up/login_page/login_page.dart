@@ -11,6 +11,7 @@ import 'package:my_collection/ui/sign_up/login_page/src/login_page_body.dart';
 import 'package:my_collection/ui/sign_up/register_page/register_page.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
+// import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -52,33 +53,46 @@ class LoginPage extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SignInButton(
-              Buttons.Google,
-              // TODO ログインした後に戻るボタンがあるのが気になる
-              onPressed: () async {
-                try {
-                  ref
-                      .read(loginPageProvider.notifier)
-                      .googleLogin()
-                      .then((value) {
-                    Navigator.pushReplacement(context, RootPage.route());
-                    // 初回ログインのみfirebaseにprofileを作成する
-                    if (value.additionalUserInfo?.isNewUser == true) {
-                      ref
-                          .read(registerProfilePageProvider.notifier)
-                          .createGoogleUserProfile(
-                              value.user?.displayName, value.user?.photoURL);
-                    }
-                  });
-                } on FirebaseAuthException catch (e) {
-                  print('FirebaseAuthException');
-                  print('${e.code}');
-                } on Exception catch (e) {
-                  print('Exception');
-                  print('${e.toString()}');
-                }
-              },
-            ),
+            // SignInButton(
+            //   Buttons.Google,
+            //   onPressed: () async {
+            //     try {
+            //       ref
+            //           .read(loginPageProvider.notifier)
+            //           .googleLogin()
+            //           .then((value) {
+            //         Navigator.pushReplacement(context, RootPage.route());
+            //         // 初回ログインのみfirebaseにprofileを作成する
+            //         if (value.additionalUserInfo?.isNewUser == true) {
+            //           ref
+            //               .read(registerProfilePageProvider.notifier)
+            //               .createGoogleUserProfile(
+            //                   value.user?.displayName, value.user?.photoURL);
+            //         }
+            //       });
+            //     } on FirebaseAuthException catch (e) {
+            //       print('${e.code}');
+            //     } on Exception catch (e) {
+            //       print('${e.toString()}');
+            //     }
+            //   },
+            // ),
+            // SizedBox(height: 8),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 60),
+            //   child: SignInWithAppleButton(
+            //     onPressed: () async {
+            //       final credential = await SignInWithApple.getAppleIDCredential(
+            //         scopes: [
+            //           AppleIDAuthorizationScopes.email,
+            //           AppleIDAuthorizationScopes.fullName,
+            //         ],
+            //       );
+            //       print(credential);
+            //     },
+            //   ),
+            // ),
+            SizedBox(height: 8),
             ButtonTheme(
               child: PressedButton(
                 primaryColor: AppColors.primary,

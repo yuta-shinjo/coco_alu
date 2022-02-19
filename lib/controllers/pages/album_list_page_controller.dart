@@ -25,16 +25,26 @@ class AlbumListPageController extends StateNotifier<AlbumListPageState> {
   final _fireAlbumService = FireAlbumService();
 
   void _init() async {
-    _fireAlbumService.fetchAlbumList(
+    await _fireAlbumService.fetchAlbumList(
       onValueChanged: (albums) {
         state = state.copyWith(albums: albums);
       },
     );
   }
 
-  Future<void> deleteAlbum(Album album) async {
+  // 作成ページで作成ボタンを押したときにalbum_list_pageのリストを更新するため
+  Future<void> fetchAlbumList() async {
+    await _fireAlbumService.fetchAlbumList(
+      onValueChanged: (albums) {
+        state = state.copyWith(albums: albums);
+      },
+    );
+  }
+
+  Future<void> deleteAlbum(Album album, int index) async {
     final albums = [...?state.albums];
-    await _fireAlbumService.deleteAlbum(album);
+    albums.removeAt(index);
+    _fireAlbumService.deleteAlbum(album);
     state = state.copyWith(albums: albums);
   }
 

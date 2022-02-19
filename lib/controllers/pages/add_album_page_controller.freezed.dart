@@ -21,26 +21,28 @@ class _$AddAlbumPageStateTearOff {
   _AddAlbumPageState call(
       {String id = '',
       String content = '',
-      String imgUrl = '',
-      List<Album>? album,
+      String imgUrls = '',
+      List<Album>? albums,
       List<Tags>? tag,
+      String latitudeRef = '',
+      String latitude = '',
+      String longitudeRef = '',
+      String longitude = '',
+      String imgTag = '',
       bool isLoading = false,
-      bool isTravel = false,
-      bool isFood = false,
-      bool isFamily = false,
-      bool isSelected = false,
       File? imgFile}) {
     return _AddAlbumPageState(
       id: id,
       content: content,
-      imgUrl: imgUrl,
-      album: album,
+      imgUrls: imgUrls,
+      albums: albums,
       tag: tag,
+      latitudeRef: latitudeRef,
+      latitude: latitude,
+      longitudeRef: longitudeRef,
+      longitude: longitude,
+      imgTag: imgTag,
       isLoading: isLoading,
-      isTravel: isTravel,
-      isFood: isFood,
-      isFamily: isFamily,
-      isSelected: isSelected,
       imgFile: imgFile,
     );
   }
@@ -53,14 +55,15 @@ const $AddAlbumPageState = _$AddAlbumPageStateTearOff();
 mixin _$AddAlbumPageState {
   String get id => throw _privateConstructorUsedError;
   String get content => throw _privateConstructorUsedError;
-  String get imgUrl => throw _privateConstructorUsedError;
-  List<Album>? get album => throw _privateConstructorUsedError;
+  String get imgUrls => throw _privateConstructorUsedError;
+  List<Album>? get albums => throw _privateConstructorUsedError;
   List<Tags>? get tag => throw _privateConstructorUsedError;
+  String get latitudeRef => throw _privateConstructorUsedError;
+  String get latitude => throw _privateConstructorUsedError;
+  String get longitudeRef => throw _privateConstructorUsedError;
+  String get longitude => throw _privateConstructorUsedError;
+  String get imgTag => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
-  bool get isTravel => throw _privateConstructorUsedError;
-  bool get isFood => throw _privateConstructorUsedError;
-  bool get isFamily => throw _privateConstructorUsedError;
-  bool get isSelected => throw _privateConstructorUsedError;
   File? get imgFile => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -76,14 +79,15 @@ abstract class $AddAlbumPageStateCopyWith<$Res> {
   $Res call(
       {String id,
       String content,
-      String imgUrl,
-      List<Album>? album,
+      String imgUrls,
+      List<Album>? albums,
       List<Tags>? tag,
+      String latitudeRef,
+      String latitude,
+      String longitudeRef,
+      String longitude,
+      String imgTag,
       bool isLoading,
-      bool isTravel,
-      bool isFood,
-      bool isFamily,
-      bool isSelected,
       File? imgFile});
 }
 
@@ -100,14 +104,15 @@ class _$AddAlbumPageStateCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? content = freezed,
-    Object? imgUrl = freezed,
-    Object? album = freezed,
+    Object? imgUrls = freezed,
+    Object? albums = freezed,
     Object? tag = freezed,
+    Object? latitudeRef = freezed,
+    Object? latitude = freezed,
+    Object? longitudeRef = freezed,
+    Object? longitude = freezed,
+    Object? imgTag = freezed,
     Object? isLoading = freezed,
-    Object? isTravel = freezed,
-    Object? isFood = freezed,
-    Object? isFamily = freezed,
-    Object? isSelected = freezed,
     Object? imgFile = freezed,
   }) {
     return _then(_value.copyWith(
@@ -119,37 +124,41 @@ class _$AddAlbumPageStateCopyWithImpl<$Res>
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
               as String,
-      imgUrl: imgUrl == freezed
-          ? _value.imgUrl
-          : imgUrl // ignore: cast_nullable_to_non_nullable
+      imgUrls: imgUrls == freezed
+          ? _value.imgUrls
+          : imgUrls // ignore: cast_nullable_to_non_nullable
               as String,
-      album: album == freezed
-          ? _value.album
-          : album // ignore: cast_nullable_to_non_nullable
+      albums: albums == freezed
+          ? _value.albums
+          : albums // ignore: cast_nullable_to_non_nullable
               as List<Album>?,
       tag: tag == freezed
           ? _value.tag
           : tag // ignore: cast_nullable_to_non_nullable
               as List<Tags>?,
+      latitudeRef: latitudeRef == freezed
+          ? _value.latitudeRef
+          : latitudeRef // ignore: cast_nullable_to_non_nullable
+              as String,
+      latitude: latitude == freezed
+          ? _value.latitude
+          : latitude // ignore: cast_nullable_to_non_nullable
+              as String,
+      longitudeRef: longitudeRef == freezed
+          ? _value.longitudeRef
+          : longitudeRef // ignore: cast_nullable_to_non_nullable
+              as String,
+      longitude: longitude == freezed
+          ? _value.longitude
+          : longitude // ignore: cast_nullable_to_non_nullable
+              as String,
+      imgTag: imgTag == freezed
+          ? _value.imgTag
+          : imgTag // ignore: cast_nullable_to_non_nullable
+              as String,
       isLoading: isLoading == freezed
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isTravel: isTravel == freezed
-          ? _value.isTravel
-          : isTravel // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isFood: isFood == freezed
-          ? _value.isFood
-          : isFood // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isFamily: isFamily == freezed
-          ? _value.isFamily
-          : isFamily // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isSelected: isSelected == freezed
-          ? _value.isSelected
-          : isSelected // ignore: cast_nullable_to_non_nullable
               as bool,
       imgFile: imgFile == freezed
           ? _value.imgFile
@@ -169,14 +178,15 @@ abstract class _$AddAlbumPageStateCopyWith<$Res>
   $Res call(
       {String id,
       String content,
-      String imgUrl,
-      List<Album>? album,
+      String imgUrls,
+      List<Album>? albums,
       List<Tags>? tag,
+      String latitudeRef,
+      String latitude,
+      String longitudeRef,
+      String longitude,
+      String imgTag,
       bool isLoading,
-      bool isTravel,
-      bool isFood,
-      bool isFamily,
-      bool isSelected,
       File? imgFile});
 }
 
@@ -195,14 +205,15 @@ class __$AddAlbumPageStateCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? content = freezed,
-    Object? imgUrl = freezed,
-    Object? album = freezed,
+    Object? imgUrls = freezed,
+    Object? albums = freezed,
     Object? tag = freezed,
+    Object? latitudeRef = freezed,
+    Object? latitude = freezed,
+    Object? longitudeRef = freezed,
+    Object? longitude = freezed,
+    Object? imgTag = freezed,
     Object? isLoading = freezed,
-    Object? isTravel = freezed,
-    Object? isFood = freezed,
-    Object? isFamily = freezed,
-    Object? isSelected = freezed,
     Object? imgFile = freezed,
   }) {
     return _then(_AddAlbumPageState(
@@ -214,37 +225,41 @@ class __$AddAlbumPageStateCopyWithImpl<$Res>
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
               as String,
-      imgUrl: imgUrl == freezed
-          ? _value.imgUrl
-          : imgUrl // ignore: cast_nullable_to_non_nullable
+      imgUrls: imgUrls == freezed
+          ? _value.imgUrls
+          : imgUrls // ignore: cast_nullable_to_non_nullable
               as String,
-      album: album == freezed
-          ? _value.album
-          : album // ignore: cast_nullable_to_non_nullable
+      albums: albums == freezed
+          ? _value.albums
+          : albums // ignore: cast_nullable_to_non_nullable
               as List<Album>?,
       tag: tag == freezed
           ? _value.tag
           : tag // ignore: cast_nullable_to_non_nullable
               as List<Tags>?,
+      latitudeRef: latitudeRef == freezed
+          ? _value.latitudeRef
+          : latitudeRef // ignore: cast_nullable_to_non_nullable
+              as String,
+      latitude: latitude == freezed
+          ? _value.latitude
+          : latitude // ignore: cast_nullable_to_non_nullable
+              as String,
+      longitudeRef: longitudeRef == freezed
+          ? _value.longitudeRef
+          : longitudeRef // ignore: cast_nullable_to_non_nullable
+              as String,
+      longitude: longitude == freezed
+          ? _value.longitude
+          : longitude // ignore: cast_nullable_to_non_nullable
+              as String,
+      imgTag: imgTag == freezed
+          ? _value.imgTag
+          : imgTag // ignore: cast_nullable_to_non_nullable
+              as String,
       isLoading: isLoading == freezed
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isTravel: isTravel == freezed
-          ? _value.isTravel
-          : isTravel // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isFood: isFood == freezed
-          ? _value.isFood
-          : isFood // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isFamily: isFamily == freezed
-          ? _value.isFamily
-          : isFamily // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isSelected: isSelected == freezed
-          ? _value.isSelected
-          : isSelected // ignore: cast_nullable_to_non_nullable
               as bool,
       imgFile: imgFile == freezed
           ? _value.imgFile
@@ -260,14 +275,15 @@ class _$_AddAlbumPageState implements _AddAlbumPageState {
   const _$_AddAlbumPageState(
       {this.id = '',
       this.content = '',
-      this.imgUrl = '',
-      this.album,
+      this.imgUrls = '',
+      this.albums,
       this.tag,
+      this.latitudeRef = '',
+      this.latitude = '',
+      this.longitudeRef = '',
+      this.longitude = '',
+      this.imgTag = '',
       this.isLoading = false,
-      this.isTravel = false,
-      this.isFood = false,
-      this.isFamily = false,
-      this.isSelected = false,
       this.imgFile});
 
   @JsonKey()
@@ -278,32 +294,35 @@ class _$_AddAlbumPageState implements _AddAlbumPageState {
   final String content;
   @JsonKey()
   @override
-  final String imgUrl;
+  final String imgUrls;
   @override
-  final List<Album>? album;
+  final List<Album>? albums;
   @override
   final List<Tags>? tag;
   @JsonKey()
   @override
+  final String latitudeRef;
+  @JsonKey()
+  @override
+  final String latitude;
+  @JsonKey()
+  @override
+  final String longitudeRef;
+  @JsonKey()
+  @override
+  final String longitude;
+  @JsonKey()
+  @override
+  final String imgTag;
+  @JsonKey()
+  @override
   final bool isLoading;
-  @JsonKey()
-  @override
-  final bool isTravel;
-  @JsonKey()
-  @override
-  final bool isFood;
-  @JsonKey()
-  @override
-  final bool isFamily;
-  @JsonKey()
-  @override
-  final bool isSelected;
   @override
   final File? imgFile;
 
   @override
   String toString() {
-    return 'AddAlbumPageState(id: $id, content: $content, imgUrl: $imgUrl, album: $album, tag: $tag, isLoading: $isLoading, isTravel: $isTravel, isFood: $isFood, isFamily: $isFamily, isSelected: $isSelected, imgFile: $imgFile)';
+    return 'AddAlbumPageState(id: $id, content: $content, imgUrls: $imgUrls, albums: $albums, tag: $tag, latitudeRef: $latitudeRef, latitude: $latitude, longitudeRef: $longitudeRef, longitude: $longitude, imgTag: $imgTag, isLoading: $isLoading, imgFile: $imgFile)';
   }
 
   @override
@@ -313,15 +332,17 @@ class _$_AddAlbumPageState implements _AddAlbumPageState {
             other is _AddAlbumPageState &&
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.content, content) &&
-            const DeepCollectionEquality().equals(other.imgUrl, imgUrl) &&
-            const DeepCollectionEquality().equals(other.album, album) &&
+            const DeepCollectionEquality().equals(other.imgUrls, imgUrls) &&
+            const DeepCollectionEquality().equals(other.albums, albums) &&
             const DeepCollectionEquality().equals(other.tag, tag) &&
-            const DeepCollectionEquality().equals(other.isLoading, isLoading) &&
-            const DeepCollectionEquality().equals(other.isTravel, isTravel) &&
-            const DeepCollectionEquality().equals(other.isFood, isFood) &&
-            const DeepCollectionEquality().equals(other.isFamily, isFamily) &&
             const DeepCollectionEquality()
-                .equals(other.isSelected, isSelected) &&
+                .equals(other.latitudeRef, latitudeRef) &&
+            const DeepCollectionEquality().equals(other.latitude, latitude) &&
+            const DeepCollectionEquality()
+                .equals(other.longitudeRef, longitudeRef) &&
+            const DeepCollectionEquality().equals(other.longitude, longitude) &&
+            const DeepCollectionEquality().equals(other.imgTag, imgTag) &&
+            const DeepCollectionEquality().equals(other.isLoading, isLoading) &&
             const DeepCollectionEquality().equals(other.imgFile, imgFile));
   }
 
@@ -330,14 +351,15 @@ class _$_AddAlbumPageState implements _AddAlbumPageState {
       runtimeType,
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(content),
-      const DeepCollectionEquality().hash(imgUrl),
-      const DeepCollectionEquality().hash(album),
+      const DeepCollectionEquality().hash(imgUrls),
+      const DeepCollectionEquality().hash(albums),
       const DeepCollectionEquality().hash(tag),
+      const DeepCollectionEquality().hash(latitudeRef),
+      const DeepCollectionEquality().hash(latitude),
+      const DeepCollectionEquality().hash(longitudeRef),
+      const DeepCollectionEquality().hash(longitude),
+      const DeepCollectionEquality().hash(imgTag),
       const DeepCollectionEquality().hash(isLoading),
-      const DeepCollectionEquality().hash(isTravel),
-      const DeepCollectionEquality().hash(isFood),
-      const DeepCollectionEquality().hash(isFamily),
-      const DeepCollectionEquality().hash(isSelected),
       const DeepCollectionEquality().hash(imgFile));
 
   @JsonKey(ignore: true)
@@ -350,14 +372,15 @@ abstract class _AddAlbumPageState implements AddAlbumPageState {
   const factory _AddAlbumPageState(
       {String id,
       String content,
-      String imgUrl,
-      List<Album>? album,
+      String imgUrls,
+      List<Album>? albums,
       List<Tags>? tag,
+      String latitudeRef,
+      String latitude,
+      String longitudeRef,
+      String longitude,
+      String imgTag,
       bool isLoading,
-      bool isTravel,
-      bool isFood,
-      bool isFamily,
-      bool isSelected,
       File? imgFile}) = _$_AddAlbumPageState;
 
   @override
@@ -365,21 +388,23 @@ abstract class _AddAlbumPageState implements AddAlbumPageState {
   @override
   String get content;
   @override
-  String get imgUrl;
+  String get imgUrls;
   @override
-  List<Album>? get album;
+  List<Album>? get albums;
   @override
   List<Tags>? get tag;
   @override
+  String get latitudeRef;
+  @override
+  String get latitude;
+  @override
+  String get longitudeRef;
+  @override
+  String get longitude;
+  @override
+  String get imgTag;
+  @override
   bool get isLoading;
-  @override
-  bool get isTravel;
-  @override
-  bool get isFood;
-  @override
-  bool get isFamily;
-  @override
-  bool get isSelected;
   @override
   File? get imgFile;
   @override

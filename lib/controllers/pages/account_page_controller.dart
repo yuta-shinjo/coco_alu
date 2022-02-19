@@ -13,8 +13,7 @@ part 'account_page_controller.freezed.dart';
 @freezed
 class AccountPageState with _$AccountPageState {
   const factory AccountPageState({
-    List<User>? profiles,
-    @Default(User()) User user,
+    @Default(User()) User profile,
     @Default('') String name,
     @Default('') String profileImageUrl,
     @Default('') String email,
@@ -34,9 +33,10 @@ class AccountPageController extends StateNotifier<AccountPageState> {
   }
 
   void _init() async {
-    final fechProfile = await _fireUsersService.fetchUserProfile();
-    final profiles = [...fechProfile];
-    state = state.copyWith(profiles: profiles);
+    final profile = await _fireUsersService.fetchUserProfile();
+    if (profile != null) {
+      state = state.copyWith(profile: profile);
+    }
   }
 
   final _fireUsersService = FireUsersService();
@@ -55,9 +55,7 @@ class AccountPageController extends StateNotifier<AccountPageState> {
     if (state.imageFile != null) {
       state = state.copyWith(imageFile: null);
     }
-    if (state.profiles?.firstWhere((imgUrl) => imgUrl == imgUrl).imgUrls !=
-        '') {
-      print(state.profiles?.firstWhere((imgUrl) => imgUrl == imgUrl).imgUrls);
+    if (state.profile.imgUrls != '') {
     }
   }
 
@@ -65,9 +63,14 @@ class AccountPageController extends StateNotifier<AccountPageState> {
       File? imageFile, String imgUrls, String name) async {
     await _fireUsersService.update(
       state.imageFile,
-      state.profiles!.first.imgUrls,
+      state.profile.imgUrls,
       state.name,
     );
+    state = state.copyWith();
+  }
+
+  void deleteImageFile() {
+    state = state.copyWith(imageFile: null);
   }
 
   final btnController = RoundedLoadingButtonController();

@@ -10,7 +10,11 @@ class HomePageBody extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final albums = ref.watch(homePageProvider.select((s) => s.albums)) ?? [];
-
+    if (albums.length == 0) {
+      return Center(
+        child: Text('登録画面からアルバムを作成しましょう!'),
+      );
+    }
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.only(left: 20, top: 20, right: 20),
@@ -20,14 +24,6 @@ class HomePageBody extends ConsumerWidget {
   }
 
   Widget _albumList(List<Album> albums, BuildContext context) {
-    if (albums.length == 0) {
-      return Container(
-        height: MediaQuery.of(context).size.height / 2,
-        child: Center(
-          child: Text('登録画面からアルバムを作成しましょう!'),
-        ),
-      );
-    }
     return GridView.builder(
       physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
@@ -49,10 +45,8 @@ class HomePageBody extends ConsumerWidget {
               ),
               child: Ink.image(
                 image: album.imgUrls != ''
-                    ? NetworkImage(album.imgUrls)
-                    : Image.network(
-                        'https://www.tsuzukiblog.org/_wu/2020/03/shutterstock_1005938026.jpg',
-                      ).image,
+                    ? Image.network(album.imgUrls).image
+                    : Image.asset('assets/images/photo.jpg').image,
                 fit: BoxFit.cover,
               ),
             ),

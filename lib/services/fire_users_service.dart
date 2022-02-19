@@ -120,21 +120,23 @@ class FireUsersService {
     });
   }
 
-  Future<List<User>> fetchUserProfile() async {
+  Future<User?> fetchUserProfile() async {
     final snapshot = await _fireStore
         .collection('users')
         .doc(_auth.currentUser?.uid)
         .collection('profile')
+        .doc(_auth.currentUser?.uid)
         .get();
-    return snapshot.docs.map((e) => User.fromJson(e.data())).toList();
+    final data = snapshot.data();
+    final user = data != null ? User.fromJson(data) : null;
+    return user;
   }
 
   Future<void> deleteStorage() {
     return _fireStorage.ref('users/${_auth.currentUser?.uid}').delete();
   }
 
-  Future<void> update(
-      File? imageFile, String imgUrls, String name) async {
+  Future<void> update(File? imageFile, String imgUrls, String name) async {
     if (imageFile == null && imgUrls == '') {
       imgUrls == '';
     }
@@ -145,7 +147,7 @@ class FireUsersService {
     //firestoreに追加前にstorageの写真をアップデートする
     if (imageFile != null) {
       final task = await _fireStorage
-          .ref('users/${_auth.currentUser?.uid}')
+          .ref('users/${_auth.currentUser?.uid}/profiles/${_auth.currentUser?.uid}')
           .putFile(imageFile);
       imgUrls = await task.ref.getDownloadURL();
     }

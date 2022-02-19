@@ -10,7 +10,7 @@ class HomePageState with _$HomePageState {
   const factory HomePageState({
     @Default('') String id,
     @Default('') String content,
-    @Default('') String imgUrl,
+    @Default('') String imgUrls,
     List<Album>? albums,
   }) = _HomePageState;
 }
@@ -35,4 +35,12 @@ class HomePageController extends StateNotifier<HomePageState> {
     );
   }
 
+  // 作成ページで作成ボタンを押したときにhomePageのリストを更新するため
+  Future<void> fetchAlbumList() async {
+    await _fireAlbumService.fetchAlbumList(
+      onValueChanged: (albums) {
+        state = state.copyWith(albums: albums);
+      },
+    ); 
+  }
 }

@@ -14,13 +14,15 @@ class LoginPageBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          _email(),
-          _password(),
-          _loginButton(),
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _email(),
+            _password(),
+            _loginButton(),
+          ],
+        ),
       ),
     );
   }

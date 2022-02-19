@@ -26,7 +26,7 @@ class TagChipsPageController extends StateNotifier<TagChipsPageState> {
   final tagController = TextEditingController();
 
   void onSubmitted(String text) {
-    // 空のタグを追加できないようにする
+    // 空のタグを追加できないようにしている
     if (text != '') {
       try {
         addChip(text);

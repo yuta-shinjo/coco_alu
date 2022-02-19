@@ -23,6 +23,7 @@ class UserController extends StateNotifier<UserState> {
   }
 
   final _auth = firebase.FirebaseAuth.instance;
+  final user = firebase.FirebaseAuth.instance.currentUser;
 
   final _fireUsersService = FireUsersService();
 
@@ -39,7 +40,6 @@ class UserController extends StateNotifier<UserState> {
 
     if (uid == null) return;
 
-    print('uid: $uid');
 
     _listen(uid);
   }

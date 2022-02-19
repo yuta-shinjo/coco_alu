@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:exif/exif.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -16,14 +17,15 @@ class AddAlbumPageState with _$AddAlbumPageState {
   const factory AddAlbumPageState({
     @Default('') String id,
     @Default('') String content,
-    @Default('') String imgUrl,
-    List<Album>? album,
+    @Default('') String imgUrls,
+    List<Album>? albums,
     List<Tags>? tag,
+    @Default('') String latitudeRef,
+    @Default('') String latitude,
+    @Default('') String longitudeRef,
+    @Default('') String longitude,
+    @Default('') String imgTag,
     @Default(false) bool isLoading,
-    @Default(false) bool isTravel,
-    @Default(false) bool isFood,
-    @Default(false) bool isFamily,
-    @Default(false) bool isSelected,
     File? imgFile,
   }) = _AddAlbumPageState;
 }
@@ -46,19 +48,24 @@ class AddAlbumPageController extends StateNotifier<AddAlbumPageState> {
     state = state.copyWith(isLoading: false);
   }
 
-  void deleteImage(String imgUrl, File? imgFile) async {
-    if (state.imgUrl != '') {
-      imgUrl = '';
+  void deleteImage(String imgUrls, File? imgFile) async {
+    if (state.imgUrls != '') {
+      imgUrls = '';
     }
     if (state.imgFile != null) {
       state = state.copyWith(imgFile: null);
     }
   }
 
-  Future<void> pickImage(XFile? imgFile, String imgUrl) async {
+  Future<void> pickImage(XFile? imgFile, String imgUrls) async {
     if (imgFile == null) return;
     state = state.copyWith(imgFile: File(imgFile.path));
-    state = state.copyWith(imgUrl: imgUrl);
+    final tags =
+        await readExifFromBytes(await File(imgFile.path).readAsBytes());
+    state = state.copyWith(
+      imgUrls: imgUrls,
+      imgTag: tags.toString(),
+    );
   }
 
   final _fireAlbumService = FireAlbumService();
@@ -68,12 +75,14 @@ class AddAlbumPageController extends StateNotifier<AddAlbumPageState> {
     String imgUrls,
     File? imgFile,
     List<String> tags,
+    String imgTag,
   ) async {
     await _fireAlbumService.addAlbum(
       content,
       imgUrls,
       imgFile,
       tags,
+      imgTag,
     );
   }
 
@@ -86,7 +95,6 @@ class AddAlbumPageController extends StateNotifier<AddAlbumPageState> {
   }
 
   final contentController = TextEditingController();
-  final tagTextFieldCntroller = TextEditingController();
   final btnController = RoundedLoadingButtonController();
 
   void loadingSuccess(RoundedLoadingButtonController controller) {
@@ -95,17 +103,5 @@ class AddAlbumPageController extends StateNotifier<AddAlbumPageState> {
 
   void loadingError(RoundedLoadingButtonController controller) {
     controller.error();
-  }
-
-  void travelSelect(bool selected) {
-    state = state.copyWith(isSelected: selected);
-  }
-
-  void foodSelect(bool selected) {
-    state = state.copyWith(isFood: selected);
-  }
-
-  void familySelect(bool selected) {
-    state = state.copyWith(isFamily: selected);
   }
 }

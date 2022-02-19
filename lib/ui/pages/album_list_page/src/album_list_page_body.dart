@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_collection/controllers/pages/album_list_page_controller.dart';
+import 'package:my_collection/controllers/pages/home_page_controller.dart';
 import 'package:my_collection/models/src/album.dart';
 import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/components.dart';
@@ -33,7 +34,12 @@ class AlbumListPageBody extends ConsumerWidget {
               caption: '削除',
               color: AppColors.red,
               icon: Icons.delete,
-              onTap: () async => await _showDialog(context, ref, album),
+              onTap: () async => await _showDialog(
+                context,
+                ref,
+                album,
+                index,
+              ),
             ),
           ],
           actionExtentRatio: 1 / 5,
@@ -63,7 +69,7 @@ class AlbumListPageBody extends ConsumerWidget {
   }
 
   Future<dynamic> _showDialog(
-      BuildContext context, WidgetRef ref, Album album) {
+      BuildContext context, WidgetRef ref, Album album, int i) {
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -73,11 +79,18 @@ class AlbumListPageBody extends ConsumerWidget {
           content: "削除してもよろしいですか？",
           onPressed: () async {
             try {
-              ref.read(albumListPageProvider.notifier).deleteAlbum(album);
-              ref.read(albumListPageProvider.notifier).deleteStorage(album.id);
-              Navigator.pop(context);
+              await ref
+                  .read(albumListPageProvider.notifier)
+                  .deleteAlbum(album, i);
+              await ref
+                  .read(albumListPageProvider.notifier)
+                  .deleteStorage(album.id);
             } catch (e) {
               print(e);
+            } finally {
+              Navigator.pop(context);
+              // albumを削除時にhomePageのリストを更新するため
+              ref.read(homePageProvider.notifier).fetchAlbumList();
             }
           },
         );
@@ -97,10 +110,8 @@ class AlbumListPageBody extends ConsumerWidget {
         ),
         child: Ink.image(
           image: album.imgUrls != ''
-              ? NetworkImage(album.imgUrls)
-              : Image.network(
-                  'https://www.tsuzukiblog.org/_wu/2020/03/shutterstock_1005938026.jpg',
-                ).image,
+              ? Image.network(album.imgUrls).image
+              : Image.asset('assets/images/photo.jpg').image,
           fit: BoxFit.cover,
           height: MediaQuery.of(context).size.height / 5,
         ),
@@ -109,7 +120,6 @@ class AlbumListPageBody extends ConsumerWidget {
   }
 
   Widget _albumText(Album album) {
-    print(album.tags);
     return Container(
       padding: const EdgeInsets.only(left: 12),
       child: Subtitle2Text(
@@ -123,21 +133,25 @@ class AlbumListPageBody extends ConsumerWidget {
   Widget _tags(Album album) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      child: Row(
-        children: [
-          for (int i = 0; i < album.tags.length; i++)
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 3),
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
-                decoration: BoxDecoration(
-                  color: AppColors.grey,
-                  borderRadius: BorderRadius.circular(10),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 12),
+        child: Row(
+          children: [
+            for (int i = 0; i < album.tags.length; i++)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 3),
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+                  decoration: BoxDecoration(
+                    color: AppColors.grey,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: OverlineText(album.tags[i], color: AppColors.white),
                 ),
-                child: OverlineText(album.tags[i], color: AppColors.white),
               ),
-            ),
-        ],
+          ],
+        ),
       ),
     );
   }
