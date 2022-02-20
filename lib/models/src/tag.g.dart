@@ -7,11 +7,9 @@ part of 'tag.dart';
 // **************************************************************************
 
 _$_Tags _$$_TagsFromJson(Map<String, dynamic> json) => _$_Tags(
-      title: json['title'] as String? ?? '',
-      isSelected: json['isSelected'] as bool? ?? false,
+      label: json['label'] as String? ?? '',
     );
 
 Map<String, dynamic> _$$_TagsToJson(_$_Tags instance) => <String, dynamic>{
-      'title': instance.title,
-      'isSelected': instance.isSelected,
+      'label': instance.label,
     };

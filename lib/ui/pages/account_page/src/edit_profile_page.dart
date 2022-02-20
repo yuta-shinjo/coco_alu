@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:my_collection/ui/pages/profile_page/src/edit_profile_page_body.dart';
+import 'package:my_collection/ui/pages/account_page/src/edit_profile_page_body.dart';
 import 'package:my_collection/ui/projects/closed_button.dart';
 
-class EditProfilePage extends ConsumerWidget {
+class EditProfilePage extends StatelessWidget {
   const EditProfilePage({Key? key}) : super(key: key);
 
   static Route<T> route<T>() {
@@ -14,7 +13,7 @@ class EditProfilePage extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return Focus(
       focusNode: FocusNode(),
       child: GestureDetector(

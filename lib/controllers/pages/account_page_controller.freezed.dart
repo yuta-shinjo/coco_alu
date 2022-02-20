@@ -19,15 +19,13 @@ class _$AccountPageStateTearOff {
   const _$AccountPageStateTearOff();
 
   _AccountPageState call(
-      {List<User>? profiles,
-      User user = const User(),
+      {User profile = const User(),
       String name = '',
       String profileImageUrl = '',
       String email = '',
       File? imageFile}) {
     return _AccountPageState(
-      profiles: profiles,
-      user: user,
+      profile: profile,
       name: name,
       profileImageUrl: profileImageUrl,
       email: email,
@@ -41,8 +39,7 @@ const $AccountPageState = _$AccountPageStateTearOff();
 
 /// @nodoc
 mixin _$AccountPageState {
-  List<User>? get profiles => throw _privateConstructorUsedError;
-  User get user => throw _privateConstructorUsedError;
+  User get profile => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get profileImageUrl => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
@@ -59,14 +56,13 @@ abstract class $AccountPageStateCopyWith<$Res> {
           AccountPageState value, $Res Function(AccountPageState) then) =
       _$AccountPageStateCopyWithImpl<$Res>;
   $Res call(
-      {List<User>? profiles,
-      User user,
+      {User profile,
       String name,
       String profileImageUrl,
       String email,
       File? imageFile});
 
-  $UserCopyWith<$Res> get user;
+  $UserCopyWith<$Res> get profile;
 }
 
 /// @nodoc
@@ -80,21 +76,16 @@ class _$AccountPageStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? profiles = freezed,
-    Object? user = freezed,
+    Object? profile = freezed,
     Object? name = freezed,
     Object? profileImageUrl = freezed,
     Object? email = freezed,
     Object? imageFile = freezed,
   }) {
     return _then(_value.copyWith(
-      profiles: profiles == freezed
-          ? _value.profiles
-          : profiles // ignore: cast_nullable_to_non_nullable
-              as List<User>?,
-      user: user == freezed
-          ? _value.user
-          : user // ignore: cast_nullable_to_non_nullable
+      profile: profile == freezed
+          ? _value.profile
+          : profile // ignore: cast_nullable_to_non_nullable
               as User,
       name: name == freezed
           ? _value.name
@@ -116,9 +107,9 @@ class _$AccountPageStateCopyWithImpl<$Res>
   }
 
   @override
-  $UserCopyWith<$Res> get user {
-    return $UserCopyWith<$Res>(_value.user, (value) {
-      return _then(_value.copyWith(user: value));
+  $UserCopyWith<$Res> get profile {
+    return $UserCopyWith<$Res>(_value.profile, (value) {
+      return _then(_value.copyWith(profile: value));
     });
   }
 }
@@ -131,15 +122,14 @@ abstract class _$AccountPageStateCopyWith<$Res>
       __$AccountPageStateCopyWithImpl<$Res>;
   @override
   $Res call(
-      {List<User>? profiles,
-      User user,
+      {User profile,
       String name,
       String profileImageUrl,
       String email,
       File? imageFile});
 
   @override
-  $UserCopyWith<$Res> get user;
+  $UserCopyWith<$Res> get profile;
 }
 
 /// @nodoc
@@ -155,21 +145,16 @@ class __$AccountPageStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? profiles = freezed,
-    Object? user = freezed,
+    Object? profile = freezed,
     Object? name = freezed,
     Object? profileImageUrl = freezed,
     Object? email = freezed,
     Object? imageFile = freezed,
   }) {
     return _then(_AccountPageState(
-      profiles: profiles == freezed
-          ? _value.profiles
-          : profiles // ignore: cast_nullable_to_non_nullable
-              as List<User>?,
-      user: user == freezed
-          ? _value.user
-          : user // ignore: cast_nullable_to_non_nullable
+      profile: profile == freezed
+          ? _value.profile
+          : profile // ignore: cast_nullable_to_non_nullable
               as User,
       name: name == freezed
           ? _value.name
@@ -195,18 +180,15 @@ class __$AccountPageStateCopyWithImpl<$Res>
 
 class _$_AccountPageState implements _AccountPageState {
   const _$_AccountPageState(
-      {this.profiles,
-      this.user = const User(),
+      {this.profile = const User(),
       this.name = '',
       this.profileImageUrl = '',
       this.email = '',
       this.imageFile});
 
-  @override
-  final List<User>? profiles;
   @JsonKey()
   @override
-  final User user;
+  final User profile;
   @JsonKey()
   @override
   final String name;
@@ -221,7 +203,7 @@ class _$_AccountPageState implements _AccountPageState {
 
   @override
   String toString() {
-    return 'AccountPageState(profiles: $profiles, user: $user, name: $name, profileImageUrl: $profileImageUrl, email: $email, imageFile: $imageFile)';
+    return 'AccountPageState(profile: $profile, name: $name, profileImageUrl: $profileImageUrl, email: $email, imageFile: $imageFile)';
   }
 
   @override
@@ -229,8 +211,7 @@ class _$_AccountPageState implements _AccountPageState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _AccountPageState &&
-            const DeepCollectionEquality().equals(other.profiles, profiles) &&
-            const DeepCollectionEquality().equals(other.user, user) &&
+            const DeepCollectionEquality().equals(other.profile, profile) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality()
                 .equals(other.profileImageUrl, profileImageUrl) &&
@@ -241,8 +222,7 @@ class _$_AccountPageState implements _AccountPageState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(profiles),
-      const DeepCollectionEquality().hash(user),
+      const DeepCollectionEquality().hash(profile),
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(profileImageUrl),
       const DeepCollectionEquality().hash(email),
@@ -256,17 +236,14 @@ class _$_AccountPageState implements _AccountPageState {
 
 abstract class _AccountPageState implements AccountPageState {
   const factory _AccountPageState(
-      {List<User>? profiles,
-      User user,
+      {User profile,
       String name,
       String profileImageUrl,
       String email,
       File? imageFile}) = _$_AccountPageState;
 
   @override
-  List<User>? get profiles;
-  @override
-  User get user;
+  User get profile;
   @override
   String get name;
   @override

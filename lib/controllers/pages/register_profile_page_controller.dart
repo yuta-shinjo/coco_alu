@@ -41,15 +41,25 @@ class RegisterProfilePageController
     state = state.copyWith(profileImageUrl: imageUrl);
   }
 
-  Future<void> createProfile(
+  Future<void> createEmailUserProfile(
     String name,
-    String profileImageUrl,
-    File? imageFile,
+    String imgUrls,
+    File? imgFile,
   ) async {
-    await _fireUsersService.registerProfile(
+    await _fireUsersService.registerEmailUserProfile(
       name,
-      profileImageUrl,
-      imageFile,
+      imgUrls,
+      imgFile,
+    );
+  }
+  
+  Future<void> createGoogleUserProfile(
+    String? name,
+    String? imgUrls,
+  ) async {
+    await _fireUsersService.registerGoogleUserProfile(
+      name,
+      imgUrls,
     );
   }
 

@@ -22,16 +22,10 @@ User _$UserFromJson(Map<String, dynamic> json) {
 class _$UserTearOff {
   const _$UserTearOff();
 
-  _User call(
-      {String name = '',
-      String profileImageUrl = '',
-      String id = '',
-      List<String> capsule = const <String>[]}) {
+  _User call({String name = '', String imgUrls = ''}) {
     return _User(
       name: name,
-      profileImageUrl: profileImageUrl,
-      id: id,
-      capsule: capsule,
+      imgUrls: imgUrls,
     );
   }
 
@@ -46,9 +40,7 @@ const $User = _$UserTearOff();
 /// @nodoc
 mixin _$User {
   String get name => throw _privateConstructorUsedError;
-  String get profileImageUrl => throw _privateConstructorUsedError;
-  String get id => throw _privateConstructorUsedError;
-  List<String> get capsule => throw _privateConstructorUsedError;
+  String get imgUrls => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -59,8 +51,7 @@ mixin _$User {
 abstract class $UserCopyWith<$Res> {
   factory $UserCopyWith(User value, $Res Function(User) then) =
       _$UserCopyWithImpl<$Res>;
-  $Res call(
-      {String name, String profileImageUrl, String id, List<String> capsule});
+  $Res call({String name, String imgUrls});
 }
 
 /// @nodoc
@@ -74,27 +65,17 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
   @override
   $Res call({
     Object? name = freezed,
-    Object? profileImageUrl = freezed,
-    Object? id = freezed,
-    Object? capsule = freezed,
+    Object? imgUrls = freezed,
   }) {
     return _then(_value.copyWith(
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      profileImageUrl: profileImageUrl == freezed
-          ? _value.profileImageUrl
-          : profileImageUrl // ignore: cast_nullable_to_non_nullable
+      imgUrls: imgUrls == freezed
+          ? _value.imgUrls
+          : imgUrls // ignore: cast_nullable_to_non_nullable
               as String,
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      capsule: capsule == freezed
-          ? _value.capsule
-          : capsule // ignore: cast_nullable_to_non_nullable
-              as List<String>,
     ));
   }
 }
@@ -104,8 +85,7 @@ abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
   factory _$UserCopyWith(_User value, $Res Function(_User) then) =
       __$UserCopyWithImpl<$Res>;
   @override
-  $Res call(
-      {String name, String profileImageUrl, String id, List<String> capsule});
+  $Res call({String name, String imgUrls});
 }
 
 /// @nodoc
@@ -120,27 +100,17 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
   @override
   $Res call({
     Object? name = freezed,
-    Object? profileImageUrl = freezed,
-    Object? id = freezed,
-    Object? capsule = freezed,
+    Object? imgUrls = freezed,
   }) {
     return _then(_User(
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      profileImageUrl: profileImageUrl == freezed
-          ? _value.profileImageUrl
-          : profileImageUrl // ignore: cast_nullable_to_non_nullable
+      imgUrls: imgUrls == freezed
+          ? _value.imgUrls
+          : imgUrls // ignore: cast_nullable_to_non_nullable
               as String,
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      capsule: capsule == freezed
-          ? _value.capsule
-          : capsule // ignore: cast_nullable_to_non_nullable
-              as List<String>,
     ));
   }
 }
@@ -148,11 +118,7 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_User implements _User {
-  const _$_User(
-      {this.name = '',
-      this.profileImageUrl = '',
-      this.id = '',
-      this.capsule = const <String>[]});
+  const _$_User({this.name = '', this.imgUrls = ''});
 
   factory _$_User.fromJson(Map<String, dynamic> json) => _$$_UserFromJson(json);
 
@@ -161,17 +127,11 @@ class _$_User implements _User {
   final String name;
   @JsonKey()
   @override
-  final String profileImageUrl;
-  @JsonKey()
-  @override
-  final String id;
-  @JsonKey()
-  @override
-  final List<String> capsule;
+  final String imgUrls;
 
   @override
   String toString() {
-    return 'User(name: $name, profileImageUrl: $profileImageUrl, id: $id, capsule: $capsule)';
+    return 'User(name: $name, imgUrls: $imgUrls)';
   }
 
   @override
@@ -180,19 +140,14 @@ class _$_User implements _User {
         (other.runtimeType == runtimeType &&
             other is _User &&
             const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality()
-                .equals(other.profileImageUrl, profileImageUrl) &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.capsule, capsule));
+            const DeepCollectionEquality().equals(other.imgUrls, imgUrls));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(profileImageUrl),
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(capsule));
+      const DeepCollectionEquality().hash(imgUrls));
 
   @JsonKey(ignore: true)
   @override
@@ -206,22 +161,14 @@ class _$_User implements _User {
 }
 
 abstract class _User implements User {
-  const factory _User(
-      {String name,
-      String profileImageUrl,
-      String id,
-      List<String> capsule}) = _$_User;
+  const factory _User({String name, String imgUrls}) = _$_User;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
 
   @override
   String get name;
   @override
-  String get profileImageUrl;
-  @override
-  String get id;
-  @override
-  List<String> get capsule;
+  String get imgUrls;
   @override
   @JsonKey(ignore: true)
   _$UserCopyWith<_User> get copyWith => throw _privateConstructorUsedError;

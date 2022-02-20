@@ -9,7 +9,7 @@ import 'package:my_collection/ui/pages/album_list_page/album_list_page.dart';
 import 'package:my_collection/ui/pages/home_page/home_page.dart';
 import 'package:page_transition/page_transition.dart';
 
-class RootPage extends ConsumerWidget {
+class RootPage extends ConsumerStatefulWidget {
   RootPage({Key? key}) : super(key: key);
 
   static Route<T> route<T>() {
@@ -27,18 +27,37 @@ class RootPage extends ConsumerWidget {
     );
   }
 
-  final _tabs = [
-    HomePage(),
-    EditAlbumPage(),
-    AddAlbumPage(),
-    AccountPage(),
-  ];
+  @override
+  _RootPageState createState() => _RootPageState();
+}
+
+class _RootPageState extends ConsumerState<RootPage>
+    with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance?.addObserver(this);
+  }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  void dispose() {
+    WidgetsBinding.instance?.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final currentIndex = ref.watch(rootPageProvider.select((s) => s.tabIndex));
+
+    final _tabs = [
+      HomePage(),
+      EditAlbumPage(),
+      AddAlbumPage(),
+      AccountPage(),
+    ];
+    
     return Scaffold(
-      body: _tabs[currentIndex],
+      body: IndexedStack(children: _tabs, index: currentIndex),
       bottomNavigationBar: _bottomNavigation(context, currentIndex),
     );
   }
@@ -64,7 +83,7 @@ class RootPage extends ConsumerWidget {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.drive_file_rename_outline),
-              label: '登録',
+              label: '作成',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person),

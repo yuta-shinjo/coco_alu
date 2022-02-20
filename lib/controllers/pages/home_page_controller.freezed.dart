@@ -21,12 +21,12 @@ class _$HomePageStateTearOff {
   _HomePageState call(
       {String id = '',
       String content = '',
-      String imgUrl = '',
+      String imgUrls = '',
       List<Album>? albums}) {
     return _HomePageState(
       id: id,
       content: content,
-      imgUrl: imgUrl,
+      imgUrls: imgUrls,
       albums: albums,
     );
   }
@@ -39,7 +39,7 @@ const $HomePageState = _$HomePageStateTearOff();
 mixin _$HomePageState {
   String get id => throw _privateConstructorUsedError;
   String get content => throw _privateConstructorUsedError;
-  String get imgUrl => throw _privateConstructorUsedError;
+  String get imgUrls => throw _privateConstructorUsedError;
   List<Album>? get albums => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -52,7 +52,7 @@ abstract class $HomePageStateCopyWith<$Res> {
   factory $HomePageStateCopyWith(
           HomePageState value, $Res Function(HomePageState) then) =
       _$HomePageStateCopyWithImpl<$Res>;
-  $Res call({String id, String content, String imgUrl, List<Album>? albums});
+  $Res call({String id, String content, String imgUrls, List<Album>? albums});
 }
 
 /// @nodoc
@@ -68,7 +68,7 @@ class _$HomePageStateCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? content = freezed,
-    Object? imgUrl = freezed,
+    Object? imgUrls = freezed,
     Object? albums = freezed,
   }) {
     return _then(_value.copyWith(
@@ -80,9 +80,9 @@ class _$HomePageStateCopyWithImpl<$Res>
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
               as String,
-      imgUrl: imgUrl == freezed
-          ? _value.imgUrl
-          : imgUrl // ignore: cast_nullable_to_non_nullable
+      imgUrls: imgUrls == freezed
+          ? _value.imgUrls
+          : imgUrls // ignore: cast_nullable_to_non_nullable
               as String,
       albums: albums == freezed
           ? _value.albums
@@ -99,7 +99,7 @@ abstract class _$HomePageStateCopyWith<$Res>
           _HomePageState value, $Res Function(_HomePageState) then) =
       __$HomePageStateCopyWithImpl<$Res>;
   @override
-  $Res call({String id, String content, String imgUrl, List<Album>? albums});
+  $Res call({String id, String content, String imgUrls, List<Album>? albums});
 }
 
 /// @nodoc
@@ -117,7 +117,7 @@ class __$HomePageStateCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? content = freezed,
-    Object? imgUrl = freezed,
+    Object? imgUrls = freezed,
     Object? albums = freezed,
   }) {
     return _then(_HomePageState(
@@ -129,9 +129,9 @@ class __$HomePageStateCopyWithImpl<$Res>
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
               as String,
-      imgUrl: imgUrl == freezed
-          ? _value.imgUrl
-          : imgUrl // ignore: cast_nullable_to_non_nullable
+      imgUrls: imgUrls == freezed
+          ? _value.imgUrls
+          : imgUrls // ignore: cast_nullable_to_non_nullable
               as String,
       albums: albums == freezed
           ? _value.albums
@@ -145,7 +145,7 @@ class __$HomePageStateCopyWithImpl<$Res>
 
 class _$_HomePageState implements _HomePageState {
   const _$_HomePageState(
-      {this.id = '', this.content = '', this.imgUrl = '', this.albums});
+      {this.id = '', this.content = '', this.imgUrls = '', this.albums});
 
   @JsonKey()
   @override
@@ -155,13 +155,13 @@ class _$_HomePageState implements _HomePageState {
   final String content;
   @JsonKey()
   @override
-  final String imgUrl;
+  final String imgUrls;
   @override
   final List<Album>? albums;
 
   @override
   String toString() {
-    return 'HomePageState(id: $id, content: $content, imgUrl: $imgUrl, albums: $albums)';
+    return 'HomePageState(id: $id, content: $content, imgUrls: $imgUrls, albums: $albums)';
   }
 
   @override
@@ -171,7 +171,7 @@ class _$_HomePageState implements _HomePageState {
             other is _HomePageState &&
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.content, content) &&
-            const DeepCollectionEquality().equals(other.imgUrl, imgUrl) &&
+            const DeepCollectionEquality().equals(other.imgUrls, imgUrls) &&
             const DeepCollectionEquality().equals(other.albums, albums));
   }
 
@@ -180,7 +180,7 @@ class _$_HomePageState implements _HomePageState {
       runtimeType,
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(content),
-      const DeepCollectionEquality().hash(imgUrl),
+      const DeepCollectionEquality().hash(imgUrls),
       const DeepCollectionEquality().hash(albums));
 
   @JsonKey(ignore: true)
@@ -193,7 +193,7 @@ abstract class _HomePageState implements HomePageState {
   const factory _HomePageState(
       {String id,
       String content,
-      String imgUrl,
+      String imgUrls,
       List<Album>? albums}) = _$_HomePageState;
 
   @override
@@ -201,7 +201,7 @@ abstract class _HomePageState implements HomePageState {
   @override
   String get content;
   @override
-  String get imgUrl;
+  String get imgUrls;
   @override
   List<Album>? get albums;
   @override

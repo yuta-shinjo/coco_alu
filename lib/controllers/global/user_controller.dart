@@ -23,6 +23,7 @@ class UserController extends StateNotifier<UserState> {
   }
 
   final _auth = firebase.FirebaseAuth.instance;
+  final user = firebase.FirebaseAuth.instance.currentUser;
 
   final _fireUsersService = FireUsersService();
 
@@ -30,7 +31,7 @@ class UserController extends StateNotifier<UserState> {
 
   String get name => state.user.name;
 
-  String? get imageUrl => state.user.profileImageUrl;
+  String? get imageUrl => state.user.imgUrls;
 
   Future<void> login() async {
     final userCredential = await _auth.signInAnonymously();
@@ -39,7 +40,6 @@ class UserController extends StateNotifier<UserState> {
 
     if (uid == null) return;
 
-    print('uid: $uid');
 
     _listen(uid);
   }

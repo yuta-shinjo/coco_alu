@@ -11,7 +11,14 @@ class Album with _$Album {
     @Default('') String id,
     @Default('') String content,
     @Default('') String imgUrls,
-    @FireTimestampConverterNonNull() DateTime? created,
+    @Default(<String>[]) List<String> tags,
+    @Default(false) bool public,
+    @Default('') String latitudeRef,
+    @Default('') String latitude,
+    @Default('') String longitudeRef,
+    @Default('') String longitude,
+    @Default('') String imgLocation,
+    @FireTimestampConverterNonNull() required DateTime created,
   }) = _Album;
 
   factory Album.fromJson(Map<String, dynamic> json) => _$AlbumFromJson(json);

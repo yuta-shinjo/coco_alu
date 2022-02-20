@@ -1,6 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_collection/controllers/global/user_controller.dart';
 import 'package:my_collection/controllers/pages/account_page_controller.dart';
 import 'package:my_collection/controllers/pages/album_list_page_controller.dart';
 import 'package:my_collection/models/src/album.dart';
@@ -15,124 +15,164 @@ class AccountPageBody extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // TODO riverpodに直す
-    final user = FirebaseAuth.instance.currentUser;
-    final email = user?.email;
-    final displayName = user?.displayName;
-    final displayImgUrl = user?.photoURL;
-    final albumNum =
-        ref.watch(albumListPageProvider.select((s) => s.albums)) ?? [];
-    final account = ref.watch(accountPageProvider.select((s) => s.profiles));
-
-    if (displayName == null || displayImgUrl == null) {
+    final user = ref.watch(userProvider.notifier).user;
+    if (user == null) {
       return Center(
         child: CircularProgressIndicator(),
       );
     }
+    final email = user.email;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: SingleChildScrollView(
         child: Column(
           children: [
             const SizedBox(height: 50),
-            _profileDisplay(displayImgUrl, context, displayName, albumNum),
+            _profileDisplay(),
             const Divider(color: AppColors.grey),
             const SizedBox(height: 60),
-            Column(
-              children: [
-                ListTile(
-                  title: const Subtitle2Text('プロフィールを編集する'),
-                  onTap: () async {
-                    await Navigator.push(context, EditProfilePage.route());
-                  },
-                  trailing: const Icon(
-                    Icons.arrow_forward_ios,
-                    color: AppColors.primary,
-                  ),
-                ),
-                const Divider(color: AppColors.grey),
-                ListTile(
-                  title: const Subtitle2Text('メールアドレス'),
-                  trailing: Subtitle1Text(email, color: AppColors.textDisable),
-                ),
-                const Divider(color: AppColors.grey),
-                ListTile(
-                  title: const Subtitle2Text('ログアウト'),
-                  onTap: () async {
-                    await showDialog(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (_) {
-                        return DisplayDialog(
-                          title: "ログアウト",
-                          content: "本当にログアウトしてもよろしいですか？",
-                          onPressed: () {
-                            try {
-                              ref
-                                  .read(accountPageProvider.notifier)
-                                  .isSignOut();
-                              Navigator.of(context).pushReplacement<void, void>(
-                                  LoginPage.fadeInRoute());
-                            } catch (e) {
-                              print(e);
-                            }
-                          },
-                        );
-                      },
-                    );
-                  },
-                  trailing: const Icon(
-                    Icons.arrow_forward_ios,
-                    color: AppColors.primary,
-                  ),
-                ),
-                const Divider(color: AppColors.grey),
-              ],
-            ),
+            _settingAccount(context, email),
           ],
         ),
       ),
     );
   }
 
-  Widget _profileDisplay(String displayImgUrl, BuildContext context, String displayName, List<Album> albumNum) {
-    return Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 10,
-            ),
-            child: Row(
-              children: [
-                CircleAvatar(
-                  radius: 50,
-                  backgroundImage: NetworkImage(
-                    displayImgUrl,
-                  ),
-                ),
-                const SizedBox(width: 20),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.only(left: 12),
-                      width: MediaQuery.of(context).size.width / 2.5,
-                      child: Text(
-                        displayName,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(fontSize: 20),
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.only(left: 12),
-                      child: OverlineText(
-                        'アルバム数: ${albumNum.length}',
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          );
+  Widget _profileDisplay() {
+    return Consumer(
+      builder: (context, ref, _) {
+        final album =
+            ref.watch(albumListPageProvider.select((s) => s.albums)) ?? [];
+        final profile = ref.watch(accountPageProvider.select((s) => s.profile));
+        final imgUrls = profile.imgUrls;
+        final name = profile.name;
+        return Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 10,
+          ),
+          child: Row(
+            children: [
+              imgUser(imgUrls),
+              const SizedBox(width: 20),
+              infoUser(context, name, album),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget imgUser(String imgUrls) {
+    return Container(
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(
+          color: AppColors.grey,
+          width: 1,
+        ),
+      ),
+      child: CircleAvatar(
+        radius: 50,
+        backgroundImage: imgUrls != ''
+            ? Image.network(imgUrls).image
+            : AssetImage('assets/images/avatar.jpg'),
+      ),
+    );
+  }
+
+  Widget infoUser(BuildContext context, String? name, List<Album> album) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          padding: const EdgeInsets.only(left: 12),
+          width: MediaQuery.of(context).size.width / 2.5,
+          child: Text(
+            name!,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontSize: 20),
+          ),
+        ),
+        Container(
+          padding: const EdgeInsets.only(left: 12),
+          child: OverlineText(
+            'アルバム数: ${album.length}',
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _settingAccount(BuildContext context, String? email) {
+    return Column(
+      children: [
+        editProfile(context),
+        const Divider(color: AppColors.grey),
+        emailAdless(email),
+        const Divider(color: AppColors.grey),
+        ListTile(
+          title: const Subtitle2Text('ログアウト'),
+          onTap: () async {
+            await showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (_) {
+                return displayDialog();
+              },
+            );
+          },
+          trailing: const Icon(
+            Icons.arrow_forward_ios,
+            color: AppColors.primary,
+          ),
+        ),
+        const Divider(color: AppColors.grey),
+      ],
+    );
+  }
+
+  Widget editProfile(BuildContext context) {
+    return Consumer(builder: (context, ref, _) {
+      return ListTile(
+        title: const Subtitle2Text('プロフィールを編集'),
+        onTap: () {
+          ref.read(accountPageProvider.notifier).resetProfile();
+          Navigator.push(context, EditProfilePage.route());
+        },
+        trailing: const Icon(
+          Icons.arrow_forward_ios,
+          color: AppColors.primary,
+        ),
+      );
+    });
+  }
+
+  ListTile emailAdless(String? email) {
+    return ListTile(
+      title: const Subtitle2Text('メールアドレス'),
+      trailing: Subtitle1Text(email, color: AppColors.textDisable),
+    );
+  }
+
+  Widget displayDialog() {
+    return Consumer(
+      builder: (context, ref, _) {
+        return DisplayDialog(
+          title: "ログアウト",
+          content: "本当にログアウトしてもよろしいですか？",
+          onPressed: () {
+            Navigator.pop(context);
+            try {
+              ref.read(accountPageProvider.notifier).isSignOut();
+              Navigator.pushReplacement(context, LoginPage.fadeInRoute());
+            } catch (e) {
+              print(e);
+            }
+          },
+        );
+      },
+    );
   }
 }

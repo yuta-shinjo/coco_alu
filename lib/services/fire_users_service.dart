@@ -50,7 +50,7 @@ class FireUsersService {
     );
   }
 
-  Future<firebase.UserCredential> googleLogin()  async{
+  Future<firebase.UserCredential> googleLogin() async {
     final googleUser = await GoogleSignIn(scopes: [
       'email',
     ]).signIn();
@@ -61,6 +61,7 @@ class FireUsersService {
       accessToken: googleAuth?.accessToken,
       idToken: googleAuth?.idToken,
     );
+
     // サインインしたら、UserCredentialを返す
     return _auth.signInWithCredential(credential);
   }
@@ -72,25 +73,24 @@ class FireUsersService {
   Future<void> registerUser(String newEmail, String newPassword) async {
     await _auth
         .createUserWithEmailAndPassword(
-          email: newEmail,
-          password: newPassword,
-        )
-        .then(
-          (currentUser) =>
-              _fireStore.collection("users").doc(currentUser.user?.uid).set({}),
-        );
+      email: newEmail,
+      password: newPassword,
+    )
+        .then((currentUser) {
+      _fireStore.collection("users").doc(currentUser.user?.uid).set({});
+    });
   }
 
-  Future<void> registerProfile(
+  Future<void> registerEmailUserProfile(
     String name,
     String profileImageUrl,
-    File? imageFile,
+    File? imgFile,
   ) async {
-    if (imageFile != null) {
+    if (imgFile != null) {
       final task = await _fireStorage
           .ref(
               'users/${_auth.currentUser?.uid}/profiles/${_auth.currentUser?.uid}')
-          .putFile(imageFile);
+          .putFile(imgFile);
       profileImageUrl = await task.ref.getDownloadURL();
     }
 
@@ -105,44 +105,51 @@ class FireUsersService {
     });
   }
 
-  StreamSubscription fetchUserProfile(
-      {required Function(User) onValueChanged}) {
-    return _fireStore
+  Future<void> registerGoogleUserProfile(
+    String? name,
+    String? imgUrl,
+  ) async {
+    await _fireStore
         .collection('users')
         .doc(_auth.currentUser?.uid)
         .collection('profile')
         .doc(_auth.currentUser?.uid)
-        .snapshots()
-        .listen((snapshot) {
-      final data = snapshot.data();
-      if (data != null) {
-        final user = User.fromJson(data);
-        onValueChanged(user);
-      }
+        .set({
+      FieldName.name: _auth.currentUser?.displayName,
+      FieldName.imgUrls: _auth.currentUser?.photoURL,
     });
-    // return snapshot.map((e) => User.fromJson(e.docs)).toList();
+  }
+
+  Future<User?> fetchUserProfile() async {
+    final snapshot = await _fireStore
+        .collection('users')
+        .doc(_auth.currentUser?.uid)
+        .collection('profile')
+        .doc(_auth.currentUser?.uid)
+        .get();
+    final data = snapshot.data();
+    final user = data != null ? User.fromJson(data) : null;
+    return user;
   }
 
   Future<void> deleteStorage() {
     return _fireStorage.ref('users/${_auth.currentUser?.uid}').delete();
   }
 
-  Future<void> update(
-      File? imageFile, String profileImageUrl, String name) async {
-    if (imageFile == null) {
-      profileImageUrl == '';
+  Future<void> update(File? imageFile, String imgUrls, String name) async {
+    if (imageFile == null && imgUrls == '') {
+      imgUrls == '';
+    }
+    if (imageFile == null && imgUrls != '') {
+      imgUrls;
     }
 
     //firestoreに追加前にstorageの写真をアップデートする
     if (imageFile != null) {
-      if (profileImageUrl != '') {
-        await deleteStorage();
-      }
-
       final task = await _fireStorage
-          .ref('users/${_auth.currentUser?.uid}')
+          .ref('users/${_auth.currentUser?.uid}/profiles/${_auth.currentUser?.uid}')
           .putFile(imageFile);
-      profileImageUrl = await task.ref.getDownloadURL();
+      imgUrls = await task.ref.getDownloadURL();
     }
 
     await _fireStore
@@ -152,10 +159,7 @@ class FireUsersService {
         .doc(_auth.currentUser?.uid)
         .update({
       FieldName.name: name,
-      FieldName.imgUrls: profileImageUrl,
+      FieldName.imgUrls: imgUrls,
     });
-  }
-
-  Future<void> fetchAccount() async {
   }
 }

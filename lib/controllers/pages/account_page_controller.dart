@@ -13,8 +13,7 @@ part 'account_page_controller.freezed.dart';
 @freezed
 class AccountPageState with _$AccountPageState {
   const factory AccountPageState({
-    List<User>? profiles,
-    @Default(User()) User user,
+    @Default(User()) User profile,
     @Default('') String name,
     @Default('') String profileImageUrl,
     @Default('') String email,
@@ -29,7 +28,36 @@ final accountPageProvider =
 });
 
 class AccountPageController extends StateNotifier<AccountPageState> {
-  AccountPageController() : super(const AccountPageState());
+  AccountPageController() : super(const AccountPageState()) {
+    _init();
+  }
+
+  void _init() async {
+    final profile = await _fireUsersService.fetchUserProfile();
+    if (profile != null) {
+      state = state.copyWith(profile: profile);
+    }
+  }
+
+  // プロフィールを編集した時に時にリアルタイムに反映させるようにするため
+  Future<void> fetchUserProfile() async {
+    final profile = await _fireUsersService.fetchUserProfile();
+    if (profile != null) {
+      state = state.copyWith(profile: profile);
+    }
+  }
+
+  // 編集ページで呼び出さないのは、変更ボタンを押さずにaccount_pageに戻った後、
+  // 再度変更ボタンを押すと前回の内容が反映されてしまうためaccount_pageで実装した
+  // 登録後に入力した内容を削除するため
+  void resetProfile() {
+    if (state.name != '') {
+      state = state.copyWith(name: '');
+    }
+    if (state.imageFile != null) {
+      state = state.copyWith(imageFile: null);
+    }
+  }
 
   final _fireUsersService = FireUsersService();
 
@@ -43,30 +71,28 @@ class AccountPageController extends StateNotifier<AccountPageState> {
 
   void inputName(String name) => state = state.copyWith(name: name);
 
-  void deleteImage(String profileImageUrl, File? imageFile) {
-    if (state.profileImageUrl != '') {
-      profileImageUrl = '';
-    }
+  void deleteImage(String imgUrl, File? imageFile) {
     if (state.imageFile != null) {
       state = state.copyWith(imageFile: null);
     }
+    if (state.profile.imgUrls != '') {}
   }
 
   Future<void> updateProfile(
-      File? imageFile, String profileImageUrl, String name) async {
+      File? imageFile, String imgUrls, String name) async {
     await _fireUsersService.update(
       state.imageFile,
-      state.profileImageUrl,
+      state.profile.imgUrls,
       state.name,
     );
+    state = state.copyWith();
+  }
+
+  void deleteImageFile() {
+    state = state.copyWith(imageFile: null);
   }
 
   final btnController = RoundedLoadingButtonController();
-
-
-  Future<void> fechUserProfile() async {
-    
-  }
 
   Future<void> isSignOut() async {
     await _fireUsersService.signOut();

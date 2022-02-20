@@ -9,9 +9,7 @@ class ClosedButton extends StatelessWidget {
     return IconButton(
       color: AppColors.black,
       icon: const Icon(Icons.close),
-      onPressed: () {
-        Navigator.pop(context);
-      },
+      onPressed: () => Navigator.pop(context),
     );
   }
 }

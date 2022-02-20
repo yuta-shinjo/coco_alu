@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_collection/controllers/pages/album_list_page_controller.dart';
+import 'package:my_collection/controllers/pages/home_page_controller.dart';
 import 'package:my_collection/models/src/album.dart';
 import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/components.dart';
@@ -14,7 +15,11 @@ class AlbumListPageBody extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final albums =
         ref.watch(albumListPageProvider.select((s) => s.albums)) ?? [];
-
+    if (albums.length == 0) {
+      return Center(
+        child: Text('登録画面からアルバムを作成しましょう!'),
+      );
+    }
     return ListView.separated(
       itemCount: albums.length,
       separatorBuilder: (context, index) => const Divider(
@@ -25,33 +30,50 @@ class AlbumListPageBody extends ConsumerWidget {
         return Slidable(
           actionPane: SlidableBehindActionPane(),
           secondaryActions: [
-            IconSlideAction(
-              caption: '削除',
-              color: Colors.red,
-              icon: Icons.delete,
-              onTap: () async => await _showDialog(context, ref, album),
-            ),
+            _removeAlbum(context, ref, album, index),
           ],
           actionExtentRatio: 1 / 5,
-          child: GestureDetector(
-            onTap: () {},
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-              child: Row(
-                children: [
-                  _albumImage(album, context),
-                  _albumText(),
-                ],
-              ),
-            ),
-          ),
+          child: _detailAlbum(album, context),
         );
       },
     );
   }
 
+  Widget _removeAlbum(
+      BuildContext context, WidgetRef ref, Album album, int index) {
+    return IconSlideAction(
+      caption: '削除',
+      color: AppColors.red,
+      icon: Icons.delete,
+      onTap: () async => await _showDialog(context, ref, album, index),
+    );
+  }
+
+  Widget _detailAlbum(Album album, BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      child: Row(
+        children: [
+          _albumImage(album, context),
+          Container(
+            height: 110,
+            width: MediaQuery.of(context).size.width / 2,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                _albumText(album),
+                _tagArea(album),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Future<dynamic> _showDialog(
-      BuildContext context, WidgetRef ref, Album album) {
+      BuildContext context, WidgetRef ref, Album album, int i) {
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -61,11 +83,18 @@ class AlbumListPageBody extends ConsumerWidget {
           content: "削除してもよろしいですか？",
           onPressed: () async {
             try {
-              ref.read(albumListPageProvider.notifier).deleteAlbum(album);
-              ref.read(albumListPageProvider.notifier).deleteStorage(album.id);
-              Navigator.pop(context);
+              await ref
+                  .read(albumListPageProvider.notifier)
+                  .deleteAlbum(album, i);
+              await ref
+                  .read(albumListPageProvider.notifier)
+                  .deleteStorage(album.id);
             } catch (e) {
               print(e);
+            } finally {
+              Navigator.pop(context);
+              // albumを削除時にhomePageのリストを更新するため
+              ref.read(homePageProvider.notifier).fetchAlbumList();
             }
           },
         );
@@ -75,8 +104,8 @@ class AlbumListPageBody extends ConsumerWidget {
 
   Widget _albumImage(Album album, BuildContext context) {
     return SizedBox(
-      height: 100,
-      width: 100,
+      height: 120,
+      width: 120,
       child: Card(
         clipBehavior: Clip.antiAlias,
         elevation: 0,
@@ -85,10 +114,8 @@ class AlbumListPageBody extends ConsumerWidget {
         ),
         child: Ink.image(
           image: album.imgUrls != ''
-              ? NetworkImage(album.imgUrls)
-              : Image.network(
-                  'https://www.tsuzukiblog.org/_wu/2020/03/shutterstock_1005938026.jpg',
-                ).image,
+              ? Image.network(album.imgUrls).image
+              : Image.asset('assets/images/photo.jpg').image,
           fit: BoxFit.cover,
           height: MediaQuery.of(context).size.height / 5,
         ),
@@ -96,42 +123,42 @@ class AlbumListPageBody extends ConsumerWidget {
     );
   }
 
-  Widget _albumText() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        // TODO 表示するものを決めたらそれを表示させる
-        Container(
-          padding: const EdgeInsets.only(left: 12),
-          child: const Subtitle1Text(
-            '四国旅行',
-            maxLines: 3,
-            overflow: TextOverflow.ellipsis,
-          ),
+  Widget _albumText(Album album) {
+    return Container(
+      padding: const EdgeInsets.only(left: 12),
+      child: Subtitle2Text(
+        album.content,
+        maxLines: 3,
+        overflow: TextOverflow.ellipsis,
+      ),
+    );
+  }
+
+  Widget _tagArea(Album album) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 12),
+        child: Row(
+          children: [
+            for (int i = 0; i < album.tags.length; i++) _tagChip(album, i),
+          ],
         ),
-        Container(
-          padding: const EdgeInsets.only(left: 12),
-          child: const Subtitle1Text(
-            '楽しかった',
-            maxLines: 3,
-            overflow: TextOverflow.ellipsis,
-          ),
+      ),
+    );
+  }
+
+  Widget _tagChip(Album album, int i) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 3),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+        decoration: BoxDecoration(
+          color: AppColors.grey,
+          borderRadius: BorderRadius.circular(10),
         ),
-        Container(
-          padding: const EdgeInsets.only(left: 12),
-          child: Row(
-            children: const [
-              OverlineText('楽しかった'),
-              SizedBox(width: 10),
-              OverlineText(
-                '2022/01/31',
-                color: Colors.grey,
-              ),
-            ],
-          ),
-        ),
-      ],
+        child: OverlineText(album.tags[i], color: AppColors.white),
+      ),
     );
   }
 }

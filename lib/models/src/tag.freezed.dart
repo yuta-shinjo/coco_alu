@@ -22,10 +22,9 @@ Tags _$TagsFromJson(Map<String, dynamic> json) {
 class _$TagsTearOff {
   const _$TagsTearOff();
 
-  _Tags call({String title = '', bool isSelected = false}) {
+  _Tags call({String label = ''}) {
     return _Tags(
-      title: title,
-      isSelected: isSelected,
+      label: label,
     );
   }
 
@@ -39,8 +38,7 @@ const $Tags = _$TagsTearOff();
 
 /// @nodoc
 mixin _$Tags {
-  String get title => throw _privateConstructorUsedError;
-  bool get isSelected => throw _privateConstructorUsedError;
+  String get label => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -51,7 +49,7 @@ mixin _$Tags {
 abstract class $TagsCopyWith<$Res> {
   factory $TagsCopyWith(Tags value, $Res Function(Tags) then) =
       _$TagsCopyWithImpl<$Res>;
-  $Res call({String title, bool isSelected});
+  $Res call({String label});
 }
 
 /// @nodoc
@@ -64,18 +62,13 @@ class _$TagsCopyWithImpl<$Res> implements $TagsCopyWith<$Res> {
 
   @override
   $Res call({
-    Object? title = freezed,
-    Object? isSelected = freezed,
+    Object? label = freezed,
   }) {
     return _then(_value.copyWith(
-      title: title == freezed
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
+      label: label == freezed
+          ? _value.label
+          : label // ignore: cast_nullable_to_non_nullable
               as String,
-      isSelected: isSelected == freezed
-          ? _value.isSelected
-          : isSelected // ignore: cast_nullable_to_non_nullable
-              as bool,
     ));
   }
 }
@@ -85,7 +78,7 @@ abstract class _$TagsCopyWith<$Res> implements $TagsCopyWith<$Res> {
   factory _$TagsCopyWith(_Tags value, $Res Function(_Tags) then) =
       __$TagsCopyWithImpl<$Res>;
   @override
-  $Res call({String title, bool isSelected});
+  $Res call({String label});
 }
 
 /// @nodoc
@@ -99,18 +92,13 @@ class __$TagsCopyWithImpl<$Res> extends _$TagsCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? title = freezed,
-    Object? isSelected = freezed,
+    Object? label = freezed,
   }) {
     return _then(_Tags(
-      title: title == freezed
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
+      label: label == freezed
+          ? _value.label
+          : label // ignore: cast_nullable_to_non_nullable
               as String,
-      isSelected: isSelected == freezed
-          ? _value.isSelected
-          : isSelected // ignore: cast_nullable_to_non_nullable
-              as bool,
     ));
   }
 }
@@ -118,20 +106,17 @@ class __$TagsCopyWithImpl<$Res> extends _$TagsCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Tags implements _Tags {
-  const _$_Tags({this.title = '', this.isSelected = false});
+  const _$_Tags({this.label = ''});
 
   factory _$_Tags.fromJson(Map<String, dynamic> json) => _$$_TagsFromJson(json);
 
   @JsonKey()
   @override
-  final String title;
-  @JsonKey()
-  @override
-  final bool isSelected;
+  final String label;
 
   @override
   String toString() {
-    return 'Tags(title: $title, isSelected: $isSelected)';
+    return 'Tags(label: $label)';
   }
 
   @override
@@ -139,16 +124,12 @@ class _$_Tags implements _Tags {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _Tags &&
-            const DeepCollectionEquality().equals(other.title, title) &&
-            const DeepCollectionEquality()
-                .equals(other.isSelected, isSelected));
+            const DeepCollectionEquality().equals(other.label, label));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(title),
-      const DeepCollectionEquality().hash(isSelected));
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(label));
 
   @JsonKey(ignore: true)
   @override
@@ -162,14 +143,12 @@ class _$_Tags implements _Tags {
 }
 
 abstract class _Tags implements Tags {
-  const factory _Tags({String title, bool isSelected}) = _$_Tags;
+  const factory _Tags({String label}) = _$_Tags;
 
   factory _Tags.fromJson(Map<String, dynamic> json) = _$_Tags.fromJson;
 
   @override
-  String get title;
-  @override
-  bool get isSelected;
+  String get label;
   @override
   @JsonKey(ignore: true)
   _$TagsCopyWith<_Tags> get copyWith => throw _privateConstructorUsedError;
