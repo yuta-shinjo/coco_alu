@@ -11,7 +11,7 @@ class EditAlbumPage extends StatelessWidget {
     
     return Scaffold(
       appBar: AppBar(
-        title: const AppBarText('アルバムを編集する'),
+        title: const AppBarText('アルバム編集'),
       ),
       body: AlbumListPageBody(),
     );

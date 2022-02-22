@@ -20,11 +20,10 @@ class AddAlbumPageState with _$AddAlbumPageState {
     @Default('') String imgUrls,
     List<Album>? albums,
     List<Tags>? tag,
-    @Default('') String latitudeRef,
-    @Default('') String latitude,
-    @Default('') String longitudeRef,
-    @Default('') String longitude,
-    @Default('') String imgTag,
+    String? latitudeRef,
+    String? latitude,
+    String? longitudeRef,
+    String? longitude,
     @Default(false) bool isLoading,
     File? imgFile,
   }) = _AddAlbumPageState;
@@ -63,9 +62,16 @@ class AddAlbumPageController extends StateNotifier<AddAlbumPageState> {
     state = state.copyWith(imgFile: File(imgFile.path));
     final tags =
         await readExifFromBytes(await File(imgFile.path).readAsBytes());
+    final latitudeRef = tags['GPS GPSLatitudeRef'].toString();
+    final latitude = tags['GPS GPSLatitude'].toString();
+    final longitudeRef = tags['GPS GPSLongitudeRef'].toString();
+    final longitude = tags['GPS GPSLongitude'].toString();
     state = state.copyWith(
       imgUrls: imgUrls,
-      imgTag: tags.toString(),
+      latitudeRef:latitudeRef,
+      latitude: latitude,
+      longitudeRef: longitudeRef,
+      longitude: longitude,
     );
   }
 
@@ -76,15 +82,27 @@ class AddAlbumPageController extends StateNotifier<AddAlbumPageState> {
     String imgUrls,
     File? imgFile,
     List<String> tags,
-    String imgTag,
+    String? latitudeRef,
+    String? latitude,
+    String? longitudeRef,
+    String? longitude,
   ) async {
     await _fireAlbumService.addAlbum(
       content,
       imgUrls,
       imgFile,
       tags,
-      imgTag,
-    );
+latitudeRef,
+  latitude,
+     longitudeRef,
+     longitude,    );
+  }
+
+  // contentを記述したalbumを作成した後に
+  // contentなしのalbumを作成すると前回のcontentのデータになってしまうため
+  // contentを初期化
+  void clearContent() {
+    state = state.copyWith(content: '');
   }
 
   final contentController = TextEditingController();

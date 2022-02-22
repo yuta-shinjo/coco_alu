@@ -10,5 +10,4 @@ class FieldName {
   static const latitude = 'latitude';
   static const longitudeRef = 'longitudeRef';
   static const longitude = 'longitude';
-  static const imgTag = 'imgTag';
 }

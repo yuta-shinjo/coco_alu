@@ -98,8 +98,8 @@ class EditProfilePageBody extends StatelessWidget {
             controller.reset();
           },
           child: const SizedBox(
-            width: 240,
-            height: 240,
+            width: 243,
+            height: 243,
           ),
           shape: const CircleBorder(),
           elevation: 0,

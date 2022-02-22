@@ -26,7 +26,13 @@ class AddAlbumPgeBody extends ConsumerWidget {
         ref.read(addAlbumPageProvider.notifier).contentController;
     final tags =
         ref.watch(tagChipsPageProvider.select((s) => s.labelList)) ?? [];
-    final imgTag = ref.watch(addAlbumPageProvider.select((s) => s.imgTag));
+    final latitudeRef =
+        ref.watch(addAlbumPageProvider.select((s) => s.latitudeRef));
+    final latitude = ref.watch(addAlbumPageProvider.select((s) => s.latitude));
+    final longitudeRef =
+        ref.watch(addAlbumPageProvider.select((s) => s.longitudeRef));
+    final longitude =
+        ref.watch(addAlbumPageProvider.select((s) => s.longitude));
     return Focus(
       focusNode: FocusNode(),
       child: GestureDetector(
@@ -35,7 +41,7 @@ class AddAlbumPgeBody extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _selectImage(ref, imgUrls, btnController, context, imgFile),
+              _selectImage(imgUrls, btnController, imgFile),
               const Divider(color: AppColors.grey),
               const Padding(
                 padding: EdgeInsets.only(left: 16, top: 18),
@@ -52,7 +58,16 @@ class AddAlbumPgeBody extends ConsumerWidget {
               TagChip(btnController: btnController),
               const SizedBox(height: 40),
               _createdButton(
-                  btnController, ref, content, imgUrls, imgFile, tags, imgTag),
+                btnController,
+                content,
+                imgUrls,
+                imgFile,
+                tags,
+                latitudeRef,
+                latitude,
+                longitudeRef,
+                longitude,
+              ),
               SizedBox(height: 30),
             ],
           ),
@@ -63,75 +78,91 @@ class AddAlbumPgeBody extends ConsumerWidget {
 
   Widget _createdButton(
     RoundedLoadingButtonController btnController,
-    WidgetRef ref,
     String content,
     String imgUrls,
     File? imgFile,
     List<String> tags,
-    String imgTag,
+    String? latitudeRef,
+    String? latitude,
+    String? longitudeRef,
+    String? longitude,
   ) {
-    return ButtonTheme(
-      child: LoadingButton(
-        primaryColor: AppColors.primary,
-        text: ButtonText('作成'),
-        controller: btnController,
-        onPressed: () async {
-          // if (imgFile != null) {
-          try {
-            ref.read(addAlbumPageProvider.notifier).startLoading();
-            ref
-                .read(addAlbumPageProvider.notifier)
-                .loadingSuccess(btnController);
-            await ref
-                .read(addAlbumPageProvider.notifier)
-                .addAlbum(content, imgUrls, imgFile, tags, imgTag);
-            createAlbumSuccessMassage();
-            ref.read(addAlbumPageProvider.notifier).contentController.clear();
-            ref
-                .read(addAlbumPageProvider.notifier)
-                .deleteImage(imgUrls, imgFile);
-            ref.read(tagChipsPageProvider.notifier).clearChips();
-          } catch (e) {
-            ref.read(addAlbumPageProvider.notifier).loadingError(btnController);
-            print(e);
-          } finally {
-            ref.read(addAlbumPageProvider.notifier).endLoading();
-            btnController.reset();
-            ref.read(homePageProvider.notifier).fetchAlbumList();
-            ref.read(albumListPageProvider.notifier).fetchAlbumList();
-          }
-          // } else {
-          //   ref
-          //       .read(addAlbumPageProvider.notifier)
-          //       .btnController
-          //       .error();
-          //   pictureErrorMassage(btnController);
-          // }
-        },
-      ),
-    );
+    return Consumer(builder: (context, ref, _) {
+      return ButtonTheme(
+        child: LoadingButton(
+          primaryColor: AppColors.primary,
+          text: ButtonText('作成'),
+          controller: btnController,
+          onPressed: () async {
+            if (imgFile != null) {
+              try {
+                ref.read(addAlbumPageProvider.notifier).startLoading();
+                ref
+                    .read(addAlbumPageProvider.notifier)
+                    .loadingSuccess(btnController);
+                await ref.read(addAlbumPageProvider.notifier).addAlbum(
+                      content,
+                      imgUrls,
+                      imgFile,
+                      tags,
+                      latitudeRef,
+                      latitude,
+                      longitudeRef,
+                      longitude,
+                    );
+                createAlbumSuccessMassage();
+                ref
+                    .read(addAlbumPageProvider.notifier)
+                    .contentController
+                    .clear();
+                ref
+                    .read(addAlbumPageProvider.notifier)
+                    .deleteImage(imgUrls, imgFile);
+                ref.read(addAlbumPageProvider.notifier).clearContent();
+                ref.read(tagChipsPageProvider.notifier).clearChips();
+              } catch (e) {
+                ref
+                    .read(addAlbumPageProvider.notifier)
+                    .loadingError(btnController);
+                print(e);
+              } finally {
+                ref.read(addAlbumPageProvider.notifier).endLoading();
+                btnController.reset();
+                ref.read(homePageProvider.notifier).fetchAlbumList();
+                ref.read(albumListPageProvider.notifier).fetchAlbumList();
+              }
+            } else {
+              ref.read(addAlbumPageProvider.notifier).btnController.error();
+              pictureErrorMassage(btnController);
+            }
+          },
+        ),
+      );
+    });
   }
 
   Widget _selectImage(
-    WidgetRef ref,
     String imgUrls,
     RoundedLoadingButtonController btnController,
-    BuildContext context,
     File? imgFile,
   ) {
-    return GestureDetector(
-      onTap: () async {
-        final image =
-            await ImagePicker().pickImage(source: ImageSource.gallery);
-        await ref.read(addAlbumPageProvider.notifier).pickImage(image, imgUrls);
-        btnController.reset();
-      },
-      child: SizedBox(
-        height: MediaQuery.of(context).size.height / 3,
-        width: double.infinity,
-        child: _imgArea(imgFile),
-      ),
-    );
+    return Consumer(builder: (context, ref, _) {
+      return GestureDetector(
+        onTap: () async {
+          final image =
+              await ImagePicker().pickImage(source: ImageSource.gallery);
+          await ref
+              .read(addAlbumPageProvider.notifier)
+              .pickImage(image, imgUrls);
+          btnController.reset();
+        },
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height / 3,
+          width: double.infinity,
+          child: _imgArea(imgFile),
+        ),
+      );
+    });
   }
 
   Widget _imgArea(File? imgFile) {

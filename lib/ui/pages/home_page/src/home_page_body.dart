@@ -12,7 +12,7 @@ class HomePageBody extends ConsumerWidget {
     final albums = ref.watch(homePageProvider.select((s) => s.albums)) ?? [];
     if (albums.length == 0) {
       return Center(
-        child: Text('登録画面からアルバムを作成しましょう!'),
+        child: Text('作成画面からアルバムを作成しましょう!'),
       );
     }
     return SingleChildScrollView(

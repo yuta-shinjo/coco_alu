@@ -84,6 +84,13 @@ void pictureErrorMassage(RoundedLoadingButtonController controller) {
   );
 }
 
+void notAddChip() {
+  Fluttertoast.showToast(
+    msg: '同じタグがあるため追加できません',
+    toastLength: Toast.LENGTH_LONG,
+  );
+}
+
 void loadingSuccess(RoundedLoadingButtonController controller) {
   controller.success();
 }

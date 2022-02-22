@@ -17,7 +17,7 @@ class AlbumListPageBody extends ConsumerWidget {
         ref.watch(albumListPageProvider.select((s) => s.albums)) ?? [];
     if (albums.length == 0) {
       return Center(
-        child: Text('登録画面からアルバムを作成しましょう!'),
+        child: Text('作成画面からアルバムを作成しましょう!'),
       );
     }
     return ListView.separated(

@@ -24,11 +24,10 @@ class _$AddAlbumPageStateTearOff {
       String imgUrls = '',
       List<Album>? albums,
       List<Tags>? tag,
-      String latitudeRef = '',
-      String latitude = '',
-      String longitudeRef = '',
-      String longitude = '',
-      String imgTag = '',
+      String? latitudeRef,
+      String? latitude,
+      String? longitudeRef,
+      String? longitude,
       bool isLoading = false,
       File? imgFile}) {
     return _AddAlbumPageState(
@@ -41,7 +40,6 @@ class _$AddAlbumPageStateTearOff {
       latitude: latitude,
       longitudeRef: longitudeRef,
       longitude: longitude,
-      imgTag: imgTag,
       isLoading: isLoading,
       imgFile: imgFile,
     );
@@ -58,11 +56,10 @@ mixin _$AddAlbumPageState {
   String get imgUrls => throw _privateConstructorUsedError;
   List<Album>? get albums => throw _privateConstructorUsedError;
   List<Tags>? get tag => throw _privateConstructorUsedError;
-  String get latitudeRef => throw _privateConstructorUsedError;
-  String get latitude => throw _privateConstructorUsedError;
-  String get longitudeRef => throw _privateConstructorUsedError;
-  String get longitude => throw _privateConstructorUsedError;
-  String get imgTag => throw _privateConstructorUsedError;
+  String? get latitudeRef => throw _privateConstructorUsedError;
+  String? get latitude => throw _privateConstructorUsedError;
+  String? get longitudeRef => throw _privateConstructorUsedError;
+  String? get longitude => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   File? get imgFile => throw _privateConstructorUsedError;
 
@@ -82,11 +79,10 @@ abstract class $AddAlbumPageStateCopyWith<$Res> {
       String imgUrls,
       List<Album>? albums,
       List<Tags>? tag,
-      String latitudeRef,
-      String latitude,
-      String longitudeRef,
-      String longitude,
-      String imgTag,
+      String? latitudeRef,
+      String? latitude,
+      String? longitudeRef,
+      String? longitude,
       bool isLoading,
       File? imgFile});
 }
@@ -111,7 +107,6 @@ class _$AddAlbumPageStateCopyWithImpl<$Res>
     Object? latitude = freezed,
     Object? longitudeRef = freezed,
     Object? longitude = freezed,
-    Object? imgTag = freezed,
     Object? isLoading = freezed,
     Object? imgFile = freezed,
   }) {
@@ -139,23 +134,19 @@ class _$AddAlbumPageStateCopyWithImpl<$Res>
       latitudeRef: latitudeRef == freezed
           ? _value.latitudeRef
           : latitudeRef // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       latitude: latitude == freezed
           ? _value.latitude
           : latitude // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       longitudeRef: longitudeRef == freezed
           ? _value.longitudeRef
           : longitudeRef // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       longitude: longitude == freezed
           ? _value.longitude
           : longitude // ignore: cast_nullable_to_non_nullable
-              as String,
-      imgTag: imgTag == freezed
-          ? _value.imgTag
-          : imgTag // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       isLoading: isLoading == freezed
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -181,11 +172,10 @@ abstract class _$AddAlbumPageStateCopyWith<$Res>
       String imgUrls,
       List<Album>? albums,
       List<Tags>? tag,
-      String latitudeRef,
-      String latitude,
-      String longitudeRef,
-      String longitude,
-      String imgTag,
+      String? latitudeRef,
+      String? latitude,
+      String? longitudeRef,
+      String? longitude,
       bool isLoading,
       File? imgFile});
 }
@@ -212,7 +202,6 @@ class __$AddAlbumPageStateCopyWithImpl<$Res>
     Object? latitude = freezed,
     Object? longitudeRef = freezed,
     Object? longitude = freezed,
-    Object? imgTag = freezed,
     Object? isLoading = freezed,
     Object? imgFile = freezed,
   }) {
@@ -240,23 +229,19 @@ class __$AddAlbumPageStateCopyWithImpl<$Res>
       latitudeRef: latitudeRef == freezed
           ? _value.latitudeRef
           : latitudeRef // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       latitude: latitude == freezed
           ? _value.latitude
           : latitude // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       longitudeRef: longitudeRef == freezed
           ? _value.longitudeRef
           : longitudeRef // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       longitude: longitude == freezed
           ? _value.longitude
           : longitude // ignore: cast_nullable_to_non_nullable
-              as String,
-      imgTag: imgTag == freezed
-          ? _value.imgTag
-          : imgTag // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       isLoading: isLoading == freezed
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -278,11 +263,10 @@ class _$_AddAlbumPageState implements _AddAlbumPageState {
       this.imgUrls = '',
       this.albums,
       this.tag,
-      this.latitudeRef = '',
-      this.latitude = '',
-      this.longitudeRef = '',
-      this.longitude = '',
-      this.imgTag = '',
+      this.latitudeRef,
+      this.latitude,
+      this.longitudeRef,
+      this.longitude,
       this.isLoading = false,
       this.imgFile});
 
@@ -299,21 +283,14 @@ class _$_AddAlbumPageState implements _AddAlbumPageState {
   final List<Album>? albums;
   @override
   final List<Tags>? tag;
-  @JsonKey()
   @override
-  final String latitudeRef;
-  @JsonKey()
+  final String? latitudeRef;
   @override
-  final String latitude;
-  @JsonKey()
+  final String? latitude;
   @override
-  final String longitudeRef;
-  @JsonKey()
+  final String? longitudeRef;
   @override
-  final String longitude;
-  @JsonKey()
-  @override
-  final String imgTag;
+  final String? longitude;
   @JsonKey()
   @override
   final bool isLoading;
@@ -322,7 +299,7 @@ class _$_AddAlbumPageState implements _AddAlbumPageState {
 
   @override
   String toString() {
-    return 'AddAlbumPageState(id: $id, content: $content, imgUrls: $imgUrls, albums: $albums, tag: $tag, latitudeRef: $latitudeRef, latitude: $latitude, longitudeRef: $longitudeRef, longitude: $longitude, imgTag: $imgTag, isLoading: $isLoading, imgFile: $imgFile)';
+    return 'AddAlbumPageState(id: $id, content: $content, imgUrls: $imgUrls, albums: $albums, tag: $tag, latitudeRef: $latitudeRef, latitude: $latitude, longitudeRef: $longitudeRef, longitude: $longitude, isLoading: $isLoading, imgFile: $imgFile)';
   }
 
   @override
@@ -341,7 +318,6 @@ class _$_AddAlbumPageState implements _AddAlbumPageState {
             const DeepCollectionEquality()
                 .equals(other.longitudeRef, longitudeRef) &&
             const DeepCollectionEquality().equals(other.longitude, longitude) &&
-            const DeepCollectionEquality().equals(other.imgTag, imgTag) &&
             const DeepCollectionEquality().equals(other.isLoading, isLoading) &&
             const DeepCollectionEquality().equals(other.imgFile, imgFile));
   }
@@ -358,7 +334,6 @@ class _$_AddAlbumPageState implements _AddAlbumPageState {
       const DeepCollectionEquality().hash(latitude),
       const DeepCollectionEquality().hash(longitudeRef),
       const DeepCollectionEquality().hash(longitude),
-      const DeepCollectionEquality().hash(imgTag),
       const DeepCollectionEquality().hash(isLoading),
       const DeepCollectionEquality().hash(imgFile));
 
@@ -375,11 +350,10 @@ abstract class _AddAlbumPageState implements AddAlbumPageState {
       String imgUrls,
       List<Album>? albums,
       List<Tags>? tag,
-      String latitudeRef,
-      String latitude,
-      String longitudeRef,
-      String longitude,
-      String imgTag,
+      String? latitudeRef,
+      String? latitude,
+      String? longitudeRef,
+      String? longitude,
       bool isLoading,
       File? imgFile}) = _$_AddAlbumPageState;
 
@@ -394,15 +368,13 @@ abstract class _AddAlbumPageState implements AddAlbumPageState {
   @override
   List<Tags>? get tag;
   @override
-  String get latitudeRef;
+  String? get latitudeRef;
   @override
-  String get latitude;
+  String? get latitude;
   @override
-  String get longitudeRef;
+  String? get longitudeRef;
   @override
-  String get longitude;
-  @override
-  String get imgTag;
+  String? get longitude;
   @override
   bool get isLoading;
   @override

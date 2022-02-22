@@ -32,7 +32,10 @@ class FireAlbumService {
     String imgUrls,
     File? imgFile,
     List<String> tags,
-    String imgTag,
+    String? latitudeRef,
+    String? latitude,
+    String? longitudeRef,
+    String? longitude,
   ) async {
     final collectionRef = _fireStore
         .collection('users')
@@ -52,7 +55,10 @@ class FireAlbumService {
       FieldName.tags: tags.map((e) => e).toList(),
       FieldName.public: false,
       FieldName.created: FieldValue.serverTimestamp(),
-      FieldName.imgTag: imgTag,
+      FieldName.latitudeRef: latitudeRef,
+      FieldName.latitude: latitude,
+      FieldName.longitudeRef: longitudeRef,
+      FieldName.longitude: longitude,
     });
   }
 

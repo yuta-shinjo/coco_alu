@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_collection/utiles.dart';
 
 part 'tag_chips_page_controller.freezed.dart';
 
@@ -39,8 +40,13 @@ class TagChipsPageController extends StateNotifier<TagChipsPageState> {
 
   void addChip(String text) {
     final labelList = [...?state.labelList];
-    labelList.add(text);
-    state = state.copyWith(labelList: labelList);
+    // 同じやつを追加できないようにする
+    if (!labelList.contains(text)) {
+      labelList.add(text);
+      state = state.copyWith(labelList: labelList);
+    } else {
+      notAddChip();
+    }
   }
 
   Future<void> deleteChip(int index) async {
