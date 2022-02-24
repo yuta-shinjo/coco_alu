@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:my_collection/controllers/pages/account_page_controller.dart';
 import 'package:my_collection/controllers/pages/register_profile_page_controller.dart';
 import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/src/theme_text.dart';
@@ -126,10 +127,12 @@ class RegisterProfilePageBody extends StatelessWidget {
                     .read(registerProfilePageProvider.notifier)
                     .profileName
                     .clear();
-                Navigator.pushReplacement(context, RootPage.route());
                 profileSuccessMassage();
               } catch (e) {
                 errorMassage(controller, e);
+              } finally {
+                ref.read(accountPageProvider.notifier).fetchUserProfile();
+                Navigator.pushReplacement(context, RootPage.route());
               }
             } else {
               nameErrorMassage(controller);

@@ -7,8 +7,8 @@ import 'package:my_collection/models/src/album.dart';
 import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/components.dart';
 import 'package:my_collection/ui/pages/account_page/src/edit_profile_page.dart';
-import 'package:my_collection/ui/sign_up/login_page/login_page.dart';
 import 'package:my_collection/ui/pages/album_list_page/src/alert_dialog.dart';
+import 'package:my_collection/ui/pages/sign_up/login_page/login_page.dart';
 
 class AccountPageBody extends ConsumerWidget {
   const AccountPageBody({Key? key}) : super(key: key);

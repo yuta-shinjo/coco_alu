@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_collection/ui/sign_up/register_profile_page/src/register_profile_page_body.dart';
+import 'package:my_collection/ui/pages/sign_up/register_profile_page/src/register_profile_page_body.dart';
 
 class RegisterProfilePage extends StatelessWidget {
   const RegisterProfilePage({Key? key}) : super(key: key);

@@ -4,8 +4,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_collection/controllers/pages/register_page_controller.dart';
 import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/src/theme_text.dart';
+import 'package:my_collection/ui/pages/sign_up/register_profile_page/register_profile_page.dart';
 import 'package:my_collection/ui/projects/rounded_loading_button.dart';
-import 'package:my_collection/ui/sign_up/register_profile_page/register_profile_page.dart';
+
 import 'package:my_collection/utiles.dart';
 
 class RegisterPageBody extends StatelessWidget {
