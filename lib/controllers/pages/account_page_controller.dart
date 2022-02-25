@@ -39,6 +39,10 @@ class AccountPageController extends StateNotifier<AccountPageState> {
     }
   }
 
+  void fixName() {
+    state = state.copyWith(name: state.profile.name);
+  }
+
   // プロフィールを編集した時に時にリアルタイムに反映させるようにするため
   Future<void> fetchUserProfile() async {
     final profile = await _fireUsersService.fetchUserProfile();
@@ -85,7 +89,6 @@ class AccountPageController extends StateNotifier<AccountPageState> {
       state.profile.imgUrls,
       state.name,
     );
-    state = state.copyWith();
   }
 
   void deleteImageFile() {

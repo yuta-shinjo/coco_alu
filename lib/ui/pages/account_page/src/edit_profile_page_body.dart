@@ -174,13 +174,15 @@ class EditProfilePageBody extends StatelessWidget {
           controller: controller,
           onPressed: () async {
             if (name != '' || imageFile != null) {
+              if (name == '') {
+                    ref.read(accountPageProvider.notifier).fixName();
+              }
               loadingSuccess(controller);
               try {
                 await ref
                     .read(accountPageProvider.notifier)
                     .updateProfile(imageFile, profileImageUrl, name);
                 editProfileSuccessMassage();
-                ref.read(accountPageProvider.notifier).profileName.clear();
               } catch (e) {
                 errorMassage(controller, e);
               } finally {
