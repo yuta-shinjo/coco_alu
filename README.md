@@ -1,4 +1,4 @@
-# my_collection
+# coco_alu
 
 A new Flutter project.
 
