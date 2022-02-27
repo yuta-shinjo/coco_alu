@@ -83,18 +83,14 @@ class AlbumListPageBody extends ConsumerWidget {
           content: "削除してもよろしいですか？",
           onPressed: () async {
             try {
-              await ref
-                  .read(albumListPageProvider.notifier)
-                  .deleteAlbum(album, i);
-              await ref
-                  .read(albumListPageProvider.notifier)
-                  .deleteStorage(album.id);
+              ref.read(albumListPageProvider.notifier).deleteAlbum(album, i);
+              ref.read(albumListPageProvider.notifier).deleteStorage(album.id);
             } catch (e) {
               print(e);
             } finally {
               Navigator.pop(context);
               // albumを削除時にhomePageのリストを更新するため
-              ref.read(homePageProvider.notifier).fetchAlbumList();
+              await ref.read(homePageProvider.notifier).fetchAlbumList();
             }
           },
         );

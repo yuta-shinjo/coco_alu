@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/src/theme_text.dart';
+import 'package:my_collection/ui/pages/anonymously_register_profile_page/anonymously_register_profile_page.dart';
 import 'package:my_collection/ui/pages/sign_up/login_page/src/login_page_body.dart';
 import 'package:my_collection/ui/pages/sign_up/register_page/register_page.dart';
 import 'package:my_collection/ui/projects/elevated_button.dart';
@@ -87,12 +88,23 @@ class LoginPage extends StatelessWidget {
             //   ),
             // ),
             ButtonTheme(
-              child: PressedButton(
-                primaryColor: AppColors.primary,
-                text: const ButtonText('アカウントを作成する'),
-                onPressed: () {
-                  Navigator.pushReplacement(context, RegisterPage.route());
-                },
+              child: Column(
+                children: [
+                  PressedButton(
+                    primaryColor: AppColors.primary,
+                    text: const ButtonText('アカウントを作成する'),
+                    onPressed: () {
+                      Navigator.pushReplacement(context, RegisterPage.route());
+                    },
+                  ),
+                  PressedButton(
+                    primaryColor: AppColors.primary,
+                    text: const ButtonText('メールアドレスを登録せずに利用する'),
+                    onPressed: () {
+                      Navigator.pushReplacement(context, AnonymouslyRegisterProfilePage.route());
+                    },
+                  ),
+                ],
               ),
             ),
           ],

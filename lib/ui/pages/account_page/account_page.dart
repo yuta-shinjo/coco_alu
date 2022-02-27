@@ -5,6 +5,13 @@ import 'src/account_page_body.dart';
 class AccountPage extends StatelessWidget {
   const AccountPage({Key? key}) : super(key: key);
 
+  static Route<T> route<T>() {
+    return MaterialPageRoute<T>(
+      builder: (_) => const AccountPage(),
+      settings: const RouteSettings(name: 'account_page'),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
