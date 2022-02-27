@@ -1,6 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:my_collection/controllers/global/user_controller.dart';
 import 'package:my_collection/controllers/pages/account_page_controller.dart';
 import 'package:my_collection/controllers/pages/album_list_page_controller.dart';
 import 'package:my_collection/models/src/album.dart';
@@ -8,20 +8,20 @@ import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/components.dart';
 import 'package:my_collection/ui/pages/account_page/src/edit_profile_page.dart';
 import 'package:my_collection/ui/pages/album_list_page/src/alert_dialog.dart';
+import 'package:my_collection/ui/pages/link_account_page/link_account_page.dart';
 import 'package:my_collection/ui/pages/sign_up/login_page/login_page.dart';
 
 class AccountPageBody extends ConsumerWidget {
   const AccountPageBody({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(userProvider.notifier).user;
-    if (user == null) {
+    late User? currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser == null) {
       return Center(
         child: CircularProgressIndicator(),
       );
     }
-    final email = user.email;
+    final email = currentUser.email;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: SingleChildScrollView(
@@ -110,7 +110,7 @@ class AccountPageBody extends ConsumerWidget {
       children: [
         editProfile(context),
         const Divider(color: AppColors.grey),
-        emailAdless(email),
+        emailAdless(email, context),
         const Divider(color: AppColors.grey),
         ListTile(
           title: const Subtitle2Text('ログアウト'),
@@ -149,10 +149,26 @@ class AccountPageBody extends ConsumerWidget {
     });
   }
 
-  ListTile emailAdless(String? email) {
+  ListTile emailAdless(String? email, BuildContext context) {
     return ListTile(
       title: const Subtitle2Text('メールアドレス'),
-      trailing: Subtitle1Text(email, color: AppColors.textDisable),
+      trailing: email != null
+          ? Subtitle1Text(email, color: AppColors.textDisable)
+          : const Icon(
+              Icons.arrow_forward_ios,
+              color: AppColors.primary,
+            ),
+      onTap: email == null
+          ? () async {
+              await showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (_) {
+                  return linkDialog();
+                },
+              );
+            }
+          : null,
     );
   }
 
@@ -161,7 +177,7 @@ class AccountPageBody extends ConsumerWidget {
       builder: (context, ref, _) {
         return DisplayDialog(
           title: "ログアウト",
-          content: "本当にログアウトしてもよろしいですか？",
+          content: "メールアドレスを登録していない場合、二度とアカウントを復帰できません。\n\n本当にログアウトしてもよろしいですか？",
           onPressed: () {
             Navigator.pop(context);
             try {
@@ -170,6 +186,22 @@ class AccountPageBody extends ConsumerWidget {
             } catch (e) {
               print(e);
             }
+          },
+        );
+      },
+    );
+  }
+
+  Widget linkDialog() {
+    return Consumer(
+      builder: (context, ref, _) {
+        return DisplayDialog(
+          title: "アカウントリンク",
+          content:
+              "現在のアカウントにメールアドレスをリンクさせることで、機種変更時やログアウトした場合でも現在のアカウントを復帰させることができるようになります。\n\nメールアドレスをリンクさせますか？",
+          onPressed: () {
+            Navigator.pop(context);
+            Navigator.push(context, LinkAccountPage.route());
           },
         );
       },

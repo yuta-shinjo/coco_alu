@@ -81,6 +81,17 @@ class FireUsersService {
     });
   }
 
+// メールアドレスを連携
+  Future<void> linkEmail(String email, String password) async {
+    final credential =
+        firebase.EmailAuthProvider.credential(email: email, password: password);
+    await _auth.currentUser!.linkWithCredential(credential);
+  }
+
+  Future<void> anonymouslyRegisterUser() async {
+    await _auth.signInAnonymously();
+  }
+
   Future<void> registerEmailUserProfile(
     String name,
     String profileImageUrl,
@@ -94,6 +105,29 @@ class FireUsersService {
       profileImageUrl = await task.ref.getDownloadURL();
     }
 
+    await _fireStore
+        .collection('users')
+        .doc(_auth.currentUser?.uid)
+        .collection('profile')
+        .doc(_auth.currentUser?.uid)
+        .set({
+      FieldName.name: name,
+      FieldName.imgUrls: profileImageUrl,
+    });
+  }
+
+  Future<void> registerAnonymouslyUserProfile(
+    String name,
+    String profileImageUrl,
+    File? imgFile,
+  ) async {
+    if (imgFile != null) {
+      final task = await _fireStorage
+          .ref(
+              'users/${_auth.currentUser?.uid}/profiles/${_auth.currentUser?.uid}')
+          .putFile(imgFile);
+      profileImageUrl = await task.ref.getDownloadURL();
+    }
     await _fireStore
         .collection('users')
         .doc(_auth.currentUser?.uid)
@@ -147,7 +181,8 @@ class FireUsersService {
     //firestoreに追加前にstorageの写真をアップデートする
     if (imageFile != null) {
       final task = await _fireStorage
-          .ref('users/${_auth.currentUser?.uid}/profiles/${_auth.currentUser?.uid}')
+          .ref(
+              'users/${_auth.currentUser?.uid}/profiles/${_auth.currentUser?.uid}')
           .putFile(imageFile);
       imgUrls = await task.ref.getDownloadURL();
     }

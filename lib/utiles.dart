@@ -14,6 +14,12 @@ void registerSuccessMassage() {
     toastLength: Toast.LENGTH_LONG,
   );
 }
+void linkSuccessMassage() {
+  Fluttertoast.showToast(
+    msg: 'アカウントをリンクさせました',
+    toastLength: Toast.LENGTH_LONG,
+  );
+}
 
 void profileSuccessMassage() {
   Fluttertoast.showToast(
