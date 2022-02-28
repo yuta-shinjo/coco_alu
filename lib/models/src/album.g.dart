@@ -14,11 +14,10 @@ _$_Album _$$_AlbumFromJson(Map<String, dynamic> json) => _$_Album(
           (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList() ??
               const <String>[],
       public: json['public'] as bool? ?? false,
-      latitudeRef: json['latitudeRef'] as String? ?? '',
-      latitude: json['latitude'] as String? ?? '',
-      longitudeRef: json['longitudeRef'] as String? ?? '',
-      longitude: json['longitude'] as String? ?? '',
-      imgLocation: json['imgLocation'] as String? ?? '',
+      latitudeRef: json['latitudeRef'] as String?,
+      latitude: json['latitude'] as String?,
+      longitudeRef: json['longitudeRef'] as String?,
+      longitude: json['longitude'] as String?,
       created: const FireTimestampConverterNonNull().fromJson(json['created']),
     );
 
@@ -32,6 +31,5 @@ Map<String, dynamic> _$$_AlbumToJson(_$_Album instance) => <String, dynamic>{
       'latitude': instance.latitude,
       'longitudeRef': instance.longitudeRef,
       'longitude': instance.longitude,
-      'imgLocation': instance.imgLocation,
       'created': const FireTimestampConverterNonNull().toJson(instance.created),
     };

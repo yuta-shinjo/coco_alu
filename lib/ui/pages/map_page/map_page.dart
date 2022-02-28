@@ -1,10 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:location/location.dart';
+import 'package:my_collection/controllers/pages/map_page_controller.dart';
+import 'package:my_collection/models/src/album.dart';
 
 class MapPage extends ConsumerStatefulWidget {
   MapPage({Key? key}) : super(key: key);
@@ -28,15 +29,17 @@ class _MapPageState extends ConsumerState<MapPage>
       future: _getCurrentPosition(),
       builder: (context, AsyncSnapshot<LatLng> snapshot) {
         if (snapshot.hasData) {
-          return GoogleMap(
-            markers: _markers,
-            initialCameraPosition: CameraPosition(
-                target:
-                    LatLng(snapshot.data!.latitude, snapshot.data!.longitude),
-                zoom: 14),
-            onMapCreated: (controller) => _controller.complete(controller),
-            myLocationEnabled: true,
-          );
+          return Consumer(builder: (context, ref, _) {
+            return GoogleMap(
+              markers: _markers(context, ref),
+              initialCameraPosition: CameraPosition(
+                  target:
+                      LatLng(snapshot.data!.latitude, snapshot.data!.longitude),
+                  zoom: 14),
+              onMapCreated: (controller) => _controller.complete(controller),
+              myLocationEnabled: true,
+            );
+          });
         } else {
           return Center(
             child: CircularProgressIndicator(),
@@ -46,13 +49,38 @@ class _MapPageState extends ConsumerState<MapPage>
     );
   }
 
-  Set<Marker> _markers = {
-    Marker(
-      markerId: MarkerId("marker1"),
-      position: LatLng(35.4456381, 137.0195095),
-      infoWindow: InfoWindow(title: "美濃太田駅"),
-    )
-  };
+  Set<Marker> _markers(BuildContext context, WidgetRef ref) {
+    final albums = ref.watch(mapPageProvider.select((s) => s.albums)) ?? [];
+
+    final markers = <Marker>{};
+
+    for (var i = 0; i < albums.length; i++) {
+      final album = albums[i];
+      final lat = album.latitude;
+      final lng = album.longitude;
+      // 写真に位置情報が入っていない時があるため
+      if (lat != '' && lng != '') {
+        markers.add(_markerFromCheckIn(context, ref, i, album, lat!, lng!));
+      }
+    }
+    return markers;
+  }
+
+  Marker _markerFromCheckIn(
+    BuildContext context,
+    WidgetRef ref,
+    int index,
+    Album album,
+    String lat,
+    String lng,
+  ) {
+    final id = MarkerId(album.id);
+    return Marker(
+      markerId: id,
+      position: LatLng(double.parse(lat), double.parse(lng)),
+      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueViolet),
+    );
+  }
 
   final Location _location = Location();
 

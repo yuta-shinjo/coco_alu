@@ -55,10 +55,10 @@ class FireAlbumService {
       FieldName.tags: tags.map((e) => e).toList(),
       FieldName.public: false,
       FieldName.created: FieldValue.serverTimestamp(),
-      FieldName.latitudeRef: latitudeRef,
-      FieldName.latitude: latitude,
-      FieldName.longitudeRef: longitudeRef,
-      FieldName.longitude: longitude,
+      FieldName.latitudeRef: latitudeRef != 'null' ? latitudeRef : '',
+      FieldName.latitude: latitude != 'null' ? latitude : '',
+      FieldName.longitudeRef: longitudeRef != 'null' ? longitudeRef : '',
+      FieldName.longitude: longitude != 'null' ? longitude : '',
     });
   }
 

@@ -68,7 +68,7 @@ class AddAlbumPageController extends StateNotifier<AddAlbumPageState> {
     final longitude = tags['GPS GPSLongitude'].toString();
     state = state.copyWith(
       imgUrls: imgUrls,
-      latitudeRef:latitudeRef,
+      latitudeRef: latitudeRef,
       latitude: latitude,
       longitudeRef: longitudeRef,
       longitude: longitude,
@@ -92,10 +92,11 @@ class AddAlbumPageController extends StateNotifier<AddAlbumPageState> {
       imgUrls,
       imgFile,
       tags,
-latitudeRef,
-  latitude,
-     longitudeRef,
-     longitude,    );
+      latitudeRef,
+      latitude,
+      longitudeRef,
+      longitude,
+    );
   }
 
   // contentを記述したalbumを作成した後に

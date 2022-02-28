@@ -28,11 +28,10 @@ class _$AlbumTearOff {
       String imgUrls = '',
       List<String> tags = const <String>[],
       bool public = false,
-      String latitudeRef = '',
-      String latitude = '',
-      String longitudeRef = '',
-      String longitude = '',
-      String imgLocation = '',
+      String? latitudeRef,
+      String? latitude,
+      String? longitudeRef,
+      String? longitude,
       @FireTimestampConverterNonNull() required DateTime created}) {
     return _Album(
       id: id,
@@ -44,7 +43,6 @@ class _$AlbumTearOff {
       latitude: latitude,
       longitudeRef: longitudeRef,
       longitude: longitude,
-      imgLocation: imgLocation,
       created: created,
     );
   }
@@ -64,11 +62,10 @@ mixin _$Album {
   String get imgUrls => throw _privateConstructorUsedError;
   List<String> get tags => throw _privateConstructorUsedError;
   bool get public => throw _privateConstructorUsedError;
-  String get latitudeRef => throw _privateConstructorUsedError;
-  String get latitude => throw _privateConstructorUsedError;
-  String get longitudeRef => throw _privateConstructorUsedError;
-  String get longitude => throw _privateConstructorUsedError;
-  String get imgLocation => throw _privateConstructorUsedError;
+  String? get latitudeRef => throw _privateConstructorUsedError;
+  String? get latitude => throw _privateConstructorUsedError;
+  String? get longitudeRef => throw _privateConstructorUsedError;
+  String? get longitude => throw _privateConstructorUsedError;
   @FireTimestampConverterNonNull()
   DateTime get created => throw _privateConstructorUsedError;
 
@@ -87,11 +84,10 @@ abstract class $AlbumCopyWith<$Res> {
       String imgUrls,
       List<String> tags,
       bool public,
-      String latitudeRef,
-      String latitude,
-      String longitudeRef,
-      String longitude,
-      String imgLocation,
+      String? latitudeRef,
+      String? latitude,
+      String? longitudeRef,
+      String? longitude,
       @FireTimestampConverterNonNull() DateTime created});
 }
 
@@ -114,7 +110,6 @@ class _$AlbumCopyWithImpl<$Res> implements $AlbumCopyWith<$Res> {
     Object? latitude = freezed,
     Object? longitudeRef = freezed,
     Object? longitude = freezed,
-    Object? imgLocation = freezed,
     Object? created = freezed,
   }) {
     return _then(_value.copyWith(
@@ -141,23 +136,19 @@ class _$AlbumCopyWithImpl<$Res> implements $AlbumCopyWith<$Res> {
       latitudeRef: latitudeRef == freezed
           ? _value.latitudeRef
           : latitudeRef // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       latitude: latitude == freezed
           ? _value.latitude
           : latitude // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       longitudeRef: longitudeRef == freezed
           ? _value.longitudeRef
           : longitudeRef // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       longitude: longitude == freezed
           ? _value.longitude
           : longitude // ignore: cast_nullable_to_non_nullable
-              as String,
-      imgLocation: imgLocation == freezed
-          ? _value.imgLocation
-          : imgLocation // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       created: created == freezed
           ? _value.created
           : created // ignore: cast_nullable_to_non_nullable
@@ -177,11 +168,10 @@ abstract class _$AlbumCopyWith<$Res> implements $AlbumCopyWith<$Res> {
       String imgUrls,
       List<String> tags,
       bool public,
-      String latitudeRef,
-      String latitude,
-      String longitudeRef,
-      String longitude,
-      String imgLocation,
+      String? latitudeRef,
+      String? latitude,
+      String? longitudeRef,
+      String? longitude,
       @FireTimestampConverterNonNull() DateTime created});
 }
 
@@ -205,7 +195,6 @@ class __$AlbumCopyWithImpl<$Res> extends _$AlbumCopyWithImpl<$Res>
     Object? latitude = freezed,
     Object? longitudeRef = freezed,
     Object? longitude = freezed,
-    Object? imgLocation = freezed,
     Object? created = freezed,
   }) {
     return _then(_Album(
@@ -232,23 +221,19 @@ class __$AlbumCopyWithImpl<$Res> extends _$AlbumCopyWithImpl<$Res>
       latitudeRef: latitudeRef == freezed
           ? _value.latitudeRef
           : latitudeRef // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       latitude: latitude == freezed
           ? _value.latitude
           : latitude // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       longitudeRef: longitudeRef == freezed
           ? _value.longitudeRef
           : longitudeRef // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       longitude: longitude == freezed
           ? _value.longitude
           : longitude // ignore: cast_nullable_to_non_nullable
-              as String,
-      imgLocation: imgLocation == freezed
-          ? _value.imgLocation
-          : imgLocation // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       created: created == freezed
           ? _value.created
           : created // ignore: cast_nullable_to_non_nullable
@@ -266,11 +251,10 @@ class _$_Album implements _Album {
       this.imgUrls = '',
       this.tags = const <String>[],
       this.public = false,
-      this.latitudeRef = '',
-      this.latitude = '',
-      this.longitudeRef = '',
-      this.longitude = '',
-      this.imgLocation = '',
+      this.latitudeRef,
+      this.latitude,
+      this.longitudeRef,
+      this.longitude,
       @FireTimestampConverterNonNull() required this.created});
 
   factory _$_Album.fromJson(Map<String, dynamic> json) =>
@@ -291,28 +275,21 @@ class _$_Album implements _Album {
   @JsonKey()
   @override
   final bool public;
-  @JsonKey()
   @override
-  final String latitudeRef;
-  @JsonKey()
+  final String? latitudeRef;
   @override
-  final String latitude;
-  @JsonKey()
+  final String? latitude;
   @override
-  final String longitudeRef;
-  @JsonKey()
+  final String? longitudeRef;
   @override
-  final String longitude;
-  @JsonKey()
-  @override
-  final String imgLocation;
+  final String? longitude;
   @override
   @FireTimestampConverterNonNull()
   final DateTime created;
 
   @override
   String toString() {
-    return 'Album(id: $id, content: $content, imgUrls: $imgUrls, tags: $tags, public: $public, latitudeRef: $latitudeRef, latitude: $latitude, longitudeRef: $longitudeRef, longitude: $longitude, imgLocation: $imgLocation, created: $created)';
+    return 'Album(id: $id, content: $content, imgUrls: $imgUrls, tags: $tags, public: $public, latitudeRef: $latitudeRef, latitude: $latitude, longitudeRef: $longitudeRef, longitude: $longitude, created: $created)';
   }
 
   @override
@@ -331,8 +308,6 @@ class _$_Album implements _Album {
             const DeepCollectionEquality()
                 .equals(other.longitudeRef, longitudeRef) &&
             const DeepCollectionEquality().equals(other.longitude, longitude) &&
-            const DeepCollectionEquality()
-                .equals(other.imgLocation, imgLocation) &&
             const DeepCollectionEquality().equals(other.created, created));
   }
 
@@ -348,7 +323,6 @@ class _$_Album implements _Album {
       const DeepCollectionEquality().hash(latitude),
       const DeepCollectionEquality().hash(longitudeRef),
       const DeepCollectionEquality().hash(longitude),
-      const DeepCollectionEquality().hash(imgLocation),
       const DeepCollectionEquality().hash(created));
 
   @JsonKey(ignore: true)
@@ -369,11 +343,10 @@ abstract class _Album implements Album {
       String imgUrls,
       List<String> tags,
       bool public,
-      String latitudeRef,
-      String latitude,
-      String longitudeRef,
-      String longitude,
-      String imgLocation,
+      String? latitudeRef,
+      String? latitude,
+      String? longitudeRef,
+      String? longitude,
       @FireTimestampConverterNonNull() required DateTime created}) = _$_Album;
 
   factory _Album.fromJson(Map<String, dynamic> json) = _$_Album.fromJson;
@@ -389,15 +362,13 @@ abstract class _Album implements Album {
   @override
   bool get public;
   @override
-  String get latitudeRef;
+  String? get latitudeRef;
   @override
-  String get latitude;
+  String? get latitude;
   @override
-  String get longitudeRef;
+  String? get longitudeRef;
   @override
-  String get longitude;
-  @override
-  String get imgLocation;
+  String? get longitude;
   @override
   @FireTimestampConverterNonNull()
   DateTime get created;

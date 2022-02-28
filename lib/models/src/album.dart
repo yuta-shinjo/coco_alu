@@ -13,11 +13,10 @@ class Album with _$Album {
     @Default('') String imgUrls,
     @Default(<String>[]) List<String> tags,
     @Default(false) bool public,
-    @Default('') String latitudeRef,
-    @Default('') String latitude,
-    @Default('') String longitudeRef,
-    @Default('') String longitude,
-    @Default('') String imgLocation,
+    String? latitudeRef,
+    String? latitude,
+    String? longitudeRef,
+    String? longitude,
     @FireTimestampConverterNonNull() required DateTime created,
   }) = _Album;
 
