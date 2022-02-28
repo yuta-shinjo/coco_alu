@@ -36,13 +36,11 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>このアプリはカメラにファイルを追加する必要があります</string>
+	<string>プロフィール写真の設定やアルバム作成に使用します。</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Why is my app authenticating using face id?</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>このアプリでは、マイクのフォトライブラリにファイルを追加する必要があります</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>このアプリはフォトライブラリにアクセスする必要があります</string>
+	<string>プロフィール写真の設定やアルバム作成に使用します。</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

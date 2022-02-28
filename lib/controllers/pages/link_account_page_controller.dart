@@ -1,27 +1,26 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:my_collection/services/fire_users_service.dart';
-import 'package:my_collection/ui/projects/authentication_error.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
-part 'register_page_controller.freezed.dart';
+part 'link_account_page_controller.freezed.dart';
 
 @freezed
-class RegisterPageState with _$RegisterPageState {
-  const factory RegisterPageState({
+class LinkAccountPageState with _$LinkAccountPageState {
+  const factory LinkAccountPageState({
     @Default('') String newEmail,
     @Default('') String newPassword,
     @Default('') String userId,
-  }) = _RegisterPageState;
+  }) = _LinkAccountPageState;
 }
 
-final registerPageProvider = StateNotifierProvider.autoDispose<
-    RegisterPageController, RegisterPageState>(
-  (ref) => RegisterPageController(),
+final linkAccountPageProvider = StateNotifierProvider.autoDispose<
+    LinkAccountPageController, LinkAccountPageState>(
+  (ref) => LinkAccountPageController(),
 );
 
-class RegisterPageController extends StateNotifier<RegisterPageState> {
-  RegisterPageController() : super(const RegisterPageState());
+class LinkAccountPageController extends StateNotifier<LinkAccountPageState> {
+  LinkAccountPageController() : super(const LinkAccountPageState());
 
   void inputEmail(String newEmail) =>
       state = state.copyWith(newEmail: newEmail);
@@ -36,8 +35,9 @@ class RegisterPageController extends StateNotifier<RegisterPageState> {
 
   final _fireUsersService = FireUsersService();
 
-  Future<void> isRegister(String newEmail, String newPassword) async =>
-      _fireUsersService.registerUser(newEmail, newPassword);
+
+  Future<void> linkEmail(String newEmail, String newPassword) async =>
+      _fireUsersService.linkEmail(newEmail, newPassword);
 
   final btnController = RoundedLoadingButtonController();
 }
