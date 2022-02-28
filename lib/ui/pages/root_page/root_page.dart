@@ -7,6 +7,7 @@ import 'package:my_collection/ui/pages/add_album_page/add_album_page.dart';
 import 'package:my_collection/ui/pages/album_list_page/album_list_page.dart';
 
 import 'package:my_collection/ui/pages/home_page/home_page.dart';
+import 'package:my_collection/ui/pages/map_page/map_page.dart';
 import 'package:page_transition/page_transition.dart';
 
 class RootPage extends ConsumerStatefulWidget {
@@ -50,12 +51,13 @@ class _RootPageState extends ConsumerState<RootPage>
     final currentIndex = ref.watch(rootPageProvider.select((s) => s.tabIndex));
 
     final _tabs = [
+      MapPage(),
       HomePage(),
       EditAlbumPage(),
       AddAlbumPage(),
       AccountPage(),
     ];
-    
+
     return Scaffold(
       body: IndexedStack(children: _tabs, index: currentIndex),
       bottomNavigationBar: _bottomNavigation(context, currentIndex),
@@ -73,6 +75,10 @@ class _RootPageState extends ConsumerState<RootPage>
           onTap: ref.read(rootPageProvider.notifier).onTabTap,
           currentIndex: currentIndex,
           items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.pin_drop),
+              label: 'マップ',
+            ),
             BottomNavigationBarItem(
               icon: Icon(Icons.auto_stories),
               label: '一覧',
