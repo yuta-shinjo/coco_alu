@@ -76,9 +76,10 @@ class _MapPageState extends ConsumerState<MapPage>
   ) {
     final id = MarkerId(album.id);
     return Marker(
+      infoWindow: InfoWindow(title: album.content),
+
       markerId: id,
       position: LatLng(double.parse(lat), double.parse(lng)),
-      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueViolet),
     );
   }
 

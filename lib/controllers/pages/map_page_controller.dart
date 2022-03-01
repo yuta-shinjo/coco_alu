@@ -35,7 +35,7 @@ class MapPageController extends StateNotifier<MapPageState> {
     );
   }
 
-  // 作成ページで作成ボタンを押したときにhomePageのリストを更新するため
+  // 作成ページで作成ボタンを押したときにmapPageのマップを更新するため
   Future<void> fetchAlbumList() async {
     await _fireAlbumService.fetchAlbumList(
       onValueChanged: (albums) {

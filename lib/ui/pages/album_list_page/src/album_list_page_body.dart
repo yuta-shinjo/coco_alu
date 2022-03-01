@@ -3,6 +3,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_collection/controllers/pages/album_list_page_controller.dart';
 import 'package:my_collection/controllers/pages/home_page_controller.dart';
+import 'package:my_collection/controllers/pages/map_page_controller.dart';
 import 'package:my_collection/models/src/album.dart';
 import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/components.dart';
@@ -91,6 +92,7 @@ class AlbumListPageBody extends ConsumerWidget {
               Navigator.pop(context);
               // albumを削除時にhomePageのリストを更新するため
               await ref.read(homePageProvider.notifier).fetchAlbumList();
+              await ref.read(mapPageProvider.notifier).fetchAlbumList();
             }
           },
         );

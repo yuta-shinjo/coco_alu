@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Your location is required for this app</string>
+	<string>位置情報は作成したアルバムをマップ上に表示したりするときに使用します</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Your location is required for this app</string>
+	<string>位置情報は作成したアルバムをマップ上に表示したりするときに使用します</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
