@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:my_collection/controllers/pages/add_album_page_controller.dart';
 import 'package:my_collection/controllers/pages/album_list_page_controller.dart';
 import 'package:my_collection/controllers/pages/home_page_controller.dart';
+import 'package:my_collection/controllers/pages/map_page_controller.dart';
 import 'package:my_collection/controllers/pages/tag_chips_page_controller.dart';
 import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/components.dart';
@@ -130,6 +131,7 @@ class AddAlbumPgeBody extends ConsumerWidget {
                 btnController.reset();
                 ref.read(homePageProvider.notifier).fetchAlbumList();
                 ref.read(albumListPageProvider.notifier).fetchAlbumList();
+                ref.read(mapPageProvider.notifier).fetchAlbumList();
               }
             } else {
               ref.read(addAlbumPageProvider.notifier).btnController.error();

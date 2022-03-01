@@ -3,6 +3,12 @@
    <application
         android:label="my_collection"
         android:icon="@mipmap/ic_launcher">
+        <meta-data
+            android:name="flutterEmbedding"
+            android:value="2" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+             android:value="AIzaSyDsmW01EX83nbk8YaouigcVWJ50PRAzKLY"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

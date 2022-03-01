@@ -63,12 +63,26 @@ class AddAlbumPageController extends StateNotifier<AddAlbumPageState> {
     final tags =
         await readExifFromBytes(await File(imgFile.path).readAsBytes());
     final latitudeRef = tags['GPS GPSLatitudeRef'].toString();
-    final latitude = tags['GPS GPSLatitude'].toString();
+    // 緯度は[35, 12, 1781/100]のような感じで取得できるため、
+    // Google Mapで使えるように10進数に変換する
+    final lat = tags['GPS GPSLatitude'];
+    final changeListLat = lat?.values.toList();
+    final lat0 = changeListLat?[0].toDouble();
+    final lat1 = changeListLat?[1].toDouble();
+    final lat2 = changeListLat?[2].toDouble();
+    final latitude = (lat0 + lat1 / 60 + lat2 / 3600).toString();
     final longitudeRef = tags['GPS GPSLongitudeRef'].toString();
-    final longitude = tags['GPS GPSLongitude'].toString();
+    // 経度も同様にGoogle Mapで使えるように10進数に変換する
+    final lon = tags['GPS GPSLongitude'];
+    final changeListLon = lon?.values.toList();
+    final lon0 = changeListLon?[0].toDouble();
+    final lon1 = changeListLon?[1].toDouble();
+    final lon2 = changeListLon?[2].toDouble();
+    final longitude = (lon0 + lon1 / 60 + lon2 / 3600).toString();
+    
     state = state.copyWith(
       imgUrls: imgUrls,
-      latitudeRef:latitudeRef,
+      latitudeRef: latitudeRef,
       latitude: latitude,
       longitudeRef: longitudeRef,
       longitude: longitude,
@@ -92,10 +106,11 @@ class AddAlbumPageController extends StateNotifier<AddAlbumPageState> {
       imgUrls,
       imgFile,
       tags,
-latitudeRef,
-  latitude,
-     longitudeRef,
-     longitude,    );
+      latitudeRef,
+      latitude,
+      longitudeRef,
+      longitude,
+    );
   }
 
   // contentを記述したalbumを作成した後に
@@ -115,4 +130,16 @@ latitudeRef,
   void loadingError(RoundedLoadingButtonController controller) {
     controller.error();
   }
+}
+
+abstract class IfdValues {
+  const IfdValues();
+
+  List toList();
+
+  int get length;
+
+  int firstAsInt();
+
+  int secondInt();
 }
