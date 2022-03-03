@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>位置情報は作成したアルバムをマップ上に表示したりするときに使用します</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>位置情報は作成したアルバムをマップ上に表示したりするときに使用します</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -21,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>$(FLUTTER_BUILD_NAME)</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -36,13 +32,17 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>プロフィール写真の設定やアルバム作成に使用します。</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Why is my app authenticating using face id?</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>位置情報は作成したアルバムをマップ上に表示したりするときに使用します</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>位置情報は作成したアルバムをマップ上に表示したりするときに使用します</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>プロフィール写真の設定やアルバム作成に使用します。</string>
 	<key>UILaunchStoryboardName</key>

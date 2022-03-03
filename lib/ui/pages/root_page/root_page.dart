@@ -51,10 +51,10 @@ class _RootPageState extends ConsumerState<RootPage>
     final currentIndex = ref.watch(rootPageProvider.select((s) => s.tabIndex));
 
     final _tabs = [
-      MapPage(),
       HomePage(),
       EditAlbumPage(),
       AddAlbumPage(),
+      MapPage(),
       AccountPage(),
     ];
 
@@ -76,10 +76,6 @@ class _RootPageState extends ConsumerState<RootPage>
           currentIndex: currentIndex,
           items: const [
             BottomNavigationBarItem(
-              icon: Icon(Icons.pin_drop),
-              label: 'マップ',
-            ),
-            BottomNavigationBarItem(
               icon: Icon(Icons.auto_stories),
               label: '一覧',
             ),
@@ -90,6 +86,10 @@ class _RootPageState extends ConsumerState<RootPage>
             BottomNavigationBarItem(
               icon: Icon(Icons.drive_file_rename_outline),
               label: '作成',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.pin_drop),
+              label: 'マップ',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person),

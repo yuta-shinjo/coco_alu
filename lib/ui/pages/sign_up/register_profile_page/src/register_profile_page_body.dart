@@ -6,7 +6,7 @@ import 'package:my_collection/controllers/pages/account_page_controller.dart';
 import 'package:my_collection/controllers/pages/register_profile_page_controller.dart';
 import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/src/theme_text.dart';
-import 'package:my_collection/ui/pages/root_page/root_page.dart';
+import 'package:my_collection/ui/pages/introduction_page/introduction_page.dart';
 import 'package:my_collection/ui/projects/rounded_loading_button.dart';
 import 'package:my_collection/utiles.dart';
 
@@ -132,7 +132,7 @@ class RegisterProfilePageBody extends StatelessWidget {
                 errorMassage(controller, e);
               } finally {
                 ref.read(accountPageProvider.notifier).fetchUserProfile();
-                Navigator.pushReplacement(context, RootPage.route());
+                Navigator.pushReplacement(context, IntroductionPage.route());
               }
             } else {
               nameErrorMassage(controller);

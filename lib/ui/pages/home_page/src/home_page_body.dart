@@ -25,6 +25,7 @@ class HomePageBody extends ConsumerWidget {
 
   Widget _albumList(List<Album> albums, BuildContext context) {
     return GridView.builder(
+      // 変な感じでスクロールされるのを防ぐため
       physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
