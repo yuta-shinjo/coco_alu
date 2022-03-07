@@ -79,7 +79,7 @@ class AddAlbumPageController extends StateNotifier<AddAlbumPageState> {
     final lon1 = changeListLon?[1].toDouble();
     final lon2 = changeListLon?[2].toDouble();
     final longitude = (lon0 + lon1 / 60 + lon2 / 3600).toString();
-    
+
     state = state.copyWith(
       imgUrls: imgUrls,
       latitudeRef: latitudeRef,
@@ -130,16 +130,4 @@ class AddAlbumPageController extends StateNotifier<AddAlbumPageState> {
   void loadingError(RoundedLoadingButtonController controller) {
     controller.error();
   }
-}
-
-abstract class IfdValues {
-  const IfdValues();
-
-  List toList();
-
-  int get length;
-
-  int firstAsInt();
-
-  int secondInt();
 }
