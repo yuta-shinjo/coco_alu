@@ -45,14 +45,14 @@ class AddAlbumPgeBody extends ConsumerWidget {
               _selectImage(imgUrls, btnController, imgFile),
               const Divider(color: AppColors.grey),
               const Padding(
-                padding: EdgeInsets.only(left: 16, top: 18),
-                child: Subtitle2Text('キャプション', color: AppColors.textDisable),
+                padding: EdgeInsets.only(left: 16, top: 8, bottom: 8),
+                child: Subtitle2Text('コメント', color: AppColors.textDisable),
               ),
               const Divider(color: AppColors.grey),
               _contentArea(contentController, btnController),
               const Divider(color: AppColors.grey),
               const Padding(
-                padding: EdgeInsets.only(left: 16, top: 16),
+                padding: EdgeInsets.only(left: 16, top: 8, bottom: 8),
                 child: Subtitle2Text('タグ', color: AppColors.textDisable),
               ),
               const Divider(color: AppColors.grey),
@@ -105,9 +105,7 @@ class AddAlbumPgeBody extends ConsumerWidget {
     return Image(
       image: imgFile != null
           ? Image.file(imgFile, fit: BoxFit.cover).image
-          : AssetImage(
-              'assets/images/photo.jpg',
-            ),
+          : AssetImage('assets/images/photo.jpg'),
       fit: BoxFit.cover,
     );
   }
@@ -124,7 +122,7 @@ class AddAlbumPgeBody extends ConsumerWidget {
           minLines: 6,
           decoration: const InputDecoration(
             contentPadding: EdgeInsets.all(15),
-            hintText: 'キャプションを書こう',
+            hintText: 'コメントを書こう',
             border: InputBorder.none,
           ),
           onChanged: (text) {
