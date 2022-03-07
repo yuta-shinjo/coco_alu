@@ -77,6 +77,65 @@ class AddAlbumPgeBody extends ConsumerWidget {
     );
   }
 
+  Widget _selectImage(
+    String imgUrls,
+    RoundedLoadingButtonController btnController,
+    File? imgFile,
+  ) {
+    return Consumer(builder: (context, ref, _) {
+      return GestureDetector(
+        onTap: () async {
+          final image =
+              await ImagePicker().pickImage(source: ImageSource.gallery);
+          await ref
+              .read(addAlbumPageProvider.notifier)
+              .pickImage(image, imgUrls);
+          btnController.reset();
+        },
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height / 3,
+          width: double.infinity,
+          child: _imgArea(imgFile),
+        ),
+      );
+    });
+  }
+
+  Widget _imgArea(File? imgFile) {
+    return Image(
+      image: imgFile != null
+          ? Image.file(imgFile, fit: BoxFit.cover).image
+          : AssetImage(
+              'assets/images/photo.jpg',
+            ),
+      fit: BoxFit.cover,
+    );
+  }
+
+  Widget _contentArea(
+    TextEditingController contentController,
+    RoundedLoadingButtonController btnController,
+  ) {
+    return Consumer(
+      builder: (context, ref, _) {
+        return TextFormField(
+          onTap: () => btnController.reset(),
+          maxLines: 6,
+          minLines: 6,
+          decoration: const InputDecoration(
+            contentPadding: EdgeInsets.all(15),
+            hintText: 'キャプションを書こう',
+            border: InputBorder.none,
+          ),
+          onChanged: (text) {
+            ref.read(addAlbumPageProvider.notifier).inputContent(text);
+          },
+          controller: contentController,
+        );
+      },
+    );
+  }
+
   Widget _createdButton(
     RoundedLoadingButtonController btnController,
     String content,
@@ -141,64 +200,5 @@ class AddAlbumPgeBody extends ConsumerWidget {
         ),
       );
     });
-  }
-
-  Widget _selectImage(
-    String imgUrls,
-    RoundedLoadingButtonController btnController,
-    File? imgFile,
-  ) {
-    return Consumer(builder: (context, ref, _) {
-      return GestureDetector(
-        onTap: () async {
-          final image =
-              await ImagePicker().pickImage(source: ImageSource.gallery);
-          await ref
-              .read(addAlbumPageProvider.notifier)
-              .pickImage(image, imgUrls);
-          btnController.reset();
-        },
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height / 3,
-          width: double.infinity,
-          child: _imgArea(imgFile),
-        ),
-      );
-    });
-  }
-
-  Widget _imgArea(File? imgFile) {
-    return Image(
-      image: imgFile != null
-          ? Image.file(imgFile, fit: BoxFit.cover).image
-          : AssetImage(
-              'assets/images/photo.jpg',
-            ),
-      fit: BoxFit.cover,
-    );
-  }
-
-  Widget _contentArea(
-    TextEditingController contentController,
-    RoundedLoadingButtonController btnController,
-  ) {
-    return Consumer(
-      builder: (context, ref, _) {
-        return TextFormField(
-          onTap: () => btnController.reset(),
-          maxLines: 6,
-          minLines: 6,
-          decoration: const InputDecoration(
-            contentPadding: EdgeInsets.all(15),
-            hintText: 'キャプションを書こう',
-            border: InputBorder.none,
-          ),
-          onChanged: (text) {
-            ref.read(addAlbumPageProvider.notifier).inputContent(text);
-          },
-          controller: contentController,
-        );
-      },
-    );
   }
 }
