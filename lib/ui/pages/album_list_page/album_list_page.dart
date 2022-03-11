@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/components.dart';
+import 'package:my_collection/ui/pages/add_album_page/add_album_page.dart';
 import 'package:my_collection/ui/pages/album_list_page/src/album_list_page_body.dart';
 
 class EditAlbumPage extends StatelessWidget {
@@ -10,6 +12,11 @@ class EditAlbumPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const AppBarText('アルバム編集'),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Navigator.push(context, AddAlbumPage.route()),
+        backgroundColor: AppColors.accentColor,
+        child: Icon(Icons.add_photo_alternate),
       ),
       body: AlbumListPageBody(),
     );

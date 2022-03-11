@@ -162,8 +162,6 @@ class _MapPageState extends ConsumerState<MapPage>
       final controller = ref.watch(mapPageProvider.notifier).controller;
       final currentPage =
           ref.watch(mapPageProvider.select((s) => s.currentPage));
-      final controllerInt = controller;
-      print(controllerInt);
       return Align(
         alignment: Alignment(0, 0.92),
         child: SizedBox(

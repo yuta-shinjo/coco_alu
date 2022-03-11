@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:my_collection/controllers/pages/account_page_controller.dart';
 import 'package:my_collection/controllers/pages/anonymously_register_profile_page_controller.dart';
 import 'package:my_collection/themes/app_colors.dart';
@@ -40,7 +39,7 @@ class AnonymouslyRegisterProfilePageBody extends StatelessWidget {
         return Stack(
           children: [
             _userProfile(imageFile),
-            _effectButton(ref, profileImageUrl),
+            _effectButton(profileImageUrl),
           ],
         );
       },
@@ -60,22 +59,23 @@ class AnonymouslyRegisterProfilePageBody extends StatelessWidget {
     );
   }
 
-  Widget _effectButton(WidgetRef ref, String profileImageUrl) {
-    return RawMaterialButton(
-      onPressed: () async {
-        final image =
-            await ImagePicker().pickImage(source: ImageSource.gallery);
-        await ref
-            .read(anonymouslyRegisterPageProvider.notifier)
-            .pickImage(image, profileImageUrl);
-      },
-      child: const SizedBox(
-        width: 240,
-        height: 240,
-      ),
-      shape: const CircleBorder(),
-      elevation: 0,
-    );
+  Widget _effectButton(String profileImageUrl) {
+    return Consumer(builder: (context, ref, _) {
+      final controller =
+          ref.watch(anonymouslyRegisterPageProvider.notifier).btnController;
+      return RawMaterialButton(
+        onPressed: () async {
+          await ref.read(anonymouslyRegisterPageProvider.notifier).pickImage();
+          controller.reset();
+        },
+        child: const SizedBox(
+          width: 240,
+          height: 240,
+        ),
+        shape: const CircleBorder(),
+        elevation: 0,
+      );
+    });
   }
 
   Widget _registerName() {
@@ -109,10 +109,6 @@ class AnonymouslyRegisterProfilePageBody extends StatelessWidget {
       builder: (context, ref, _) {
         final name =
             ref.watch(anonymouslyRegisterPageProvider.select((s) => s.name));
-        final profileImageUrl = ref.watch(
-            anonymouslyRegisterPageProvider.select((s) => s.profileImageUrl));
-        final imageFile = ref
-            .watch(anonymouslyRegisterPageProvider.select((s) => s.imageFile));
         final controller =
             ref.watch(anonymouslyRegisterPageProvider.notifier).btnController;
         return LoadingButton(
@@ -127,8 +123,7 @@ class AnonymouslyRegisterProfilePageBody extends StatelessWidget {
                     .isRegister();
                 await ref
                     .read(anonymouslyRegisterPageProvider.notifier)
-                    .createAnonymouslyUserProfile(
-                        name, profileImageUrl, imageFile);
+                    .createAnonymouslyUserProfile(name);
                 profileSuccessMassage();
               } catch (e) {
                 errorMassage(controller, e);

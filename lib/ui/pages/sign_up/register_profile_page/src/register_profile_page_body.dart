@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:my_collection/controllers/pages/account_page_controller.dart';
 import 'package:my_collection/controllers/pages/register_profile_page_controller.dart';
 import 'package:my_collection/themes/app_colors.dart';
@@ -61,21 +60,22 @@ class RegisterProfilePageBody extends StatelessWidget {
   }
 
   Widget _effectButton(WidgetRef ref, String profileImageUrl) {
-    return RawMaterialButton(
-      onPressed: () async {
-        final image =
-            await ImagePicker().pickImage(source: ImageSource.gallery);
-        await ref
-            .read(registerProfilePageProvider.notifier)
-            .pickImage(image, profileImageUrl);
-      },
-      child: const SizedBox(
-        width: 240,
-        height: 240,
-      ),
-      shape: const CircleBorder(),
-      elevation: 0,
-    );
+    return Consumer(builder: (context, ref, _) {
+      final controller =
+          ref.watch(registerProfilePageProvider.notifier).btnController;
+      return RawMaterialButton(
+        onPressed: () async {
+          await ref.read(registerProfilePageProvider.notifier).pickImage();
+          controller.reset();
+        },
+        child: const SizedBox(
+          width: 240,
+          height: 240,
+        ),
+        shape: const CircleBorder(),
+        elevation: 0,
+      );
+    });
   }
 
   Widget _registerName() {
@@ -107,10 +107,6 @@ class RegisterProfilePageBody extends StatelessWidget {
       builder: (context, ref, _) {
         final name =
             ref.watch(registerProfilePageProvider.select((s) => s.name));
-        final profileImageUrl = ref.watch(
-            registerProfilePageProvider.select((s) => s.profileImageUrl));
-        final imageFile =
-            ref.watch(registerProfilePageProvider.select((s) => s.imageFile));
         final controller =
             ref.watch(registerProfilePageProvider.notifier).btnController;
         return LoadingButton(
@@ -120,9 +116,9 @@ class RegisterProfilePageBody extends StatelessWidget {
             if (name != '') {
               loadingSuccess(controller);
               try {
-                ref
+                await ref
                     .read(registerProfilePageProvider.notifier)
-                    .createEmailUserProfile(name, profileImageUrl, imageFile);
+                    .createEmailUserProfile(name);
                 ref
                     .read(registerProfilePageProvider.notifier)
                     .profileName

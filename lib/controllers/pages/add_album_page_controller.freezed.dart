@@ -29,6 +29,7 @@ class _$AddAlbumPageStateTearOff {
       String? longitudeRef,
       String? longitude,
       bool isLoading = false,
+      bool public = false,
       File? imgFile}) {
     return _AddAlbumPageState(
       id: id,
@@ -41,6 +42,7 @@ class _$AddAlbumPageStateTearOff {
       longitudeRef: longitudeRef,
       longitude: longitude,
       isLoading: isLoading,
+      public: public,
       imgFile: imgFile,
     );
   }
@@ -61,6 +63,7 @@ mixin _$AddAlbumPageState {
   String? get longitudeRef => throw _privateConstructorUsedError;
   String? get longitude => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
+  bool get public => throw _privateConstructorUsedError;
   File? get imgFile => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -84,6 +87,7 @@ abstract class $AddAlbumPageStateCopyWith<$Res> {
       String? longitudeRef,
       String? longitude,
       bool isLoading,
+      bool public,
       File? imgFile});
 }
 
@@ -108,6 +112,7 @@ class _$AddAlbumPageStateCopyWithImpl<$Res>
     Object? longitudeRef = freezed,
     Object? longitude = freezed,
     Object? isLoading = freezed,
+    Object? public = freezed,
     Object? imgFile = freezed,
   }) {
     return _then(_value.copyWith(
@@ -151,6 +156,10 @@ class _$AddAlbumPageStateCopyWithImpl<$Res>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      public: public == freezed
+          ? _value.public
+          : public // ignore: cast_nullable_to_non_nullable
+              as bool,
       imgFile: imgFile == freezed
           ? _value.imgFile
           : imgFile // ignore: cast_nullable_to_non_nullable
@@ -177,6 +186,7 @@ abstract class _$AddAlbumPageStateCopyWith<$Res>
       String? longitudeRef,
       String? longitude,
       bool isLoading,
+      bool public,
       File? imgFile});
 }
 
@@ -203,6 +213,7 @@ class __$AddAlbumPageStateCopyWithImpl<$Res>
     Object? longitudeRef = freezed,
     Object? longitude = freezed,
     Object? isLoading = freezed,
+    Object? public = freezed,
     Object? imgFile = freezed,
   }) {
     return _then(_AddAlbumPageState(
@@ -246,6 +257,10 @@ class __$AddAlbumPageStateCopyWithImpl<$Res>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      public: public == freezed
+          ? _value.public
+          : public // ignore: cast_nullable_to_non_nullable
+              as bool,
       imgFile: imgFile == freezed
           ? _value.imgFile
           : imgFile // ignore: cast_nullable_to_non_nullable
@@ -268,6 +283,7 @@ class _$_AddAlbumPageState implements _AddAlbumPageState {
       this.longitudeRef,
       this.longitude,
       this.isLoading = false,
+      this.public = false,
       this.imgFile});
 
   @JsonKey()
@@ -294,12 +310,15 @@ class _$_AddAlbumPageState implements _AddAlbumPageState {
   @JsonKey()
   @override
   final bool isLoading;
+  @JsonKey()
+  @override
+  final bool public;
   @override
   final File? imgFile;
 
   @override
   String toString() {
-    return 'AddAlbumPageState(id: $id, content: $content, imgUrls: $imgUrls, albums: $albums, tag: $tag, latitudeRef: $latitudeRef, latitude: $latitude, longitudeRef: $longitudeRef, longitude: $longitude, isLoading: $isLoading, imgFile: $imgFile)';
+    return 'AddAlbumPageState(id: $id, content: $content, imgUrls: $imgUrls, albums: $albums, tag: $tag, latitudeRef: $latitudeRef, latitude: $latitude, longitudeRef: $longitudeRef, longitude: $longitude, isLoading: $isLoading, public: $public, imgFile: $imgFile)';
   }
 
   @override
@@ -319,6 +338,7 @@ class _$_AddAlbumPageState implements _AddAlbumPageState {
                 .equals(other.longitudeRef, longitudeRef) &&
             const DeepCollectionEquality().equals(other.longitude, longitude) &&
             const DeepCollectionEquality().equals(other.isLoading, isLoading) &&
+            const DeepCollectionEquality().equals(other.public, public) &&
             const DeepCollectionEquality().equals(other.imgFile, imgFile));
   }
 
@@ -335,6 +355,7 @@ class _$_AddAlbumPageState implements _AddAlbumPageState {
       const DeepCollectionEquality().hash(longitudeRef),
       const DeepCollectionEquality().hash(longitude),
       const DeepCollectionEquality().hash(isLoading),
+      const DeepCollectionEquality().hash(public),
       const DeepCollectionEquality().hash(imgFile));
 
   @JsonKey(ignore: true)
@@ -355,6 +376,7 @@ abstract class _AddAlbumPageState implements AddAlbumPageState {
       String? longitudeRef,
       String? longitude,
       bool isLoading,
+      bool public,
       File? imgFile}) = _$_AddAlbumPageState;
 
   @override
@@ -377,6 +399,8 @@ abstract class _AddAlbumPageState implements AddAlbumPageState {
   String? get longitude;
   @override
   bool get isLoading;
+  @override
+  bool get public;
   @override
   File? get imgFile;
   @override

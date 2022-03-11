@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_collection/controllers/pages/tag_chips_page_controller.dart';
+import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/components.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
@@ -20,7 +21,15 @@ class TagChip extends ConsumerWidget {
           TextFormField(
             onTap: () => btnController.reset(),
             controller: ref.read(tagChipsPageProvider.notifier).tagController,
-            decoration: InputDecoration(hintText: 'タグを追加する'),
+            decoration: InputDecoration(
+              hintText: 'タグを追加する',
+              hintStyle: TextStyle(
+                color: AppColors.grey,
+                fontWeight: FontWeight.bold,
+              ),
+              filled: true,
+              border: InputBorder.none,
+            ),
             onFieldSubmitted:
                 ref.read(tagChipsPageProvider.notifier).onSubmitted,
             onChanged: (text) =>

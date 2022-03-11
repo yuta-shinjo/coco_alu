@@ -37,14 +37,10 @@ class AccountPageController extends StateNotifier<AccountPageState> {
 
   void _init() async {
     final profile = await _fireUsersService.fetchUserProfile();
-    if (profile != null) {
-      state = state.copyWith(profile: profile);
-    }
+    if (profile != null) state = state.copyWith(profile: profile);
   }
 
-  void fixName() {
-    state = state.copyWith(name: state.profile.name);
-  }
+  void fixName() => state = state.copyWith(name: state.profile.name);
 
   // プロフィールを編集した時に時にリアルタイムに反映させるようにするため
   Future<void> fetchUserProfile() async {
@@ -66,60 +62,49 @@ class AccountPageController extends StateNotifier<AccountPageState> {
     }
   }
 
-  final _fireUsersService = FireUsersService();
-
   final profileName = TextEditingController();
 
   Future<void> pickImage() async {
     //画像取得&軽量化
-    final pickedImageFile = await ImagePicker().pickImage(
+    final ImagePicker picker = ImagePicker();
+    final pickedImageFile = await picker.pickImage(
       source: ImageSource.gallery,
-      imageQuality: 1, //画質。とりあえず1。
+      maxWidth: 1000,
+      maxHeight: 1000,
+      imageQuality: 1,
     );
     //トリミング
     if (pickedImageFile == null) return;
     final croppedImageFile = await ImageCropper().cropImage(
       sourcePath: pickedImageFile.path,
+      cropStyle: CropStyle.circle,
     );
     state = state.copyWith(imageFile: croppedImageFile);
+  }
+
+  void inputName(String name) => state = state.copyWith(name: name);
+
+  final _fireUsersService = FireUsersService();
+
+  Future<void> updateProfile(
+      File? imageFile, String imgUrls, String name) async {
+    await uploadImage();
+    await _fireUsersService.updateProfile(
+      state.imageFile,
+      state.profileImageUrl,
+      state.name,
+    );
   }
 
   final _fireStorageService = FireStorageService();
 
   Future<void> uploadImage() async {
-    final uploadUrl = await _fireStorageService.uploadImage(
-        croppedImageFile: state.imageFile);
+    final uploadUrl = await _fireStorageService.uploadProfileImage(
+      croppedImageFile: state.imageFile,
+    );
     EasyLoading.dismiss();
     if (uploadUrl == null) return;
     state = state.copyWith(profileImageUrl: uploadUrl);
-  }
-
-  // Future<void> pickImage(XFile? image, String imageUrl) async {
-  //   if (image == null) return;
-  //   state = state.copyWith(imageFile: File(image.path));
-  //   state = state.copyWith(profileImageUrl: imageUrl);
-  // }
-
-  void inputName(String name) => state = state.copyWith(name: name);
-
-  void deleteImage(String imgUrl, File? imageFile) {
-    if (state.imageFile != null) {
-      state = state.copyWith(imageFile: null);
-    }
-    if (state.profile.imgUrls != '') {}
-  }
-
-  Future<void> updateProfile(
-      File? imageFile, String imgUrls, String name) async {
-    await _fireUsersService.update(
-      state.imageFile,
-      state.profile.imgUrls,
-      state.name,
-    );
-  }
-
-  void deleteImageFile() {
-    state = state.copyWith(imageFile: null);
   }
 
   final btnController = RoundedLoadingButtonController();

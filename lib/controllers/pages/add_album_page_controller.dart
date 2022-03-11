@@ -4,6 +4,7 @@ import 'package:exif/exif.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_collection/models/src/album.dart';
 import 'package:my_collection/models/src/tag.dart';
@@ -25,6 +26,7 @@ class AddAlbumPageState with _$AddAlbumPageState {
     String? longitudeRef,
     String? longitude,
     @Default(false) bool isLoading,
+    @Default(false) bool public,
     File? imgFile,
   }) = _AddAlbumPageState;
 }
@@ -57,11 +59,35 @@ class AddAlbumPageController extends StateNotifier<AddAlbumPageState> {
     }
   }
 
-  Future<void> pickImage(XFile? imgFile, String imgUrls) async {
-    if (imgFile == null) return;
-    state = state.copyWith(imgFile: File(imgFile.path));
-    final tags =
-        await readExifFromBytes(await File(imgFile.path).readAsBytes());
+// 投稿する写真を選び直したときに
+// 前回選んだ写真の位置情報が反映されないようにする
+  void resetLatLong() {
+    state = state.copyWith(
+      latitudeRef: null,
+      latitude: null,
+      longitudeRef: null,
+      longitude: null,
+      imgFile: null,
+    );
+  }
+
+  Future<void> pickImage(String imgUrls) async {
+    //画像取得&軽量化
+    final ImagePicker picker = ImagePicker();
+    final pickedImageFile = await picker.pickImage(
+      source: ImageSource.gallery,
+      maxWidth: 1000,
+      maxHeight: 1000,
+      imageQuality: 20,
+    );
+    //トリミング
+    if (pickedImageFile == null) return;
+    final croppedImageFile = await ImageCropper().cropImage(
+      sourcePath: pickedImageFile.path,
+    );
+    state = state.copyWith(imgFile: croppedImageFile);
+
+    final tags = await readExifFromBytes(await pickedImageFile.readAsBytes());
     final latitudeRef = tags['GPS GPSLatitudeRef'].toString();
     // 緯度は[35, 12, 1781/100]のような感じで取得できるため、
     // Google Mapで使えるように10進数に変換する
@@ -86,6 +112,7 @@ class AddAlbumPageController extends StateNotifier<AddAlbumPageState> {
       latitude: latitude,
       longitudeRef: longitudeRef,
       longitude: longitude,
+      imgFile: croppedImageFile,
     );
   }
 
@@ -96,20 +123,17 @@ class AddAlbumPageController extends StateNotifier<AddAlbumPageState> {
     String imgUrls,
     File? imgFile,
     List<String> tags,
-    String? latitudeRef,
-    String? latitude,
-    String? longitudeRef,
-    String? longitude,
   ) async {
     await _fireAlbumService.addAlbum(
       content,
       imgUrls,
       imgFile,
       tags,
-      latitudeRef,
-      latitude,
-      longitudeRef,
-      longitude,
+      state.latitudeRef,
+      state.latitude,
+      state.longitudeRef,
+      state.longitude,
+      state.public,
     );
   }
 
@@ -129,5 +153,9 @@ class AddAlbumPageController extends StateNotifier<AddAlbumPageState> {
 
   void loadingError(RoundedLoadingButtonController controller) {
     controller.error();
+  }
+
+  void changeToggle() {
+    state = state.copyWith(public: !state.public);
   }
 }

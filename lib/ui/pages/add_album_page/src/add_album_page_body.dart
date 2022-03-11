@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:my_collection/controllers/pages/add_album_page_controller.dart';
 import 'package:my_collection/controllers/pages/album_list_page_controller.dart';
 import 'package:my_collection/controllers/pages/home_page_controller.dart';
@@ -27,13 +26,7 @@ class AddAlbumPgeBody extends ConsumerWidget {
         ref.read(addAlbumPageProvider.notifier).contentController;
     final tags =
         ref.watch(tagChipsPageProvider.select((s) => s.labelList)) ?? [];
-    final latitudeRef =
-        ref.watch(addAlbumPageProvider.select((s) => s.latitudeRef));
-    final latitude = ref.watch(addAlbumPageProvider.select((s) => s.latitude));
-    final longitudeRef =
-        ref.watch(addAlbumPageProvider.select((s) => s.longitudeRef));
-    final longitude =
-        ref.watch(addAlbumPageProvider.select((s) => s.longitude));
+    final public = ref.watch(addAlbumPageProvider.select((s) => s.public));
     return Focus(
       focusNode: FocusNode(),
       child: GestureDetector(
@@ -57,6 +50,30 @@ class AddAlbumPgeBody extends ConsumerWidget {
               ),
               const Divider(color: AppColors.grey),
               TagChip(btnController: btnController),
+              const Divider(color: AppColors.grey),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'みんなに公開する',
+                      style: TextStyle(
+                        color: AppColors.textDisable,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Switch(
+                      value: public,
+                      onChanged: (value) => ref
+                          .read(addAlbumPageProvider.notifier)
+                          .changeToggle(),
+                      activeColor: AppColors.accentColor,
+                    ),
+                  ],
+                ),
+              ),
+              const Divider(color: AppColors.grey),
               const SizedBox(height: 40),
               _createdButton(
                 btnController,
@@ -64,10 +81,6 @@ class AddAlbumPgeBody extends ConsumerWidget {
                 imgUrls,
                 imgFile,
                 tags,
-                latitudeRef,
-                latitude,
-                longitudeRef,
-                longitude,
               ),
               SizedBox(height: 30),
             ],
@@ -85,11 +98,8 @@ class AddAlbumPgeBody extends ConsumerWidget {
     return Consumer(builder: (context, ref, _) {
       return GestureDetector(
         onTap: () async {
-          final image =
-              await ImagePicker().pickImage(source: ImageSource.gallery);
-          await ref
-              .read(addAlbumPageProvider.notifier)
-              .pickImage(image, imgUrls);
+          ref.read(addAlbumPageProvider.notifier).resetLatLong();
+          await ref.read(addAlbumPageProvider.notifier).pickImage(imgUrls);
           btnController.reset();
         },
         child: SizedBox(
@@ -116,19 +126,27 @@ class AddAlbumPgeBody extends ConsumerWidget {
   ) {
     return Consumer(
       builder: (context, ref, _) {
-        return TextFormField(
-          onTap: () => btnController.reset(),
-          maxLines: 6,
-          minLines: 6,
-          decoration: const InputDecoration(
-            contentPadding: EdgeInsets.all(15),
-            hintText: 'コメントを書こう',
-            border: InputBorder.none,
+        return Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          child: TextFormField(
+            onTap: () => btnController.reset(),
+            maxLines: 6,
+            minLines: 6,
+            decoration: const InputDecoration(
+              filled: true,
+              contentPadding: EdgeInsets.all(15),
+              hintText: 'コメントを書こう',
+              hintStyle: TextStyle(
+                color: AppColors.grey,
+                fontWeight: FontWeight.bold,
+              ),
+              border: InputBorder.none,
+            ),
+            onChanged: (text) {
+              ref.read(addAlbumPageProvider.notifier).inputContent(text);
+            },
+            controller: contentController,
           ),
-          onChanged: (text) {
-            ref.read(addAlbumPageProvider.notifier).inputContent(text);
-          },
-          controller: contentController,
         );
       },
     );
@@ -140,12 +158,9 @@ class AddAlbumPgeBody extends ConsumerWidget {
     String imgUrls,
     File? imgFile,
     List<String> tags,
-    String? latitudeRef,
-    String? latitude,
-    String? longitudeRef,
-    String? longitude,
   ) {
     return Consumer(builder: (context, ref, _) {
+      final public = ref.watch(addAlbumPageProvider.select((s) => s.public));
       return ButtonTheme(
         child: LoadingButton(
           primaryColor: AppColors.primary,
@@ -163,10 +178,6 @@ class AddAlbumPgeBody extends ConsumerWidget {
                       imgUrls,
                       imgFile,
                       tags,
-                      latitudeRef,
-                      latitude,
-                      longitudeRef,
-                      longitude,
                     );
                 createAlbumSuccessMassage();
                 ref
@@ -178,6 +189,8 @@ class AddAlbumPgeBody extends ConsumerWidget {
                     .deleteImage(imgUrls, imgFile);
                 ref.read(addAlbumPageProvider.notifier).clearContent();
                 ref.read(tagChipsPageProvider.notifier).clearChips();
+                if (public)
+                  ref.read(addAlbumPageProvider.notifier).changeToggle();
               } catch (e) {
                 ref
                     .read(addAlbumPageProvider.notifier)

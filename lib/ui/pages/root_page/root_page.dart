@@ -52,8 +52,8 @@ class _RootPageState extends ConsumerState<RootPage>
 
     final _tabs = [
       HomePage(),
+      HomePage(),
       EditAlbumPage(),
-      AddAlbumPage(),
       MapPage(),
       AccountPage(),
     ];
@@ -76,16 +76,16 @@ class _RootPageState extends ConsumerState<RootPage>
           currentIndex: currentIndex,
           items: const [
             BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'ホーム',
+            ),
+            BottomNavigationBarItem(
               icon: Icon(Icons.auto_stories),
-              label: '一覧',
+              label: 'My一覧',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.app_registration),
+              icon: Icon(Icons.edit_note),
               label: '編集',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.drive_file_rename_outline),
-              label: '作成',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.pin_drop),

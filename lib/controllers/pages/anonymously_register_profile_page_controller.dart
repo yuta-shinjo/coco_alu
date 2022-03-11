@@ -1,9 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:my_collection/services/fire_storage_service.dart';
 import 'package:my_collection/services/fire_users_service.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
@@ -35,25 +38,41 @@ class AnonymouslyRegisterProfilePageController
 
   final _fireUsersService = FireUsersService();
 
-  Future<void> pickImage(XFile? image, String imageUrl) async {
-    if (image == null) return;
-    state = state.copyWith(imageFile: File(image.path));
-    state = state.copyWith(profileImageUrl: imageUrl);
+  Future<void> pickImage() async {
+    //画像取得&軽量化
+    final ImagePicker picker = ImagePicker();
+    final pickedImageFile = await picker.pickImage(
+      source: ImageSource.gallery,
+      maxWidth: 1000,
+      maxHeight: 1000,
+      imageQuality: 1,
+    );
+    //トリミング
+    if (pickedImageFile == null) return;
+    final croppedImageFile = await ImageCropper().cropImage(
+      sourcePath: pickedImageFile.path,
+      cropStyle: CropStyle.circle,
+    );
+    state = state.copyWith(imageFile: croppedImageFile);
   }
 
-// firebaseにそのユーザーのデータ欄を作成する
-// 呼び出しているところの引数の順番も大切な気がした
-//(例: profileImageUrl,name,imageFile だったらうまくいかなかった)
-  Future<void> createAnonymouslyUserProfile(
-    String name,
-    String imgUrls,
-    File? imgFile,
-  ) async {
-    await _fireUsersService.registerAnonymouslyUserProfile(
-      name,
-      imgUrls,
-      imgFile,
+  // firebaseにそのユーザーのデータ欄を作成する
+  // 呼び出しているところの引数の順番も大切な気がした
+  //(例: profileImageUrl,name,imageFile だったらうまくいかなかった)
+  Future<void> createAnonymouslyUserProfile(String name) async {
+    await uploadImage();
+    await _fireUsersService.registerUserProfile(name, state.profileImageUrl);
+  }
+
+  final _fireStorageService = FireStorageService();
+
+  Future<void> uploadImage() async {
+    final uploadUrl = await _fireStorageService.uploadProfileImage(
+      croppedImageFile: state.imageFile,
     );
+    EasyLoading.dismiss();
+    if (uploadUrl == null) return;
+    state = state.copyWith(profileImageUrl: uploadUrl);
   }
 
   // Authenticationにuidを追加する

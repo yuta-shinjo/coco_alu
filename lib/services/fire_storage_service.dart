@@ -3,20 +3,24 @@ import 'dart:io' as io;
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:firebase_auth/firebase_auth.dart' as firebase;
+
 import 'package:image_picker/image_picker.dart';
 
 class FireStorageService {
   final ImagePicker picker = ImagePicker();
   final FirebaseStorage storage = FirebaseStorage.instance;
+  final _auth = firebase.FirebaseAuth.instance;
 
   //FirebaseStorageにアップロードして、
   //画像のURLを返すメソッド
-  Future<String?> uploadImage({required io.File? croppedImageFile}) async {
-    //firebaseStorageにアップロード
+  Future<String?> uploadProfileImage(
+      {required io.File? croppedImageFile}) async {
     if (croppedImageFile == null) return null;
     final io.File imageFile = io.File(croppedImageFile.path);
     final data = io.File(croppedImageFile.path).readAsBytesSync();
-    final Reference ref = storage.ref("uploads/users/uid/nft_post_test.jpg");
+    final Reference ref = storage.ref(
+        "users/${_auth.currentUser?.uid}/profiles/${_auth.currentUser?.uid}");
     final metadata = SettableMetadata(contentType: 'image/jpg');
     try {
       EasyLoading.show();
