@@ -2,10 +2,13 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:my_collection/models/src/user.dart';
 import 'package:my_collection/services/fire_users_service.dart';
+import 'package:my_collection/services/fire_storage_service.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 part 'account_page_controller.freezed.dart';
@@ -67,11 +70,35 @@ class AccountPageController extends StateNotifier<AccountPageState> {
 
   final profileName = TextEditingController();
 
-  Future<void> pickImage(XFile? image, String imageUrl) async {
-    if (image == null) return;
-    state = state.copyWith(imageFile: File(image.path));
-    state = state.copyWith(profileImageUrl: imageUrl);
+  Future<void> pickImage() async {
+    //画像取得&軽量化
+    final pickedImageFile = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 1, //画質。とりあえず1。
+    );
+    //トリミング
+    if (pickedImageFile == null) return;
+    final croppedImageFile = await ImageCropper().cropImage(
+      sourcePath: pickedImageFile.path,
+    );
+    state = state.copyWith(imageFile: croppedImageFile);
   }
+
+  final _fireStorageService = FireStorageService();
+
+  Future<void> uploadImage() async {
+    final uploadUrl = await _fireStorageService.uploadImage(
+        croppedImageFile: state.imageFile);
+    EasyLoading.dismiss();
+    if (uploadUrl == null) return;
+    state = state.copyWith(profileImageUrl: uploadUrl);
+  }
+
+  // Future<void> pickImage(XFile? image, String imageUrl) async {
+  //   if (image == null) return;
+  //   state = state.copyWith(imageFile: File(image.path));
+  //   state = state.copyWith(profileImageUrl: imageUrl);
+  // }
 
   void inputName(String name) => state = state.copyWith(name: name);
 

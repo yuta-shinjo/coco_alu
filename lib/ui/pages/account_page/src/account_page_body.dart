@@ -23,7 +23,7 @@ class AccountPageBody extends ConsumerWidget {
     }
     final email = currentUser.email;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.only(left: 20),
       child: SingleChildScrollView(
         child: Column(
           children: [
@@ -47,10 +47,7 @@ class AccountPageBody extends ConsumerWidget {
         final imgUrls = profile.imgUrls;
         final name = profile.name;
         return Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 10,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
           child: Row(
             children: [
               imgUser(imgUrls),
@@ -105,6 +102,22 @@ class AccountPageBody extends ConsumerWidget {
     );
   }
 
+  Widget editProfile(BuildContext context) {
+    return Consumer(builder: (context, ref, _) {
+      return ListTile(
+        title: const Subtitle2Text('プロフィールを編集'),
+        onTap: () {
+          ref.read(accountPageProvider.notifier).resetProfile();
+          Navigator.push(context, EditProfilePage.route());
+        },
+        trailing: const Icon(
+          Icons.arrow_forward_ios,
+          color: AppColors.primary,
+        ),
+      );
+    });
+  }
+
   Widget _settingAccount(BuildContext context, String? email) {
     return Column(
       children: [
@@ -131,22 +144,6 @@ class AccountPageBody extends ConsumerWidget {
         const Divider(color: AppColors.grey),
       ],
     );
-  }
-
-  Widget editProfile(BuildContext context) {
-    return Consumer(builder: (context, ref, _) {
-      return ListTile(
-        title: const Subtitle2Text('プロフィールを編集'),
-        onTap: () {
-          ref.read(accountPageProvider.notifier).resetProfile();
-          Navigator.push(context, EditProfilePage.route());
-        },
-        trailing: const Icon(
-          Icons.arrow_forward_ios,
-          color: AppColors.primary,
-        ),
-      );
-    });
   }
 
   ListTile emailAdless(String? email, BuildContext context) {

@@ -11,8 +11,12 @@ class HomePageBody extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final albums = ref.watch(homePageProvider.select((s) => s.albums)) ?? [];
     if (albums.length == 0) {
-      return Center(
-        child: Text('作成画面からアルバムを作成しましょう!'),
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset('assets/images/home_page.jpg', fit: BoxFit.cover),
+          Text('アルバムを作成して\n思い出を振り返りましょう!'),
+        ],
       );
     }
     return SingleChildScrollView(

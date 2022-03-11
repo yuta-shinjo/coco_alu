@@ -232,8 +232,9 @@ class _MapPageState extends ConsumerState<MapPage>
 
   Widget _toggleViewParts(bool viewAlbums) {
     return Consumer(builder: (context, ref, _) {
-      return Align(
-        alignment: const Alignment(0.94, 0.8),
+      return Positioned(
+        right: MediaQuery.of(context).size.width / 40,
+        bottom: MediaQuery.of(context).size.height / 10,
         child: viewAlbums == true
             ? FloatingActionButton(
                 backgroundColor: AppColors.white,

@@ -17,14 +17,21 @@ class AlbumListPageBody extends ConsumerWidget {
     final albums =
         ref.watch(albumListPageProvider.select((s) => s.albums)) ?? [];
     if (albums.length == 0) {
-      return Center(
-        child: Text('作成画面からアルバムを作成しましょう!'),
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset('assets/images/edit_album.jpg'),
+          Text('編集するアルバムがありません。\n作成画面からアルバムを作成しましょう!'),
+        ],
       );
     }
     return ListView.separated(
       itemCount: albums.length,
-      separatorBuilder: (context, index) => const Divider(
-        color: AppColors.grey,
+      separatorBuilder: (context, index) => Padding(
+        padding: EdgeInsets.only(left: MediaQuery.of(context).size.width / 2.7),
+        child: const Divider(
+          color: AppColors.grey,
+        ),
       ),
       itemBuilder: (context, index) {
         final album = albums[index];
@@ -123,7 +130,7 @@ class AlbumListPageBody extends ConsumerWidget {
 
   Widget _albumText(Album album) {
     return Container(
-      padding: const EdgeInsets.only(left: 12),
+      padding: const EdgeInsets.only(left: 16),
       child: Subtitle2Text(
         album.content,
         maxLines: 3,
@@ -136,7 +143,7 @@ class AlbumListPageBody extends ConsumerWidget {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Padding(
-        padding: const EdgeInsets.only(left: 12),
+        padding: const EdgeInsets.only(left: 16),
         child: Row(
           children: [
             for (int i = 0; i < album.tags.length; i++) _tagChip(album, i),
@@ -152,10 +159,17 @@ class AlbumListPageBody extends ConsumerWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
         decoration: BoxDecoration(
-          color: AppColors.grey,
+          color: AppColors.lightGrey,
           borderRadius: BorderRadius.circular(10),
         ),
-        child: OverlineText(album.tags[i], color: AppColors.white),
+        child: Text(
+          album.tags[i],
+          style: TextStyle(
+            color: AppColors.grey,
+            fontWeight: FontWeight.bold,
+            fontSize: 12,
+          ),
+        ),
       ),
     );
   }

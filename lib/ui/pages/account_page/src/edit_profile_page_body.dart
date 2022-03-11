@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:my_collection/controllers/pages/account_page_controller.dart';
 import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/components.dart';
@@ -84,17 +83,11 @@ class EditProfilePageBody extends StatelessWidget {
   Widget _effectButton() {
     return Consumer(
       builder: (context, ref, _) {
-        final profileImageUrl =
-            ref.watch(accountPageProvider.select((s) => s.profileImageUrl));
         final controller =
             ref.watch(accountPageProvider.notifier).btnController;
         return RawMaterialButton(
           onPressed: () async {
-            final image =
-                await ImagePicker().pickImage(source: ImageSource.gallery);
-            await ref
-                .read(accountPageProvider.notifier)
-                .pickImage(image, profileImageUrl);
+            await ref.read(accountPageProvider.notifier).pickImage();
             controller.reset();
           },
           child: const SizedBox(
@@ -150,9 +143,7 @@ class EditProfilePageBody extends StatelessWidget {
               ref.read(accountPageProvider.notifier).inputName(text);
               controller.reset();
             },
-            decoration: const InputDecoration(
-              hintText: '名前を入力してください',
-            ),
+            decoration: const InputDecoration(hintText: '名前を入力してください'),
           ),
         );
       },
@@ -175,7 +166,7 @@ class EditProfilePageBody extends StatelessWidget {
           onPressed: () async {
             if (name != '' || imageFile != null) {
               if (name == '') {
-                    ref.read(accountPageProvider.notifier).fixName();
+                ref.read(accountPageProvider.notifier).fixName();
               }
               loadingSuccess(controller);
               try {
