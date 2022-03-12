@@ -3,11 +3,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_collection/controllers/pages/root_page_controller.dart';
 import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/pages/account_page/account_page.dart';
-import 'package:my_collection/ui/pages/add_album_page/add_album_page.dart';
 import 'package:my_collection/ui/pages/album_list_page/album_list_page.dart';
-
 import 'package:my_collection/ui/pages/home_page/home_page.dart';
+
 import 'package:my_collection/ui/pages/map_page/map_page.dart';
+import 'package:my_collection/ui/pages/my_list_page/my_list_page.dart';
 import 'package:page_transition/page_transition.dart';
 
 class RootPage extends ConsumerStatefulWidget {
@@ -52,7 +52,7 @@ class _RootPageState extends ConsumerState<RootPage>
 
     final _tabs = [
       HomePage(),
-      HomePage(),
+      MyListPage(),
       EditAlbumPage(),
       MapPage(),
       AccountPage(),
@@ -81,10 +81,10 @@ class _RootPageState extends ConsumerState<RootPage>
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.auto_stories),
-              label: 'My一覧',
+              label: '一覧',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.edit_note),
+              icon: Icon(Icons.edit),
               label: '編集',
             ),
             BottomNavigationBarItem(

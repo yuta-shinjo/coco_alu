@@ -26,7 +26,7 @@ class AlbumListPageController extends StateNotifier<AlbumListPageState> {
   final _fireUsersService = FireUsersService();
 
   void _init() async {
-    await _fireUsersService.fetchAlbumList(
+    await _fireUsersService.fetchMyAlbumList(
       onValueChanged: (albums) {
         state = state.copyWith(albums: albums);
       },
@@ -35,7 +35,7 @@ class AlbumListPageController extends StateNotifier<AlbumListPageState> {
 
   // 作成ページで作成ボタンを押したときにalbum_list_pageのリストを更新するため
   Future<void> fetchAlbumList() async {
-    await _fireUsersService.fetchAlbumList(
+    await _fireUsersService.fetchMyAlbumList(
       onValueChanged: (albums) {
         state = state.copyWith(albums: albums);
       },

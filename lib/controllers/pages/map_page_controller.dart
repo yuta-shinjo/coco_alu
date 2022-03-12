@@ -34,7 +34,7 @@ class MapPageController extends StateNotifier<MapPageState> {
   final PageController controller = PageController();
 
   void _init() async {
-    await _fireUsersService.fetchAlbumList(
+    await _fireUsersService.fetchMyAlbumList(
       onValueChanged: (albums) {
         state = state.copyWith(albums: albums);
       },
@@ -51,7 +51,7 @@ class MapPageController extends StateNotifier<MapPageState> {
 
   // 作成ページで作成ボタンを押したときにmapPageのマップを更新するため
   Future<void> fetchAlbumList() async {
-    await _fireUsersService.fetchAlbumList(
+    await _fireUsersService.fetchMyAlbumList(
       onValueChanged: (albums) {
         state = state.copyWith(albums: albums);
       },

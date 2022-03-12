@@ -16,7 +16,7 @@ class EditAlbumPage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.push(context, AddAlbumPage.route()),
         backgroundColor: AppColors.accentColor,
-        child: Icon(Icons.add_photo_alternate),
+        child: Icon(Icons.add_photo_alternate, size: 30),
       ),
       body: AlbumListPageBody(),
     );

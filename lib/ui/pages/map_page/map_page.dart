@@ -7,6 +7,7 @@ import 'package:location/location.dart';
 import 'package:my_collection/controllers/pages/map_page_controller.dart';
 import 'package:my_collection/models/src/album.dart';
 import 'package:my_collection/themes/app_colors.dart';
+import 'package:my_collection/ui/components/src/universal.dart';
 
 class MapPage extends ConsumerStatefulWidget {
   MapPage({Key? key}) : super(key: key);
@@ -218,8 +219,8 @@ class _MapPageState extends ConsumerState<MapPage>
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
             ),
-            child: Ink.image(
-              image: Image.network(imagePath).image,
+            child: UniversalImage(
+              imagePath,
               fit: BoxFit.cover,
             ),
           ),

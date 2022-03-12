@@ -6,6 +6,7 @@ import 'package:my_collection/controllers/pages/album_list_page_controller.dart'
 import 'package:my_collection/models/src/album.dart';
 import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/components.dart';
+import 'package:my_collection/ui/components/src/universal.dart';
 import 'package:my_collection/ui/pages/account_page/src/edit_profile_page.dart';
 import 'package:my_collection/ui/pages/album_list_page/src/alert_dialog.dart';
 import 'package:my_collection/ui/pages/link_account_page/link_account_page.dart';
@@ -71,9 +72,17 @@ class AccountPageBody extends ConsumerWidget {
       ),
       child: CircleAvatar(
         radius: 50,
-        backgroundImage: imgUrls != ''
-            ? Image.network(imgUrls).image
-            : AssetImage('assets/images/avatar.jpg'),
+        child: ClipOval(
+          child: imgUrls.isNotEmpty
+              ? UniversalImage(
+                  imgUrls,
+                  fit: BoxFit.cover,
+                )
+              : const UniversalImage(
+                  'assets/images/avatar.jpg',
+                  fit: BoxFit.cover,
+                ),
+        ),
       ),
     );
   }

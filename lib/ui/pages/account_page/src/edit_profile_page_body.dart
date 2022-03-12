@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_collection/controllers/pages/account_page_controller.dart';
 import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/components.dart';
+import 'package:my_collection/ui/components/src/universal.dart';
 import 'package:my_collection/ui/projects/rounded_loading_button.dart';
 import 'package:my_collection/utiles.dart';
 
@@ -62,20 +63,25 @@ class EditProfilePageBody extends StatelessWidget {
   Widget _circleAvatar(File? imageFile, String imgUrls) {
     return CircleAvatar(
       radius: 120,
-      backgroundImage: imageFile != null
-          ? Image.file(
-              imageFile,
-              width: 240,
-              height: 240,
-              fit: BoxFit.cover,
-            ).image
+      child: imageFile != null
+          ? ClipOval(
+              child: Image.file(
+                imageFile,
+                width: 240,
+                height: 240,
+                fit: BoxFit.cover,
+              ),
+            )
           : imgUrls.isNotEmpty
-              ? Image.network(
-                  imgUrls,
-                  fit: BoxFit.cover,
-                ).image
-              : const AssetImage(
+              ? ClipOval(
+                  child: UniversalImage(
+                    imgUrls,
+                    fit: BoxFit.cover,
+                  ),
+                )
+              : UniversalImage(
                   'assets/images/avatar.jpg',
+                  fit: BoxFit.cover,
                 ),
     );
   }
@@ -100,32 +106,6 @@ class EditProfilePageBody extends StatelessWidget {
       },
     );
   }
-
-  // Widget _dialog() {
-  //   return Consumer(builder: (context, ref, _) {
-  //     final profileImageUrl =
-  //         ref.watch(accountPageProvider.select((s) => s.profileImageUrl));
-  //     final imageFile =
-  //         ref.watch(accountPageProvider.select((s) => s.imageFile));
-  //     return SelectDialog(
-  //       selectPicture: () async {
-  //         final image =
-  //             await ImagePicker().pickImage(source: ImageSource.gallery);
-  //         await ref
-  //             .read(accountPageProvider.notifier)
-  //             .pickImage(image, profileImageUrl);
-  //         Navigator.pop(context);
-  //       },
-  //       deletePicture: () {
-  //         // TODO deleteImageがうまくいっていない
-  //         ref
-  //             .read(accountPageProvider.notifier)
-  //             .deleteImage(profileImageUrl, imageFile);
-  //         Navigator.pop(context);
-  //       },
-  //     );
-  //   });
-  // }
 
   Widget _nameField() {
     return Consumer(
@@ -173,12 +153,12 @@ class EditProfilePageBody extends StatelessWidget {
                 await ref
                     .read(accountPageProvider.notifier)
                     .updateProfile(imageFile, profileImageUrl, name);
+                await ref.read(accountPageProvider.notifier).fetchUserProfile();
                 editProfileSuccessMassage();
               } catch (e) {
                 errorMassage(controller, e);
               } finally {
                 Navigator.pop(context);
-                ref.read(accountPageProvider.notifier).fetchUserProfile();
               }
             } else {
               profileEditErrorMassage(controller);

@@ -5,6 +5,7 @@ import 'package:my_collection/controllers/pages/add_album_page_controller.dart';
 import 'package:my_collection/controllers/pages/album_list_page_controller.dart';
 import 'package:my_collection/controllers/pages/home_page_controller.dart';
 import 'package:my_collection/controllers/pages/map_page_controller.dart';
+import 'package:my_collection/controllers/pages/my_list_page_controller.dart';
 import 'package:my_collection/controllers/pages/tag_chips_page_controller.dart';
 import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/components.dart';
@@ -196,7 +197,8 @@ class AddAlbumPgeBody extends ConsumerWidget {
               } finally {
                 ref.read(addAlbumPageProvider.notifier).endLoading();
                 btnController.reset();
-                ref.read(homePageProvider.notifier).fetchAlbumList();
+                ref.read(myListPageProvider.notifier).fetchAlbumList();
+                ref.read(homePageProvider.notifier).fetchPublicAlbumList();
                 ref.read(albumListPageProvider.notifier).fetchAlbumList();
                 ref.read(mapPageProvider.notifier).fetchAlbumList();
               }

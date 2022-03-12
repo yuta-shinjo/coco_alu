@@ -4,9 +4,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_collection/controllers/pages/album_list_page_controller.dart';
 import 'package:my_collection/controllers/pages/home_page_controller.dart';
 import 'package:my_collection/controllers/pages/map_page_controller.dart';
+import 'package:my_collection/controllers/pages/my_list_page_controller.dart';
 import 'package:my_collection/models/src/album.dart';
 import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/components.dart';
+import 'package:my_collection/ui/components/src/universal.dart';
 import 'package:my_collection/ui/pages/album_list_page/src/alert_dialog.dart';
 
 class AlbumListPageBody extends ConsumerWidget {
@@ -20,7 +22,7 @@ class AlbumListPageBody extends ConsumerWidget {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset('assets/images/edit_album.jpg'),
+          UniversalImage('assets/images/edit_album.jpg'),
           Text('編集するアルバムがありません。\n作成画面からアルバムを作成しましょう!'),
         ],
       );
@@ -98,7 +100,8 @@ class AlbumListPageBody extends ConsumerWidget {
             } finally {
               Navigator.pop(context);
               // albumを削除時にhomePageのリストを更新するため
-              await ref.read(homePageProvider.notifier).fetchAlbumList();
+              await ref.read(myListPageProvider.notifier).fetchAlbumList();
+              await ref.read(homePageProvider.notifier).fetchPublicAlbumList();
               await ref.read(mapPageProvider.notifier).fetchAlbumList();
             }
           },
@@ -117,13 +120,15 @@ class AlbumListPageBody extends ConsumerWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
-        child: Ink.image(
-          image: album.imgUrls != ''
-              ? Image.network(album.imgUrls).image
-              : Image.asset('assets/images/photo.jpg').image,
-          fit: BoxFit.cover,
-          height: MediaQuery.of(context).size.height / 5,
-        ),
+        child: album.imgUrls.isNotEmpty
+            ? UniversalImage(
+                album.imgUrls,
+                fit: BoxFit.cover,
+              )
+            : UniversalImage(
+                'assets/images/photo.jpg',
+                fit: BoxFit.cover,
+              ),
       ),
     );
   }

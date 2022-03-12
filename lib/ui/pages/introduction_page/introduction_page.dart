@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:my_collection/themes/app_colors.dart';
+import 'package:my_collection/ui/components/src/universal.dart';
 import 'package:my_collection/ui/pages/root_page/root_page.dart';
 
 class IntroductionPage extends StatelessWidget {
@@ -24,43 +25,38 @@ class IntroductionPage extends StatelessWidget {
               title: 'アルバム作成アプリ\n『ココアル』へようこそ',
               body: '・人生の中で大切な瞬間を捉えた写真\n・その時感じたこと\n\nをアルバムとして残しましょう!',
               image: Center(
-                  child: Image(
-                image: AssetImage('assets/images/welcome_introduction.jpg'),
-              )),
+                child: UniversalImage('assets/images/welcome_introduction.jpg'),
+              ),
             ),
             PageViewModel(
               title: 'カメラの位置情報をオンにしましょう!',
               body:
                   'カメラの位置情報をオンにすることで、\n・この写真はどこで撮ったのだろう\n・この思い出の場所はどこだろう\n\nこれらを思い出の振り返りと共に\n見返すことができます!',
               image: Center(
-                  child: Image(
-                image: AssetImage('assets/images/map_introduction.jpg'),
-              )),
+                child: UniversalImage('assets/images/map_introduction.'),
+              ),
             ),
             PageViewModel(
               title: 'アルバムを作成して\n思い出に浸りましょう!',
               body: '写真を撮った時の感情を\n作成時に残しておきましょう!\n\n写真にはタグも付けることができます!',
               image: Center(
-                  child: Image(
-                image: AssetImage('assets/images/create_introduction.jpg'),
-              )),
+                child: UniversalImage('assets/images/create_introduction.jpg'),
+              ),
             ),
             PageViewModel(
               title: '作成したアルバムは\n削除することができます',
               body: '必要ではなくなったアルバムは削除できます。\n\n楽しい思い出をたくさん記録しましょう!',
               image: Center(
-                  child: Image(
-                image: AssetImage('assets/images/edit_introduction.jpg'),
-              )),
+                child: UniversalImage('assets/images/edit_introduction.jpg'),
+              ),
             ),
             PageViewModel(
               title: 'アカウント情報を変更できます!',
               body:
                   'メールアドレスを登録されていない方は、\nメールアドレスを登録しましょう!\n\nメールアドレスを登録することで、\n・もしもの時にアカウント復旧ができる\n\n大切なアルバムが消えないように\nメールアドレスを登録しましょう!',
               image: Center(
-                  child: Image(
-                image: AssetImage('assets/images/profile_introduction.jpg'),
-              )),
+                child: UniversalImage('assets/images/profile_introduction.jpg'),
+              ),
             ),
           ],
           onDone: () async =>

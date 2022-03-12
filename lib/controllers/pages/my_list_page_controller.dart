@@ -3,32 +3,32 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_collection/models/src/album.dart';
 import 'package:my_collection/services/fire_users_service.dart';
 
-part 'home_page_controller.freezed.dart';
+part 'my_list_page_controller.freezed.dart';
 
 @freezed
-class HomePageState with _$HomePageState {
-  const factory HomePageState({
+class MyListPageState with _$MyListPageState {
+  const factory MyListPageState({
     @Default('') String id,
     @Default('') String content,
     @Default('') String imgUrls,
     List<Album>? albums,
-  }) = _HomePageState;
+  }) = _MyListPageState;
 }
 
-final homePageProvider =
-    StateNotifierProvider.autoDispose<HomePageController, HomePageState>(
-  (ref) => HomePageController(),
+final myListPageProvider =
+    StateNotifierProvider.autoDispose<MyListPageController, MyListPageState>(
+  (ref) => MyListPageController(),
 );
 
-class HomePageController extends StateNotifier<HomePageState> {
-  HomePageController() : super(const HomePageState()) {
+class MyListPageController extends StateNotifier<MyListPageState> {
+  MyListPageController() : super(const MyListPageState()) {
     _init();
   }
 
   final _fireUsersService = FireUsersService();
 
   void _init() async {
-    await _fireUsersService.fetchPublicAlbumList(
+    await _fireUsersService.fetchMyAlbumList(
       onValueChanged: (albums) {
         state = state.copyWith(albums: albums);
       },
@@ -36,8 +36,8 @@ class HomePageController extends StateNotifier<HomePageState> {
   }
 
   // 作成ページで作成ボタンを押したときにhomePageのリストを更新するため
-  Future<void> fetchPublicAlbumList() async {
-    await _fireUsersService.fetchPublicAlbumList(
+  Future<void> fetchAlbumList() async {
+    await _fireUsersService.fetchMyAlbumList(
       onValueChanged: (albums) {
         state = state.copyWith(albums: albums);
       },

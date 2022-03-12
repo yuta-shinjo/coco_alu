@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:my_collection/controllers/pages/home_page_controller.dart';
+import 'package:my_collection/controllers/pages/my_list_page_controller.dart';
 import 'package:my_collection/models/src/album.dart';
 import 'package:my_collection/ui/components/src/universal.dart';
-import 'package:my_collection/ui/pages/home_page/src/album_detail_page.dart';
+import 'package:my_collection/ui/pages/my_list_page/src/album_detail_page.dart';
 
-class HomePageBody extends ConsumerWidget {
-  const HomePageBody({Key? key}) : super(key: key);
+class MyListPgeBody extends ConsumerWidget {
+  const MyListPgeBody({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final albums = ref.watch(homePageProvider.select((s) => s.albums)) ?? [];
+    final albums = ref.watch(myListPageProvider.select((s) => s.albums)) ?? [];
     if (albums.length == 0) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          UniversalImage('assets/images/display.jpg', fit: BoxFit.cover),
-          Text('アルバムを共有して\nみんなに思い出を紹介しましょう!'),
+          UniversalImage('assets/images/home_page.jpg', fit: BoxFit.cover),
+          Text('アルバムを作成して\n思い出を振り返りましょう!'),
         ],
       );
     }
