@@ -83,7 +83,7 @@ class AddAlbumPageController extends StateNotifier<AddAlbumPageState> {
       source: ImageSource.gallery,
       maxWidth: 1000,
       maxHeight: 1000,
-      imageQuality: 20,
+      imageQuality: 60,
     );
     //トリミング
     if (pickedImageFile == null) return;
