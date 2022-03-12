@@ -34,29 +34,29 @@ class FireStorageService {
     return downloadURL;
   }
 
-  // Future<String?> uploadUserImage(
-  //     {required String uid, required File? imageFile}) async {
-  //   //firebaseStorageの画像を削除
-  //   final imageUrl = _user.state.user.imageUrl;
-  //   if (imageUrl.isNotEmpty) {
-  //     final Reference deleteRef = storage.refFromURL(imageUrl);
-  //     try {
-  //       await deleteRef.delete();
-  //     } catch (e) {
-  //       print(e);
-  //     }
-  //   }
-  //   //firebaseStorageにアップロード
-  //   if (imageFile == null) return null;
-  //   final iconImageFile = File(imageFile.path);
-  //   final Reference ref = storage.ref("uploads/users/$uid/${uuid.v4()}.png");
-  //   try {
-  //     await ref.putFile(iconImageFile);
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  //   //画像のURLを作成
-  //   final String downloadURL = await ref.getDownloadURL();
-  //   return downloadURL;
-  // }
+  Future<String?> uploadAlbumImage(
+      {required io.File? croppedImageFile, required String id}) async {
+    if (croppedImageFile == null) return null;
+    final io.File imageFile = io.File(croppedImageFile.path);
+    final data = io.File(croppedImageFile.path).readAsBytesSync();
+    final Reference ref =
+        storage.ref("users/${_auth.currentUser?.uid}/albums/$id");
+    final metadata = SettableMetadata(contentType: 'image/jpg');
+    try {
+      EasyLoading.show();
+      ref.putData(data, metadata);
+      await ref.putFile(imageFile, metadata);
+    } catch (e) {
+      print(e);
+    }
+    //画像のURLを作成
+    final String downloadURL = await ref.getDownloadURL();
+    return downloadURL;
+  }
+
+  Future<void> deleteStorage(String id) {
+    return storage
+        .ref('users/${_auth.currentUser?.uid}/albums/$id')
+        .delete();
+  }
 }

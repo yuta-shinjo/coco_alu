@@ -173,12 +173,9 @@ class AddAlbumPgeBody extends ConsumerWidget {
                 ref
                     .read(addAlbumPageProvider.notifier)
                     .loadingSuccess(btnController);
-                await ref.read(addAlbumPageProvider.notifier).addAlbum(
-                      content,
-                      imgUrls,
-                      imgFile,
-                      tags,
-                    );
+                await ref
+                    .read(addAlbumPageProvider.notifier)
+                    .createAlbum(content, tags);
                 createAlbumSuccessMassage();
                 ref
                     .read(addAlbumPageProvider.notifier)

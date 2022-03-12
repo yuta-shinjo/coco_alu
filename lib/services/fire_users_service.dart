@@ -3,45 +3,15 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase;
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:my_collection/models/src/album.dart';
 import 'package:my_collection/models/src/user.dart';
 
 import 'src/field_name.dart';
 
 class FireUsersService {
   final _fireStore = FirebaseFirestore.instance;
-  final _fireStorage = FirebaseStorage.instance;
   final _auth = firebase.FirebaseAuth.instance;
-
-  User? user;
-
-  Future<bool> isExisted({required String id}) async {
-    final docSnapshot = await _fireStore
-        .collection('users')
-        .doc('v1')
-        .collection('private')
-        .doc(id)
-        .get();
-    return docSnapshot.data() != null;
-  }
-
-  StreamSubscription listen(
-      {required String id, required Function(User) onValueChanged}) {
-    return _fireStore
-        .collection('users')
-        .doc(_auth.currentUser?.uid)
-        .collection('profile')
-        .doc(_auth.currentUser?.uid)
-        .snapshots()
-        .listen((snapshot) {
-      final data = snapshot.data();
-      if (data != null) {
-        final user = User.fromJson(data);
-        onValueChanged(user);
-      }
-    });
-  }
 
   Future<void> emailLogin(String email, String password) async {
     await _auth.signInWithEmailAndPassword(
@@ -66,9 +36,7 @@ class FireUsersService {
     return _auth.signInWithCredential(credential);
   }
 
-  Future<void> signOut() async {
-    await _auth.signOut();
-  }
+  Future<void> signOut() async => await _auth.signOut();
 
   Future<void> registerUser(String newEmail, String newPassword) async {
     await _auth
@@ -135,10 +103,6 @@ class FireUsersService {
     return user;
   }
 
-  Future<void> deleteStorage() {
-    return _fireStorage.ref('users/${_auth.currentUser?.uid}').delete();
-  }
-
   Future<void> updateProfile(
       File? imageFile, String imgUrls, String name) async {
     if (imageFile == null && imgUrls == '') {
@@ -157,5 +121,79 @@ class FireUsersService {
       FieldName.name: name,
       FieldName.imgUrls: imgUrls,
     });
+  }
+
+  Future fetchAlbumList({required Function(List<Album>) onValueChanged}) async {
+    final usersPublicStadiumsCollectionRef = _fireStore
+        .collection('users')
+        .doc(_auth.currentUser?.uid)
+        .collection('albums');
+    final snapShot = await usersPublicStadiumsCollectionRef.get();
+    final List<Album>? albums =
+        snapShot.docs.map((e) => Album.fromJson(e.data())).toList();
+    if (albums == null) {
+      return;
+    }
+    return onValueChanged(albums);
+  }
+
+  // firebaseとstorageに同じidで保存できるようにするために
+  // 予めidを作成しておく
+  Future<String> createId() async {
+    final collectionRef = _fireStore
+        .collection('users')
+        .doc(_auth.currentUser?.uid)
+        .collection('albums');
+    final id = collectionRef.doc().id;
+    return id;
+  }
+
+  Future<List<String>> createAlbum(
+    String content,
+    String imgUrls,
+    String id,
+    String? tookDay,
+    String? latitudeRef,
+    String? latitude,
+    String? longitudeRef,
+    String? longitude,
+    List<String> tags,
+    bool public,
+  ) async {
+    final collectionRef = _fireStore
+        .collection('users')
+        .doc(_auth.currentUser?.uid)
+        .collection('albums');
+    await collectionRef.doc(id).set({
+      FieldName.content: content,
+      FieldName.created: FieldValue.serverTimestamp(),
+      FieldName.id: id,
+      FieldName.imgUrls: imgUrls,
+      FieldName.public: public,
+      FieldName.latitude: latitude ?? '',
+      FieldName.latitudeRef: latitudeRef ?? '',
+      FieldName.longitude: longitude ?? '',
+      FieldName.longitudeRef: longitudeRef ?? '',
+      FieldName.tags: tags.map((e) => e).toList(),
+      FieldName.tookDay: tookDay ?? '',
+    });
+    return tags;
+  }
+
+  Future<void> deleteMyAlbum(Album album) {
+    return _fireStore
+        .collection('users')
+        .doc(_auth.currentUser?.uid)
+        .collection('albums')
+        .doc(album.id)
+        .delete();
+  }
+  Future<void> deletePublicAlbum(Album album) {
+    return _fireStore
+        .collection('public')
+        .doc('v1')
+        .collection('albums')
+        .doc(album.id)
+        .delete();
   }
 }

@@ -2,21 +2,19 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase;
 import 'package:flutter/material.dart';
 import 'package:my_collection/models/src/album.dart';
 import 'package:my_collection/services/src/field_name.dart';
 
-class FireAlbumService {
+class FirePublicService {
   final _fireStore = FirebaseFirestore.instance;
-  final _fireStorage = FirebaseStorage.instance;
-  final _auth = firebase.FirebaseAuth.instance;
+  final auth = firebase.FirebaseAuth.instance;
 
   Future fetchAlbumList({required Function(List<Album>) onValueChanged}) async {
     final usersPublicStadiumsCollectionRef = _fireStore
         .collection('users')
-        .doc(_auth.currentUser?.uid)
+        .doc(auth.currentUser?.uid)
         .collection('albums');
     final snapShot = await usersPublicStadiumsCollectionRef.get();
     final List<Album>? albums =
@@ -27,28 +25,21 @@ class FireAlbumService {
     return onValueChanged(albums);
   }
 
-  Future<void> addAlbum(
+  Future<void> releaseAlbum(
     String content,
     String imgUrls,
-    File? imgFile,
-    List<String> tags,
+    String id,
+    String userId,
+    String? tookDay,
     String? latitudeRef,
     String? latitude,
     String? longitudeRef,
     String? longitude,
+    List<String> tags,
     bool public,
   ) async {
-    final collectionRef = _fireStore
-        .collection('users')
-        .doc(_auth.currentUser?.uid)
-        .collection('albums');
-    final id = collectionRef.doc().id;
-    if (imgFile != null) {
-      final task = await _fireStorage
-          .ref('users/${_auth.currentUser?.uid}/albums/$id')
-          .putFile(imgFile);
-      imgUrls = await task.ref.getDownloadURL();
-    }
+    final collectionRef =
+        _fireStore.collection('public').doc('v1').collection('albums');
     await collectionRef.doc(id).set({
       FieldName.content: content,
       FieldName.imgUrls: imgUrls,
@@ -60,51 +51,16 @@ class FireAlbumService {
       FieldName.latitude: latitude ?? '',
       FieldName.longitudeRef: longitudeRef ?? '',
       FieldName.longitude: longitude ?? '',
+      FieldName.tookDay: tookDay ?? '',
     });
   }
 
   Future<void> deleteAlbum(Album album) {
     return _fireStore
         .collection('users')
-        .doc(_auth.currentUser?.uid)
+        .doc(auth.currentUser?.uid)
         .collection('albums')
         .doc(album.id)
         .delete();
-  }
-
-  Future<void> deleteStorage(String id) {
-    return _fireStorage
-        .ref('users/${_auth.currentUser?.uid}/albums/$id')
-        .delete();
-  }
-
-  Future<void> updateAlbum(
-    String? content,
-    String? imgUrls,
-    File? imgFile,
-    Album album,
-  ) async {
-    if (imgFile == null) {
-      imgUrls == '';
-      deleteStorage(album.id);
-    }
-
-    if (imgFile != null) {
-      final task = await _fireStorage
-          .ref('users/${_auth.currentUser?.uid}/albums/${album.id}')
-          .putFile(imgFile);
-      imgUrls = await task.ref.getDownloadURL();
-    }
-
-    await _fireStore
-        .collection("users")
-        .doc(_auth.currentUser?.uid)
-        .collection('albums')
-        .doc(album.id)
-        .update(
-      {
-        FieldName.content: content != '' ? content : album.content,
-      },
-    );
   }
 }

@@ -2,13 +2,15 @@ import 'dart:io';
 
 import 'package:exif/exif.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_collection/models/src/album.dart';
-import 'package:my_collection/models/src/tag.dart';
-import 'package:my_collection/services/fire_album_service.dart';
+import 'package:my_collection/services/fire_public_service.dart';
+import 'package:my_collection/services/fire_storage_service.dart';
+import 'package:my_collection/services/fire_users_service.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 part 'add_album_page_controller.freezed.dart';
@@ -19,14 +21,17 @@ class AddAlbumPageState with _$AddAlbumPageState {
     @Default('') String id,
     @Default('') String content,
     @Default('') String imgUrls,
+    @Default('') String userId,
+    List<String>? tags,
     List<Album>? albums,
-    List<Tags>? tag,
+    String? tookDay,
     String? latitudeRef,
     String? latitude,
     String? longitudeRef,
     String? longitude,
     @Default(false) bool isLoading,
     @Default(false) bool public,
+    // @Default(false) bool like,
     File? imgFile,
   }) = _AddAlbumPageState;
 }
@@ -88,7 +93,9 @@ class AddAlbumPageController extends StateNotifier<AddAlbumPageState> {
     state = state.copyWith(imgFile: croppedImageFile);
 
     final tags = await readExifFromBytes(await pickedImageFile.readAsBytes());
+    final tookDay = tags["Image DateTime"].toString();
     final latitudeRef = tags['GPS GPSLatitudeRef'].toString();
+
     // 緯度は[35, 12, 1781/100]のような感じで取得できるため、
     // Google Mapで使えるように10進数に変換する
     final lat = tags['GPS GPSLatitude'];
@@ -108,6 +115,7 @@ class AddAlbumPageController extends StateNotifier<AddAlbumPageState> {
 
     state = state.copyWith(
       imgUrls: imgUrls,
+      tookDay: tookDay,
       latitudeRef: latitudeRef,
       latitude: latitude,
       longitudeRef: longitudeRef,
@@ -116,25 +124,61 @@ class AddAlbumPageController extends StateNotifier<AddAlbumPageState> {
     );
   }
 
-  final _fireAlbumService = FireAlbumService();
+  final _firePublicService = FirePublicService();
+  final _fireUsersService = FireUsersService();
 
-  Future<void> addAlbum(
+  // firebaseとstorageに同じidで保存できるようにするために
+  // 予めidを作成しておく
+  Future<void> createId() async {
+    final docId = await _fireUsersService.createId();
+    state = state.copyWith(id: docId);
+  }
+
+  Future<void> createAlbum(
     String content,
-    String imgUrls,
-    File? imgFile,
     List<String> tags,
   ) async {
-    await _fireAlbumService.addAlbum(
+    await createId();
+    await uploadImage();
+    final tagsList = await _fireUsersService.createAlbum(
       content,
-      imgUrls,
-      imgFile,
-      tags,
+      state.imgUrls,
+      state.id,
+      state.tookDay,
       state.latitudeRef,
       state.latitude,
       state.longitudeRef,
       state.longitude,
+      tags,
       state.public,
     );
+    // publicがtrueのときfirebaseのpublic部分に追加
+    if (state.public)
+      await _firePublicService.releaseAlbum(
+        content,
+        state.imgUrls,
+        state.id,
+        _firePublicService.auth.currentUser!.uid,
+        state.tookDay,
+        state.latitudeRef,
+        state.latitude,
+        state.longitudeRef,
+        state.longitude,
+        tagsList,
+        state.public,
+      );
+  }
+
+  final _fireStorageService = FireStorageService();
+
+  Future<void> uploadImage() async {
+    final uploadUrl = await _fireStorageService.uploadAlbumImage(
+      croppedImageFile: state.imgFile,
+      id: state.id,
+    );
+    EasyLoading.dismiss();
+    if (uploadUrl == null) return;
+    state = state.copyWith(imgUrls: uploadUrl);
   }
 
   // contentを記述したalbumを作成した後に

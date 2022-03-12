@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_collection/models/src/album.dart';
-import 'package:my_collection/services/fire_album_service.dart';
+import 'package:my_collection/services/fire_users_service.dart';
 
 part 'map_page_controller.freezed.dart';
 
@@ -30,11 +30,11 @@ class MapPageController extends StateNotifier<MapPageState> {
     _init();
   }
 
-  final _fireAlbumService = FireAlbumService();
+  final _fireUsersService = FireUsersService();
   final PageController controller = PageController();
 
   void _init() async {
-    await _fireAlbumService.fetchAlbumList(
+    await _fireUsersService.fetchAlbumList(
       onValueChanged: (albums) {
         state = state.copyWith(albums: albums);
       },
@@ -51,7 +51,7 @@ class MapPageController extends StateNotifier<MapPageState> {
 
   // 作成ページで作成ボタンを押したときにmapPageのマップを更新するため
   Future<void> fetchAlbumList() async {
-    await _fireAlbumService.fetchAlbumList(
+    await _fireUsersService.fetchAlbumList(
       onValueChanged: (albums) {
         state = state.copyWith(albums: albums);
       },

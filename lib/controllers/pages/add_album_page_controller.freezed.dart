@@ -22,8 +22,10 @@ class _$AddAlbumPageStateTearOff {
       {String id = '',
       String content = '',
       String imgUrls = '',
+      String userId = '',
+      List<String>? tags,
       List<Album>? albums,
-      List<Tags>? tag,
+      String? tookDay,
       String? latitudeRef,
       String? latitude,
       String? longitudeRef,
@@ -35,8 +37,10 @@ class _$AddAlbumPageStateTearOff {
       id: id,
       content: content,
       imgUrls: imgUrls,
+      userId: userId,
+      tags: tags,
       albums: albums,
-      tag: tag,
+      tookDay: tookDay,
       latitudeRef: latitudeRef,
       latitude: latitude,
       longitudeRef: longitudeRef,
@@ -56,14 +60,17 @@ mixin _$AddAlbumPageState {
   String get id => throw _privateConstructorUsedError;
   String get content => throw _privateConstructorUsedError;
   String get imgUrls => throw _privateConstructorUsedError;
+  String get userId => throw _privateConstructorUsedError;
+  List<String>? get tags => throw _privateConstructorUsedError;
   List<Album>? get albums => throw _privateConstructorUsedError;
-  List<Tags>? get tag => throw _privateConstructorUsedError;
+  String? get tookDay => throw _privateConstructorUsedError;
   String? get latitudeRef => throw _privateConstructorUsedError;
   String? get latitude => throw _privateConstructorUsedError;
   String? get longitudeRef => throw _privateConstructorUsedError;
   String? get longitude => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
-  bool get public => throw _privateConstructorUsedError;
+  bool get public =>
+      throw _privateConstructorUsedError; // @Default(false) bool like,
   File? get imgFile => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -80,8 +87,10 @@ abstract class $AddAlbumPageStateCopyWith<$Res> {
       {String id,
       String content,
       String imgUrls,
+      String userId,
+      List<String>? tags,
       List<Album>? albums,
-      List<Tags>? tag,
+      String? tookDay,
       String? latitudeRef,
       String? latitude,
       String? longitudeRef,
@@ -105,8 +114,10 @@ class _$AddAlbumPageStateCopyWithImpl<$Res>
     Object? id = freezed,
     Object? content = freezed,
     Object? imgUrls = freezed,
+    Object? userId = freezed,
+    Object? tags = freezed,
     Object? albums = freezed,
-    Object? tag = freezed,
+    Object? tookDay = freezed,
     Object? latitudeRef = freezed,
     Object? latitude = freezed,
     Object? longitudeRef = freezed,
@@ -128,14 +139,22 @@ class _$AddAlbumPageStateCopyWithImpl<$Res>
           ? _value.imgUrls
           : imgUrls // ignore: cast_nullable_to_non_nullable
               as String,
+      userId: userId == freezed
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
+      tags: tags == freezed
+          ? _value.tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
       albums: albums == freezed
           ? _value.albums
           : albums // ignore: cast_nullable_to_non_nullable
               as List<Album>?,
-      tag: tag == freezed
-          ? _value.tag
-          : tag // ignore: cast_nullable_to_non_nullable
-              as List<Tags>?,
+      tookDay: tookDay == freezed
+          ? _value.tookDay
+          : tookDay // ignore: cast_nullable_to_non_nullable
+              as String?,
       latitudeRef: latitudeRef == freezed
           ? _value.latitudeRef
           : latitudeRef // ignore: cast_nullable_to_non_nullable
@@ -179,8 +198,10 @@ abstract class _$AddAlbumPageStateCopyWith<$Res>
       {String id,
       String content,
       String imgUrls,
+      String userId,
+      List<String>? tags,
       List<Album>? albums,
-      List<Tags>? tag,
+      String? tookDay,
       String? latitudeRef,
       String? latitude,
       String? longitudeRef,
@@ -206,8 +227,10 @@ class __$AddAlbumPageStateCopyWithImpl<$Res>
     Object? id = freezed,
     Object? content = freezed,
     Object? imgUrls = freezed,
+    Object? userId = freezed,
+    Object? tags = freezed,
     Object? albums = freezed,
-    Object? tag = freezed,
+    Object? tookDay = freezed,
     Object? latitudeRef = freezed,
     Object? latitude = freezed,
     Object? longitudeRef = freezed,
@@ -229,14 +252,22 @@ class __$AddAlbumPageStateCopyWithImpl<$Res>
           ? _value.imgUrls
           : imgUrls // ignore: cast_nullable_to_non_nullable
               as String,
+      userId: userId == freezed
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
+      tags: tags == freezed
+          ? _value.tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
       albums: albums == freezed
           ? _value.albums
           : albums // ignore: cast_nullable_to_non_nullable
               as List<Album>?,
-      tag: tag == freezed
-          ? _value.tag
-          : tag // ignore: cast_nullable_to_non_nullable
-              as List<Tags>?,
+      tookDay: tookDay == freezed
+          ? _value.tookDay
+          : tookDay // ignore: cast_nullable_to_non_nullable
+              as String?,
       latitudeRef: latitudeRef == freezed
           ? _value.latitudeRef
           : latitudeRef // ignore: cast_nullable_to_non_nullable
@@ -276,8 +307,10 @@ class _$_AddAlbumPageState implements _AddAlbumPageState {
       {this.id = '',
       this.content = '',
       this.imgUrls = '',
+      this.userId = '',
+      this.tags,
       this.albums,
-      this.tag,
+      this.tookDay,
       this.latitudeRef,
       this.latitude,
       this.longitudeRef,
@@ -295,10 +328,15 @@ class _$_AddAlbumPageState implements _AddAlbumPageState {
   @JsonKey()
   @override
   final String imgUrls;
+  @JsonKey()
+  @override
+  final String userId;
+  @override
+  final List<String>? tags;
   @override
   final List<Album>? albums;
   @override
-  final List<Tags>? tag;
+  final String? tookDay;
   @override
   final String? latitudeRef;
   @override
@@ -313,12 +351,12 @@ class _$_AddAlbumPageState implements _AddAlbumPageState {
   @JsonKey()
   @override
   final bool public;
-  @override
+  @override // @Default(false) bool like,
   final File? imgFile;
 
   @override
   String toString() {
-    return 'AddAlbumPageState(id: $id, content: $content, imgUrls: $imgUrls, albums: $albums, tag: $tag, latitudeRef: $latitudeRef, latitude: $latitude, longitudeRef: $longitudeRef, longitude: $longitude, isLoading: $isLoading, public: $public, imgFile: $imgFile)';
+    return 'AddAlbumPageState(id: $id, content: $content, imgUrls: $imgUrls, userId: $userId, tags: $tags, albums: $albums, tookDay: $tookDay, latitudeRef: $latitudeRef, latitude: $latitude, longitudeRef: $longitudeRef, longitude: $longitude, isLoading: $isLoading, public: $public, imgFile: $imgFile)';
   }
 
   @override
@@ -329,8 +367,10 @@ class _$_AddAlbumPageState implements _AddAlbumPageState {
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.content, content) &&
             const DeepCollectionEquality().equals(other.imgUrls, imgUrls) &&
+            const DeepCollectionEquality().equals(other.userId, userId) &&
+            const DeepCollectionEquality().equals(other.tags, tags) &&
             const DeepCollectionEquality().equals(other.albums, albums) &&
-            const DeepCollectionEquality().equals(other.tag, tag) &&
+            const DeepCollectionEquality().equals(other.tookDay, tookDay) &&
             const DeepCollectionEquality()
                 .equals(other.latitudeRef, latitudeRef) &&
             const DeepCollectionEquality().equals(other.latitude, latitude) &&
@@ -348,8 +388,10 @@ class _$_AddAlbumPageState implements _AddAlbumPageState {
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(content),
       const DeepCollectionEquality().hash(imgUrls),
+      const DeepCollectionEquality().hash(userId),
+      const DeepCollectionEquality().hash(tags),
       const DeepCollectionEquality().hash(albums),
-      const DeepCollectionEquality().hash(tag),
+      const DeepCollectionEquality().hash(tookDay),
       const DeepCollectionEquality().hash(latitudeRef),
       const DeepCollectionEquality().hash(latitude),
       const DeepCollectionEquality().hash(longitudeRef),
@@ -369,8 +411,10 @@ abstract class _AddAlbumPageState implements AddAlbumPageState {
       {String id,
       String content,
       String imgUrls,
+      String userId,
+      List<String>? tags,
       List<Album>? albums,
-      List<Tags>? tag,
+      String? tookDay,
       String? latitudeRef,
       String? latitude,
       String? longitudeRef,
@@ -386,9 +430,13 @@ abstract class _AddAlbumPageState implements AddAlbumPageState {
   @override
   String get imgUrls;
   @override
+  String get userId;
+  @override
+  List<String>? get tags;
+  @override
   List<Album>? get albums;
   @override
-  List<Tags>? get tag;
+  String? get tookDay;
   @override
   String? get latitudeRef;
   @override
@@ -401,7 +449,7 @@ abstract class _AddAlbumPageState implements AddAlbumPageState {
   bool get isLoading;
   @override
   bool get public;
-  @override
+  @override // @Default(false) bool like,
   File? get imgFile;
   @override
   @JsonKey(ignore: true)
