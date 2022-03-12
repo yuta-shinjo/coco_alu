@@ -33,7 +33,7 @@ class IntroductionPage extends StatelessWidget {
               body:
                   'カメラの位置情報をオンにすることで、\n・この写真はどこで撮ったのだろう\n・この思い出の場所はどこだろう\n\nこれらを思い出の振り返りと共に\n見返すことができます!',
               image: Center(
-                child: UniversalImage('assets/images/map_introduction.'),
+                child: UniversalImage('assets/images/map_introduction.jpg'),
               ),
             ),
             PageViewModel(

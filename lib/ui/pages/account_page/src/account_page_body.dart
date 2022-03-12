@@ -72,6 +72,7 @@ class AccountPageBody extends ConsumerWidget {
       ),
       child: CircleAvatar(
         radius: 50,
+        backgroundColor: AppColors.lightGrey,
         child: ClipOval(
           child: imgUrls.isNotEmpty
               ? UniversalImage(

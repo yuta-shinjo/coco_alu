@@ -63,6 +63,7 @@ class EditProfilePageBody extends StatelessWidget {
   Widget _circleAvatar(File? imageFile, String imgUrls) {
     return CircleAvatar(
       radius: 120,
+      backgroundColor: AppColors.lightGrey,
       child: imageFile != null
           ? ClipOval(
               child: Image.file(
@@ -72,17 +73,17 @@ class EditProfilePageBody extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             )
-          : imgUrls.isNotEmpty
-              ? ClipOval(
-                  child: UniversalImage(
-                    imgUrls,
-                    fit: BoxFit.cover,
-                  ),
-                )
-              : UniversalImage(
-                  'assets/images/avatar.jpg',
-                  fit: BoxFit.cover,
-                ),
+          : ClipOval(
+              child: imgUrls.isNotEmpty
+                  ? UniversalImage(
+                      imgUrls,
+                      fit: BoxFit.cover,
+                    )
+                  : UniversalImage(
+                      'assets/images/avatar.jpg',
+                      fit: BoxFit.cover,
+                    ),
+            ),
     );
   }
 
