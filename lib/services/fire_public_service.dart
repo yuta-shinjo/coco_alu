@@ -25,33 +25,12 @@ class FirePublicService {
     return onValueChanged(albums);
   }
 
-  Future<void> releaseAlbum(
-    String content,
-    String imgUrls,
-    String id,
-    String userId,
-    String? tookDay,
-    String? latitudeRef,
-    String? latitude,
-    String? longitudeRef,
-    String? longitude,
-    List<String> tags,
-    bool public,
-  ) async {
+  Future<void> releaseAlbum(List<String> tags, {required Album album}) async {
     final collectionRef =
         _fireStore.collection('public').doc('v1').collection('albums');
-    await collectionRef.doc(id).set({
-      FieldName.content: content,
-      FieldName.imgUrls: imgUrls,
-      FieldName.id: id,
+    await collectionRef.doc(album.id).set(<String, dynamic>{
+      ...album.toJson(),
       FieldName.tags: tags.map((e) => e).toList(),
-      FieldName.public: public,
-      FieldName.created: FieldValue.serverTimestamp(),
-      FieldName.latitudeRef: latitudeRef ?? '',
-      FieldName.latitude: latitude ?? '',
-      FieldName.longitudeRef: longitudeRef ?? '',
-      FieldName.longitude: longitude ?? '',
-      FieldName.tookDay: tookDay ?? '',
     });
   }
 

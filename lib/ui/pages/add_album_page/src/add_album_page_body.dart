@@ -78,7 +78,6 @@ class AddAlbumPgeBody extends ConsumerWidget {
               const SizedBox(height: 40),
               _createdButton(
                 btnController,
-                content,
                 imgUrls,
                 imgFile,
                 tags,
@@ -155,7 +154,6 @@ class AddAlbumPgeBody extends ConsumerWidget {
 
   Widget _createdButton(
     RoundedLoadingButtonController btnController,
-    String content,
     String imgUrls,
     File? imgFile,
     List<String> tags,
@@ -174,9 +172,7 @@ class AddAlbumPgeBody extends ConsumerWidget {
                 ref
                     .read(addAlbumPageProvider.notifier)
                     .loadingSuccess(btnController);
-                await ref
-                    .read(addAlbumPageProvider.notifier)
-                    .createAlbum(content, tags);
+                await ref.read(addAlbumPageProvider.notifier).createAlbum(tags);
                 createAlbumSuccessMassage();
                 ref
                     .read(addAlbumPageProvider.notifier)

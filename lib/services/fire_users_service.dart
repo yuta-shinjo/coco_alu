@@ -103,6 +103,18 @@ class FireUsersService {
     return user;
   }
 
+  Future<User?> fetchCreatedUserProfile(String createdUserId) async {
+    final snapshot = await _fireStore
+        .collection('users')
+        .doc(createdUserId)
+        .collection('profile')
+        .doc(createdUserId)
+        .get();
+    final data = snapshot.data();
+    final user = data != null ? User.fromJson(data) : null;
+    return user;
+  }
+
   Future<void> updateProfile(
       File? imageFile, String imgUrls, String name) async {
     if (imageFile == null && imgUrls == '') {
@@ -123,7 +135,8 @@ class FireUsersService {
     });
   }
 
-  Future fetchMyAlbumList({required Function(List<Album>) onValueChanged}) async {
+  Future fetchMyAlbumList(
+      {required Function(List<Album>) onValueChanged}) async {
     final usersPublicStadiumsCollectionRef = _fireStore
         .collection('users')
         .doc(_auth.currentUser?.uid)
@@ -136,11 +149,11 @@ class FireUsersService {
     }
     return onValueChanged(albums);
   }
-  Future fetchPublicAlbumList({required Function(List<Album>) onValueChanged}) async {
-    final usersPublicStadiumsCollectionRef = _fireStore
-        .collection('public')
-        .doc('v1')
-        .collection('albums');
+
+  Future fetchPublicAlbumList(
+      {required Function(List<Album>) onValueChanged}) async {
+    final usersPublicStadiumsCollectionRef =
+        _fireStore.collection('public').doc('v1').collection('albums');
     final snapShot = await usersPublicStadiumsCollectionRef.get();
     final List<Album>? albums =
         snapShot.docs.map((e) => Album.fromJson(e.data())).toList();
@@ -161,34 +174,15 @@ class FireUsersService {
     return id;
   }
 
-  Future<List<String>> createAlbum(
-    String content,
-    String imgUrls,
-    String id,
-    String? tookDay,
-    String? latitudeRef,
-    String? latitude,
-    String? longitudeRef,
-    String? longitude,
-    List<String> tags,
-    bool public,
-  ) async {
+  Future<List<String>> createAlbum(List<String> tags,
+      {required Album album}) async {
     final collectionRef = _fireStore
         .collection('users')
         .doc(_auth.currentUser?.uid)
         .collection('albums');
-    await collectionRef.doc(id).set({
-      FieldName.content: content,
-      FieldName.created: FieldValue.serverTimestamp(),
-      FieldName.id: id,
-      FieldName.imgUrls: imgUrls,
-      FieldName.public: public,
-      FieldName.latitude: latitude ?? '',
-      FieldName.latitudeRef: latitudeRef ?? '',
-      FieldName.longitude: longitude ?? '',
-      FieldName.longitudeRef: longitudeRef ?? '',
+    await collectionRef.doc(album.id).set(<String, dynamic>{
+      ...album.toJson(),
       FieldName.tags: tags.map((e) => e).toList(),
-      FieldName.tookDay: tookDay ?? '',
     });
     return tags;
   }
@@ -201,6 +195,7 @@ class FireUsersService {
         .doc(album.id)
         .delete();
   }
+
   Future<void> deletePublicAlbum(Album album) {
     return _fireStore
         .collection('public')

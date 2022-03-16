@@ -11,12 +11,16 @@ class Album with _$Album {
     @Default('') String id,
     @Default('') String content,
     @Default('') String imgUrls,
+    @Default('') String createdUser,
+    @Default(0) int likedCount,
     @Default(<String>[]) List<String> tags,
+    @Default(<String>[]) List<String> likedUser,
     @Default(false) bool public,
     String? latitudeRef,
     String? latitude,
     String? longitudeRef,
     String? longitude,
+    String? tookDay,
     @FireTimestampConverterNonNull() required DateTime created,
   }) = _Album;
 

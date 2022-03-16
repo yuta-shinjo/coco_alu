@@ -5,6 +5,39 @@ TextTheme _getTheme(BuildContext context) {
   return Theme.of(context).textTheme;
 }
 
+class Headline6Text extends StatelessWidget {
+  const Headline6Text(
+    this.text, {
+    Key? key,
+    this.color,
+    this.maxLines,
+    this.textAlign,
+    this.overflow,
+    this.bottomPadding = 2,
+  }) : super(key: key);
+
+  final String? text;
+  final Color? color;
+  final int? maxLines;
+  final TextAlign? textAlign;
+  final TextOverflow? overflow;
+  final double bottomPadding;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: bottomPadding),
+      child: Text(
+        text ?? '',
+        maxLines: maxLines,
+        textAlign: textAlign,
+        overflow: overflow,
+        style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),
+      ),
+    );
+  }
+}
+
 class Subtitle1Text extends StatelessWidget {
   const Subtitle1Text(
     this.text, {

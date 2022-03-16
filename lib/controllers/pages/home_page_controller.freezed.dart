@@ -22,11 +22,15 @@ class _$HomePageStateTearOff {
       {String id = '',
       String content = '',
       String imgUrls = '',
+      bool viewContent = false,
+      User profile = const User(),
       List<Album>? albums}) {
     return _HomePageState(
       id: id,
       content: content,
       imgUrls: imgUrls,
+      viewContent: viewContent,
+      profile: profile,
       albums: albums,
     );
   }
@@ -40,6 +44,8 @@ mixin _$HomePageState {
   String get id => throw _privateConstructorUsedError;
   String get content => throw _privateConstructorUsedError;
   String get imgUrls => throw _privateConstructorUsedError;
+  bool get viewContent => throw _privateConstructorUsedError;
+  User get profile => throw _privateConstructorUsedError;
   List<Album>? get albums => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -52,7 +58,15 @@ abstract class $HomePageStateCopyWith<$Res> {
   factory $HomePageStateCopyWith(
           HomePageState value, $Res Function(HomePageState) then) =
       _$HomePageStateCopyWithImpl<$Res>;
-  $Res call({String id, String content, String imgUrls, List<Album>? albums});
+  $Res call(
+      {String id,
+      String content,
+      String imgUrls,
+      bool viewContent,
+      User profile,
+      List<Album>? albums});
+
+  $UserCopyWith<$Res> get profile;
 }
 
 /// @nodoc
@@ -69,6 +83,8 @@ class _$HomePageStateCopyWithImpl<$Res>
     Object? id = freezed,
     Object? content = freezed,
     Object? imgUrls = freezed,
+    Object? viewContent = freezed,
+    Object? profile = freezed,
     Object? albums = freezed,
   }) {
     return _then(_value.copyWith(
@@ -84,11 +100,26 @@ class _$HomePageStateCopyWithImpl<$Res>
           ? _value.imgUrls
           : imgUrls // ignore: cast_nullable_to_non_nullable
               as String,
+      viewContent: viewContent == freezed
+          ? _value.viewContent
+          : viewContent // ignore: cast_nullable_to_non_nullable
+              as bool,
+      profile: profile == freezed
+          ? _value.profile
+          : profile // ignore: cast_nullable_to_non_nullable
+              as User,
       albums: albums == freezed
           ? _value.albums
           : albums // ignore: cast_nullable_to_non_nullable
               as List<Album>?,
     ));
+  }
+
+  @override
+  $UserCopyWith<$Res> get profile {
+    return $UserCopyWith<$Res>(_value.profile, (value) {
+      return _then(_value.copyWith(profile: value));
+    });
   }
 }
 
@@ -99,7 +130,16 @@ abstract class _$HomePageStateCopyWith<$Res>
           _HomePageState value, $Res Function(_HomePageState) then) =
       __$HomePageStateCopyWithImpl<$Res>;
   @override
-  $Res call({String id, String content, String imgUrls, List<Album>? albums});
+  $Res call(
+      {String id,
+      String content,
+      String imgUrls,
+      bool viewContent,
+      User profile,
+      List<Album>? albums});
+
+  @override
+  $UserCopyWith<$Res> get profile;
 }
 
 /// @nodoc
@@ -118,6 +158,8 @@ class __$HomePageStateCopyWithImpl<$Res>
     Object? id = freezed,
     Object? content = freezed,
     Object? imgUrls = freezed,
+    Object? viewContent = freezed,
+    Object? profile = freezed,
     Object? albums = freezed,
   }) {
     return _then(_HomePageState(
@@ -133,6 +175,14 @@ class __$HomePageStateCopyWithImpl<$Res>
           ? _value.imgUrls
           : imgUrls // ignore: cast_nullable_to_non_nullable
               as String,
+      viewContent: viewContent == freezed
+          ? _value.viewContent
+          : viewContent // ignore: cast_nullable_to_non_nullable
+              as bool,
+      profile: profile == freezed
+          ? _value.profile
+          : profile // ignore: cast_nullable_to_non_nullable
+              as User,
       albums: albums == freezed
           ? _value.albums
           : albums // ignore: cast_nullable_to_non_nullable
@@ -145,7 +195,12 @@ class __$HomePageStateCopyWithImpl<$Res>
 
 class _$_HomePageState implements _HomePageState {
   const _$_HomePageState(
-      {this.id = '', this.content = '', this.imgUrls = '', this.albums});
+      {this.id = '',
+      this.content = '',
+      this.imgUrls = '',
+      this.viewContent = false,
+      this.profile = const User(),
+      this.albums});
 
   @JsonKey()
   @override
@@ -156,12 +211,18 @@ class _$_HomePageState implements _HomePageState {
   @JsonKey()
   @override
   final String imgUrls;
+  @JsonKey()
+  @override
+  final bool viewContent;
+  @JsonKey()
+  @override
+  final User profile;
   @override
   final List<Album>? albums;
 
   @override
   String toString() {
-    return 'HomePageState(id: $id, content: $content, imgUrls: $imgUrls, albums: $albums)';
+    return 'HomePageState(id: $id, content: $content, imgUrls: $imgUrls, viewContent: $viewContent, profile: $profile, albums: $albums)';
   }
 
   @override
@@ -172,6 +233,9 @@ class _$_HomePageState implements _HomePageState {
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.content, content) &&
             const DeepCollectionEquality().equals(other.imgUrls, imgUrls) &&
+            const DeepCollectionEquality()
+                .equals(other.viewContent, viewContent) &&
+            const DeepCollectionEquality().equals(other.profile, profile) &&
             const DeepCollectionEquality().equals(other.albums, albums));
   }
 
@@ -181,6 +245,8 @@ class _$_HomePageState implements _HomePageState {
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(content),
       const DeepCollectionEquality().hash(imgUrls),
+      const DeepCollectionEquality().hash(viewContent),
+      const DeepCollectionEquality().hash(profile),
       const DeepCollectionEquality().hash(albums));
 
   @JsonKey(ignore: true)
@@ -194,6 +260,8 @@ abstract class _HomePageState implements HomePageState {
       {String id,
       String content,
       String imgUrls,
+      bool viewContent,
+      User profile,
       List<Album>? albums}) = _$_HomePageState;
 
   @override
@@ -202,6 +270,10 @@ abstract class _HomePageState implements HomePageState {
   String get content;
   @override
   String get imgUrls;
+  @override
+  bool get viewContent;
+  @override
+  User get profile;
   @override
   List<Album>? get albums;
   @override

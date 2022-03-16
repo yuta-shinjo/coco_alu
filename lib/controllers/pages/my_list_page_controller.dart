@@ -41,6 +41,6 @@ class MyListPageController extends StateNotifier<MyListPageState> {
       onValueChanged: (albums) {
         state = state.copyWith(albums: albums);
       },
-    ); 
+    );
   }
 }

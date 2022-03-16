@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_collection/controllers/pages/home_page_controller.dart';
 import 'package:my_collection/models/src/album.dart';
+import 'package:my_collection/models/src/user.dart';
 import 'package:my_collection/ui/components/src/universal.dart';
-import 'package:my_collection/ui/pages/home_page/src/album_detail_page.dart';
+import 'package:my_collection/ui/pages/home_page/src/public_album_detail_page.dart';
 
 class HomePageBody extends ConsumerWidget {
   const HomePageBody({Key? key}) : super(key: key);
@@ -32,38 +33,44 @@ class HomePageBody extends ConsumerWidget {
       itemCount: albums.length,
       itemBuilder: (BuildContext context, int index) {
         final album = albums[index];
-        return _albumImage(context, album);
+        return _albumImage(album);
       },
     );
   }
 
-  Widget _albumImage(BuildContext context, Album album) {
-    return GestureDetector(
-      onTap: () => _goToDetail(context, album),
-      child: Padding(
-        padding: const EdgeInsets.all(4),
-        child: Card(
-          clipBehavior: Clip.antiAlias,
-          elevation: 5,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
+  Widget _albumImage(Album album) {
+    return Consumer(builder: (context, ref, _) {
+      return GestureDetector(
+        onTap: () async {
+          await ref.read(homePageProvider.notifier).fetchCreatedUserProfile(album.createdUser);
+          final profile = ref.watch(homePageProvider.select((s) => s.profile));
+          _goToDetail(context, album, profile);
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(4),
+          child: Card(
+            clipBehavior: Clip.antiAlias,
+            elevation: 5,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: album.imgUrls.isNotEmpty
+                ? UniversalImage(
+                    album.imgUrls,
+                    fit: BoxFit.cover,
+                  )
+                : UniversalImage(
+                    'assets/images/photo.jpg',
+                    fit: BoxFit.cover,
+                  ),
           ),
-          child: album.imgUrls.isNotEmpty
-              ? UniversalImage(
-                  album.imgUrls,
-                  fit: BoxFit.cover,
-                )
-              : UniversalImage(
-                  'assets/images/photo.jpg',
-                  fit: BoxFit.cover,
-                ),
         ),
-      ),
-    );
+      );
+    });
   }
 
-  void _goToDetail(BuildContext context, Album album) {
-    final page = AlbumDetailPage(album: album);
+  void _goToDetail(BuildContext context, Album album, User profile) {
+    final page = PublicAlbumDetailPage(album: album, profile: profile);
     Navigator.of(context).push(
       PageRouteBuilder<Null>(
         pageBuilder: (BuildContext context, Animation<double> animation,

@@ -65,7 +65,7 @@ class IntroductionPage extends StatelessWidget {
           next: const Icon(Icons.arrow_forward_ios, color: AppColors.primary),
           back: const Icon(Icons.arrow_back_ios, color: AppColors.primary),
           done: const Text(
-            "Done",
+            'はじめる',
             style: TextStyle(
               fontWeight: FontWeight.w600,
               color: AppColors.primary,

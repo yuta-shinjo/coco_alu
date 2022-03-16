@@ -22,6 +22,8 @@ class AddAlbumPageState with _$AddAlbumPageState {
     @Default('') String content,
     @Default('') String imgUrls,
     @Default('') String userId,
+    @Default('') String createdUser,
+    @Default(<String>[]) List<String> likedUser,
     List<String>? tags,
     List<Album>? albums,
     String? tookDay,
@@ -31,7 +33,7 @@ class AddAlbumPageState with _$AddAlbumPageState {
     String? longitude,
     @Default(false) bool isLoading,
     @Default(false) bool public,
-    // @Default(false) bool like,
+    @Default(0) int likedCount,
     File? imgFile,
   }) = _AddAlbumPageState;
 }
@@ -135,37 +137,47 @@ class AddAlbumPageController extends StateNotifier<AddAlbumPageState> {
   }
 
   Future<void> createAlbum(
-    String content,
     List<String> tags,
   ) async {
     await createId();
     await uploadImage();
     final tagsList = await _fireUsersService.createAlbum(
-      content,
-      state.imgUrls,
-      state.id,
-      state.tookDay,
-      state.latitudeRef,
-      state.latitude,
-      state.longitudeRef,
-      state.longitude,
       tags,
-      state.public,
+      album: Album(
+        createdUser: _firePublicService.auth.currentUser!.uid,
+        created: DateTime.now(),
+        content: state.content,
+        imgUrls: state.imgUrls,
+        id: state.id,
+        latitudeRef: state.latitudeRef ?? '',
+        latitude: state.latitude ?? '',
+        longitudeRef: state.longitudeRef ?? '',
+        longitude: state.longitude ?? '',
+        public: state.public,
+        tookDay: state.tookDay ?? '',
+        likedCount: state.likedCount,
+        likedUser: state.likedUser,
+      ),
     );
     // publicがtrueのときfirebaseのpublic部分に追加
     if (state.public)
       await _firePublicService.releaseAlbum(
-        content,
-        state.imgUrls,
-        state.id,
-        _firePublicService.auth.currentUser!.uid,
-        state.tookDay,
-        state.latitudeRef,
-        state.latitude,
-        state.longitudeRef,
-        state.longitude,
         tagsList,
-        state.public,
+        album: Album(
+          createdUser: _firePublicService.auth.currentUser!.uid,
+          created: DateTime.now(),
+          content: state.content,
+          imgUrls: state.imgUrls,
+          id: state.id,
+          latitudeRef: state.latitudeRef ?? '',
+          latitude: state.latitude ?? '',
+          longitudeRef: state.longitudeRef ?? '',
+          longitude: state.longitude ?? '',
+          public: state.public,
+          tookDay: state.tookDay ?? '',
+          likedCount: state.likedCount,
+          likedUser: state.likedUser,
+        ),
       );
   }
 

@@ -23,6 +23,8 @@ class _$AddAlbumPageStateTearOff {
       String content = '',
       String imgUrls = '',
       String userId = '',
+      String createdUser = '',
+      List<String> likedUser = const <String>[],
       List<String>? tags,
       List<Album>? albums,
       String? tookDay,
@@ -32,12 +34,15 @@ class _$AddAlbumPageStateTearOff {
       String? longitude,
       bool isLoading = false,
       bool public = false,
+      int likedCount = 0,
       File? imgFile}) {
     return _AddAlbumPageState(
       id: id,
       content: content,
       imgUrls: imgUrls,
       userId: userId,
+      createdUser: createdUser,
+      likedUser: likedUser,
       tags: tags,
       albums: albums,
       tookDay: tookDay,
@@ -47,6 +52,7 @@ class _$AddAlbumPageStateTearOff {
       longitude: longitude,
       isLoading: isLoading,
       public: public,
+      likedCount: likedCount,
       imgFile: imgFile,
     );
   }
@@ -61,6 +67,8 @@ mixin _$AddAlbumPageState {
   String get content => throw _privateConstructorUsedError;
   String get imgUrls => throw _privateConstructorUsedError;
   String get userId => throw _privateConstructorUsedError;
+  String get createdUser => throw _privateConstructorUsedError;
+  List<String> get likedUser => throw _privateConstructorUsedError;
   List<String>? get tags => throw _privateConstructorUsedError;
   List<Album>? get albums => throw _privateConstructorUsedError;
   String? get tookDay => throw _privateConstructorUsedError;
@@ -69,8 +77,8 @@ mixin _$AddAlbumPageState {
   String? get longitudeRef => throw _privateConstructorUsedError;
   String? get longitude => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
-  bool get public =>
-      throw _privateConstructorUsedError; // @Default(false) bool like,
+  bool get public => throw _privateConstructorUsedError;
+  int get likedCount => throw _privateConstructorUsedError;
   File? get imgFile => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -88,6 +96,8 @@ abstract class $AddAlbumPageStateCopyWith<$Res> {
       String content,
       String imgUrls,
       String userId,
+      String createdUser,
+      List<String> likedUser,
       List<String>? tags,
       List<Album>? albums,
       String? tookDay,
@@ -97,6 +107,7 @@ abstract class $AddAlbumPageStateCopyWith<$Res> {
       String? longitude,
       bool isLoading,
       bool public,
+      int likedCount,
       File? imgFile});
 }
 
@@ -115,6 +126,8 @@ class _$AddAlbumPageStateCopyWithImpl<$Res>
     Object? content = freezed,
     Object? imgUrls = freezed,
     Object? userId = freezed,
+    Object? createdUser = freezed,
+    Object? likedUser = freezed,
     Object? tags = freezed,
     Object? albums = freezed,
     Object? tookDay = freezed,
@@ -124,6 +137,7 @@ class _$AddAlbumPageStateCopyWithImpl<$Res>
     Object? longitude = freezed,
     Object? isLoading = freezed,
     Object? public = freezed,
+    Object? likedCount = freezed,
     Object? imgFile = freezed,
   }) {
     return _then(_value.copyWith(
@@ -143,6 +157,14 @@ class _$AddAlbumPageStateCopyWithImpl<$Res>
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String,
+      createdUser: createdUser == freezed
+          ? _value.createdUser
+          : createdUser // ignore: cast_nullable_to_non_nullable
+              as String,
+      likedUser: likedUser == freezed
+          ? _value.likedUser
+          : likedUser // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       tags: tags == freezed
           ? _value.tags
           : tags // ignore: cast_nullable_to_non_nullable
@@ -179,6 +201,10 @@ class _$AddAlbumPageStateCopyWithImpl<$Res>
           ? _value.public
           : public // ignore: cast_nullable_to_non_nullable
               as bool,
+      likedCount: likedCount == freezed
+          ? _value.likedCount
+          : likedCount // ignore: cast_nullable_to_non_nullable
+              as int,
       imgFile: imgFile == freezed
           ? _value.imgFile
           : imgFile // ignore: cast_nullable_to_non_nullable
@@ -199,6 +225,8 @@ abstract class _$AddAlbumPageStateCopyWith<$Res>
       String content,
       String imgUrls,
       String userId,
+      String createdUser,
+      List<String> likedUser,
       List<String>? tags,
       List<Album>? albums,
       String? tookDay,
@@ -208,6 +236,7 @@ abstract class _$AddAlbumPageStateCopyWith<$Res>
       String? longitude,
       bool isLoading,
       bool public,
+      int likedCount,
       File? imgFile});
 }
 
@@ -228,6 +257,8 @@ class __$AddAlbumPageStateCopyWithImpl<$Res>
     Object? content = freezed,
     Object? imgUrls = freezed,
     Object? userId = freezed,
+    Object? createdUser = freezed,
+    Object? likedUser = freezed,
     Object? tags = freezed,
     Object? albums = freezed,
     Object? tookDay = freezed,
@@ -237,6 +268,7 @@ class __$AddAlbumPageStateCopyWithImpl<$Res>
     Object? longitude = freezed,
     Object? isLoading = freezed,
     Object? public = freezed,
+    Object? likedCount = freezed,
     Object? imgFile = freezed,
   }) {
     return _then(_AddAlbumPageState(
@@ -256,6 +288,14 @@ class __$AddAlbumPageStateCopyWithImpl<$Res>
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String,
+      createdUser: createdUser == freezed
+          ? _value.createdUser
+          : createdUser // ignore: cast_nullable_to_non_nullable
+              as String,
+      likedUser: likedUser == freezed
+          ? _value.likedUser
+          : likedUser // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       tags: tags == freezed
           ? _value.tags
           : tags // ignore: cast_nullable_to_non_nullable
@@ -292,6 +332,10 @@ class __$AddAlbumPageStateCopyWithImpl<$Res>
           ? _value.public
           : public // ignore: cast_nullable_to_non_nullable
               as bool,
+      likedCount: likedCount == freezed
+          ? _value.likedCount
+          : likedCount // ignore: cast_nullable_to_non_nullable
+              as int,
       imgFile: imgFile == freezed
           ? _value.imgFile
           : imgFile // ignore: cast_nullable_to_non_nullable
@@ -308,6 +352,8 @@ class _$_AddAlbumPageState implements _AddAlbumPageState {
       this.content = '',
       this.imgUrls = '',
       this.userId = '',
+      this.createdUser = '',
+      this.likedUser = const <String>[],
       this.tags,
       this.albums,
       this.tookDay,
@@ -317,6 +363,7 @@ class _$_AddAlbumPageState implements _AddAlbumPageState {
       this.longitude,
       this.isLoading = false,
       this.public = false,
+      this.likedCount = 0,
       this.imgFile});
 
   @JsonKey()
@@ -331,6 +378,12 @@ class _$_AddAlbumPageState implements _AddAlbumPageState {
   @JsonKey()
   @override
   final String userId;
+  @JsonKey()
+  @override
+  final String createdUser;
+  @JsonKey()
+  @override
+  final List<String> likedUser;
   @override
   final List<String>? tags;
   @override
@@ -351,12 +404,15 @@ class _$_AddAlbumPageState implements _AddAlbumPageState {
   @JsonKey()
   @override
   final bool public;
-  @override // @Default(false) bool like,
+  @JsonKey()
+  @override
+  final int likedCount;
+  @override
   final File? imgFile;
 
   @override
   String toString() {
-    return 'AddAlbumPageState(id: $id, content: $content, imgUrls: $imgUrls, userId: $userId, tags: $tags, albums: $albums, tookDay: $tookDay, latitudeRef: $latitudeRef, latitude: $latitude, longitudeRef: $longitudeRef, longitude: $longitude, isLoading: $isLoading, public: $public, imgFile: $imgFile)';
+    return 'AddAlbumPageState(id: $id, content: $content, imgUrls: $imgUrls, userId: $userId, createdUser: $createdUser, likedUser: $likedUser, tags: $tags, albums: $albums, tookDay: $tookDay, latitudeRef: $latitudeRef, latitude: $latitude, longitudeRef: $longitudeRef, longitude: $longitude, isLoading: $isLoading, public: $public, likedCount: $likedCount, imgFile: $imgFile)';
   }
 
   @override
@@ -368,6 +424,9 @@ class _$_AddAlbumPageState implements _AddAlbumPageState {
             const DeepCollectionEquality().equals(other.content, content) &&
             const DeepCollectionEquality().equals(other.imgUrls, imgUrls) &&
             const DeepCollectionEquality().equals(other.userId, userId) &&
+            const DeepCollectionEquality()
+                .equals(other.createdUser, createdUser) &&
+            const DeepCollectionEquality().equals(other.likedUser, likedUser) &&
             const DeepCollectionEquality().equals(other.tags, tags) &&
             const DeepCollectionEquality().equals(other.albums, albums) &&
             const DeepCollectionEquality().equals(other.tookDay, tookDay) &&
@@ -379,6 +438,8 @@ class _$_AddAlbumPageState implements _AddAlbumPageState {
             const DeepCollectionEquality().equals(other.longitude, longitude) &&
             const DeepCollectionEquality().equals(other.isLoading, isLoading) &&
             const DeepCollectionEquality().equals(other.public, public) &&
+            const DeepCollectionEquality()
+                .equals(other.likedCount, likedCount) &&
             const DeepCollectionEquality().equals(other.imgFile, imgFile));
   }
 
@@ -389,6 +450,8 @@ class _$_AddAlbumPageState implements _AddAlbumPageState {
       const DeepCollectionEquality().hash(content),
       const DeepCollectionEquality().hash(imgUrls),
       const DeepCollectionEquality().hash(userId),
+      const DeepCollectionEquality().hash(createdUser),
+      const DeepCollectionEquality().hash(likedUser),
       const DeepCollectionEquality().hash(tags),
       const DeepCollectionEquality().hash(albums),
       const DeepCollectionEquality().hash(tookDay),
@@ -398,6 +461,7 @@ class _$_AddAlbumPageState implements _AddAlbumPageState {
       const DeepCollectionEquality().hash(longitude),
       const DeepCollectionEquality().hash(isLoading),
       const DeepCollectionEquality().hash(public),
+      const DeepCollectionEquality().hash(likedCount),
       const DeepCollectionEquality().hash(imgFile));
 
   @JsonKey(ignore: true)
@@ -412,6 +476,8 @@ abstract class _AddAlbumPageState implements AddAlbumPageState {
       String content,
       String imgUrls,
       String userId,
+      String createdUser,
+      List<String> likedUser,
       List<String>? tags,
       List<Album>? albums,
       String? tookDay,
@@ -421,6 +487,7 @@ abstract class _AddAlbumPageState implements AddAlbumPageState {
       String? longitude,
       bool isLoading,
       bool public,
+      int likedCount,
       File? imgFile}) = _$_AddAlbumPageState;
 
   @override
@@ -431,6 +498,10 @@ abstract class _AddAlbumPageState implements AddAlbumPageState {
   String get imgUrls;
   @override
   String get userId;
+  @override
+  String get createdUser;
+  @override
+  List<String> get likedUser;
   @override
   List<String>? get tags;
   @override
@@ -449,7 +520,9 @@ abstract class _AddAlbumPageState implements AddAlbumPageState {
   bool get isLoading;
   @override
   bool get public;
-  @override // @Default(false) bool like,
+  @override
+  int get likedCount;
+  @override
   File? get imgFile;
   @override
   @JsonKey(ignore: true)
