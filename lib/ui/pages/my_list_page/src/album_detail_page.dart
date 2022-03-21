@@ -16,12 +16,13 @@ class AlbumDetailPage extends StatelessWidget {
         Hero(
           tag: "background_${album.content}",
           child: Container(
-            color: AppColors.white,
+            color: AppColors.scaffoldColor,
           ),
         ),
         Scaffold(
-          backgroundColor: AppColors.transparent,
+          backgroundColor: AppColors.scaffoldColor,
           appBar: AppBar(
+            backgroundColor: AppColors.barColor,
             leading: CloseButton(),
           ),
           body: _albumDetailPageBody(context),

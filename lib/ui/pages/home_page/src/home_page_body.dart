@@ -43,8 +43,8 @@ class HomePageBody extends ConsumerWidget {
       return GestureDetector(
         onTap: () async {
           await ref.read(homePageProvider.notifier).fetchCreatedUserProfile(album.createdUser);
-          final profile = ref.watch(homePageProvider.select((s) => s.profile));
-          _goToDetail(context, album, profile);
+          final createdUserProfile = ref.watch(homePageProvider.select((s) => s.createdUserProfile));
+          _goToDetail(context, album, createdUserProfile);
         },
         child: Padding(
           padding: const EdgeInsets.all(4),

@@ -39,8 +39,9 @@ class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-      backgroundColor: AppColors.white,
+      backgroundColor: AppColors.scaffoldColor,
       appBar: AppBar(
+        backgroundColor: AppColors.barColor,
         leading: CloseButton(),
       ),
       body: _albumDetailPageBody(context),

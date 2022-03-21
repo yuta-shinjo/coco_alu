@@ -37,7 +37,6 @@ class AddAlbumPgeBody extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _selectImage(imgUrls, btnController, imgFile),
-              const Divider(color: AppColors.grey),
               const Padding(
                 padding: EdgeInsets.only(left: 16, top: 8, bottom: 8),
                 child: Subtitle2Text('コメント', color: AppColors.textDisable),

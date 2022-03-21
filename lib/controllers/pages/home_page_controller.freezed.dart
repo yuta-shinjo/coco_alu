@@ -23,14 +23,14 @@ class _$HomePageStateTearOff {
       String content = '',
       String imgUrls = '',
       bool viewContent = false,
-      User profile = const User(),
+      User createdUserProfile = const User(),
       List<Album>? albums}) {
     return _HomePageState(
       id: id,
       content: content,
       imgUrls: imgUrls,
       viewContent: viewContent,
-      profile: profile,
+      createdUserProfile: createdUserProfile,
       albums: albums,
     );
   }
@@ -45,7 +45,7 @@ mixin _$HomePageState {
   String get content => throw _privateConstructorUsedError;
   String get imgUrls => throw _privateConstructorUsedError;
   bool get viewContent => throw _privateConstructorUsedError;
-  User get profile => throw _privateConstructorUsedError;
+  User get createdUserProfile => throw _privateConstructorUsedError;
   List<Album>? get albums => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -63,10 +63,10 @@ abstract class $HomePageStateCopyWith<$Res> {
       String content,
       String imgUrls,
       bool viewContent,
-      User profile,
+      User createdUserProfile,
       List<Album>? albums});
 
-  $UserCopyWith<$Res> get profile;
+  $UserCopyWith<$Res> get createdUserProfile;
 }
 
 /// @nodoc
@@ -84,7 +84,7 @@ class _$HomePageStateCopyWithImpl<$Res>
     Object? content = freezed,
     Object? imgUrls = freezed,
     Object? viewContent = freezed,
-    Object? profile = freezed,
+    Object? createdUserProfile = freezed,
     Object? albums = freezed,
   }) {
     return _then(_value.copyWith(
@@ -104,9 +104,9 @@ class _$HomePageStateCopyWithImpl<$Res>
           ? _value.viewContent
           : viewContent // ignore: cast_nullable_to_non_nullable
               as bool,
-      profile: profile == freezed
-          ? _value.profile
-          : profile // ignore: cast_nullable_to_non_nullable
+      createdUserProfile: createdUserProfile == freezed
+          ? _value.createdUserProfile
+          : createdUserProfile // ignore: cast_nullable_to_non_nullable
               as User,
       albums: albums == freezed
           ? _value.albums
@@ -116,9 +116,9 @@ class _$HomePageStateCopyWithImpl<$Res>
   }
 
   @override
-  $UserCopyWith<$Res> get profile {
-    return $UserCopyWith<$Res>(_value.profile, (value) {
-      return _then(_value.copyWith(profile: value));
+  $UserCopyWith<$Res> get createdUserProfile {
+    return $UserCopyWith<$Res>(_value.createdUserProfile, (value) {
+      return _then(_value.copyWith(createdUserProfile: value));
     });
   }
 }
@@ -135,11 +135,11 @@ abstract class _$HomePageStateCopyWith<$Res>
       String content,
       String imgUrls,
       bool viewContent,
-      User profile,
+      User createdUserProfile,
       List<Album>? albums});
 
   @override
-  $UserCopyWith<$Res> get profile;
+  $UserCopyWith<$Res> get createdUserProfile;
 }
 
 /// @nodoc
@@ -159,7 +159,7 @@ class __$HomePageStateCopyWithImpl<$Res>
     Object? content = freezed,
     Object? imgUrls = freezed,
     Object? viewContent = freezed,
-    Object? profile = freezed,
+    Object? createdUserProfile = freezed,
     Object? albums = freezed,
   }) {
     return _then(_HomePageState(
@@ -179,9 +179,9 @@ class __$HomePageStateCopyWithImpl<$Res>
           ? _value.viewContent
           : viewContent // ignore: cast_nullable_to_non_nullable
               as bool,
-      profile: profile == freezed
-          ? _value.profile
-          : profile // ignore: cast_nullable_to_non_nullable
+      createdUserProfile: createdUserProfile == freezed
+          ? _value.createdUserProfile
+          : createdUserProfile // ignore: cast_nullable_to_non_nullable
               as User,
       albums: albums == freezed
           ? _value.albums
@@ -199,7 +199,7 @@ class _$_HomePageState implements _HomePageState {
       this.content = '',
       this.imgUrls = '',
       this.viewContent = false,
-      this.profile = const User(),
+      this.createdUserProfile = const User(),
       this.albums});
 
   @JsonKey()
@@ -216,13 +216,13 @@ class _$_HomePageState implements _HomePageState {
   final bool viewContent;
   @JsonKey()
   @override
-  final User profile;
+  final User createdUserProfile;
   @override
   final List<Album>? albums;
 
   @override
   String toString() {
-    return 'HomePageState(id: $id, content: $content, imgUrls: $imgUrls, viewContent: $viewContent, profile: $profile, albums: $albums)';
+    return 'HomePageState(id: $id, content: $content, imgUrls: $imgUrls, viewContent: $viewContent, createdUserProfile: $createdUserProfile, albums: $albums)';
   }
 
   @override
@@ -235,7 +235,8 @@ class _$_HomePageState implements _HomePageState {
             const DeepCollectionEquality().equals(other.imgUrls, imgUrls) &&
             const DeepCollectionEquality()
                 .equals(other.viewContent, viewContent) &&
-            const DeepCollectionEquality().equals(other.profile, profile) &&
+            const DeepCollectionEquality()
+                .equals(other.createdUserProfile, createdUserProfile) &&
             const DeepCollectionEquality().equals(other.albums, albums));
   }
 
@@ -246,7 +247,7 @@ class _$_HomePageState implements _HomePageState {
       const DeepCollectionEquality().hash(content),
       const DeepCollectionEquality().hash(imgUrls),
       const DeepCollectionEquality().hash(viewContent),
-      const DeepCollectionEquality().hash(profile),
+      const DeepCollectionEquality().hash(createdUserProfile),
       const DeepCollectionEquality().hash(albums));
 
   @JsonKey(ignore: true)
@@ -261,7 +262,7 @@ abstract class _HomePageState implements HomePageState {
       String content,
       String imgUrls,
       bool viewContent,
-      User profile,
+      User createdUserProfile,
       List<Album>? albums}) = _$_HomePageState;
 
   @override
@@ -273,7 +274,7 @@ abstract class _HomePageState implements HomePageState {
   @override
   bool get viewContent;
   @override
-  User get profile;
+  User get createdUserProfile;
   @override
   List<Album>? get albums;
   @override

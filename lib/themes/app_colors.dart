@@ -10,6 +10,8 @@ class AppColors {
   static const Color mapButton = Color(0xff616161);
   static const Color grey = Colors.grey;
   static const Color lightGrey = Color(0xffE6E6E6);
+  static const Color scaffoldColor = Color(0xfff7f6f5);
+  static const Color barColor = Color(0xfff7f6f5);
   static const Color textDisable = Color(0xffABABAB);
   static const Color circleBorder = Colors.black12;
   static const Color transparent = Colors.transparent;

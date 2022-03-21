@@ -33,6 +33,7 @@ class LoginPage extends StatelessWidget {
       child: GestureDetector(
         onTap: FocusScope.of(context).unfocus,
         child: Scaffold(
+          backgroundColor: AppColors.scaffoldColor,
           resizeToAvoidBottomInset: false,
           body: const LoginPageBody(),
           bottomNavigationBar: _otherLosingMethod(),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/pages/link_account_page/src/link_account_page_body.dart';
 
 class LinkAccountPage extends StatelessWidget {
@@ -18,7 +19,9 @@ class LinkAccountPage extends StatelessWidget {
       child: GestureDetector(
         onTap: FocusScope.of(context).unfocus,
         child: Scaffold(
+          backgroundColor: AppColors.scaffoldColor,
           appBar: AppBar(
+            backgroundColor: AppColors.barColor,
             title: const Text('メールアドレスをリンクする'),
           ),
           body: const LinkAccountPageBody(),

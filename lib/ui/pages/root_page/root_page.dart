@@ -70,7 +70,7 @@ class _RootPageState extends ConsumerState<RootPage>
         return BottomNavigationBar(
           unselectedItemColor: AppColors.grey,
           selectedItemColor: AppColors.primary,
-          backgroundColor: AppColors.white,
+          backgroundColor: AppColors.barColor,
           type: BottomNavigationBarType.fixed,
           onTap: ref.read(rootPageProvider.notifier).onTabTap,
           currentIndex: currentIndex,

@@ -10,7 +10,9 @@ class EditAlbumPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.scaffoldColor,
       appBar: AppBar(
+        backgroundColor: AppColors.barColor,
         title: const AppBarText('アルバム編集'),
       ),
       floatingActionButton: FloatingActionButton(

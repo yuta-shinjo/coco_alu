@@ -13,7 +13,7 @@ class HomePageState with _$HomePageState {
     @Default('') String content,
     @Default('') String imgUrls,
     @Default(false) bool viewContent,
-    @Default(User()) User profile,
+    @Default(User()) User createdUserProfile,
     List<Album>? albums,
   }) = _HomePageState;
 }
@@ -48,9 +48,9 @@ class HomePageController extends StateNotifier<HomePageState> {
   }
 
   Future<void> fetchCreatedUserProfile(String createdUserId) async {
-    final profile =
+    final createdUserProfile =
         await _fireUsersService.fetchCreatedUserProfile(createdUserId);
-    if (profile != null) state = state.copyWith(profile: profile);
+    if (createdUserProfile != null) state = state.copyWith(createdUserProfile: createdUserProfile);
   }
 
   void viewContent() {

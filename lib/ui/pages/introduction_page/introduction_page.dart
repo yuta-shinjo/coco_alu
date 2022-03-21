@@ -17,6 +17,7 @@ class IntroductionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.barColor,
       body: SafeArea(
         child: IntroductionScreen(
           scrollPhysics: const BouncingScrollPhysics(),
