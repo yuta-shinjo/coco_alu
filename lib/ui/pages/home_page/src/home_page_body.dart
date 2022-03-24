@@ -42,8 +42,11 @@ class HomePageBody extends ConsumerWidget {
     return Consumer(builder: (context, ref, _) {
       return GestureDetector(
         onTap: () async {
-          await ref.read(homePageProvider.notifier).fetchCreatedUserProfile(album.createdUser);
-          final createdUserProfile = ref.watch(homePageProvider.select((s) => s.createdUserProfile));
+          await ref
+              .read(homePageProvider.notifier)
+              .fetchCreatedUserProfile(album.createdUser);
+          final createdUserProfile =
+              ref.watch(homePageProvider.select((s) => s.createdUserProfile));
           _goToDetail(context, album, createdUserProfile);
         },
         child: Padding(
@@ -54,13 +57,13 @@ class HomePageBody extends ConsumerWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
             ),
-            child: album.imgUrls.isNotEmpty
+            child: album.imgUrls.isEmpty
                 ? UniversalImage(
-                    album.imgUrls,
+                    'assets/images/photo.jpg',
                     fit: BoxFit.cover,
                   )
                 : UniversalImage(
-                    'assets/images/photo.jpg',
+                    album.imgUrls,
                     fit: BoxFit.cover,
                   ),
           ),
@@ -70,8 +73,8 @@ class HomePageBody extends ConsumerWidget {
   }
 
   void _goToDetail(BuildContext context, Album album, User profile) {
-    final page = PublicAlbumDetailPage(album: album, profile: profile);
-    Navigator.of(context).push(
+    Navigator.push(
+      context,
       PageRouteBuilder<Null>(
         pageBuilder: (BuildContext context, Animation<double> animation,
             Animation<double> secondaryAnimation) {
@@ -80,7 +83,10 @@ class HomePageBody extends ConsumerWidget {
             builder: (BuildContext context, Widget? child) {
               return Opacity(
                 opacity: animation.value,
-                child: page,
+                child: PublicAlbumDetailPage(
+                  album: album,
+                  profile: profile,
+                ),
               );
             },
           );

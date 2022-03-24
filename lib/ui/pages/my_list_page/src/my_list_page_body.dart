@@ -63,7 +63,6 @@ class MyListPgeBody extends ConsumerWidget {
   }
 
   void _goToDetail(BuildContext context, Album album) {
-    final page = AlbumDetailPage(album: album);
     Navigator.of(context).push(
       PageRouteBuilder<Null>(
         pageBuilder: (BuildContext context, Animation<double> animation,
@@ -73,7 +72,7 @@ class MyListPgeBody extends ConsumerWidget {
             builder: (BuildContext context, Widget? child) {
               return Opacity(
                 opacity: animation.value,
-                child: page,
+                child: AlbumDetailPage(album: album),
               );
             },
           );

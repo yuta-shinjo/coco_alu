@@ -13,12 +13,7 @@ class AlbumDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Hero(
-          tag: "background_${album.content}",
-          child: Container(
-            color: AppColors.scaffoldColor,
-          ),
-        ),
+        Container(color: AppColors.scaffoldColor),
         Scaffold(
           backgroundColor: AppColors.scaffoldColor,
           appBar: AppBar(
@@ -47,13 +42,10 @@ class AlbumDetailPage extends StatelessWidget {
   }
 
   Widget _displayImage(BuildContext context) {
-    return Hero(
-      tag: "image_${album.content}",
-      child: Container(
-        height: MediaQuery.of(context).size.height / 2,
-        width: double.infinity,
-        child: UniversalImage(album.imgUrls, fit: BoxFit.cover),
-      ),
+    return Container(
+      height: MediaQuery.of(context).size.height / 2,
+      width: double.infinity,
+      child: UniversalImage(album.imgUrls, fit: BoxFit.cover),
     );
   }
 }

@@ -161,7 +161,7 @@ class AddAlbumPgeBody extends ConsumerWidget {
       final public = ref.watch(addAlbumPageProvider.select((s) => s.public));
       return ButtonTheme(
         child: LoadingButton(
-          primaryColor: AppColors.primary,
+          primaryColor: AppColors.subPrimary,
           text: ButtonText('作成'),
           controller: btnController,
           onPressed: () async {

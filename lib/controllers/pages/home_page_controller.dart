@@ -50,7 +50,8 @@ class HomePageController extends StateNotifier<HomePageState> {
   Future<void> fetchCreatedUserProfile(String createdUserId) async {
     final createdUserProfile =
         await _fireUsersService.fetchCreatedUserProfile(createdUserId);
-    if (createdUserProfile != null) state = state.copyWith(createdUserProfile: createdUserProfile);
+    if (createdUserProfile != null)
+      state = state.copyWith(createdUserProfile: createdUserProfile);
   }
 
   void viewContent() {

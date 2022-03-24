@@ -100,7 +100,7 @@ class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
                             alignment: Alignment.bottomCenter,
                             children: [
                               Padding(
-                                padding: const EdgeInsets.only(bottom: 15),
+                                padding: const EdgeInsets.only(bottom: 30),
                                 child: UniversalImage('assets/images/lost.jpg'),
                               ),
                               Subtitle2Text('この写真には位置情報が登録されていないようです'),
@@ -114,7 +114,7 @@ class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
               ),
             ],
           ),
-          const SizedBox(height: 50),
+          const SizedBox(height: 30),
         ],
       ),
     );
@@ -163,10 +163,7 @@ class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
     return Container(
       padding: const EdgeInsets.only(top: 5),
       width: MediaQuery.of(context).size.width / 2.5,
-      child: Subtitle2Text(
-        name!,
-        overflow: TextOverflow.ellipsis,
-      ),
+      child: Subtitle2Text(name!, overflow: TextOverflow.ellipsis),
     );
   }
 
@@ -217,13 +214,10 @@ class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
   Widget _displayImage(
     BuildContext context,
   ) {
-    return Hero(
-      tag: "image_${album.content}",
-      child: Container(
-        height: MediaQuery.of(context).size.height / 3,
-        width: double.infinity,
-        child: UniversalImage(album.imgUrls, fit: BoxFit.cover),
-      ),
+    return Container(
+      height: MediaQuery.of(context).size.height / 3,
+      width: double.infinity,
+      child: UniversalImage(album.imgUrls, fit: BoxFit.cover),
     );
   }
 

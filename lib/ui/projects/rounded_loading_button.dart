@@ -21,6 +21,7 @@ class LoadingButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return RoundedLoadingButton(
       successColor: AppColors.primary,
+      errorColor: AppColors.red,
       color: AppColors.primary,
       successIcon: Icons.check,
       failedIcon: Icons.close,

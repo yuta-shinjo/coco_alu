@@ -127,7 +127,6 @@ class _MapPageState extends ConsumerState<MapPage>
 
   Set<Marker> _markers(BuildContext context, WidgetRef ref) {
     final albums = ref.watch(mapPageProvider.select((s) => s.albums)) ?? [];
-
     final markers = <Marker>{};
 
     for (var i = 0; i < albums.length; i++) {
