@@ -37,6 +37,7 @@ class _RootPageState extends ConsumerState<RootPage>
   @override
   void initState() {
     super.initState();
+    ref.read(rootPageProvider.notifier).checkNeedUpdate(context);
     WidgetsBinding.instance?.addObserver(this);
   }
 
@@ -44,6 +45,15 @@ class _RootPageState extends ConsumerState<RootPage>
   void dispose() {
     WidgetsBinding.instance?.removeObserver(this);
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      if (!Navigator.canPop(context)) {
+        ref.read(rootPageProvider.notifier).checkNeedUpdate(context);
+      }
+    }
   }
 
   @override
