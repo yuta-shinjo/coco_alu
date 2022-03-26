@@ -18,9 +18,14 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$RootPageStateTearOff {
   const _$RootPageStateTearOff();
 
-  _RootPageState call({int tabIndex = 0}) {
+  _RootPageState call(
+      {int tabIndex = 0,
+      bool needUpdate = false,
+      AppConfig appConfig = const AppConfig()}) {
     return _RootPageState(
       tabIndex: tabIndex,
+      needUpdate: needUpdate,
+      appConfig: appConfig,
     );
   }
 }
@@ -31,6 +36,8 @@ const $RootPageState = _$RootPageStateTearOff();
 /// @nodoc
 mixin _$RootPageState {
   int get tabIndex => throw _privateConstructorUsedError;
+  bool get needUpdate => throw _privateConstructorUsedError;
+  AppConfig get appConfig => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $RootPageStateCopyWith<RootPageState> get copyWith =>
@@ -42,7 +49,9 @@ abstract class $RootPageStateCopyWith<$Res> {
   factory $RootPageStateCopyWith(
           RootPageState value, $Res Function(RootPageState) then) =
       _$RootPageStateCopyWithImpl<$Res>;
-  $Res call({int tabIndex});
+  $Res call({int tabIndex, bool needUpdate, AppConfig appConfig});
+
+  $AppConfigCopyWith<$Res> get appConfig;
 }
 
 /// @nodoc
@@ -57,13 +66,30 @@ class _$RootPageStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? tabIndex = freezed,
+    Object? needUpdate = freezed,
+    Object? appConfig = freezed,
   }) {
     return _then(_value.copyWith(
       tabIndex: tabIndex == freezed
           ? _value.tabIndex
           : tabIndex // ignore: cast_nullable_to_non_nullable
               as int,
+      needUpdate: needUpdate == freezed
+          ? _value.needUpdate
+          : needUpdate // ignore: cast_nullable_to_non_nullable
+              as bool,
+      appConfig: appConfig == freezed
+          ? _value.appConfig
+          : appConfig // ignore: cast_nullable_to_non_nullable
+              as AppConfig,
     ));
+  }
+
+  @override
+  $AppConfigCopyWith<$Res> get appConfig {
+    return $AppConfigCopyWith<$Res>(_value.appConfig, (value) {
+      return _then(_value.copyWith(appConfig: value));
+    });
   }
 }
 
@@ -74,7 +100,10 @@ abstract class _$RootPageStateCopyWith<$Res>
           _RootPageState value, $Res Function(_RootPageState) then) =
       __$RootPageStateCopyWithImpl<$Res>;
   @override
-  $Res call({int tabIndex});
+  $Res call({int tabIndex, bool needUpdate, AppConfig appConfig});
+
+  @override
+  $AppConfigCopyWith<$Res> get appConfig;
 }
 
 /// @nodoc
@@ -91,12 +120,22 @@ class __$RootPageStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? tabIndex = freezed,
+    Object? needUpdate = freezed,
+    Object? appConfig = freezed,
   }) {
     return _then(_RootPageState(
       tabIndex: tabIndex == freezed
           ? _value.tabIndex
           : tabIndex // ignore: cast_nullable_to_non_nullable
               as int,
+      needUpdate: needUpdate == freezed
+          ? _value.needUpdate
+          : needUpdate // ignore: cast_nullable_to_non_nullable
+              as bool,
+      appConfig: appConfig == freezed
+          ? _value.appConfig
+          : appConfig // ignore: cast_nullable_to_non_nullable
+              as AppConfig,
     ));
   }
 }
@@ -104,15 +143,24 @@ class __$RootPageStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_RootPageState implements _RootPageState {
-  const _$_RootPageState({this.tabIndex = 0});
+  const _$_RootPageState(
+      {this.tabIndex = 0,
+      this.needUpdate = false,
+      this.appConfig = const AppConfig()});
 
   @JsonKey()
   @override
   final int tabIndex;
+  @JsonKey()
+  @override
+  final bool needUpdate;
+  @JsonKey()
+  @override
+  final AppConfig appConfig;
 
   @override
   String toString() {
-    return 'RootPageState(tabIndex: $tabIndex)';
+    return 'RootPageState(tabIndex: $tabIndex, needUpdate: $needUpdate, appConfig: $appConfig)';
   }
 
   @override
@@ -120,12 +168,18 @@ class _$_RootPageState implements _RootPageState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _RootPageState &&
-            const DeepCollectionEquality().equals(other.tabIndex, tabIndex));
+            const DeepCollectionEquality().equals(other.tabIndex, tabIndex) &&
+            const DeepCollectionEquality()
+                .equals(other.needUpdate, needUpdate) &&
+            const DeepCollectionEquality().equals(other.appConfig, appConfig));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(tabIndex));
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(tabIndex),
+      const DeepCollectionEquality().hash(needUpdate),
+      const DeepCollectionEquality().hash(appConfig));
 
   @JsonKey(ignore: true)
   @override
@@ -134,10 +188,15 @@ class _$_RootPageState implements _RootPageState {
 }
 
 abstract class _RootPageState implements RootPageState {
-  const factory _RootPageState({int tabIndex}) = _$_RootPageState;
+  const factory _RootPageState(
+      {int tabIndex, bool needUpdate, AppConfig appConfig}) = _$_RootPageState;
 
   @override
   int get tabIndex;
+  @override
+  bool get needUpdate;
+  @override
+  AppConfig get appConfig;
   @override
   @JsonKey(ignore: true)
   _$RootPageStateCopyWith<_RootPageState> get copyWith =>
