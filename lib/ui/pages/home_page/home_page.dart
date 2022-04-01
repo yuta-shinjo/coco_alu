@@ -11,7 +11,7 @@ class HomePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        title: const AppBarText('みんなのアルバム'),
+        title: const AppBarText('みんなの思い出'),
       ),
       body: HomePageBody(),
     );
