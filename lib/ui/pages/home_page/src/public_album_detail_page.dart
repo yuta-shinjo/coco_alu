@@ -127,6 +127,31 @@ class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
         children: [
           imgUser(profile.imgUrls),
           infoUser(context, profile.name),
+          Spacer(),
+          PopupMenuButton(
+            color: AppColors.scaffoldColor,
+            icon: Icon(Icons.more_horiz, color: AppColors.iconBlack),
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                child: Row(
+                  children: [
+                    Subtitle2Text('この投稿を非表示にする'),
+                    Spacer(),
+                    Icon(Icons.visibility_off, color: AppColors.iconBlack),
+                  ],
+                ),
+              ),
+              PopupMenuItem(
+                child: Row(
+                  children: [
+                    Subtitle2Text('ブロックする'),
+                    Spacer(),
+                    Icon(Icons.person_off, color: AppColors.iconBlack),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
