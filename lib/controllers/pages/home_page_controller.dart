@@ -2,6 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_collection/models/src/album.dart';
 import 'package:my_collection/models/src/user.dart';
+import 'package:my_collection/services/fire_public_service.dart';
 import 'package:my_collection/services/fire_users_service.dart';
 
 part 'home_page_controller.freezed.dart';
@@ -14,6 +15,7 @@ class HomePageState with _$HomePageState {
     @Default('') String imgUrls,
     @Default(false) bool viewContent,
     @Default(User()) User createdUserProfile,
+    @Default(<Album>[]) List<Album> userAlbumList,
     List<Album>? albums,
   }) = _HomePageState;
 }
@@ -29,9 +31,10 @@ class HomePageController extends StateNotifier<HomePageState> {
   }
 
   final _fireUsersService = FireUsersService();
+  final _firePublicService = FirePublicService();
 
   void _init() async {
-    await _fireUsersService.fetchPublicAlbumList(
+    await _firePublicService.fetchPublicAlbumList(
       onValueChanged: (albums) {
         state = state.copyWith(albums: albums);
       },
@@ -40,7 +43,7 @@ class HomePageController extends StateNotifier<HomePageState> {
 
   // 作成ページで作成ボタンを押したときにhomePageのリストを更新するため
   Future<void> fetchPublicAlbumList() async {
-    await _fireUsersService.fetchPublicAlbumList(
+    await _firePublicService.fetchPublicAlbumList(
       onValueChanged: (albums) {
         state = state.copyWith(albums: albums);
       },
@@ -56,5 +59,11 @@ class HomePageController extends StateNotifier<HomePageState> {
 
   void viewContent() {
     state = state.copyWith(viewContent: !state.viewContent);
+  }
+
+  void fetchUserAlbumList(String userId) async {
+    final userAlbumList =
+        await _firePublicService.fetchUserAlbumList(userId: userId);
+    state = state.copyWith(userAlbumList: userAlbumList);
   }
 }

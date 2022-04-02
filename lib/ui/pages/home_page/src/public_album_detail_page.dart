@@ -9,6 +9,7 @@ import 'package:my_collection/models/src/user.dart';
 import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/src/theme_text.dart';
 import 'package:my_collection/ui/components/src/universal.dart';
+import 'package:my_collection/ui/pages/profile_page/profile_page.dart';
 
 class PublicAlbumDetailPage extends ConsumerStatefulWidget {
   const PublicAlbumDetailPage({
@@ -125,38 +126,40 @@ class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
       padding: const EdgeInsets.only(left: 5, top: 10, bottom: 10),
       child: Row(
         children: [
-          imgUser(profile.imgUrls),
+          imgUser(profile.imgUrls, album.createdUser),
           infoUser(context, profile.name),
         ],
       ),
     );
   }
 
-  Widget imgUser(String imgUrls) {
-    return Container(
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(
-          color: AppColors.grey,
-          width: 1,
+  Widget imgUser(String imgUrls, String createdUserId) {
+    return Consumer(builder: (context, ref, _) {
+      return GestureDetector(
+        onTap: () {
+          Navigator.push(context, ProfilePage.route(profile: profile));
+          ref.read(homePageProvider.notifier).fetchUserAlbumList(createdUserId);
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(
+              color: AppColors.grey,
+              width: 1,
+            ),
+          ),
+          child: CircleAvatar(
+            radius: 25,
+            backgroundColor: AppColors.lightGrey,
+            backgroundImage: imgUrls.isEmpty
+                ? Image.asset(
+                    'assets/images/avatar.jpg',
+                  ).image
+                : Image.network(imgUrls).image,
+          ),
         ),
-      ),
-      child: CircleAvatar(
-        radius: 25,
-        backgroundColor: AppColors.lightGrey,
-        child: ClipOval(
-          child: imgUrls.isNotEmpty
-              ? UniversalImage(
-                  imgUrls,
-                  fit: BoxFit.cover,
-                )
-              : const UniversalImage(
-                  'assets/images/avatar.jpg',
-                  fit: BoxFit.cover,
-                ),
-        ),
-      ),
-    );
+      );
+    });
   }
 
   Widget infoUser(BuildContext context, String? name) {
