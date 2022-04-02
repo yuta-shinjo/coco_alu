@@ -118,7 +118,7 @@ class FireUsersService {
   Future<void> updateProfile(
       File? imageFile, String imgUrls, String name) async {
     if (imageFile == null && imgUrls == '') {
-      imgUrls == '';
+      imgUrls.isEmpty;
     }
     if (imageFile == null && imgUrls != '') {
       imgUrls;
@@ -141,19 +141,6 @@ class FireUsersService {
         .collection('users')
         .doc(_auth.currentUser?.uid)
         .collection('albums');
-    final snapShot = await usersPublicStadiumsCollectionRef.get();
-    final List<Album>? albums =
-        snapShot.docs.map((e) => Album.fromJson(e.data())).toList();
-    if (albums == null) {
-      return;
-    }
-    return onValueChanged(albums);
-  }
-
-  Future fetchPublicAlbumList(
-      {required Function(List<Album>) onValueChanged}) async {
-    final usersPublicStadiumsCollectionRef =
-        _fireStore.collection('public').doc('v1').collection('albums');
     final snapShot = await usersPublicStadiumsCollectionRef.get();
     final List<Album>? albums =
         snapShot.docs.map((e) => Album.fromJson(e.data())).toList();
