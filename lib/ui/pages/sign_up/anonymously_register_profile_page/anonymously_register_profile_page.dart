@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_collection/themes/app_colors.dart';
-import 'package:my_collection/ui/pages/anonymously_register_profile_page/src/anonymously_register_profile_page_body.dart';
 import 'package:my_collection/ui/pages/sign_up/login_page/login_page.dart';
+
+import 'src/anonymously_register_profile_page_body.dart';
 
 class AnonymouslyRegisterProfilePage extends StatelessWidget {
   const AnonymouslyRegisterProfilePage({Key? key}) : super(key: key);

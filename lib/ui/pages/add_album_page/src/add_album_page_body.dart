@@ -55,8 +55,9 @@ class AddAlbumPgeBody extends ConsumerWidget {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    Icon(Icons.public, color: AppColors.primary),
+                    SizedBox(width: 10),
                     Text(
                       'みんなに公開する',
                       style: TextStyle(
@@ -64,6 +65,7 @@ class AddAlbumPgeBody extends ConsumerWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+                    Spacer(),
                     Switch(
                       value: public,
                       onChanged: (value) => ref
@@ -81,8 +83,9 @@ class AddAlbumPgeBody extends ConsumerWidget {
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 16),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
+                              Icon(Icons.location_on, color: AppColors.primary),
+                              SizedBox(width: 10),
                               Text(
                                 '写真の位置情報を公開する',
                                 style: TextStyle(
@@ -90,6 +93,7 @@ class AddAlbumPgeBody extends ConsumerWidget {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
+                              Spacer(),
                               Switch(
                                 value: pictureLocation,
                                 onChanged: (value) => ref
