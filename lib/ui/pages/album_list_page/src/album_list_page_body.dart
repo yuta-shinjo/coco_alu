@@ -61,7 +61,7 @@ class AlbumListPageBody extends ConsumerWidget {
 
   Widget _detailAlbum(Album album, BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      padding: const EdgeInsets.only(left: 16, top: 10, bottom: 10),
       child: Row(
         children: [
           _albumImage(album, context),
@@ -72,7 +72,18 @@ class AlbumListPageBody extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _albumText(album),
+                album.public
+                    ? Stack(
+                        children: [
+                          _albumText(album),
+                          Align(
+                            alignment: Alignment(1.5, 0),
+                            child:
+                                Icon(Icons.public, color: AppColors.primary),
+                          ),
+                        ],
+                      )
+                    : _albumText(album),
                 _tagArea(album),
               ],
             ),
