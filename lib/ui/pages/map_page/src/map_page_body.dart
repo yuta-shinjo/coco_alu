@@ -8,6 +8,7 @@ import 'package:my_collection/controllers/pages/map_page_controller.dart';
 import 'package:my_collection/models/model.dart';
 import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/src/universal.dart';
+import 'package:my_collection/ui/pages/album_detail_page/album_detail_page.dart';
 
 class MapPageBody extends StatelessWidget {
   MapPageBody({Key? key, required this.mapController}) : super(key: key);
@@ -26,15 +27,16 @@ class MapPageBody extends StatelessWidget {
                   ref.watch(mapPageProvider.select((s) => s.isViewAlbums));
               final albums = ref.watch(mapPageProvider.select((s) => s.albums));
               // ピンが打たれているAlbumをListで抽出
-              final exitAlbum =
+              final exitAlbums =
                   albums?.where((album) => album.latitude != '').toList();
+
               final activeAlbumIndex =
                   ref.watch(mapPageProvider.select((s) => s.activeAlbumIndex));
               // 画像を移動することでマーカーの照準を変更する
               if (isViewAlbums == true) {
                 mapController.future.then((GoogleMapController googleMap) {
-                  final latitude = exitAlbum?[activeAlbumIndex].latitude;
-                  final longitude = exitAlbum?[activeAlbumIndex].longitude;
+                  final latitude = exitAlbums?[activeAlbumIndex].latitude;
+                  final longitude = exitAlbums?[activeAlbumIndex].longitude;
                   googleMap.animateCamera(
                     CameraUpdate.newLatLng(
                       LatLng(
@@ -47,13 +49,20 @@ class MapPageBody extends StatelessWidget {
               }
               final viewAlbums =
                   ref.watch(mapPageProvider.select((s) => s.isViewAlbums));
-              return Stack(
-                children: [
-                  _mapPart(snapshot),
-                  viewAlbums == true ? _viewImageParts() : Container(),
-                  _toggleViewParts(viewAlbums),
-                ],
-              );
+
+              return exitAlbums == null
+                  ? Center(child: CircularProgressIndicator())
+                  : Stack(
+                      children: [
+                        _mapPart(snapshot),
+                        viewAlbums == true
+                            ? _viewImageParts(exitAlbums)
+                            : Container(),
+                        exitAlbums.isNotEmpty
+                            ? _toggleViewParts(viewAlbums)
+                            : Container(),
+                      ],
+                    );
             },
           );
         } else {
@@ -145,11 +154,12 @@ class MapPageBody extends StatelessWidget {
     );
   }
 
-  Widget _viewImageParts() {
+  Widget _viewImageParts(List<Album>? albums) {
     return Consumer(builder: (context, ref, _) {
       final controller = ref.watch(mapPageProvider.notifier).controller;
       final currentPage =
           ref.watch(mapPageProvider.select((s) => s.currentPage));
+      final album = albums![currentPage];
       return Align(
         alignment: Alignment(0, 0.92),
         child: SizedBox(
@@ -164,6 +174,7 @@ class MapPageBody extends StatelessWidget {
                 context,
                 _displayImg(context, ref)[currentIndex],
                 active,
+                album,
               );
             },
             onPageChanged: (page) {
@@ -194,7 +205,7 @@ class MapPageBody extends StatelessWidget {
   }
 
   Widget _createCardAnimate(
-      BuildContext context, String imagePath, bool active) {
+      BuildContext context, String imagePath, bool active, Album album) {
     final double side = active ? 0 : 40;
     return AnimatedContainer(
       duration: Duration(milliseconds: 300),
@@ -203,17 +214,40 @@ class MapPageBody extends StatelessWidget {
         child: SizedBox(
           height: MediaQuery.of(context).size.height / 3.8,
           width: MediaQuery.of(context).size.width / 1.5,
-          child: Card(
-            clipBehavior: Clip.antiAlias,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: UniversalImage(
-              imagePath,
-              fit: BoxFit.cover,
+          child: GestureDetector(
+            onTap: () => _goToDetail(context, album),
+            child: Card(
+              clipBehavior: Clip.antiAlias,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: UniversalImage(
+                imagePath,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  void _goToDetail(BuildContext context, Album album) {
+    Navigator.of(context).push(
+      PageRouteBuilder<Null>(
+        pageBuilder: (BuildContext context, Animation<double> animation,
+            Animation<double> secondaryAnimation) {
+          return AnimatedBuilder(
+            animation: animation,
+            builder: (BuildContext context, Widget? child) {
+              return Opacity(
+                opacity: animation.value,
+                child: AlbumDetailPage(album: album),
+              );
+            },
+          );
+        },
+        transitionDuration: Duration(milliseconds: 400),
       ),
     );
   }

@@ -56,16 +56,52 @@ class MyListPgeBody extends ConsumerWidget {
                       'assets/images/photo.jpg',
                       fit: BoxFit.cover,
                     )
-                  : UniversalImage(
-                      album.imgUrls,
-                      fit: BoxFit.cover,
-                    ),
+                  : album.latitude!.isEmpty
+                      ? UniversalImage(
+                          album.imgUrls,
+                          fit: BoxFit.cover,
+                        )
+                      : _onLocation(album),
         ),
       ),
     );
   }
 
+  Widget _onLocation(Album album) {
+    return Stack(
+      children: [
+        Container(
+          width: double.infinity,
+          height: double.infinity,
+          child: album.imgUrls.isEmpty
+              ? UniversalImage(
+                  'assets/images/photo.jpg',
+                  fit: BoxFit.cover,
+                )
+              : UniversalImage(
+                  album.imgUrls,
+                  fit: BoxFit.cover,
+                ),
+        ),
+        Align(
+          alignment: Alignment(0.95, -0.95),
+          child: CircleAvatar(
+            radius: 15,
+            backgroundColor: AppColors.lightGrey,
+            child: Icon(Icons.location_on, color: AppColors.primary),
+          ),
+        ),
+      ],
+    );
+  }
+
   Widget onPublicCard(Album album) {
+    return album.latitude!.isEmpty
+        ? _onPublic(album)
+        : _onPublicAndLocation(album);
+  }
+
+  Widget _onPublic(Album album) {
     return Stack(
       children: [
         Container(
@@ -87,6 +123,45 @@ class MyListPgeBody extends ConsumerWidget {
             radius: 15,
             backgroundColor: AppColors.lightGrey,
             child: Icon(Icons.public, color: AppColors.primary),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _onPublicAndLocation(Album album) {
+    return Stack(
+      children: [
+        Container(
+          width: double.infinity,
+          height: double.infinity,
+          child: album.imgUrls.isEmpty
+              ? UniversalImage(
+                  'assets/images/photo.jpg',
+                  fit: BoxFit.cover,
+                )
+              : UniversalImage(
+                  album.imgUrls,
+                  fit: BoxFit.cover,
+                ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 5, right: 5),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              CircleAvatar(
+                radius: 15,
+                backgroundColor: AppColors.lightGrey,
+                child: Icon(Icons.public, color: AppColors.primary),
+              ),
+              SizedBox(width: 3),
+              CircleAvatar(
+                radius: 15,
+                backgroundColor: AppColors.lightGrey,
+                child: Icon(Icons.location_on, color: AppColors.primary),
+              ),
+            ],
           ),
         ),
       ],
