@@ -23,7 +23,7 @@ class AlbumListPageBody extends ConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           UniversalImage('assets/images/edit_album.jpg'),
-          Text('編集するアルバムがありません。\n作成画面からアルバムを作成しましょう!'),
+          Text('編集する思い出がありません。\n作成画面から思い出を作成しましょう!'),
         ],
       );
     }

@@ -33,6 +33,7 @@ class AddAlbumPageState with _$AddAlbumPageState {
     String? longitude,
     @Default(false) bool isLoading,
     @Default(false) bool public,
+    @Default(false) bool pictureLocation,
     @Default(0) int likedCount,
     File? imgFile,
   }) = _AddAlbumPageState;
@@ -94,6 +95,7 @@ class AddAlbumPageController extends StateNotifier<AddAlbumPageState> {
     );
     state = state.copyWith(imgFile: croppedImageFile);
 
+    // 写真に登録されている位置情報&撮影日を取得
     final tags = await readExifFromBytes(await pickedImageFile.readAsBytes());
     final tookDay = tags["Image DateTime"].toString();
     final latitudeRef = tags['GPS GPSLatitudeRef'].toString();
@@ -123,6 +125,16 @@ class AddAlbumPageController extends StateNotifier<AddAlbumPageState> {
       longitudeRef: longitudeRef,
       longitude: longitude,
       imgFile: croppedImageFile,
+    );
+  }
+
+  // 写真の位置情報をオフにする
+  void pictureLocationOff() {
+    state = state.copyWith(
+      latitudeRef: null,
+      latitude: null,
+      longitudeRef: null,
+      longitude: null,
     );
   }
 
@@ -211,7 +223,13 @@ class AddAlbumPageController extends StateNotifier<AddAlbumPageState> {
     controller.error();
   }
 
-  void changeToggle() {
+  // みんなに投稿する
+  void publicToggle() {
     state = state.copyWith(public: !state.public);
+  }
+
+  // 写真の位置情報をオフにする
+  void pictureLocationToggle() {
+    state = state.copyWith(pictureLocation: !state.pictureLocation);
   }
 }
