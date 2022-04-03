@@ -5,6 +5,7 @@ import 'package:my_collection/models/model.dart';
 import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/components.dart';
 import 'package:my_collection/ui/components/src/universal.dart';
+import 'package:my_collection/ui/pages/album_detail_page/album_detail_page.dart';
 
 class ProfilePageBody extends ConsumerWidget {
   ProfilePageBody({Key? key, required this.profile}) : super(key: key);
@@ -21,25 +22,7 @@ class ProfilePageBody extends ConsumerWidget {
           padding: EdgeInsets.symmetric(horizontal: 20),
           child: Divider(color: AppColors.grey),
         ),
-        Expanded(
-          child: GridView.builder(
-              padding: EdgeInsets.symmetric(horizontal: 4),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                mainAxisSpacing: 2,
-                crossAxisSpacing: 2,
-                crossAxisCount: 3,
-              ),
-              itemCount: album.length,
-              itemBuilder: (context, index) {
-                final authorNftImage = album[index];
-                final authorNftImageUrl = authorNftImage.imgUrls;
-                return Container(
-                  width: MediaQuery.of(context).size.width / 2.9,
-                  height: MediaQuery.of(context).size.width / 2.9,
-                  child: UniversalImage(authorNftImageUrl, fit: BoxFit.cover),
-                );
-              }),
-        ),
+        _photoList(album),
       ],
     );
   }
@@ -107,6 +90,52 @@ class ProfilePageBody extends ConsumerWidget {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _photoList(List<Album> albums) {
+    return Expanded(
+      child: GridView.builder(
+        padding: EdgeInsets.symmetric(horizontal: 4),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          mainAxisSpacing: 2,
+          crossAxisSpacing: 2,
+          crossAxisCount: 3,
+        ),
+        itemCount: albums.length,
+        itemBuilder: (context, index) {
+          final album = albums[index];
+          final albumImageUrl = album.imgUrls;
+          return GestureDetector(
+            onTap: () => _goToDetail(context, album),
+            child: Container(
+              width: MediaQuery.of(context).size.width / 2.9,
+              height: MediaQuery.of(context).size.width / 2.9,
+              child: UniversalImage(albumImageUrl, fit: BoxFit.cover),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  void _goToDetail(BuildContext context, Album album) {
+    Navigator.of(context).push(
+      PageRouteBuilder<Null>(
+        pageBuilder: (BuildContext context, Animation<double> animation,
+            Animation<double> secondaryAnimation) {
+          return AnimatedBuilder(
+            animation: animation,
+            builder: (BuildContext context, Widget? child) {
+              return Opacity(
+                opacity: animation.value,
+                child: AlbumDetailPage(album: album),
+              );
+            },
+          );
+        },
+        transitionDuration: Duration(milliseconds: 400),
+      ),
     );
   }
 }

@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_collection/controllers/pages/my_list_page_controller.dart';
 import 'package:my_collection/models/src/album.dart';
+import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/src/universal.dart';
-import 'package:my_collection/ui/pages/my_list_page/src/album_detail_page.dart';
+import 'package:my_collection/ui/pages/album_detail_page/album_detail_page.dart';
 
 class MyListPgeBody extends ConsumerWidget {
   const MyListPgeBody({Key? key}) : super(key: key);
@@ -48,17 +49,47 @@ class MyListPgeBody extends ConsumerWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
           ),
-          child: album.imgUrls.isNotEmpty
+          child: album.public
+              ? onPublicCard(album)
+              : album.imgUrls.isEmpty
+                  ? UniversalImage(
+                      'assets/images/photo.jpg',
+                      fit: BoxFit.cover,
+                    )
+                  : UniversalImage(
+                      album.imgUrls,
+                      fit: BoxFit.cover,
+                    ),
+        ),
+      ),
+    );
+  }
+
+  Widget onPublicCard(Album album) {
+    return Stack(
+      children: [
+        Container(
+          width: double.infinity,
+          height: double.infinity,
+          child: album.imgUrls.isEmpty
               ? UniversalImage(
-                  album.imgUrls,
+                  'assets/images/photo.jpg',
                   fit: BoxFit.cover,
                 )
               : UniversalImage(
-                  'assets/images/photo.jpg',
+                  album.imgUrls,
                   fit: BoxFit.cover,
                 ),
         ),
-      ),
+        Align(
+          alignment: Alignment(0.95, -0.95),
+          child: CircleAvatar(
+            radius: 15,
+            backgroundColor: AppColors.lightGrey,
+            child: Icon(Icons.public, color: AppColors.primary),
+          ),
+        ),
+      ],
     );
   }
 

@@ -170,8 +170,40 @@ class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
     );
   }
 
+  Widget _displayImage(
+    BuildContext context,
+  ) {
+    return Container(
+      height: MediaQuery.of(context).size.height / 3,
+      width: double.infinity,
+      child: UniversalImage(album.imgUrls, fit: BoxFit.cover),
+    );
+  }
+
+  Widget _tagChip(Album album, int i) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 3),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+        decoration: BoxDecoration(
+          color: AppColors.lightGrey,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Text(
+          album.tags[i],
+          style: TextStyle(
+            color: AppColors.grey,
+            fontWeight: FontWeight.bold,
+            fontSize: 12,
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _albumContent(WidgetRef ref) {
-    final viewContent = ref.watch(homePageProvider).viewContent;
+    final viewContent =
+        ref.watch(homePageProvider.select((s) => s.viewContent));
     if (album.content.length > 0 && album.content.length < 4) {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -211,16 +243,6 @@ class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
                 ),
               ],
             ),
-    );
-  }
-
-  Widget _displayImage(
-    BuildContext context,
-  ) {
-    return Container(
-      height: MediaQuery.of(context).size.height / 3,
-      width: double.infinity,
-      child: UniversalImage(album.imgUrls, fit: BoxFit.cover),
     );
   }
 
@@ -271,27 +293,6 @@ class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
       infoWindow: InfoWindow(title: album.content),
       markerId: id,
       position: LatLng(double.parse(lat), double.parse(lng)),
-    );
-  }
-
-  Widget _tagChip(Album album, int i) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 3),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
-        decoration: BoxDecoration(
-          color: AppColors.lightGrey,
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Text(
-          album.tags[i],
-          style: TextStyle(
-            color: AppColors.grey,
-            fontWeight: FontWeight.bold,
-            fontSize: 12,
-          ),
-        ),
-      ),
     );
   }
 }

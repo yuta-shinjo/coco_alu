@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_collection/controllers/pages/home_page_controller.dart';
 import 'package:my_collection/models/src/album.dart';
 import 'package:my_collection/models/src/user.dart';
+import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/src/universal.dart';
 import 'package:my_collection/ui/pages/home_page/src/public_album_detail_page.dart';
 
@@ -57,19 +58,56 @@ class HomePageBody extends ConsumerWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
             ),
-            child: album.imgUrls.isEmpty
-                ? UniversalImage(
-                    'assets/images/photo.jpg',
-                    fit: BoxFit.cover,
+            child: album.latitude!.isEmpty
+                ? Container(
+                    width: double.infinity,
+                    height: double.infinity,
+                    child: album.imgUrls.isEmpty
+                        ? UniversalImage(
+                            'assets/images/photo.jpg',
+                            fit: BoxFit.cover,
+                          )
+                        : UniversalImage(
+                            album.imgUrls,
+                            fit: BoxFit.cover,
+                          ),
                   )
-                : UniversalImage(
-                    album.imgUrls,
-                    fit: BoxFit.cover,
-                  ),
+                : onLocationCard(album),
           ),
         ),
       );
     });
+  }
+
+  Widget onLocationCard(Album album) {
+    return Stack(
+      children: [
+        Container(
+          width: double.infinity,
+          height: double.infinity,
+          child: album.imgUrls.isEmpty
+              ? UniversalImage(
+                  'assets/images/photo.jpg',
+                  fit: BoxFit.cover,
+                )
+              : UniversalImage(
+                  album.imgUrls,
+                  fit: BoxFit.cover,
+                ),
+        ),
+        Align(
+          alignment: Alignment(0.95, -0.95),
+          child: CircleAvatar(
+            radius: 15,
+            backgroundColor: AppColors.lightGrey,
+            child: Icon(
+              Icons.location_on,
+              color: AppColors.primary,
+            ),
+          ),
+        ),
+      ],
+    );
   }
 
   void _goToDetail(BuildContext context, Album album, User profile) {
