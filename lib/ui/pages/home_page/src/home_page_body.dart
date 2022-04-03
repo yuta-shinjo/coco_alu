@@ -17,7 +17,7 @@ class HomePageBody extends ConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           UniversalImage('assets/images/display.jpg', fit: BoxFit.cover),
-          Text('アルバムを共有して\nみんなに思い出を紹介しましょう!'),
+          Text('思い出を共有して\nみんなに思い出を紹介しましょう!'),
         ],
       );
     }

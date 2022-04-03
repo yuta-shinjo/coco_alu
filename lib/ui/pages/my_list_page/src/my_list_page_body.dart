@@ -16,7 +16,7 @@ class MyListPgeBody extends ConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           UniversalImage('assets/images/home_page.jpg', fit: BoxFit.cover),
-          Text('アルバムを作成して\n思い出を振り返りましょう!'),
+          Text('思い出を記録して\n思い出を振り返りましょう!'),
         ],
       );
     }

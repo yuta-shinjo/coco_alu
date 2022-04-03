@@ -36,15 +36,15 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>プロフィール写真の設定やアルバム作成に使用します。</string>
+	<string>プロフィール写真の設定や思い出作成に使用します。</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Why is my app authenticating using face id?</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>位置情報は作成したアルバムをマップ上に表示したりするときに使用します</string>
+	<string>位置情報は作成した思い出をマップ上に表示したりするときに使用します</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>位置情報は作成したアルバムをマップ上に表示したりするときに使用します</string>
+	<string>位置情報は作成した思い出をマップ上に表示したりするときに使用します</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>プロフィール写真の設定やアルバム作成に使用します。</string>
+	<string>プロフィール写真の設定や思い出作成に使用します。</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

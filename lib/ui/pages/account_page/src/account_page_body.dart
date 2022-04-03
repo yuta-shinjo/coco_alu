@@ -105,7 +105,7 @@ class AccountPageBody extends ConsumerWidget {
         Container(
           padding: const EdgeInsets.only(left: 12),
           child: OverlineText(
-            'アルバム数: ${album.length}',
+            '思い出: ${album.length}',
           ),
         ),
       ],
