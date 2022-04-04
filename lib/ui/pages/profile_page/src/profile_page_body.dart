@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:my_collection/controllers/pages/home_page_controller.dart';
 import 'package:my_collection/models/model.dart';
 import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/components.dart';
@@ -8,21 +7,23 @@ import 'package:my_collection/ui/components/src/universal.dart';
 import 'package:my_collection/ui/pages/album_detail_page/album_detail_page.dart';
 
 class ProfilePageBody extends ConsumerWidget {
-  ProfilePageBody({Key? key, required this.profile}) : super(key: key);
+  ProfilePageBody({Key? key, required this.profile, required this.albums})
+      : super(key: key);
 
-  User profile;
+  final List<Album> albums;
+  final User profile;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final album = ref.watch(homePageProvider.select((s) => s.userAlbumList));
     return Column(
       children: [
         SizedBox(height: 50),
-        _profileDisplay(context, album),
+        _profileDisplay(context, albums),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 20),
           child: Divider(color: AppColors.grey),
         ),
-        _photoList(album),
+        _photoList(albums),
       ],
     );
   }
@@ -108,11 +109,30 @@ class ProfilePageBody extends ConsumerWidget {
           final albumImageUrl = album.imgUrls;
           return GestureDetector(
             onTap: () => _goToDetail(context, album),
-            child: Container(
-              width: MediaQuery.of(context).size.width / 2.9,
-              height: MediaQuery.of(context).size.width / 2.9,
-              child: UniversalImage(albumImageUrl, fit: BoxFit.cover),
-            ),
+            child: album.latitude!.isEmpty
+                ? Container(
+                    width: MediaQuery.of(context).size.width / 2.9,
+                    height: MediaQuery.of(context).size.width / 2.9,
+                    child: UniversalImage(albumImageUrl, fit: BoxFit.cover),
+                  )
+                : Stack(
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width / 2.9,
+                        height: MediaQuery.of(context).size.width / 2.9,
+                        child: UniversalImage(albumImageUrl, fit: BoxFit.cover),
+                      ),
+                      Align(
+                        alignment: Alignment(0.95, -0.95),
+                        child: CircleAvatar(
+                          radius: 15,
+                          backgroundColor: AppColors.lightGrey,
+                          child:
+                              Icon(Icons.location_on, color: AppColors.primary),
+                        ),
+                      )
+                    ],
+                  ),
           );
         },
       ),
