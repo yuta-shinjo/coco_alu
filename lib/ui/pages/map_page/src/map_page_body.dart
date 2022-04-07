@@ -7,71 +7,102 @@ import 'package:location/location.dart';
 import 'package:my_collection/controllers/pages/map_page_controller.dart';
 import 'package:my_collection/models/model.dart';
 import 'package:my_collection/themes/app_colors.dart';
+import 'package:my_collection/ui/components/components.dart';
 import 'package:my_collection/ui/components/src/universal.dart';
 import 'package:my_collection/ui/pages/album_detail_page/album_detail_page.dart';
 
-class MapPageBody extends StatelessWidget {
+class MapPageBody extends ConsumerWidget {
   MapPageBody({Key? key, required this.mapController}) : super(key: key);
 
-  Completer<GoogleMapController> mapController;
+  final Completer<GoogleMapController> mapController;
   final Location _location = Location();
   @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: _getCurrentPosition(),
-      builder: (context, AsyncSnapshot<LatLng> snapshot) {
-        if (snapshot.hasData) {
-          return Consumer(
-            builder: (context, ref, _) {
-              final isViewAlbums =
-                  ref.watch(mapPageProvider.select((s) => s.isViewAlbums));
-              final albums = ref.watch(mapPageProvider.select((s) => s.albums));
-              // ピンが打たれているAlbumをListで抽出
-              final exitAlbums =
-                  albums?.where((album) => album.latitude != '').toList();
+  Widget build(BuildContext context, WidgetRef ref) {
+    final albums = ref.watch(mapPageProvider.select((s) => s.albums));
+    // ピンが打たれているAlbumをListで抽出
+    final exitAlbums = albums?.where((album) => album.latitude != '').toList();
+    if (exitAlbums == null) {
+      return Center(child: CircularProgressIndicator());
+    }
+    return exitAlbums.isEmpty
+        ? Center(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  UniversalImage('assets/images/lost.jpg'),
+                  SizedBox(height: 20),
+                  Subtitle1Text('位置情報のある思い出が無いようです'),
+                  Subtitle1Text('⚙設定＞✋プライバシー'),
+                  Subtitle1Text('➤位置情報サービス＞📷カメラ '),
+                  SizedBox(height: 15),
+                  Subtitle1Text('位置情報をオン'),
+                  Subtitle1Text('↓'),
+                  Subtitle1Text('撮った写真で思い出を作成しましょう！'),
+                  SizedBox(height: 20),
+                  Text(
+                    '※カメラの位置情報を許可した後に',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    '撮った写真のみ位置情報が登録されます',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            ),
+          )
+        : FutureBuilder(
+            future: _getCurrentPosition(),
+            builder: (context, AsyncSnapshot<LatLng> snapshot) {
+              if (snapshot.hasData) {
+                return Consumer(
+                  builder: (context, ref, _) {
+                    final isViewAlbums = ref
+                        .watch(mapPageProvider.select((s) => s.isViewAlbums));
+                    final activeAlbumIndex = ref.watch(
+                        mapPageProvider.select((s) => s.activeAlbumIndex));
+                    // 画像を移動することでマーカーの照準を変更する
+                    if (isViewAlbums == true) {
+                      mapController.future
+                          .then((GoogleMapController googleMap) {
+                        final latitude = exitAlbums[activeAlbumIndex].latitude;
+                        final longitude =
+                            exitAlbums[activeAlbumIndex].longitude;
+                        googleMap.animateCamera(
+                          CameraUpdate.newLatLng(
+                            LatLng(
+                              double.parse(latitude.toString()),
+                              double.parse(longitude.toString()),
+                            ),
+                          ),
+                        );
+                      });
+                    }
+                    final viewAlbums = ref
+                        .watch(mapPageProvider.select((s) => s.isViewAlbums));
 
-              final activeAlbumIndex =
-                  ref.watch(mapPageProvider.select((s) => s.activeAlbumIndex));
-              // 画像を移動することでマーカーの照準を変更する
-              if (isViewAlbums == true) {
-                mapController.future.then((GoogleMapController googleMap) {
-                  final latitude = exitAlbums?[activeAlbumIndex].latitude;
-                  final longitude = exitAlbums?[activeAlbumIndex].longitude;
-                  googleMap.animateCamera(
-                    CameraUpdate.newLatLng(
-                      LatLng(
-                        double.parse(latitude.toString()),
-                        double.parse(longitude.toString()),
-                      ),
-                    ),
-                  );
-                });
+                    return exitAlbums == null
+                        ? Center(child: CircularProgressIndicator())
+                        : Stack(
+                            children: [
+                              _mapPart(snapshot),
+                              viewAlbums == true
+                                  ? _viewImageParts(exitAlbums)
+                                  : Container(),
+                              exitAlbums.isNotEmpty
+                                  ? _toggleViewParts(viewAlbums)
+                                  : Container(),
+                            ],
+                          );
+                  },
+                );
+              } else {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
               }
-              final viewAlbums =
-                  ref.watch(mapPageProvider.select((s) => s.isViewAlbums));
-
-              return exitAlbums == null
-                  ? Center(child: CircularProgressIndicator())
-                  : Stack(
-                      children: [
-                        _mapPart(snapshot),
-                        viewAlbums == true
-                            ? _viewImageParts(exitAlbums)
-                            : Container(),
-                        exitAlbums.isNotEmpty
-                            ? _toggleViewParts(viewAlbums)
-                            : Container(),
-                      ],
-                    );
             },
           );
-        } else {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-      },
-    );
   }
 
   // 位置情報を取得する

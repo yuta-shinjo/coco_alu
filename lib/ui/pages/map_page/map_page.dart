@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/pages/map_page/src/map_page_body.dart';
 
 class MapPage extends ConsumerStatefulWidget {
@@ -23,6 +24,9 @@ class _MapPageState extends ConsumerState<MapPage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return MapPageBody(mapController: mapController);
+    return Scaffold(
+      backgroundColor: AppColors.scaffoldColor,
+      body: MapPageBody(mapController: mapController),
+    );
   }
 }

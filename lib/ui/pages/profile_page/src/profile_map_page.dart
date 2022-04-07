@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_collection/models/model.dart';
+import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/components.dart';
 import 'package:my_collection/ui/pages/profile_page/src/profile_map_body_page.dart';
 
@@ -35,9 +36,16 @@ class _MapPageState extends ConsumerState<ProfileMapPage>
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-      appBar: AppBar(title: AppBarText('思い出'), leading: CloseButton()),
+      backgroundColor: AppColors.scaffoldColor,
+      appBar: AppBar(
+        title: AppBarText('思い出'),
+        leading: CloseButton(),
+        backgroundColor: AppColors.barColor,
+      ),
       body: ProfileMapPageBody(
-          mapController: mapController, albums: widget.albums),
+        mapController: mapController,
+        albums: widget.albums,
+      ),
     );
   }
 }

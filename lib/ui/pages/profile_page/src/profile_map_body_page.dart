@@ -7,6 +7,7 @@ import 'package:location/location.dart';
 import 'package:my_collection/controllers/pages/profile_map_page_controller.dart';
 import 'package:my_collection/models/model.dart';
 import 'package:my_collection/themes/app_colors.dart';
+import 'package:my_collection/ui/components/components.dart';
 import 'package:my_collection/ui/components/src/universal.dart';
 import 'package:my_collection/ui/pages/album_detail_page/album_detail_page.dart';
 
@@ -23,58 +24,68 @@ class ProfileMapPageBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: _getCurrentPosition(),
-      builder: (context, AsyncSnapshot<LatLng> snapshot) {
-        if (snapshot.hasData) {
-          return Consumer(
-            builder: (context, ref, _) {
-              final isViewAlbums = ref
-                  .watch(profileMapPageProvider.select((s) => s.isViewAlbums));
-              // ピンが打たれているAlbumをListで抽出
-              final exitAlbums =
-                  albums.where((album) => album.latitude != '').toList();
+    final exitAlbums = albums.where((album) => album.latitude != '').toList();
+    return exitAlbums.isEmpty
+        ? Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              UniversalImage('assets/images/lost.jpg'),
+              SizedBox(height: 20),
+              Subtitle2Text('位置情報が公開されている思い出が無いようです'),
+              SizedBox(height: 40),
+            ],
+          )
+        : FutureBuilder(
+            future: _getCurrentPosition(),
+            builder: (context, AsyncSnapshot<LatLng> snapshot) {
+              if (snapshot.hasData) {
+                return Consumer(
+                  builder: (context, ref, _) {
+                    final isViewAlbums = ref.watch(
+                        profileMapPageProvider.select((s) => s.isViewAlbums));
 
-              final activeAlbumIndex = ref.watch(
-                  profileMapPageProvider.select((s) => s.activeAlbumIndex));
-              // 画像を移動することでマーカーの照準を変更する
-              if (isViewAlbums == true) {
-                mapController.future.then((GoogleMapController googleMap) {
-                  final latitude = exitAlbums[activeAlbumIndex].latitude;
-                  final longitude = exitAlbums[activeAlbumIndex].longitude;
-                  googleMap.animateCamera(
-                    CameraUpdate.newLatLng(
-                      LatLng(
-                        double.parse(latitude.toString()),
-                        double.parse(longitude.toString()),
-                      ),
-                    ),
-                  );
-                });
+                    final activeAlbumIndex = ref.watch(profileMapPageProvider
+                        .select((s) => s.activeAlbumIndex));
+                    // 画像を移動することでマーカーの照準を変更する
+                    if (isViewAlbums == true) {
+                      mapController.future
+                          .then((GoogleMapController googleMap) {
+                        final latitude = exitAlbums[activeAlbumIndex].latitude;
+                        final longitude =
+                            exitAlbums[activeAlbumIndex].longitude;
+                        googleMap.animateCamera(
+                          CameraUpdate.newLatLng(
+                            LatLng(
+                              double.parse(latitude.toString()),
+                              double.parse(longitude.toString()),
+                            ),
+                          ),
+                        );
+                      });
+                    }
+                    final viewAlbums = ref.watch(
+                        profileMapPageProvider.select((s) => s.isViewAlbums));
+
+                    return Stack(
+                      children: [
+                        _mapPart(snapshot),
+                        viewAlbums == true
+                            ? _viewImageParts(exitAlbums)
+                            : Container(),
+                        exitAlbums.isNotEmpty
+                            ? _toggleViewParts(viewAlbums)
+                            : Container(),
+                      ],
+                    );
+                  },
+                );
+              } else {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
               }
-              final viewAlbums = ref
-                  .watch(profileMapPageProvider.select((s) => s.isViewAlbums));
-
-              return Stack(
-                children: [
-                  _mapPart(snapshot),
-                  viewAlbums == true
-                      ? _viewImageParts(exitAlbums)
-                      : Container(),
-                  exitAlbums.isNotEmpty
-                      ? _toggleViewParts(viewAlbums)
-                      : Container(),
-                ],
-              );
             },
           );
-        } else {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-      },
-    );
   }
 
   // 位置情報を取得する

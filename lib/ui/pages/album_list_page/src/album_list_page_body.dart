@@ -23,7 +23,9 @@ class AlbumListPageBody extends ConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           UniversalImage('assets/images/edit_album.jpg'),
-          Text('編集する思い出がありません。\n作成画面から思い出を作成しましょう!'),
+          SizedBox(height: 15),
+          Subtitle1Text('編集する思い出がありません。'),
+          Subtitle1Text('作成画面から思い出を作成しましょう!'),
         ],
       );
     }
@@ -78,8 +80,7 @@ class AlbumListPageBody extends ConsumerWidget {
                           _albumText(album),
                           Align(
                             alignment: Alignment(1.5, 0),
-                            child:
-                                Icon(Icons.public, color: AppColors.primary),
+                            child: Icon(Icons.public, color: AppColors.primary),
                           ),
                         ],
                       )

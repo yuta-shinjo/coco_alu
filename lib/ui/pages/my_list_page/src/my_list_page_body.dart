@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_collection/controllers/pages/my_list_page_controller.dart';
 import 'package:my_collection/models/src/album.dart';
 import 'package:my_collection/themes/app_colors.dart';
+import 'package:my_collection/ui/components/src/theme_text.dart';
 import 'package:my_collection/ui/components/src/universal.dart';
 import 'package:my_collection/ui/pages/album_detail_page/album_detail_page.dart';
 
@@ -17,7 +18,9 @@ class MyListPgeBody extends ConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           UniversalImage('assets/images/home_page.jpg', fit: BoxFit.cover),
-          Text('思い出を記録して\n思い出を振り返りましょう!'),
+          SizedBox(height: 15),
+          Subtitle1Text('楽しい思い出を記録して'),
+          Subtitle1Text('思い出を振り返りましょう!'),
         ],
       );
     }
