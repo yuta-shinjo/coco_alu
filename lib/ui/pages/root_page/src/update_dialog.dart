@@ -10,7 +10,7 @@ class UpdateDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 30,vertical: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
         child: const Subtitle1Text('アプリのアップデートが必要です'),
       ),
       titlePadding: EdgeInsets.zero,
@@ -18,9 +18,9 @@ class UpdateDialog extends StatelessWidget {
       actions: <Widget>[
         GestureDetector(
           child: Container(
-            padding: const EdgeInsets.only(bottom: 15,right: 15),
+            padding: const EdgeInsets.only(bottom: 15, right: 15),
             child: RichText(
-              text: TextSpan(
+              text: const TextSpan(
                 text: 'アップデート',
                 style: TextStyle(
                   color: Colors.blue,
@@ -32,7 +32,8 @@ class UpdateDialog extends StatelessWidget {
           ),
           onTap: () {
             if (Platform.isIOS) {
-              launch('https://apps.apple.com/jp/app/%E3%82%B3%E3%82%B3%E3%82%A2%E3%83%AB/id1611178182');
+              launch(
+                  'https://apps.apple.com/jp/app/%E3%82%B3%E3%82%B3%E3%82%A2%E3%83%AB/id1611178182');
             } else {
               launch('storeAndroidUrl');
             }

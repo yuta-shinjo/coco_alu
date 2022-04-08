@@ -18,7 +18,7 @@ class AccountPageBody extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     late User? currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser == null) {
-      return Center(
+      return const Center(
         child: CircularProgressIndicator(),
       );
     }
@@ -99,7 +99,7 @@ class AccountPageBody extends ConsumerWidget {
           child: Text(
             name!,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(fontSize: 20),
+            style: const TextStyle(fontSize: 20),
           ),
         ),
         Container(

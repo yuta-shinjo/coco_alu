@@ -6,10 +6,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_collection/models/model.dart';
 import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/components.dart';
-import 'package:my_collection/ui/pages/profile_page/src/profile_map_body_page.dart';
+import 'package:my_collection/ui/pages/profile_page/src/profile_map_page_body.dart';
 
 class ProfileMapPage extends ConsumerStatefulWidget {
-  ProfileMapPage({Key? key, required this.albums}) : super(key: key);
+  const ProfileMapPage({Key? key, required this.albums}) : super(key: key);
 
   final List<Album> albums;
 
@@ -38,8 +38,8 @@ class _MapPageState extends ConsumerState<ProfileMapPage>
     return Scaffold(
       backgroundColor: AppColors.scaffoldColor,
       appBar: AppBar(
-        title: AppBarText('思い出'),
-        leading: CloseButton(),
+        title: const AppBarText('思い出'),
+        leading: const CloseButton(),
         backgroundColor: AppColors.barColor,
       ),
       body: ProfileMapPageBody(

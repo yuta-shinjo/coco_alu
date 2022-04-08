@@ -58,7 +58,9 @@ class RootPageController extends StateNotifier<RootPageState> {
           isNeedUpdate = true;
         }
       }
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
     return isNeedUpdate;
   }
 

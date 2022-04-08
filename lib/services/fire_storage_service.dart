@@ -55,8 +55,6 @@ class FireStorageService {
   }
 
   Future<void> deleteStorage(String id) {
-    return storage
-        .ref('users/${_auth.currentUser?.uid}/albums/$id')
-        .delete();
+    return storage.ref('users/${_auth.currentUser?.uid}/albums/$id').delete();
   }
 }

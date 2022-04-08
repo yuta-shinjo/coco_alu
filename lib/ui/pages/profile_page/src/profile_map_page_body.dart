@@ -28,7 +28,7 @@ class ProfileMapPageBody extends StatelessWidget {
     return exitAlbums.isEmpty
         ? Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+            children: const [
               UniversalImage('assets/images/lost.jpg'),
               SizedBox(height: 20),
               Subtitle2Text('位置情報が公開されている思い出が無いようです'),
@@ -80,7 +80,7 @@ class ProfileMapPageBody extends StatelessWidget {
                   },
                 );
               } else {
-                return Center(
+                return const Center(
                   child: CircularProgressIndicator(),
                 );
               }
@@ -93,7 +93,7 @@ class ProfileMapPageBody extends StatelessWidget {
     // サービスと位置情報アクセスが有効かどうかを確認する
     if (!await _allowedLocating) {
       // 初期位置（東京駅）
-      return Future.value(LatLng(35.6812362, 139.7649361));
+      return Future.value(const LatLng(35.6812362, 139.7649361));
     }
     // 位置情報を取得する
     LocationData locationData = await _location.getLocation();
@@ -174,7 +174,7 @@ class ProfileMapPageBody extends StatelessWidget {
           ref.watch(profileMapPageProvider.select((s) => s.currentPage));
       final album = albums![currentPage];
       return Align(
-        alignment: Alignment(0, 0.92),
+        alignment: const Alignment(0, 0.92),
         child: SizedBox(
           height: MediaQuery.of(context).size.height / 3.8,
           width: MediaQuery.of(context).size.width / 1.5,
@@ -217,25 +217,21 @@ class ProfileMapPageBody extends StatelessWidget {
 
   Widget _createCardAnimate(
       BuildContext context, String imagePath, bool active, Album album) {
-    final double side = active ? 0 : 40;
     return AnimatedContainer(
-      duration: Duration(milliseconds: 300),
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: side),
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height / 3.8,
-          width: MediaQuery.of(context).size.width / 1.5,
-          child: GestureDetector(
-            onTap: () => _goToDetail(context, album),
-            child: Card(
-              clipBehavior: Clip.antiAlias,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: UniversalImage(
-                imagePath,
-                fit: BoxFit.cover,
-              ),
+      duration: const Duration(milliseconds: 300),
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height / 3.8,
+        width: MediaQuery.of(context).size.width / 1.5,
+        child: GestureDetector(
+          onTap: () => _goToDetail(context, album),
+          child: Card(
+            clipBehavior: Clip.antiAlias,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: UniversalImage(
+              imagePath,
+              fit: BoxFit.cover,
             ),
           ),
         ),
@@ -245,7 +241,7 @@ class ProfileMapPageBody extends StatelessWidget {
 
   void _goToDetail(BuildContext context, Album album) {
     Navigator.of(context).push(
-      PageRouteBuilder<Null>(
+      PageRouteBuilder<void>(
         pageBuilder: (BuildContext context, Animation<double> animation,
             Animation<double> secondaryAnimation) {
           return AnimatedBuilder(
@@ -258,7 +254,7 @@ class ProfileMapPageBody extends StatelessWidget {
             },
           );
         },
-        transitionDuration: Duration(milliseconds: 400),
+        transitionDuration: const Duration(milliseconds: 400),
       ),
     );
   }
@@ -270,6 +266,7 @@ class ProfileMapPageBody extends StatelessWidget {
         bottom: MediaQuery.of(context).size.height / 7.5,
         child: viewAlbums == true
             ? FloatingActionButton(
+                heroTag: 'profile_map1',
                 backgroundColor: AppColors.white,
                 child: const Icon(
                   Icons.collections,
@@ -281,6 +278,7 @@ class ProfileMapPageBody extends StatelessWidget {
                 },
               )
             : FloatingActionButton(
+                heroTag: 'profile_map2',
                 backgroundColor: AppColors.white,
                 child: const Icon(
                   Icons.collections,

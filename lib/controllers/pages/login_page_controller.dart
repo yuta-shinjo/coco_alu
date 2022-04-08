@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_collection/services/fire_users_service.dart';
-import 'package:my_collection/ui/projects/authentication_error.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 part 'login_page_controller.freezed.dart';
@@ -41,8 +40,6 @@ class LoginPageController extends StateNotifier<LoginPageState> {
       _fireUsersService.emailLogin(loginEmail, loginPassword);
 
   Future<UserCredential> googleLogin() async => _fireUsersService.googleLogin();
-
-  final authError = AuthenticationError();
 
   final btnController = RoundedLoadingButtonController();
 }

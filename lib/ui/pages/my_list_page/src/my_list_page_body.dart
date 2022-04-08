@@ -13,10 +13,10 @@ class MyListPgeBody extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final albums = ref.watch(myListPageProvider.select((s) => s.albums)) ?? [];
-    if (albums.length == 0) {
+    if (albums.isEmpty) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+        children: const [
           UniversalImage('assets/images/home_page.jpg', fit: BoxFit.cover),
           SizedBox(height: 15),
           Subtitle1Text('楽しい思い出を記録して'),
@@ -30,7 +30,7 @@ class MyListPgeBody extends ConsumerWidget {
   Widget _albumList(List<Album> albums, BuildContext context) {
     return GridView.builder(
       padding: const EdgeInsets.only(left: 20, top: 20, right: 20),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
       ),
       itemCount: albums.length,
@@ -55,7 +55,7 @@ class MyListPgeBody extends ConsumerWidget {
           child: album.public
               ? onPublicCard(album)
               : album.imgUrls.isEmpty
-                  ? UniversalImage(
+                  ? const UniversalImage(
                       'assets/images/photo.jpg',
                       fit: BoxFit.cover,
                     )
@@ -73,11 +73,11 @@ class MyListPgeBody extends ConsumerWidget {
   Widget _onLocation(Album album) {
     return Stack(
       children: [
-        Container(
+        SizedBox(
           width: double.infinity,
           height: double.infinity,
           child: album.imgUrls.isEmpty
-              ? UniversalImage(
+              ? const UniversalImage(
                   'assets/images/photo.jpg',
                   fit: BoxFit.cover,
                 )
@@ -86,7 +86,7 @@ class MyListPgeBody extends ConsumerWidget {
                   fit: BoxFit.cover,
                 ),
         ),
-        Align(
+        const Align(
           alignment: Alignment(0.95, -0.95),
           child: CircleAvatar(
             radius: 15,
@@ -107,11 +107,11 @@ class MyListPgeBody extends ConsumerWidget {
   Widget _onPublic(Album album) {
     return Stack(
       children: [
-        Container(
+        SizedBox(
           width: double.infinity,
           height: double.infinity,
           child: album.imgUrls.isEmpty
-              ? UniversalImage(
+              ? const UniversalImage(
                   'assets/images/photo.jpg',
                   fit: BoxFit.cover,
                 )
@@ -120,7 +120,7 @@ class MyListPgeBody extends ConsumerWidget {
                   fit: BoxFit.cover,
                 ),
         ),
-        Align(
+        const Align(
           alignment: Alignment(0.95, -0.95),
           child: CircleAvatar(
             radius: 15,
@@ -135,11 +135,11 @@ class MyListPgeBody extends ConsumerWidget {
   Widget _onPublicAndLocation(Album album) {
     return Stack(
       children: [
-        Container(
+        SizedBox(
           width: double.infinity,
           height: double.infinity,
           child: album.imgUrls.isEmpty
-              ? UniversalImage(
+              ? const UniversalImage(
                   'assets/images/photo.jpg',
                   fit: BoxFit.cover,
                 )
@@ -152,7 +152,7 @@ class MyListPgeBody extends ConsumerWidget {
           padding: const EdgeInsets.only(top: 5, right: 5),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
-            children: [
+            children: const [
               CircleAvatar(
                 radius: 15,
                 backgroundColor: AppColors.lightGrey,
@@ -173,7 +173,7 @@ class MyListPgeBody extends ConsumerWidget {
 
   void _goToDetail(BuildContext context, Album album) {
     Navigator.of(context).push(
-      PageRouteBuilder<Null>(
+      PageRouteBuilder<void>(
         pageBuilder: (BuildContext context, Animation<double> animation,
             Animation<double> secondaryAnimation) {
           return AnimatedBuilder(
@@ -186,7 +186,7 @@ class MyListPgeBody extends ConsumerWidget {
             },
           );
         },
-        transitionDuration: Duration(milliseconds: 400),
+        transitionDuration: const Duration(milliseconds: 400),
       ),
     );
   }

@@ -35,7 +35,6 @@ class LinkAccountPageController extends StateNotifier<LinkAccountPageState> {
 
   final _fireUsersService = FireUsersService();
 
-
   Future<void> linkEmail(String newEmail, String newPassword) async =>
       _fireUsersService.linkEmail(newEmail, newPassword);
 

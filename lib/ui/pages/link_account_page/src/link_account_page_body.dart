@@ -25,10 +25,10 @@ class LinkAccountPageBody extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 100),
+          const SizedBox(height: 100),
           _email(),
           _password(),
-          SizedBox(height: 30),
+          const SizedBox(height: 30),
           _registerButton(),
         ],
       ),
@@ -105,8 +105,8 @@ class LinkAccountPageBody extends StatelessWidget {
                   await ref
                       .read(linkAccountPageProvider.notifier)
                       .linkEmail(newEmail, newPassword);
-                      // これがないとAccount Pageに戻った時に左上に戻るボタンが残る
-                      Navigator.pop(context);
+                  // これがないとAccount Pageに戻った時に左上に戻るボタンが残る
+                  Navigator.pop(context);
                   linkSuccessMassage();
                 } catch (e) {
                   errorMassage(controller, e);

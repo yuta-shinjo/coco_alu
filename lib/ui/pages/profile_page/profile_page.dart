@@ -8,7 +8,7 @@ import 'package:my_collection/ui/pages/profile_page/src/profile_map_page.dart';
 import 'package:my_collection/ui/pages/profile_page/src/profile_page_body.dart';
 
 class ProfilePage extends ConsumerWidget {
-  ProfilePage({Key? key, required this.profile}) : super(key: key);
+  const ProfilePage({Key? key, required this.profile}) : super(key: key);
 
   final User profile;
 
@@ -25,17 +25,18 @@ class ProfilePage extends ConsumerWidget {
     return Scaffold(
       backgroundColor: AppColors.scaffoldColor,
       appBar: AppBar(
-        leading: CloseButton(),
+        leading: const CloseButton(),
         backgroundColor: AppColors.barColor,
         title: const AppBarText('プロフィール'),
       ),
       body: ProfilePageBody(profile: profile, albums: albums),
       floatingActionButton: FloatingActionButton(
+        heroTag: 'profile_page',
         tooltip: 'マップ',
         backgroundColor: AppColors.accentColor,
         onPressed: () =>
             Navigator.push(context, ProfileMapPage.route(albums: albums)),
-        child: Icon(Icons.map),
+        child: const Icon(Icons.map),
       ),
     );
   }

@@ -18,10 +18,10 @@ class AlbumListPageBody extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final albums =
         ref.watch(albumListPageProvider.select((s) => s.albums)) ?? [];
-    if (albums.length == 0) {
+    if (albums.isEmpty) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+        children: const [
           UniversalImage('assets/images/edit_album.jpg'),
           SizedBox(height: 15),
           Subtitle1Text('編集する思い出がありません。'),
@@ -40,7 +40,7 @@ class AlbumListPageBody extends ConsumerWidget {
       itemBuilder: (context, index) {
         final album = albums[index];
         return Slidable(
-          actionPane: SlidableBehindActionPane(),
+          actionPane: const SlidableBehindActionPane(),
           secondaryActions: [
             _removeAlbum(context, ref, album, index),
           ],
@@ -67,7 +67,7 @@ class AlbumListPageBody extends ConsumerWidget {
       child: Row(
         children: [
           _albumImage(album, context),
-          Container(
+          SizedBox(
             height: 110,
             width: MediaQuery.of(context).size.width / 2,
             child: Column(
@@ -78,7 +78,7 @@ class AlbumListPageBody extends ConsumerWidget {
                     ? Stack(
                         children: [
                           _albumText(album),
-                          Align(
+                          const Align(
                             alignment: Alignment(1.5, 0),
                             child: Icon(Icons.public, color: AppColors.primary),
                           ),
@@ -137,7 +137,7 @@ class AlbumListPageBody extends ConsumerWidget {
                 album.imgUrls,
                 fit: BoxFit.cover,
               )
-            : UniversalImage(
+            : const UniversalImage(
                 'assets/images/photo.jpg',
                 fit: BoxFit.cover,
               ),
@@ -181,7 +181,7 @@ class AlbumListPageBody extends ConsumerWidget {
         ),
         child: Text(
           album.tags[i],
-          style: TextStyle(
+          style: const TextStyle(
             color: AppColors.grey,
             fontWeight: FontWeight.bold,
             fontSize: 12,
