@@ -21,10 +21,10 @@ class SplashPage extends StatelessWidget {
             .pushReplacement<void, void>(LoginPage.fadeInRoute());
       });
     }
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: AppColors.primary,
       body: Center(
-        child: Container(
+        child: SizedBox(
           width: 257,
           height: 257,
           child: UniversalImage(

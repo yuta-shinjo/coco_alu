@@ -18,12 +18,14 @@ class AlbumListPageBody extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final albums =
         ref.watch(albumListPageProvider.select((s) => s.albums)) ?? [];
-    if (albums.length == 0) {
+    if (albums.isEmpty) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+        children: const [
           UniversalImage('assets/images/edit_album.jpg'),
-          Text('編集するアルバムがありません。\n作成画面からアルバムを作成しましょう!'),
+          SizedBox(height: 15),
+          Subtitle1Text('編集する思い出がありません。'),
+          Subtitle1Text('作成画面から思い出を作成しましょう!'),
         ],
       );
     }
@@ -38,7 +40,7 @@ class AlbumListPageBody extends ConsumerWidget {
       itemBuilder: (context, index) {
         final album = albums[index];
         return Slidable(
-          actionPane: SlidableBehindActionPane(),
+          actionPane: const SlidableBehindActionPane(),
           secondaryActions: [
             _removeAlbum(context, ref, album, index),
           ],
@@ -61,18 +63,28 @@ class AlbumListPageBody extends ConsumerWidget {
 
   Widget _detailAlbum(Album album, BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      padding: const EdgeInsets.only(left: 16, top: 10, bottom: 10),
       child: Row(
         children: [
           _albumImage(album, context),
-          Container(
+          SizedBox(
             height: 110,
             width: MediaQuery.of(context).size.width / 2,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _albumText(album),
+                album.public
+                    ? Stack(
+                        children: [
+                          _albumText(album),
+                          const Align(
+                            alignment: Alignment(1.5, 0),
+                            child: Icon(Icons.public, color: AppColors.primary),
+                          ),
+                        ],
+                      )
+                    : _albumText(album),
                 _tagArea(album),
               ],
             ),
@@ -125,7 +137,7 @@ class AlbumListPageBody extends ConsumerWidget {
                 album.imgUrls,
                 fit: BoxFit.cover,
               )
-            : UniversalImage(
+            : const UniversalImage(
                 'assets/images/photo.jpg',
                 fit: BoxFit.cover,
               ),
@@ -169,7 +181,7 @@ class AlbumListPageBody extends ConsumerWidget {
         ),
         child: Text(
           album.tags[i],
-          style: TextStyle(
+          style: const TextStyle(
             color: AppColors.grey,
             fontWeight: FontWeight.bold,
             fontSize: 12,

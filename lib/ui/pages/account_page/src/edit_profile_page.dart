@@ -26,7 +26,7 @@ class EditProfilePage extends StatelessWidget {
             title: const Text('プロフィールを編集'),
             leading: const ClosedButton(),
           ),
-          body: EditProfilePageBody(),
+          body: const EditProfilePageBody(),
         ),
       ),
     );

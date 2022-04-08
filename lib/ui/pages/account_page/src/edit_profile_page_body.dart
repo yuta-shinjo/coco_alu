@@ -79,7 +79,7 @@ class EditProfilePageBody extends StatelessWidget {
                       imgUrls,
                       fit: BoxFit.cover,
                     )
-                  : UniversalImage(
+                  : const UniversalImage(
                       'assets/images/avatar.jpg',
                       fit: BoxFit.cover,
                     ),

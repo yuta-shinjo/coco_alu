@@ -25,9 +25,9 @@ class LoadingButton extends StatelessWidget {
       color: AppColors.primary,
       successIcon: Icons.check,
       failedIcon: Icons.close,
-      child: text,
       controller: controller,
       onPressed: onPressed,
+      child: text,
     );
   }
 }

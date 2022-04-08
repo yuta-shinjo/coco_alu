@@ -34,6 +34,7 @@ class _$AddAlbumPageStateTearOff {
       String? longitude,
       bool isLoading = false,
       bool public = false,
+      bool pictureLocation = false,
       int likedCount = 0,
       File? imgFile}) {
     return _AddAlbumPageState(
@@ -52,6 +53,7 @@ class _$AddAlbumPageStateTearOff {
       longitude: longitude,
       isLoading: isLoading,
       public: public,
+      pictureLocation: pictureLocation,
       likedCount: likedCount,
       imgFile: imgFile,
     );
@@ -78,6 +80,7 @@ mixin _$AddAlbumPageState {
   String? get longitude => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   bool get public => throw _privateConstructorUsedError;
+  bool get pictureLocation => throw _privateConstructorUsedError;
   int get likedCount => throw _privateConstructorUsedError;
   File? get imgFile => throw _privateConstructorUsedError;
 
@@ -107,6 +110,7 @@ abstract class $AddAlbumPageStateCopyWith<$Res> {
       String? longitude,
       bool isLoading,
       bool public,
+      bool pictureLocation,
       int likedCount,
       File? imgFile});
 }
@@ -137,6 +141,7 @@ class _$AddAlbumPageStateCopyWithImpl<$Res>
     Object? longitude = freezed,
     Object? isLoading = freezed,
     Object? public = freezed,
+    Object? pictureLocation = freezed,
     Object? likedCount = freezed,
     Object? imgFile = freezed,
   }) {
@@ -201,6 +206,10 @@ class _$AddAlbumPageStateCopyWithImpl<$Res>
           ? _value.public
           : public // ignore: cast_nullable_to_non_nullable
               as bool,
+      pictureLocation: pictureLocation == freezed
+          ? _value.pictureLocation
+          : pictureLocation // ignore: cast_nullable_to_non_nullable
+              as bool,
       likedCount: likedCount == freezed
           ? _value.likedCount
           : likedCount // ignore: cast_nullable_to_non_nullable
@@ -236,6 +245,7 @@ abstract class _$AddAlbumPageStateCopyWith<$Res>
       String? longitude,
       bool isLoading,
       bool public,
+      bool pictureLocation,
       int likedCount,
       File? imgFile});
 }
@@ -268,6 +278,7 @@ class __$AddAlbumPageStateCopyWithImpl<$Res>
     Object? longitude = freezed,
     Object? isLoading = freezed,
     Object? public = freezed,
+    Object? pictureLocation = freezed,
     Object? likedCount = freezed,
     Object? imgFile = freezed,
   }) {
@@ -332,6 +343,10 @@ class __$AddAlbumPageStateCopyWithImpl<$Res>
           ? _value.public
           : public // ignore: cast_nullable_to_non_nullable
               as bool,
+      pictureLocation: pictureLocation == freezed
+          ? _value.pictureLocation
+          : pictureLocation // ignore: cast_nullable_to_non_nullable
+              as bool,
       likedCount: likedCount == freezed
           ? _value.likedCount
           : likedCount // ignore: cast_nullable_to_non_nullable
@@ -363,6 +378,7 @@ class _$_AddAlbumPageState implements _AddAlbumPageState {
       this.longitude,
       this.isLoading = false,
       this.public = false,
+      this.pictureLocation = false,
       this.likedCount = 0,
       this.imgFile});
 
@@ -406,13 +422,16 @@ class _$_AddAlbumPageState implements _AddAlbumPageState {
   final bool public;
   @JsonKey()
   @override
+  final bool pictureLocation;
+  @JsonKey()
+  @override
   final int likedCount;
   @override
   final File? imgFile;
 
   @override
   String toString() {
-    return 'AddAlbumPageState(id: $id, content: $content, imgUrls: $imgUrls, userId: $userId, createdUser: $createdUser, likedUser: $likedUser, tags: $tags, albums: $albums, tookDay: $tookDay, latitudeRef: $latitudeRef, latitude: $latitude, longitudeRef: $longitudeRef, longitude: $longitude, isLoading: $isLoading, public: $public, likedCount: $likedCount, imgFile: $imgFile)';
+    return 'AddAlbumPageState(id: $id, content: $content, imgUrls: $imgUrls, userId: $userId, createdUser: $createdUser, likedUser: $likedUser, tags: $tags, albums: $albums, tookDay: $tookDay, latitudeRef: $latitudeRef, latitude: $latitude, longitudeRef: $longitudeRef, longitude: $longitude, isLoading: $isLoading, public: $public, pictureLocation: $pictureLocation, likedCount: $likedCount, imgFile: $imgFile)';
   }
 
   @override
@@ -439,6 +458,8 @@ class _$_AddAlbumPageState implements _AddAlbumPageState {
             const DeepCollectionEquality().equals(other.isLoading, isLoading) &&
             const DeepCollectionEquality().equals(other.public, public) &&
             const DeepCollectionEquality()
+                .equals(other.pictureLocation, pictureLocation) &&
+            const DeepCollectionEquality()
                 .equals(other.likedCount, likedCount) &&
             const DeepCollectionEquality().equals(other.imgFile, imgFile));
   }
@@ -461,6 +482,7 @@ class _$_AddAlbumPageState implements _AddAlbumPageState {
       const DeepCollectionEquality().hash(longitude),
       const DeepCollectionEquality().hash(isLoading),
       const DeepCollectionEquality().hash(public),
+      const DeepCollectionEquality().hash(pictureLocation),
       const DeepCollectionEquality().hash(likedCount),
       const DeepCollectionEquality().hash(imgFile));
 
@@ -487,6 +509,7 @@ abstract class _AddAlbumPageState implements AddAlbumPageState {
       String? longitude,
       bool isLoading,
       bool public,
+      bool pictureLocation,
       int likedCount,
       File? imgFile}) = _$_AddAlbumPageState;
 
@@ -520,6 +543,8 @@ abstract class _AddAlbumPageState implements AddAlbumPageState {
   bool get isLoading;
   @override
   bool get public;
+  @override
+  bool get pictureLocation;
   @override
   int get likedCount;
   @override

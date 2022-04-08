@@ -13,9 +13,9 @@ class MyListPage extends ConsumerWidget {
       backgroundColor: AppColors.scaffoldColor,
       appBar: AppBar(
         backgroundColor: AppColors.barColor,
-        title: const AppBarText('Myアルバム一覧'),
+        title: const AppBarText('My思い出一覧'),
       ),
-      body: MyListPgeBody(),
+      body: const MyListPgeBody(),
     );
   }
 }

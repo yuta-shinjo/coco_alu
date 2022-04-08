@@ -21,13 +21,14 @@ class AddAlbumPgeBody extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final imgFile = ref.watch(addAlbumPageProvider.select((s) => s.imgFile));
     final imgUrls = ref.watch(addAlbumPageProvider.select((s) => s.imgUrls));
-    final content = ref.watch(addAlbumPageProvider.select((s) => s.content));
     final btnController = ref.read(addAlbumPageProvider.notifier).btnController;
     final contentController =
         ref.read(addAlbumPageProvider.notifier).contentController;
     final tags =
         ref.watch(tagChipsPageProvider.select((s) => s.labelList)) ?? [];
     final public = ref.watch(addAlbumPageProvider.select((s) => s.public));
+    final pictureLocation =
+        ref.watch(addAlbumPageProvider.select((s) => s.pictureLocation));
     return Focus(
       focusNode: FocusNode(),
       child: GestureDetector(
@@ -52,28 +53,61 @@ class AddAlbumPgeBody extends ConsumerWidget {
               TagChip(btnController: btnController),
               const Divider(color: AppColors.grey),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    const Icon(Icons.public, color: AppColors.primary),
+                    const SizedBox(width: 10),
+                    const Text(
                       'みんなに公開する',
                       style: TextStyle(
                         color: AppColors.textDisable,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+                    const Spacer(),
                     Switch(
                       value: public,
                       onChanged: (value) => ref
                           .read(addAlbumPageProvider.notifier)
-                          .changeToggle(),
+                          .publicToggle(),
                       activeColor: AppColors.accentColor,
                     ),
                   ],
                 ),
               ),
-              const Divider(color: AppColors.grey),
+              public
+                  ? Column(
+                      children: [
+                        const Divider(color: AppColors.grey),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Row(
+                            children: [
+                              const Icon(Icons.location_on,
+                                  color: AppColors.primary),
+                              const SizedBox(width: 10),
+                              const Text(
+                                '写真の位置情報を公開する',
+                                style: TextStyle(
+                                  color: AppColors.textDisable,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const Spacer(),
+                              Switch(
+                                value: pictureLocation,
+                                onChanged: (value) => ref
+                                    .read(addAlbumPageProvider.notifier)
+                                    .pictureLocationToggle(),
+                                activeColor: AppColors.accentColor,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    )
+                  : const Divider(color: AppColors.grey),
               const SizedBox(height: 40),
               _createdButton(
                 btnController,
@@ -81,7 +115,7 @@ class AddAlbumPgeBody extends ConsumerWidget {
                 imgFile,
                 tags,
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
             ],
           ),
         ),
@@ -114,7 +148,7 @@ class AddAlbumPgeBody extends ConsumerWidget {
     return Image(
       image: imgFile != null
           ? Image.file(imgFile, fit: BoxFit.cover).image
-          : AssetImage('assets/images/photo.jpg'),
+          : const AssetImage('assets/images/photo.jpg'),
       fit: BoxFit.cover,
     );
   }
@@ -126,7 +160,7 @@ class AddAlbumPgeBody extends ConsumerWidget {
     return Consumer(
       builder: (context, ref, _) {
         return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: TextFormField(
             onTap: () => btnController.reset(),
             maxLines: 6,
@@ -159,10 +193,12 @@ class AddAlbumPgeBody extends ConsumerWidget {
   ) {
     return Consumer(builder: (context, ref, _) {
       final public = ref.watch(addAlbumPageProvider.select((s) => s.public));
+      final pictureLocation =
+          ref.watch(addAlbumPageProvider.select((s) => s.pictureLocation));
       return ButtonTheme(
         child: LoadingButton(
           primaryColor: AppColors.subPrimary,
-          text: ButtonText('作成'),
+          text: const ButtonText('作成'),
           controller: btnController,
           onPressed: () async {
             if (imgFile != null) {
@@ -171,6 +207,9 @@ class AddAlbumPgeBody extends ConsumerWidget {
                 ref
                     .read(addAlbumPageProvider.notifier)
                     .loadingSuccess(btnController);
+                if (!pictureLocation) {
+                  ref.read(addAlbumPageProvider.notifier).pictureLocationOff();
+                }
                 await ref.read(addAlbumPageProvider.notifier).createAlbum(tags);
                 createAlbumSuccessMassage();
                 ref
@@ -182,8 +221,14 @@ class AddAlbumPgeBody extends ConsumerWidget {
                     .deleteImage(imgUrls, imgFile);
                 ref.read(addAlbumPageProvider.notifier).clearContent();
                 ref.read(tagChipsPageProvider.notifier).clearChips();
-                if (public)
-                  ref.read(addAlbumPageProvider.notifier).changeToggle();
+                if (public) {
+                  ref.read(addAlbumPageProvider.notifier).publicToggle();
+                }
+                if (pictureLocation) {
+                  ref
+                      .read(addAlbumPageProvider.notifier)
+                      .pictureLocationToggle();
+                }
               } catch (e) {
                 ref
                     .read(addAlbumPageProvider.notifier)

@@ -13,14 +13,15 @@ class EditAlbumPage extends StatelessWidget {
       backgroundColor: AppColors.scaffoldColor,
       appBar: AppBar(
         backgroundColor: AppColors.barColor,
-        title: const AppBarText('アルバム編集'),
+        title: const AppBarText('思い出一覧を編集'),
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: 'edit_album',
         onPressed: () => Navigator.push(context, AddAlbumPage.route()),
         backgroundColor: AppColors.accentColor,
-        child: Icon(Icons.add_photo_alternate, size: 30),
+        child: const Icon(Icons.add_photo_alternate, size: 30),
       ),
-      body: AlbumListPageBody(),
+      body: const AlbumListPageBody(),
     );
   }
 }

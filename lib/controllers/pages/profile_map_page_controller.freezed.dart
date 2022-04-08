@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'home_page_controller.dart';
+part of 'profile_map_page_controller.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,102 +15,92 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$HomePageStateTearOff {
-  const _$HomePageStateTearOff();
+class _$ProfileMapPageStateTearOff {
+  const _$ProfileMapPageStateTearOff();
 
-  _HomePageState call(
-      {String id = '',
+  _ProfileMapPageState call(
+      {String markerId = '',
       String content = '',
       String imgUrls = '',
       int currentPage = 0,
       int activeAlbumIndex = 0,
-      bool viewContent = false,
       bool isViewAlbums = false,
-      User createdUserProfile = const User(),
-      List<Album> userAlbumList = const <Album>[],
-      List<Album>? albums}) {
-    return _HomePageState(
-      id: id,
+      List<Album> albums = const <Album>[],
+      Album? selectedAlbum}) {
+    return _ProfileMapPageState(
+      markerId: markerId,
       content: content,
       imgUrls: imgUrls,
       currentPage: currentPage,
       activeAlbumIndex: activeAlbumIndex,
-      viewContent: viewContent,
       isViewAlbums: isViewAlbums,
-      createdUserProfile: createdUserProfile,
-      userAlbumList: userAlbumList,
       albums: albums,
+      selectedAlbum: selectedAlbum,
     );
   }
 }
 
 /// @nodoc
-const $HomePageState = _$HomePageStateTearOff();
+const $ProfileMapPageState = _$ProfileMapPageStateTearOff();
 
 /// @nodoc
-mixin _$HomePageState {
-  String get id => throw _privateConstructorUsedError;
+mixin _$ProfileMapPageState {
+  String get markerId => throw _privateConstructorUsedError;
   String get content => throw _privateConstructorUsedError;
   String get imgUrls => throw _privateConstructorUsedError;
   int get currentPage => throw _privateConstructorUsedError;
   int get activeAlbumIndex => throw _privateConstructorUsedError;
-  bool get viewContent => throw _privateConstructorUsedError;
   bool get isViewAlbums => throw _privateConstructorUsedError;
-  User get createdUserProfile => throw _privateConstructorUsedError;
-  List<Album> get userAlbumList => throw _privateConstructorUsedError;
-  List<Album>? get albums => throw _privateConstructorUsedError;
+  List<Album> get albums => throw _privateConstructorUsedError;
+  Album? get selectedAlbum => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $HomePageStateCopyWith<HomePageState> get copyWith =>
+  $ProfileMapPageStateCopyWith<ProfileMapPageState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $HomePageStateCopyWith<$Res> {
-  factory $HomePageStateCopyWith(
-          HomePageState value, $Res Function(HomePageState) then) =
-      _$HomePageStateCopyWithImpl<$Res>;
+abstract class $ProfileMapPageStateCopyWith<$Res> {
+  factory $ProfileMapPageStateCopyWith(
+          ProfileMapPageState value, $Res Function(ProfileMapPageState) then) =
+      _$ProfileMapPageStateCopyWithImpl<$Res>;
   $Res call(
-      {String id,
+      {String markerId,
       String content,
       String imgUrls,
       int currentPage,
       int activeAlbumIndex,
-      bool viewContent,
       bool isViewAlbums,
-      User createdUserProfile,
-      List<Album> userAlbumList,
-      List<Album>? albums});
+      List<Album> albums,
+      Album? selectedAlbum});
 
-  $UserCopyWith<$Res> get createdUserProfile;
+  $AlbumCopyWith<$Res>? get selectedAlbum;
 }
 
 /// @nodoc
-class _$HomePageStateCopyWithImpl<$Res>
-    implements $HomePageStateCopyWith<$Res> {
-  _$HomePageStateCopyWithImpl(this._value, this._then);
+class _$ProfileMapPageStateCopyWithImpl<$Res>
+    implements $ProfileMapPageStateCopyWith<$Res> {
+  _$ProfileMapPageStateCopyWithImpl(this._value, this._then);
 
-  final HomePageState _value;
+  final ProfileMapPageState _value;
   // ignore: unused_field
-  final $Res Function(HomePageState) _then;
+  final $Res Function(ProfileMapPageState) _then;
 
   @override
   $Res call({
-    Object? id = freezed,
+    Object? markerId = freezed,
     Object? content = freezed,
     Object? imgUrls = freezed,
     Object? currentPage = freezed,
     Object? activeAlbumIndex = freezed,
-    Object? viewContent = freezed,
     Object? isViewAlbums = freezed,
-    Object? createdUserProfile = freezed,
-    Object? userAlbumList = freezed,
     Object? albums = freezed,
+    Object? selectedAlbum = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
+      markerId: markerId == freezed
+          ? _value.markerId
+          : markerId // ignore: cast_nullable_to_non_nullable
               as String,
       content: content == freezed
           ? _value.content
@@ -128,88 +118,80 @@ class _$HomePageStateCopyWithImpl<$Res>
           ? _value.activeAlbumIndex
           : activeAlbumIndex // ignore: cast_nullable_to_non_nullable
               as int,
-      viewContent: viewContent == freezed
-          ? _value.viewContent
-          : viewContent // ignore: cast_nullable_to_non_nullable
-              as bool,
       isViewAlbums: isViewAlbums == freezed
           ? _value.isViewAlbums
           : isViewAlbums // ignore: cast_nullable_to_non_nullable
               as bool,
-      createdUserProfile: createdUserProfile == freezed
-          ? _value.createdUserProfile
-          : createdUserProfile // ignore: cast_nullable_to_non_nullable
-              as User,
-      userAlbumList: userAlbumList == freezed
-          ? _value.userAlbumList
-          : userAlbumList // ignore: cast_nullable_to_non_nullable
-              as List<Album>,
       albums: albums == freezed
           ? _value.albums
           : albums // ignore: cast_nullable_to_non_nullable
-              as List<Album>?,
+              as List<Album>,
+      selectedAlbum: selectedAlbum == freezed
+          ? _value.selectedAlbum
+          : selectedAlbum // ignore: cast_nullable_to_non_nullable
+              as Album?,
     ));
   }
 
   @override
-  $UserCopyWith<$Res> get createdUserProfile {
-    return $UserCopyWith<$Res>(_value.createdUserProfile, (value) {
-      return _then(_value.copyWith(createdUserProfile: value));
+  $AlbumCopyWith<$Res>? get selectedAlbum {
+    if (_value.selectedAlbum == null) {
+      return null;
+    }
+
+    return $AlbumCopyWith<$Res>(_value.selectedAlbum!, (value) {
+      return _then(_value.copyWith(selectedAlbum: value));
     });
   }
 }
 
 /// @nodoc
-abstract class _$HomePageStateCopyWith<$Res>
-    implements $HomePageStateCopyWith<$Res> {
-  factory _$HomePageStateCopyWith(
-          _HomePageState value, $Res Function(_HomePageState) then) =
-      __$HomePageStateCopyWithImpl<$Res>;
+abstract class _$ProfileMapPageStateCopyWith<$Res>
+    implements $ProfileMapPageStateCopyWith<$Res> {
+  factory _$ProfileMapPageStateCopyWith(_ProfileMapPageState value,
+          $Res Function(_ProfileMapPageState) then) =
+      __$ProfileMapPageStateCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String id,
+      {String markerId,
       String content,
       String imgUrls,
       int currentPage,
       int activeAlbumIndex,
-      bool viewContent,
       bool isViewAlbums,
-      User createdUserProfile,
-      List<Album> userAlbumList,
-      List<Album>? albums});
+      List<Album> albums,
+      Album? selectedAlbum});
 
   @override
-  $UserCopyWith<$Res> get createdUserProfile;
+  $AlbumCopyWith<$Res>? get selectedAlbum;
 }
 
 /// @nodoc
-class __$HomePageStateCopyWithImpl<$Res>
-    extends _$HomePageStateCopyWithImpl<$Res>
-    implements _$HomePageStateCopyWith<$Res> {
-  __$HomePageStateCopyWithImpl(
-      _HomePageState _value, $Res Function(_HomePageState) _then)
-      : super(_value, (v) => _then(v as _HomePageState));
+class __$ProfileMapPageStateCopyWithImpl<$Res>
+    extends _$ProfileMapPageStateCopyWithImpl<$Res>
+    implements _$ProfileMapPageStateCopyWith<$Res> {
+  __$ProfileMapPageStateCopyWithImpl(
+      _ProfileMapPageState _value, $Res Function(_ProfileMapPageState) _then)
+      : super(_value, (v) => _then(v as _ProfileMapPageState));
 
   @override
-  _HomePageState get _value => super._value as _HomePageState;
+  _ProfileMapPageState get _value => super._value as _ProfileMapPageState;
 
   @override
   $Res call({
-    Object? id = freezed,
+    Object? markerId = freezed,
     Object? content = freezed,
     Object? imgUrls = freezed,
     Object? currentPage = freezed,
     Object? activeAlbumIndex = freezed,
-    Object? viewContent = freezed,
     Object? isViewAlbums = freezed,
-    Object? createdUserProfile = freezed,
-    Object? userAlbumList = freezed,
     Object? albums = freezed,
+    Object? selectedAlbum = freezed,
   }) {
-    return _then(_HomePageState(
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
+    return _then(_ProfileMapPageState(
+      markerId: markerId == freezed
+          ? _value.markerId
+          : markerId // ignore: cast_nullable_to_non_nullable
               as String,
       content: content == freezed
           ? _value.content
@@ -227,48 +209,38 @@ class __$HomePageStateCopyWithImpl<$Res>
           ? _value.activeAlbumIndex
           : activeAlbumIndex // ignore: cast_nullable_to_non_nullable
               as int,
-      viewContent: viewContent == freezed
-          ? _value.viewContent
-          : viewContent // ignore: cast_nullable_to_non_nullable
-              as bool,
       isViewAlbums: isViewAlbums == freezed
           ? _value.isViewAlbums
           : isViewAlbums // ignore: cast_nullable_to_non_nullable
               as bool,
-      createdUserProfile: createdUserProfile == freezed
-          ? _value.createdUserProfile
-          : createdUserProfile // ignore: cast_nullable_to_non_nullable
-              as User,
-      userAlbumList: userAlbumList == freezed
-          ? _value.userAlbumList
-          : userAlbumList // ignore: cast_nullable_to_non_nullable
-              as List<Album>,
       albums: albums == freezed
           ? _value.albums
           : albums // ignore: cast_nullable_to_non_nullable
-              as List<Album>?,
+              as List<Album>,
+      selectedAlbum: selectedAlbum == freezed
+          ? _value.selectedAlbum
+          : selectedAlbum // ignore: cast_nullable_to_non_nullable
+              as Album?,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_HomePageState implements _HomePageState {
-  const _$_HomePageState(
-      {this.id = '',
+class _$_ProfileMapPageState implements _ProfileMapPageState {
+  const _$_ProfileMapPageState(
+      {this.markerId = '',
       this.content = '',
       this.imgUrls = '',
       this.currentPage = 0,
       this.activeAlbumIndex = 0,
-      this.viewContent = false,
       this.isViewAlbums = false,
-      this.createdUserProfile = const User(),
-      this.userAlbumList = const <Album>[],
-      this.albums});
+      this.albums = const <Album>[],
+      this.selectedAlbum});
 
   @JsonKey()
   @override
-  final String id;
+  final String markerId;
   @JsonKey()
   @override
   final String content;
@@ -283,30 +255,24 @@ class _$_HomePageState implements _HomePageState {
   final int activeAlbumIndex;
   @JsonKey()
   @override
-  final bool viewContent;
-  @JsonKey()
-  @override
   final bool isViewAlbums;
   @JsonKey()
   @override
-  final User createdUserProfile;
-  @JsonKey()
+  final List<Album> albums;
   @override
-  final List<Album> userAlbumList;
-  @override
-  final List<Album>? albums;
+  final Album? selectedAlbum;
 
   @override
   String toString() {
-    return 'HomePageState(id: $id, content: $content, imgUrls: $imgUrls, currentPage: $currentPage, activeAlbumIndex: $activeAlbumIndex, viewContent: $viewContent, isViewAlbums: $isViewAlbums, createdUserProfile: $createdUserProfile, userAlbumList: $userAlbumList, albums: $albums)';
+    return 'ProfileMapPageState(markerId: $markerId, content: $content, imgUrls: $imgUrls, currentPage: $currentPage, activeAlbumIndex: $activeAlbumIndex, isViewAlbums: $isViewAlbums, albums: $albums, selectedAlbum: $selectedAlbum)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _HomePageState &&
-            const DeepCollectionEquality().equals(other.id, id) &&
+            other is _ProfileMapPageState &&
+            const DeepCollectionEquality().equals(other.markerId, markerId) &&
             const DeepCollectionEquality().equals(other.content, content) &&
             const DeepCollectionEquality().equals(other.imgUrls, imgUrls) &&
             const DeepCollectionEquality()
@@ -314,51 +280,44 @@ class _$_HomePageState implements _HomePageState {
             const DeepCollectionEquality()
                 .equals(other.activeAlbumIndex, activeAlbumIndex) &&
             const DeepCollectionEquality()
-                .equals(other.viewContent, viewContent) &&
-            const DeepCollectionEquality()
                 .equals(other.isViewAlbums, isViewAlbums) &&
+            const DeepCollectionEquality().equals(other.albums, albums) &&
             const DeepCollectionEquality()
-                .equals(other.createdUserProfile, createdUserProfile) &&
-            const DeepCollectionEquality()
-                .equals(other.userAlbumList, userAlbumList) &&
-            const DeepCollectionEquality().equals(other.albums, albums));
+                .equals(other.selectedAlbum, selectedAlbum));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(markerId),
       const DeepCollectionEquality().hash(content),
       const DeepCollectionEquality().hash(imgUrls),
       const DeepCollectionEquality().hash(currentPage),
       const DeepCollectionEquality().hash(activeAlbumIndex),
-      const DeepCollectionEquality().hash(viewContent),
       const DeepCollectionEquality().hash(isViewAlbums),
-      const DeepCollectionEquality().hash(createdUserProfile),
-      const DeepCollectionEquality().hash(userAlbumList),
-      const DeepCollectionEquality().hash(albums));
+      const DeepCollectionEquality().hash(albums),
+      const DeepCollectionEquality().hash(selectedAlbum));
 
   @JsonKey(ignore: true)
   @override
-  _$HomePageStateCopyWith<_HomePageState> get copyWith =>
-      __$HomePageStateCopyWithImpl<_HomePageState>(this, _$identity);
+  _$ProfileMapPageStateCopyWith<_ProfileMapPageState> get copyWith =>
+      __$ProfileMapPageStateCopyWithImpl<_ProfileMapPageState>(
+          this, _$identity);
 }
 
-abstract class _HomePageState implements HomePageState {
-  const factory _HomePageState(
-      {String id,
+abstract class _ProfileMapPageState implements ProfileMapPageState {
+  const factory _ProfileMapPageState(
+      {String markerId,
       String content,
       String imgUrls,
       int currentPage,
       int activeAlbumIndex,
-      bool viewContent,
       bool isViewAlbums,
-      User createdUserProfile,
-      List<Album> userAlbumList,
-      List<Album>? albums}) = _$_HomePageState;
+      List<Album> albums,
+      Album? selectedAlbum}) = _$_ProfileMapPageState;
 
   @override
-  String get id;
+  String get markerId;
   @override
   String get content;
   @override
@@ -368,17 +327,13 @@ abstract class _HomePageState implements HomePageState {
   @override
   int get activeAlbumIndex;
   @override
-  bool get viewContent;
-  @override
   bool get isViewAlbums;
   @override
-  User get createdUserProfile;
+  List<Album> get albums;
   @override
-  List<Album> get userAlbumList;
-  @override
-  List<Album>? get albums;
+  Album? get selectedAlbum;
   @override
   @JsonKey(ignore: true)
-  _$HomePageStateCopyWith<_HomePageState> get copyWith =>
+  _$ProfileMapPageStateCopyWith<_ProfileMapPageState> get copyWith =>
       throw _privateConstructorUsedError;
 }

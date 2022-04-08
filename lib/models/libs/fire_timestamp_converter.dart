@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-class FireTimestampConverterNullable implements JsonConverter<DateTime?, dynamic> {
+class FireTimestampConverterNullable
+    implements JsonConverter<DateTime?, dynamic> {
   const FireTimestampConverterNullable();
 
   @override
@@ -23,7 +24,8 @@ class FireTimestampConverterNullable implements JsonConverter<DateTime?, dynamic
   }
 }
 
-class FireTimestampConverterNonNull implements JsonConverter<DateTime, dynamic> {
+class FireTimestampConverterNonNull
+    implements JsonConverter<DateTime, dynamic> {
   const FireTimestampConverterNonNull({this.defaultValue});
 
   final DateTime? defaultValue;
@@ -43,7 +45,9 @@ class FireTimestampConverterNonNull implements JsonConverter<DateTime, dynamic> 
     try {
       return Timestamp.fromDate(data);
     } catch (_) {
-      return defaultValue != null ? Timestamp.fromDate(defaultValue!) : Timestamp.now();
+      return defaultValue != null
+          ? Timestamp.fromDate(defaultValue!)
+          : Timestamp.now();
     }
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class DisplayDialog extends StatelessWidget {
-  DisplayDialog({
+  const DisplayDialog({
     required this.title,
     required this.content,
     required this.onPressed,
@@ -18,11 +18,11 @@ class DisplayDialog extends StatelessWidget {
       content: Text(content),
       actions: [
         TextButton(
-          child: Text("はい"),
+          child: const Text("はい"),
           onPressed: onPressed,
         ),
         TextButton(
-          child: Text("いいえ"),
+          child: const Text("いいえ"),
           onPressed: () => Navigator.pop(context),
         ),
       ],

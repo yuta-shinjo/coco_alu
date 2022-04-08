@@ -9,6 +9,7 @@ import 'package:my_collection/models/src/user.dart';
 import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/src/theme_text.dart';
 import 'package:my_collection/ui/components/src/universal.dart';
+import 'package:my_collection/ui/pages/profile_page/profile_page.dart';
 
 class PublicAlbumDetailPage extends ConsumerStatefulWidget {
   const PublicAlbumDetailPage({
@@ -36,24 +37,24 @@ class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
   final Album album;
   final User profile;
 
+  @override
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
       backgroundColor: AppColors.scaffoldColor,
       appBar: AppBar(
         backgroundColor: AppColors.barColor,
-        leading: CloseButton(),
+        leading: const CloseButton(),
       ),
       body: _albumDetailPageBody(context),
     );
   }
 
   Widget _albumDetailPageBody(BuildContext context) {
-    final Completer<GoogleMapController> _mapController = Completer();
     return SingleChildScrollView(
       child: Column(
         children: [
-          Container(
+          SizedBox(
             height: 60,
             child: _profileDisplay(profile),
           ),
@@ -77,8 +78,8 @@ class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16),
                 child: Headline6Text('撮影スポット'),
               ),
               SizedBox(
@@ -89,7 +90,7 @@ class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
                     if (snapshot.hasData) {
                       return Consumer(
                         builder: (context, ref, _) {
-                          return _mapPart(snapshot, _mapController);
+                          return _mapPart(snapshot);
                         },
                       );
                     } else {
@@ -98,9 +99,9 @@ class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
                           height: MediaQuery.of(context).size.height / 3.5,
                           child: Stack(
                             alignment: Alignment.bottomCenter,
-                            children: [
+                            children: const [
                               Padding(
-                                padding: const EdgeInsets.only(bottom: 30),
+                                padding: EdgeInsets.only(bottom: 30),
                                 child: UniversalImage('assets/images/lost.jpg'),
                               ),
                               Subtitle2Text('この写真には位置情報が登録されていないようです'),
@@ -125,7 +126,7 @@ class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
       padding: const EdgeInsets.only(left: 5, top: 10, bottom: 10),
       child: Row(
         children: [
-          imgUser(profile.imgUrls),
+          imgUser(profile.imgUrls, album.createdUser),
           infoUser(context, profile.name),
           Spacer(),
           PopupMenuButton(
@@ -157,31 +158,33 @@ class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
     );
   }
 
-  Widget imgUser(String imgUrls) {
-    return Container(
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(
-          color: AppColors.grey,
-          width: 1,
+  Widget imgUser(String imgUrls, String createdUserId) {
+    return Consumer(builder: (context, ref, _) {
+      return GestureDetector(
+        onTap: () {
+          Navigator.push(context, ProfilePage.route(profile: profile));
+          ref.read(homePageProvider.notifier).fetchUserAlbumList(createdUserId);
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(
+              color: AppColors.grey,
+              width: 1,
+            ),
+          ),
+          child: CircleAvatar(
+            radius: 25,
+            backgroundColor: AppColors.lightGrey,
+            backgroundImage: imgUrls.isEmpty
+                ? Image.asset(
+                    'assets/images/avatar.jpg',
+                  ).image
+                : Image.network(imgUrls).image,
+          ),
         ),
-      ),
-      child: CircleAvatar(
-        radius: 25,
-        backgroundColor: AppColors.lightGrey,
-        child: ClipOval(
-          child: imgUrls.isNotEmpty
-              ? UniversalImage(
-                  imgUrls,
-                  fit: BoxFit.cover,
-                )
-              : const UniversalImage(
-                  'assets/images/avatar.jpg',
-                  fit: BoxFit.cover,
-                ),
-        ),
-      ),
-    );
+      );
+    });
   }
 
   Widget infoUser(BuildContext context, String? name) {
@@ -192,14 +195,46 @@ class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
     );
   }
 
+  Widget _displayImage(
+    BuildContext context,
+  ) {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height / 3,
+      width: double.infinity,
+      child: UniversalImage(album.imgUrls, fit: BoxFit.cover),
+    );
+  }
+
+  Widget _tagChip(Album album, int i) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 3),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+        decoration: BoxDecoration(
+          color: AppColors.lightGrey,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Text(
+          album.tags[i],
+          style: const TextStyle(
+            color: AppColors.grey,
+            fontWeight: FontWeight.bold,
+            fontSize: 12,
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _albumContent(WidgetRef ref) {
-    final viewContent = ref.watch(homePageProvider).viewContent;
-    if (album.content.length > 0 && album.content.length < 4) {
+    final viewContent =
+        ref.watch(homePageProvider.select((s) => s.viewContent));
+    if (album.content.isNotEmpty && album.content.length < 4) {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Subtitle2Text(album.content),
       );
-    } else if (album.content.length == 0) {
+    } else if (album.content.isEmpty) {
       return Container();
     }
     return Padding(
@@ -209,11 +244,11 @@ class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Subtitle2Text(album.content.substring(0, 4) + '...'),
-                SizedBox(width: 4),
+                const SizedBox(width: 4),
                 GestureDetector(
                   onTap: () =>
                       ref.read(homePageProvider.notifier).viewContent(),
-                  child: Text(
+                  child: const Text(
                     '続きを読む',
                     style: TextStyle(color: AppColors.textDisable),
                   ),
@@ -226,23 +261,13 @@ class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
                 GestureDetector(
                   onTap: () =>
                       ref.read(homePageProvider.notifier).viewContent(),
-                  child: Text(
+                  child: const Text(
                     '閉じる',
                     style: TextStyle(color: AppColors.textDisable),
                   ),
                 ),
               ],
             ),
-    );
-  }
-
-  Widget _displayImage(
-    BuildContext context,
-  ) {
-    return Container(
-      height: MediaQuery.of(context).size.height / 3,
-      width: double.infinity,
-      child: UniversalImage(album.imgUrls, fit: BoxFit.cover),
     );
   }
 
@@ -258,10 +283,7 @@ class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
     );
   }
 
-  Widget _mapPart(
-    AsyncSnapshot<LatLng> snapshot,
-    Completer<GoogleMapController> _mapController,
-  ) {
+  Widget _mapPart(AsyncSnapshot<LatLng> snapshot) {
     return GoogleMap(
       markers: _markers(album),
       initialCameraPosition: CameraPosition(
@@ -293,27 +315,6 @@ class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
       infoWindow: InfoWindow(title: album.content),
       markerId: id,
       position: LatLng(double.parse(lat), double.parse(lng)),
-    );
-  }
-
-  Widget _tagChip(Album album, int i) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 3),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
-        decoration: BoxDecoration(
-          color: AppColors.lightGrey,
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Text(
-          album.tags[i],
-          style: TextStyle(
-            color: AppColors.grey,
-            fontWeight: FontWeight.bold,
-            fontSize: 12,
-          ),
-        ),
-      ),
     );
   }
 }
