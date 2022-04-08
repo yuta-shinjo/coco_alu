@@ -5,11 +5,11 @@ import 'package:my_collection/ui/components/src/universal.dart';
 import 'package:my_collection/ui/pages/root_page/root_page.dart';
 
 class IntroductionPage extends StatelessWidget {
-  IntroductionPage({Key? key}) : super(key: key);
+  const IntroductionPage({Key? key}) : super(key: key);
 
   static Route<T> route<T>() {
     return MaterialPageRoute<T>(
-      builder: (_) => IntroductionPage(),
+      builder: (_) => const IntroductionPage(),
       settings: const RouteSettings(name: 'introduction_page'),
     );
   }
@@ -25,7 +25,7 @@ class IntroductionPage extends StatelessWidget {
             PageViewModel(
               title: '思い出作成アプリ\n『ココアル』へようこそ',
               body: '・人生の中で大切な瞬間を捉えた写真\n・その時感じたこと\n\nを思い出として残しましょう!',
-              image: Center(
+              image: const Center(
                 child: UniversalImage('assets/images/welcome_introduction.jpg'),
               ),
             ),
@@ -33,21 +33,21 @@ class IntroductionPage extends StatelessWidget {
               title: 'カメラの位置情報をオンにしましょう!',
               body:
                   'カメラの位置情報をオンにすることで、\n・この写真はどこで撮ったのだろう\n・この思い出の場所はどこだろう\n\nなどを思い出の振り返りと共に\n見返すことができます!',
-              image: Center(
+              image: const Center(
                 child: UniversalImage('assets/images/map_introduction.jpg'),
               ),
             ),
             PageViewModel(
               title: '思い出を記録して\n思い出に浸りましょう!',
               body: '写真を撮った時の感情を\n作成時に残しておきましょう!\n\n写真にはタグも付けることができます!',
-              image: Center(
+              image: const Center(
                 child: UniversalImage('assets/images/create_introduction.jpg'),
               ),
             ),
             PageViewModel(
               title: '作成した思い出は\n削除することができます',
               body: '必要ではなくなった思い出は削除できます。\n\n楽しい思い出をたくさん記録しましょう!',
-              image: Center(
+              image: const Center(
                 child: UniversalImage('assets/images/edit_introduction.jpg'),
               ),
             ),
@@ -55,7 +55,7 @@ class IntroductionPage extends StatelessWidget {
               title: 'アカウント情報を変更できます!',
               body:
                   'メールアドレスを登録されていない方は、\nメールアドレスを登録しましょう!\n\nメールアドレスを登録することで、\n・もしもの時にアカウント復旧ができる\n\n大切な思い出が消えないように\nメールアドレスを登録しましょう!',
-              image: Center(
+              image: const Center(
                 child: UniversalImage('assets/images/profile_introduction.jpg'),
               ),
             ),

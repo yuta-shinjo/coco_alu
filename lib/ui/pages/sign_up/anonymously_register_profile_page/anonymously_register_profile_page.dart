@@ -22,7 +22,7 @@ class AnonymouslyRegisterProfilePage extends StatelessWidget {
         backgroundColor: AppColors.barColor,
         title: const Text('プロフィールを作成する'),
         leading: IconButton(
-          icon: Icon(Icons.close),
+          icon: const Icon(Icons.close),
           onPressed: () {
             Navigator.pushReplacement(context, LoginPage.route());
           },

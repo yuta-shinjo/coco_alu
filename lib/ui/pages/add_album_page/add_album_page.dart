@@ -22,9 +22,9 @@ class AddAlbumPage extends StatelessWidget {
           title: const AppBarText('新規作成'),
           leading: IconButton(
             onPressed: (() => Navigator.pop(context)),
-            icon: Icon(Icons.close),
+            icon: const Icon(Icons.close),
           )),
-      body: AddAlbumPgeBody(),
+      body: const AddAlbumPgeBody(),
     );
   }
 }

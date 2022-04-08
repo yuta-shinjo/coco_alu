@@ -1,6 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:my_collection/services/fire_users_service.dart';
-import 'package:my_collection/ui/projects/authentication_error.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 

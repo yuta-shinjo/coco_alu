@@ -22,7 +22,10 @@ class _$HomePageStateTearOff {
       {String id = '',
       String content = '',
       String imgUrls = '',
+      int currentPage = 0,
+      int activeAlbumIndex = 0,
       bool viewContent = false,
+      bool isViewAlbums = false,
       User createdUserProfile = const User(),
       List<Album> userAlbumList = const <Album>[],
       List<Album>? albums}) {
@@ -30,7 +33,10 @@ class _$HomePageStateTearOff {
       id: id,
       content: content,
       imgUrls: imgUrls,
+      currentPage: currentPage,
+      activeAlbumIndex: activeAlbumIndex,
       viewContent: viewContent,
+      isViewAlbums: isViewAlbums,
       createdUserProfile: createdUserProfile,
       userAlbumList: userAlbumList,
       albums: albums,
@@ -46,7 +52,10 @@ mixin _$HomePageState {
   String get id => throw _privateConstructorUsedError;
   String get content => throw _privateConstructorUsedError;
   String get imgUrls => throw _privateConstructorUsedError;
+  int get currentPage => throw _privateConstructorUsedError;
+  int get activeAlbumIndex => throw _privateConstructorUsedError;
   bool get viewContent => throw _privateConstructorUsedError;
+  bool get isViewAlbums => throw _privateConstructorUsedError;
   User get createdUserProfile => throw _privateConstructorUsedError;
   List<Album> get userAlbumList => throw _privateConstructorUsedError;
   List<Album>? get albums => throw _privateConstructorUsedError;
@@ -65,7 +74,10 @@ abstract class $HomePageStateCopyWith<$Res> {
       {String id,
       String content,
       String imgUrls,
+      int currentPage,
+      int activeAlbumIndex,
       bool viewContent,
+      bool isViewAlbums,
       User createdUserProfile,
       List<Album> userAlbumList,
       List<Album>? albums});
@@ -87,7 +99,10 @@ class _$HomePageStateCopyWithImpl<$Res>
     Object? id = freezed,
     Object? content = freezed,
     Object? imgUrls = freezed,
+    Object? currentPage = freezed,
+    Object? activeAlbumIndex = freezed,
     Object? viewContent = freezed,
+    Object? isViewAlbums = freezed,
     Object? createdUserProfile = freezed,
     Object? userAlbumList = freezed,
     Object? albums = freezed,
@@ -105,9 +120,21 @@ class _$HomePageStateCopyWithImpl<$Res>
           ? _value.imgUrls
           : imgUrls // ignore: cast_nullable_to_non_nullable
               as String,
+      currentPage: currentPage == freezed
+          ? _value.currentPage
+          : currentPage // ignore: cast_nullable_to_non_nullable
+              as int,
+      activeAlbumIndex: activeAlbumIndex == freezed
+          ? _value.activeAlbumIndex
+          : activeAlbumIndex // ignore: cast_nullable_to_non_nullable
+              as int,
       viewContent: viewContent == freezed
           ? _value.viewContent
           : viewContent // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isViewAlbums: isViewAlbums == freezed
+          ? _value.isViewAlbums
+          : isViewAlbums // ignore: cast_nullable_to_non_nullable
               as bool,
       createdUserProfile: createdUserProfile == freezed
           ? _value.createdUserProfile
@@ -143,7 +170,10 @@ abstract class _$HomePageStateCopyWith<$Res>
       {String id,
       String content,
       String imgUrls,
+      int currentPage,
+      int activeAlbumIndex,
       bool viewContent,
+      bool isViewAlbums,
       User createdUserProfile,
       List<Album> userAlbumList,
       List<Album>? albums});
@@ -168,7 +198,10 @@ class __$HomePageStateCopyWithImpl<$Res>
     Object? id = freezed,
     Object? content = freezed,
     Object? imgUrls = freezed,
+    Object? currentPage = freezed,
+    Object? activeAlbumIndex = freezed,
     Object? viewContent = freezed,
+    Object? isViewAlbums = freezed,
     Object? createdUserProfile = freezed,
     Object? userAlbumList = freezed,
     Object? albums = freezed,
@@ -186,9 +219,21 @@ class __$HomePageStateCopyWithImpl<$Res>
           ? _value.imgUrls
           : imgUrls // ignore: cast_nullable_to_non_nullable
               as String,
+      currentPage: currentPage == freezed
+          ? _value.currentPage
+          : currentPage // ignore: cast_nullable_to_non_nullable
+              as int,
+      activeAlbumIndex: activeAlbumIndex == freezed
+          ? _value.activeAlbumIndex
+          : activeAlbumIndex // ignore: cast_nullable_to_non_nullable
+              as int,
       viewContent: viewContent == freezed
           ? _value.viewContent
           : viewContent // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isViewAlbums: isViewAlbums == freezed
+          ? _value.isViewAlbums
+          : isViewAlbums // ignore: cast_nullable_to_non_nullable
               as bool,
       createdUserProfile: createdUserProfile == freezed
           ? _value.createdUserProfile
@@ -213,7 +258,10 @@ class _$_HomePageState implements _HomePageState {
       {this.id = '',
       this.content = '',
       this.imgUrls = '',
+      this.currentPage = 0,
+      this.activeAlbumIndex = 0,
       this.viewContent = false,
+      this.isViewAlbums = false,
       this.createdUserProfile = const User(),
       this.userAlbumList = const <Album>[],
       this.albums});
@@ -229,7 +277,16 @@ class _$_HomePageState implements _HomePageState {
   final String imgUrls;
   @JsonKey()
   @override
+  final int currentPage;
+  @JsonKey()
+  @override
+  final int activeAlbumIndex;
+  @JsonKey()
+  @override
   final bool viewContent;
+  @JsonKey()
+  @override
+  final bool isViewAlbums;
   @JsonKey()
   @override
   final User createdUserProfile;
@@ -241,7 +298,7 @@ class _$_HomePageState implements _HomePageState {
 
   @override
   String toString() {
-    return 'HomePageState(id: $id, content: $content, imgUrls: $imgUrls, viewContent: $viewContent, createdUserProfile: $createdUserProfile, userAlbumList: $userAlbumList, albums: $albums)';
+    return 'HomePageState(id: $id, content: $content, imgUrls: $imgUrls, currentPage: $currentPage, activeAlbumIndex: $activeAlbumIndex, viewContent: $viewContent, isViewAlbums: $isViewAlbums, createdUserProfile: $createdUserProfile, userAlbumList: $userAlbumList, albums: $albums)';
   }
 
   @override
@@ -253,7 +310,13 @@ class _$_HomePageState implements _HomePageState {
             const DeepCollectionEquality().equals(other.content, content) &&
             const DeepCollectionEquality().equals(other.imgUrls, imgUrls) &&
             const DeepCollectionEquality()
+                .equals(other.currentPage, currentPage) &&
+            const DeepCollectionEquality()
+                .equals(other.activeAlbumIndex, activeAlbumIndex) &&
+            const DeepCollectionEquality()
                 .equals(other.viewContent, viewContent) &&
+            const DeepCollectionEquality()
+                .equals(other.isViewAlbums, isViewAlbums) &&
             const DeepCollectionEquality()
                 .equals(other.createdUserProfile, createdUserProfile) &&
             const DeepCollectionEquality()
@@ -267,7 +330,10 @@ class _$_HomePageState implements _HomePageState {
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(content),
       const DeepCollectionEquality().hash(imgUrls),
+      const DeepCollectionEquality().hash(currentPage),
+      const DeepCollectionEquality().hash(activeAlbumIndex),
       const DeepCollectionEquality().hash(viewContent),
+      const DeepCollectionEquality().hash(isViewAlbums),
       const DeepCollectionEquality().hash(createdUserProfile),
       const DeepCollectionEquality().hash(userAlbumList),
       const DeepCollectionEquality().hash(albums));
@@ -283,7 +349,10 @@ abstract class _HomePageState implements HomePageState {
       {String id,
       String content,
       String imgUrls,
+      int currentPage,
+      int activeAlbumIndex,
       bool viewContent,
+      bool isViewAlbums,
       User createdUserProfile,
       List<Album> userAlbumList,
       List<Album>? albums}) = _$_HomePageState;
@@ -295,7 +364,13 @@ abstract class _HomePageState implements HomePageState {
   @override
   String get imgUrls;
   @override
+  int get currentPage;
+  @override
+  int get activeAlbumIndex;
+  @override
   bool get viewContent;
+  @override
+  bool get isViewAlbums;
   @override
   User get createdUserProfile;
   @override

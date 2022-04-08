@@ -20,7 +20,7 @@ class LoginPage extends StatelessWidget {
 
   static Route<T> fadeInRoute<T>() {
     return PageTransition<T>(
-      child: LoginPage(),
+      child: const LoginPage(),
       type: PageTransitionType.fade,
       settings: const RouteSettings(name: 'login_page'),
     );

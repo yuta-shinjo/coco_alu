@@ -53,19 +53,19 @@ class AddAlbumPgeBody extends ConsumerWidget {
               TagChip(btnController: btnController),
               const Divider(color: AppColors.grey),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Row(
                   children: [
-                    Icon(Icons.public, color: AppColors.primary),
-                    SizedBox(width: 10),
-                    Text(
+                    const Icon(Icons.public, color: AppColors.primary),
+                    const SizedBox(width: 10),
+                    const Text(
                       'みんなに公開する',
                       style: TextStyle(
                         color: AppColors.textDisable,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Switch(
                       value: public,
                       onChanged: (value) => ref
@@ -79,21 +79,22 @@ class AddAlbumPgeBody extends ConsumerWidget {
               public
                   ? Column(
                       children: [
-                        Divider(color: AppColors.grey),
+                        const Divider(color: AppColors.grey),
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16),
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: Row(
                             children: [
-                              Icon(Icons.location_on, color: AppColors.primary),
-                              SizedBox(width: 10),
-                              Text(
+                              const Icon(Icons.location_on,
+                                  color: AppColors.primary),
+                              const SizedBox(width: 10),
+                              const Text(
                                 '写真の位置情報を公開する',
                                 style: TextStyle(
                                   color: AppColors.textDisable,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              Spacer(),
+                              const Spacer(),
                               Switch(
                                 value: pictureLocation,
                                 onChanged: (value) => ref
@@ -114,7 +115,7 @@ class AddAlbumPgeBody extends ConsumerWidget {
                 imgFile,
                 tags,
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
             ],
           ),
         ),
@@ -147,7 +148,7 @@ class AddAlbumPgeBody extends ConsumerWidget {
     return Image(
       image: imgFile != null
           ? Image.file(imgFile, fit: BoxFit.cover).image
-          : AssetImage('assets/images/photo.jpg'),
+          : const AssetImage('assets/images/photo.jpg'),
       fit: BoxFit.cover,
     );
   }
@@ -159,7 +160,7 @@ class AddAlbumPgeBody extends ConsumerWidget {
     return Consumer(
       builder: (context, ref, _) {
         return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: TextFormField(
             onTap: () => btnController.reset(),
             maxLines: 6,
@@ -197,7 +198,7 @@ class AddAlbumPgeBody extends ConsumerWidget {
       return ButtonTheme(
         child: LoadingButton(
           primaryColor: AppColors.subPrimary,
-          text: ButtonText('作成'),
+          text: const ButtonText('作成'),
           controller: btnController,
           onPressed: () async {
             if (imgFile != null) {

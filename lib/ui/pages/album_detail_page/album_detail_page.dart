@@ -23,13 +23,14 @@ class _TestAlbumDetailPageState extends ConsumerState<AlbumDetailPage>
   bool dragFlg = false;
   final Album album;
 
+  @override
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
       backgroundColor: AppColors.scaffoldColor,
       appBar: AppBar(
         backgroundColor: AppColors.barColor,
-        leading: CloseButton(),
+        leading: const CloseButton(),
       ),
       body: AlbumDetailPageBody(album: album),
     );

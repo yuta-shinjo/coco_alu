@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_collection/models/src/album.dart';
@@ -13,7 +14,10 @@ class HomePageState with _$HomePageState {
     @Default('') String id,
     @Default('') String content,
     @Default('') String imgUrls,
+    @Default(0) int currentPage,
+    @Default(0) int activeAlbumIndex,
     @Default(false) bool viewContent,
+    @Default(false) bool isViewAlbums,
     @Default(User()) User createdUserProfile,
     @Default(<Album>[]) List<Album> userAlbumList,
     List<Album>? albums,
@@ -32,6 +36,7 @@ class HomePageController extends StateNotifier<HomePageState> {
 
   final _fireUsersService = FireUsersService();
   final _firePublicService = FirePublicService();
+  final PageController controller = PageController();
 
   void _init() async {
     await _firePublicService.fetchPublicAlbumList(
@@ -53,8 +58,9 @@ class HomePageController extends StateNotifier<HomePageState> {
   Future<void> fetchCreatedUserProfile(String createdUserId) async {
     final createdUserProfile =
         await _fireUsersService.fetchCreatedUserProfile(createdUserId);
-    if (createdUserProfile != null)
+    if (createdUserProfile != null) {
       state = state.copyWith(createdUserProfile: createdUserProfile);
+    }
   }
 
   void viewContent() {
@@ -65,5 +71,21 @@ class HomePageController extends StateNotifier<HomePageState> {
     final userAlbumList =
         await _firePublicService.fetchUserAlbumList(userId: userId);
     state = state.copyWith(userAlbumList: userAlbumList);
+  }
+
+  void toggleViewAlbums() {
+    state = state.copyWith(isViewAlbums: !state.isViewAlbums);
+  }
+
+  // TODO toggleボタンを押した時に最初の写真に戻らないようにしたい
+  // そうすれば、currentPageを0にしなくても良い気がする
+  // albumを表示する時にactive(これによってpaddingの値が変わる)がnullになってしまって
+  // 一瞬だけpaddingがついてしまって小さくなってしまうのを改善
+  void initializedPage() {
+    state = state.copyWith(currentPage: 0);
+  }
+
+  void selectedAlbum(int activeAlbumIndex) {
+    state = state.copyWith(activeAlbumIndex: activeAlbumIndex);
   }
 }

@@ -21,7 +21,7 @@ class AccountPage extends StatelessWidget {
         backgroundColor: AppColors.barColor,
         title: const AppBarText('アカウント'),
       ),
-      body: AccountPageBody(),
+      body: const AccountPageBody(),
     );
   }
 }

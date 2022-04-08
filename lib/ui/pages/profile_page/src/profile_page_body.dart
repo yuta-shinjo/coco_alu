@@ -7,7 +7,7 @@ import 'package:my_collection/ui/components/src/universal.dart';
 import 'package:my_collection/ui/pages/album_detail_page/album_detail_page.dart';
 
 class ProfilePageBody extends ConsumerWidget {
-  ProfilePageBody({Key? key, required this.profile, required this.albums})
+  const ProfilePageBody({Key? key, required this.profile, required this.albums})
       : super(key: key);
 
   final List<Album> albums;
@@ -17,9 +17,9 @@ class ProfilePageBody extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Column(
       children: [
-        SizedBox(height: 50),
+        const SizedBox(height: 50),
         _profileDisplay(context, albums),
-        Padding(
+        const Padding(
           padding: EdgeInsets.symmetric(horizontal: 20),
           child: Divider(color: AppColors.grey),
         ),
@@ -32,11 +32,11 @@ class ProfilePageBody extends ConsumerWidget {
     final imgUrls = profile.imgUrls;
     final name = profile.name;
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       child: Row(
         children: [
           imgUser(imgUrls),
-          SizedBox(width: 20),
+          const SizedBox(width: 20),
           infoUser(context, name, album),
         ],
       ),
@@ -61,7 +61,7 @@ class ProfilePageBody extends ConsumerWidget {
                   imgUrls,
                   fit: BoxFit.cover,
                 )
-              : UniversalImage(
+              : const UniversalImage(
                   'assets/images/avatar.jpg',
                   fit: BoxFit.cover,
                 ),
@@ -76,16 +76,16 @@ class ProfilePageBody extends ConsumerWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          padding: EdgeInsets.only(left: 12),
+          padding: const EdgeInsets.only(left: 12),
           width: MediaQuery.of(context).size.width / 2.5,
           child: Text(
             name!,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(fontSize: 20),
+            style: const TextStyle(fontSize: 20),
           ),
         ),
         Container(
-          padding: EdgeInsets.only(left: 12),
+          padding: const EdgeInsets.only(left: 12),
           child: OverlineText(
             '公開している思い出: ${album.length}',
           ),
@@ -97,8 +97,8 @@ class ProfilePageBody extends ConsumerWidget {
   Widget _photoList(List<Album> albums) {
     return Expanded(
       child: GridView.builder(
-        padding: EdgeInsets.symmetric(horizontal: 4),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        padding: const EdgeInsets.symmetric(horizontal: 4),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           mainAxisSpacing: 2,
           crossAxisSpacing: 2,
           crossAxisCount: 3,
@@ -110,19 +110,19 @@ class ProfilePageBody extends ConsumerWidget {
           return GestureDetector(
             onTap: () => _goToDetail(context, album),
             child: album.latitude!.isEmpty
-                ? Container(
+                ? SizedBox(
                     width: MediaQuery.of(context).size.width / 2.9,
                     height: MediaQuery.of(context).size.width / 2.9,
                     child: UniversalImage(albumImageUrl, fit: BoxFit.cover),
                   )
                 : Stack(
                     children: [
-                      Container(
+                      SizedBox(
                         width: MediaQuery.of(context).size.width / 2.9,
                         height: MediaQuery.of(context).size.width / 2.9,
                         child: UniversalImage(albumImageUrl, fit: BoxFit.cover),
                       ),
-                      Align(
+                      const Align(
                         alignment: Alignment(0.95, -0.95),
                         child: CircleAvatar(
                           radius: 15,
@@ -141,7 +141,7 @@ class ProfilePageBody extends ConsumerWidget {
 
   void _goToDetail(BuildContext context, Album album) {
     Navigator.of(context).push(
-      PageRouteBuilder<Null>(
+      PageRouteBuilder<void>(
         pageBuilder: (BuildContext context, Animation<double> animation,
             Animation<double> secondaryAnimation) {
           return AnimatedBuilder(
@@ -154,7 +154,7 @@ class ProfilePageBody extends ConsumerWidget {
             },
           );
         },
-        transitionDuration: Duration(milliseconds: 400),
+        transitionDuration: const Duration(milliseconds: 400),
       ),
     );
   }

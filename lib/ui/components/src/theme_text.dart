@@ -32,7 +32,7 @@ class Headline6Text extends StatelessWidget {
         maxLines: maxLines,
         textAlign: textAlign,
         overflow: overflow,
-        style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),
+        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
       ),
     );
   }

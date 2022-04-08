@@ -172,7 +172,7 @@ class AddAlbumPageController extends StateNotifier<AddAlbumPageState> {
       ),
     );
     // publicがtrueのときfirebaseのpublic部分に追加
-    if (state.public)
+    if (state.public) {
       await _firePublicService.releaseAlbum(
         tagsList,
         album: Album(
@@ -191,6 +191,7 @@ class AddAlbumPageController extends StateNotifier<AddAlbumPageState> {
           likedUser: state.likedUser,
         ),
       );
+    }
   }
 
   final _fireStorageService = FireStorageService();

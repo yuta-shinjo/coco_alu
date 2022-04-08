@@ -13,7 +13,7 @@ class TagChip extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -21,7 +21,7 @@ class TagChip extends ConsumerWidget {
           TextFormField(
             onTap: () => btnController.reset(),
             controller: ref.read(tagChipsPageProvider.notifier).tagController,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: 'タグを追加する',
               hintStyle: TextStyle(
                 color: AppColors.grey,

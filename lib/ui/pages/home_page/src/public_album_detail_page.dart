@@ -37,24 +37,24 @@ class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
   final Album album;
   final User profile;
 
+  @override
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
       backgroundColor: AppColors.scaffoldColor,
       appBar: AppBar(
         backgroundColor: AppColors.barColor,
-        leading: CloseButton(),
+        leading: const CloseButton(),
       ),
       body: _albumDetailPageBody(context),
     );
   }
 
   Widget _albumDetailPageBody(BuildContext context) {
-    final Completer<GoogleMapController> _mapController = Completer();
     return SingleChildScrollView(
       child: Column(
         children: [
-          Container(
+          SizedBox(
             height: 60,
             child: _profileDisplay(profile),
           ),
@@ -78,8 +78,8 @@ class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16),
                 child: Headline6Text('撮影スポット'),
               ),
               SizedBox(
@@ -90,7 +90,7 @@ class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
                     if (snapshot.hasData) {
                       return Consumer(
                         builder: (context, ref, _) {
-                          return _mapPart(snapshot, _mapController);
+                          return _mapPart(snapshot);
                         },
                       );
                     } else {
@@ -99,9 +99,9 @@ class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
                           height: MediaQuery.of(context).size.height / 3.5,
                           child: Stack(
                             alignment: Alignment.bottomCenter,
-                            children: [
+                            children: const [
                               Padding(
-                                padding: const EdgeInsets.only(bottom: 30),
+                                padding: EdgeInsets.only(bottom: 30),
                                 child: UniversalImage('assets/images/lost.jpg'),
                               ),
                               Subtitle2Text('この写真には位置情報が登録されていないようです'),
@@ -173,7 +173,7 @@ class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
   Widget _displayImage(
     BuildContext context,
   ) {
-    return Container(
+    return SizedBox(
       height: MediaQuery.of(context).size.height / 3,
       width: double.infinity,
       child: UniversalImage(album.imgUrls, fit: BoxFit.cover),
@@ -191,7 +191,7 @@ class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
         ),
         child: Text(
           album.tags[i],
-          style: TextStyle(
+          style: const TextStyle(
             color: AppColors.grey,
             fontWeight: FontWeight.bold,
             fontSize: 12,
@@ -204,12 +204,12 @@ class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
   Widget _albumContent(WidgetRef ref) {
     final viewContent =
         ref.watch(homePageProvider.select((s) => s.viewContent));
-    if (album.content.length > 0 && album.content.length < 4) {
+    if (album.content.isNotEmpty && album.content.length < 4) {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Subtitle2Text(album.content),
       );
-    } else if (album.content.length == 0) {
+    } else if (album.content.isEmpty) {
       return Container();
     }
     return Padding(
@@ -219,11 +219,11 @@ class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Subtitle2Text(album.content.substring(0, 4) + '...'),
-                SizedBox(width: 4),
+                const SizedBox(width: 4),
                 GestureDetector(
                   onTap: () =>
                       ref.read(homePageProvider.notifier).viewContent(),
-                  child: Text(
+                  child: const Text(
                     '続きを読む',
                     style: TextStyle(color: AppColors.textDisable),
                   ),
@@ -236,7 +236,7 @@ class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
                 GestureDetector(
                   onTap: () =>
                       ref.read(homePageProvider.notifier).viewContent(),
-                  child: Text(
+                  child: const Text(
                     '閉じる',
                     style: TextStyle(color: AppColors.textDisable),
                   ),
@@ -258,10 +258,7 @@ class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
     );
   }
 
-  Widget _mapPart(
-    AsyncSnapshot<LatLng> snapshot,
-    Completer<GoogleMapController> _mapController,
-  ) {
+  Widget _mapPart(AsyncSnapshot<LatLng> snapshot) {
     return GoogleMap(
       markers: _markers(album),
       initialCameraPosition: CameraPosition(

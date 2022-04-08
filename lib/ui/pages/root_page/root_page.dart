@@ -11,18 +11,18 @@ import 'package:my_collection/ui/pages/my_list_page/my_list_page.dart';
 import 'package:page_transition/page_transition.dart';
 
 class RootPage extends ConsumerStatefulWidget {
-  RootPage({Key? key}) : super(key: key);
+  const RootPage({Key? key}) : super(key: key);
 
   static Route<T> route<T>() {
     return MaterialPageRoute<T>(
-      builder: (_) => RootPage(),
+      builder: (_) => const RootPage(),
       settings: const RouteSettings(name: 'root_page'),
     );
   }
 
   static Route<T> fadeInRoute<T>() {
     return PageTransition<T>(
-      child: RootPage(),
+      child: const RootPage(),
       type: PageTransitionType.fade,
       settings: const RouteSettings(name: 'root_page'),
     );
@@ -61,11 +61,11 @@ class _RootPageState extends ConsumerState<RootPage>
     final currentIndex = ref.watch(rootPageProvider.select((s) => s.tabIndex));
 
     final _tabs = [
-      HomePage(),
-      MyListPage(),
-      EditAlbumPage(),
-      MapPage(),
-      AccountPage(),
+      const HomePage(),
+      const MyListPage(),
+      const EditAlbumPage(),
+      const MapPage(),
+      const AccountPage(),
     ];
 
     return Scaffold(

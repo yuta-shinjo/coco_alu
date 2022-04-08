@@ -19,9 +19,9 @@ class EditAlbumPage extends StatelessWidget {
         heroTag: 'edit_album',
         onPressed: () => Navigator.push(context, AddAlbumPage.route()),
         backgroundColor: AppColors.accentColor,
-        child: Icon(Icons.add_photo_alternate, size: 30),
+        child: const Icon(Icons.add_photo_alternate, size: 30),
       ),
-      body: AlbumListPageBody(),
+      body: const AlbumListPageBody(),
     );
   }
 }
