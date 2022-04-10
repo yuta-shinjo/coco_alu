@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:exif/exif.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -201,7 +200,6 @@ class AddAlbumPageController extends StateNotifier<AddAlbumPageState> {
       croppedImageFile: state.imgFile,
       id: state.id,
     );
-    EasyLoading.dismiss();
     if (uploadUrl == null) return;
     state = state.copyWith(imgUrls: uploadUrl);
   }

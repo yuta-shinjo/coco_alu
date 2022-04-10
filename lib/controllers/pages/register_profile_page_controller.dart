@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -67,7 +66,6 @@ class RegisterProfilePageController
     final uploadUrl = await _fireStorageService.uploadProfileImage(
       croppedImageFile: state.imageFile,
     );
-    EasyLoading.dismiss();
     if (uploadUrl == null) return;
     state = state.copyWith(profileImageUrl: uploadUrl);
   }

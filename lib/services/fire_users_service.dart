@@ -183,12 +183,39 @@ class FireUsersService {
         .delete();
   }
 
-  Future<void> deletePublicAlbum(Album album) {
-    return _fireStore
-        .collection('public')
-        .doc('v1')
-        .collection('albums')
-        .doc(album.id)
-        .delete();
+  //ユーザーデータのblockUsersを更新する処理
+  Future<void> updateBlockUser({
+    required String userId,
+    required String blockUser,
+  }) async {
+    final documentRef = _fireStore
+        .collection('users')
+        .doc(userId)
+        .collection('private')
+        .doc(userId);
+    await documentRef.set(
+      <String, dynamic>{
+        FieldName.blockUsers: FieldValue.arrayUnion(<String>[blockUser]),
+      },
+      SetOptions(merge: true),
+    );
+  }
+
+  //ユーザーデータのhideAlbumsを更新する処理
+  Future<void> updateHideAlbums({
+    required String userId,
+    required String hideAlbum,
+  }) async {
+    final documentRef = _fireStore
+        .collection('users')
+        .doc(userId)
+        .collection('private')
+        .doc(userId);
+    await documentRef.set(
+      <String, dynamic>{
+        FieldName.hideAlbums: FieldValue.arrayUnion(<String>[hideAlbum]),
+      },
+      SetOptions(merge: true),
+    );
   }
 }

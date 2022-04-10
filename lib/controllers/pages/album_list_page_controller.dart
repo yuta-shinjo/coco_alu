@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_collection/models/src/album.dart';
+import 'package:my_collection/services/fire_public_service.dart';
 import 'package:my_collection/services/fire_storage_service.dart';
 import 'package:my_collection/services/fire_users_service.dart';
 
@@ -24,6 +25,7 @@ class AlbumListPageController extends StateNotifier<AlbumListPageState> {
   }
 
   final _fireUsersService = FireUsersService();
+  final _firePublicService = FirePublicService();
 
   void _init() async {
     await _fireUsersService.fetchMyAlbumList(
@@ -46,7 +48,7 @@ class AlbumListPageController extends StateNotifier<AlbumListPageState> {
     final albums = [...?state.albums];
     albums.removeAt(index);
     await _fireUsersService.deleteMyAlbum(album);
-    if (album.public) await _fireUsersService.deletePublicAlbum(album);
+    if (album.public) await _firePublicService.deletePublicAlbum(album);
 
     state = state.copyWith(albums: albums);
   }

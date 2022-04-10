@@ -7,6 +7,7 @@ import 'package:my_collection/models/model.dart';
 import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/components.dart';
 import 'package:my_collection/ui/pages/profile_page/src/profile_map_page_body.dart';
+import 'package:my_collection/ui/projects/closed_button.dart';
 
 class ProfileMapPage extends ConsumerStatefulWidget {
   const ProfileMapPage({Key? key, required this.albums}) : super(key: key);
@@ -39,7 +40,7 @@ class _MapPageState extends ConsumerState<ProfileMapPage>
       backgroundColor: AppColors.scaffoldColor,
       appBar: AppBar(
         title: const AppBarText('思い出'),
-        leading: const CloseButton(),
+        leading: const ClosedButton(),
         backgroundColor: AppColors.barColor,
       ),
       body: ProfileMapPageBody(

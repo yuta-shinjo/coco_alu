@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io' as io;
 
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase;
 
 import 'package:image_picker/image_picker.dart';
@@ -23,7 +22,6 @@ class FireStorageService {
         "users/${_auth.currentUser?.uid}/profiles/${_auth.currentUser?.uid}");
     final metadata = SettableMetadata(contentType: 'image/jpg');
     try {
-      EasyLoading.show();
       ref.putData(data, metadata);
       await ref.putFile(imageFile, metadata);
     } catch (e) {
@@ -43,7 +41,6 @@ class FireStorageService {
         storage.ref("users/${_auth.currentUser?.uid}/albums/$id");
     final metadata = SettableMetadata(contentType: 'image/jpg');
     try {
-      EasyLoading.show();
       ref.putData(data, metadata);
       await ref.putFile(imageFile, metadata);
     } catch (e) {

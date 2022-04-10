@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_collection/models/src/album.dart';
 import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/pages/album_detail_page/src/album_detail_page_body.dart';
+import 'package:my_collection/ui/projects/closed_button.dart';
 
 class AlbumDetailPage extends ConsumerStatefulWidget {
   const AlbumDetailPage({Key? key, required this.album}) : super(key: key);
@@ -30,7 +31,7 @@ class _TestAlbumDetailPageState extends ConsumerState<AlbumDetailPage>
       backgroundColor: AppColors.scaffoldColor,
       appBar: AppBar(
         backgroundColor: AppColors.barColor,
-        leading: const CloseButton(),
+        leading: const ClosedButton(),
       ),
       body: AlbumDetailPageBody(album: album),
     );

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_collection/themes/app_colors.dart';
-import 'package:my_collection/ui/pages/home_page/src/public_map_page.dart';
-import 'package:my_collection/ui/pages/home_page/src/public_memory_page.dart';
+import 'package:my_collection/ui/pages/home_page/src/public_map_page/public_map_page.dart';
+import 'package:my_collection/ui/pages/home_page/src/public_memory_page/public_memory_page.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({Key? key}) : super(key: key);

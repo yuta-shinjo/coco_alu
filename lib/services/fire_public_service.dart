@@ -52,4 +52,13 @@ class FirePublicService {
         .doc(album.id)
         .delete();
   }
+
+  Future<void> deletePublicAlbum(Album album) {
+    return _fireStore
+        .collection('public')
+        .doc('v1')
+        .collection('albums')
+        .doc(album.id)
+        .delete();
+  }
 }

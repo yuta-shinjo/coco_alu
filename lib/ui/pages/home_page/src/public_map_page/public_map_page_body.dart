@@ -8,7 +8,7 @@ import 'package:my_collection/controllers/pages/home_page_controller.dart';
 import 'package:my_collection/models/model.dart';
 import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/src/universal.dart';
-import 'package:my_collection/ui/pages/album_detail_page/album_detail_page.dart';
+import 'package:my_collection/ui/pages/home_page/src/public_album_detail_page.dart';
 
 class PublicMapPageBody extends ConsumerWidget {
   PublicMapPageBody({Key? key, required this.mapController}) : super(key: key);
@@ -160,6 +160,9 @@ class PublicMapPageBody extends ConsumerWidget {
       final controller = ref.watch(homePageProvider.notifier).controller;
       final currentPage =
           ref.watch(homePageProvider.select((s) => s.currentPage));
+      if (albums == null) {
+        const Center(child: CircularProgressIndicator());
+      }
       final album = albums![currentPage];
       return Align(
         alignment: const Alignment(0, 0.92),
@@ -172,7 +175,6 @@ class PublicMapPageBody extends ConsumerWidget {
             itemBuilder: (context, int currentIndex) {
               bool active = currentIndex == currentPage;
               return _createCardAnimate(
-                context,
                 _displayImg(context, ref)[currentIndex],
                 active,
                 album,
@@ -204,31 +206,39 @@ class PublicMapPageBody extends ConsumerWidget {
     return imgCard;
   }
 
-  Widget _createCardAnimate(
-      BuildContext context, String imagePath, bool active, Album album) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 300),
-      child: SizedBox(
-        height: MediaQuery.of(context).size.height / 3.8,
-        width: MediaQuery.of(context).size.width / 1.5,
-        child: GestureDetector(
-          onTap: () => _goToDetail(context, album),
-          child: Card(
-            clipBehavior: Clip.antiAlias,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: UniversalImage(
-              imagePath,
-              fit: BoxFit.cover,
+  Widget _createCardAnimate(String imagePath, bool active, Album album) {
+    return Consumer(builder: (context, ref, _) {
+      return AnimatedContainer(
+        duration: const Duration(milliseconds: 300),
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height / 3.8,
+          width: MediaQuery.of(context).size.width / 1.5,
+          child: GestureDetector(
+            onTap: () async {
+              await ref
+                  .read(homePageProvider.notifier)
+                  .fetchCreatedUserProfile(album.createdUser);
+              final createdUserProfile = ref
+                  .watch(homePageProvider.select((s) => s.createdUserProfile));
+              _goToDetail(context, album, createdUserProfile);
+            },
+            child: Card(
+              clipBehavior: Clip.antiAlias,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: UniversalImage(
+                imagePath,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 
-  void _goToDetail(BuildContext context, Album album) {
+  void _goToDetail(BuildContext context, Album album, User profile) {
     Navigator.of(context).push(
       PageRouteBuilder<void>(
         pageBuilder: (BuildContext context, Animation<double> animation,
@@ -238,7 +248,7 @@ class PublicMapPageBody extends ConsumerWidget {
             builder: (BuildContext context, Widget? child) {
               return Opacity(
                 opacity: animation.value,
-                child: AlbumDetailPage(album: album),
+                child: PublicAlbumDetailPage(album: album, profile: profile),
               );
             },
           );

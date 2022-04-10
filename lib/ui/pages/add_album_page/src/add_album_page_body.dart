@@ -203,10 +203,6 @@ class AddAlbumPgeBody extends ConsumerWidget {
           onPressed: () async {
             if (imgFile != null) {
               try {
-                ref.read(addAlbumPageProvider.notifier).startLoading();
-                ref
-                    .read(addAlbumPageProvider.notifier)
-                    .loadingSuccess(btnController);
                 if (!pictureLocation) {
                   ref.read(addAlbumPageProvider.notifier).pictureLocationOff();
                 }
@@ -235,12 +231,16 @@ class AddAlbumPgeBody extends ConsumerWidget {
                     .loadingError(btnController);
                 print(e);
               } finally {
-                ref.read(addAlbumPageProvider.notifier).endLoading();
+                ref
+                    .read(addAlbumPageProvider.notifier)
+                    .loadingSuccess(btnController);
+                await ref.read(myListPageProvider.notifier).fetchAlbumList();
+                await ref
+                    .read(homePageProvider.notifier)
+                    .fetchPublicAlbumList();
+                await ref.read(albumListPageProvider.notifier).fetchAlbumList();
+                await ref.read(mapPageProvider.notifier).fetchAlbumList();
                 btnController.reset();
-                ref.read(myListPageProvider.notifier).fetchAlbumList();
-                ref.read(homePageProvider.notifier).fetchPublicAlbumList();
-                ref.read(albumListPageProvider.notifier).fetchAlbumList();
-                ref.read(mapPageProvider.notifier).fetchAlbumList();
               }
             } else {
               ref.read(addAlbumPageProvider.notifier).btnController.error();

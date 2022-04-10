@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart' as firebase;
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_collection/models/src/album.dart';
 import 'package:my_collection/models/src/user.dart';
 import 'package:my_collection/services/fire_public_service.dart';
+import 'package:my_collection/services/fire_report_service.dart';
+import 'package:my_collection/services/fire_storage_service.dart';
 import 'package:my_collection/services/fire_users_service.dart';
 
 part 'home_page_controller.freezed.dart';
@@ -35,6 +38,7 @@ class HomePageController extends StateNotifier<HomePageState> {
   }
 
   final _fireUsersService = FireUsersService();
+  final auth = firebase.FirebaseAuth.instance;
   final _firePublicService = FirePublicService();
   final PageController controller = PageController();
 
@@ -44,6 +48,14 @@ class HomePageController extends StateNotifier<HomePageState> {
         state = state.copyWith(albums: albums);
       },
     );
+
+    // ページコントローラのページ遷移を監視しページ数を丸める
+    controller.addListener(() {
+      int next = controller.page!.round();
+      if (state.currentPage != next) {
+        state = state.copyWith(currentPage: next);
+      }
+    });
   }
 
   // 作成ページで作成ボタンを押したときにhomePageのリストを更新するため
@@ -87,5 +99,52 @@ class HomePageController extends StateNotifier<HomePageState> {
 
   void selectedAlbum(int activeAlbumIndex) {
     state = state.copyWith(activeAlbumIndex: activeAlbumIndex);
+  }
+
+  void createdUserProfile() {}
+
+  Future<void> deleteAlbum(Album album) async {
+    final albums = [...?state.albums];
+    albums.remove(album.id);
+    await _fireUsersService.deleteMyAlbum(album);
+    if (album.public) await _firePublicService.deletePublicAlbum(album);
+
+    state = state.copyWith(albums: albums);
+  }
+
+  final _fireStorageService = FireStorageService();
+
+  Future<void> deleteStorage(String id) async =>
+      await _fireStorageService.deleteStorage(id);
+
+  final _fireReportService = FireReportsService();
+
+  Future<void> report({
+    required String message,
+    required String targetAlbumId,
+    required String targetAlbumContent,
+    required String targetUserId,
+  }) async {
+    await _fireReportService.createReport(
+      message: message,
+      sendUserId: auth.currentUser!.uid,
+      targetPostId: targetAlbumId,
+      targetPostContent: targetAlbumContent,
+      targetUserId: targetUserId,
+    );
+  }
+
+  Future<void> block({required String blockUserId}) async {
+    _fireUsersService.updateBlockUser(
+      userId: auth.currentUser!.uid,
+      blockUser: blockUserId,
+    );
+  }
+
+  Future<void> hideAlbum({required String hideAlbumId}) async {
+    _fireUsersService.updateHideAlbums(
+      userId: auth.currentUser!.uid,
+      hideAlbum: hideAlbumId,
+    );
   }
 }
