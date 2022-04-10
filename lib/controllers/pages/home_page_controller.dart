@@ -23,6 +23,8 @@ class HomePageState with _$HomePageState {
     @Default(false) bool isViewAlbums,
     @Default(User()) User createdUserProfile,
     @Default(<Album>[]) List<Album> userAlbumList,
+    @Default(<String>[]) List<String> blockList,
+    @Default(<String>[]) List<String> hideAlbumList,
     List<Album>? albums,
   }) = _HomePageState;
 }
@@ -43,11 +45,7 @@ class HomePageController extends StateNotifier<HomePageState> {
   final PageController controller = PageController();
 
   void _init() async {
-    await _firePublicService.fetchPublicAlbumList(
-      onValueChanged: (albums) {
-        state = state.copyWith(albums: albums);
-      },
-    );
+    fetchPublicAlbumList();
 
     // ページコントローラのページ遷移を監視しページ数を丸める
     controller.addListener(() {
@@ -60,10 +58,16 @@ class HomePageController extends StateNotifier<HomePageState> {
 
   // 作成ページで作成ボタンを押したときにhomePageのリストを更新するため
   Future<void> fetchPublicAlbumList() async {
+    final user = await _fireUsersService.fetchPrivateList();
+    final blockUsers = user?.blockUsers;
+    final hideAlbums = user?.hideAlbums;
+
     await _firePublicService.fetchPublicAlbumList(
       onValueChanged: (albums) {
         state = state.copyWith(albums: albums);
       },
+      blockUsers: blockUsers,
+      hideAlbums: hideAlbums,
     );
   }
 

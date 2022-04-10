@@ -95,7 +95,7 @@ class _RootPageState extends ConsumerState<RootPage>
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.edit),
-              label: '編集',
+              label: '追加&編集',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.pin_drop),

@@ -135,6 +135,10 @@ class AccountPageBody extends ConsumerWidget {
         const Divider(color: AppColors.grey),
         emailAdless(email, context),
         const Divider(color: AppColors.grey),
+        // blockList(email, context),
+        // const Divider(color: AppColors.grey),
+        // hideList(email, context),
+        // const Divider(color: AppColors.grey),
         ListTile(
           title: const Subtitle2Text('ログアウト'),
           onTap: () async {
@@ -178,6 +182,32 @@ class AccountPageBody extends ConsumerWidget {
           : null,
     );
   }
+
+  // ListTile blockList(String? email, BuildContext context) {
+  //   return ListTile(
+  //     title: const Subtitle2Text('ブロックリスト'),
+  //     trailing: const Icon(
+  //       Icons.arrow_forward_ios,
+  //       color: AppColors.primary,
+  //     ),
+  //     onTap: () {
+  //       Navigator.push(context, BlockListPage.route());
+  //     },
+  //   );
+  // }
+
+  // ListTile hideList(String? email, BuildContext context) {
+  //   return ListTile(
+  //     title: const Subtitle2Text('非表示リスト'),
+  //     trailing: const Icon(
+  //       Icons.arrow_forward_ios,
+  //       color: AppColors.primary,
+  //     ),
+  //     onTap: () {
+  //       Navigator.push(context, HideListPage.route());
+  //     },
+  //   );
+  // }
 
   Widget displayDialog() {
     return Consumer(

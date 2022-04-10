@@ -22,10 +22,16 @@ User _$UserFromJson(Map<String, dynamic> json) {
 class _$UserTearOff {
   const _$UserTearOff();
 
-  _User call({String name = '', String imgUrls = ''}) {
+  _User call(
+      {String name = '',
+      String imgUrls = '',
+      List<String> blockUsers = const <String>[],
+      List<String> hideAlbums = const <String>[]}) {
     return _User(
       name: name,
       imgUrls: imgUrls,
+      blockUsers: blockUsers,
+      hideAlbums: hideAlbums,
     );
   }
 
@@ -41,6 +47,8 @@ const $User = _$UserTearOff();
 mixin _$User {
   String get name => throw _privateConstructorUsedError;
   String get imgUrls => throw _privateConstructorUsedError;
+  List<String> get blockUsers => throw _privateConstructorUsedError;
+  List<String> get hideAlbums => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -51,7 +59,11 @@ mixin _$User {
 abstract class $UserCopyWith<$Res> {
   factory $UserCopyWith(User value, $Res Function(User) then) =
       _$UserCopyWithImpl<$Res>;
-  $Res call({String name, String imgUrls});
+  $Res call(
+      {String name,
+      String imgUrls,
+      List<String> blockUsers,
+      List<String> hideAlbums});
 }
 
 /// @nodoc
@@ -66,6 +78,8 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
   $Res call({
     Object? name = freezed,
     Object? imgUrls = freezed,
+    Object? blockUsers = freezed,
+    Object? hideAlbums = freezed,
   }) {
     return _then(_value.copyWith(
       name: name == freezed
@@ -76,6 +90,14 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
           ? _value.imgUrls
           : imgUrls // ignore: cast_nullable_to_non_nullable
               as String,
+      blockUsers: blockUsers == freezed
+          ? _value.blockUsers
+          : blockUsers // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      hideAlbums: hideAlbums == freezed
+          ? _value.hideAlbums
+          : hideAlbums // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -85,7 +107,11 @@ abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
   factory _$UserCopyWith(_User value, $Res Function(_User) then) =
       __$UserCopyWithImpl<$Res>;
   @override
-  $Res call({String name, String imgUrls});
+  $Res call(
+      {String name,
+      String imgUrls,
+      List<String> blockUsers,
+      List<String> hideAlbums});
 }
 
 /// @nodoc
@@ -101,6 +127,8 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
   $Res call({
     Object? name = freezed,
     Object? imgUrls = freezed,
+    Object? blockUsers = freezed,
+    Object? hideAlbums = freezed,
   }) {
     return _then(_User(
       name: name == freezed
@@ -111,6 +139,14 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
           ? _value.imgUrls
           : imgUrls // ignore: cast_nullable_to_non_nullable
               as String,
+      blockUsers: blockUsers == freezed
+          ? _value.blockUsers
+          : blockUsers // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      hideAlbums: hideAlbums == freezed
+          ? _value.hideAlbums
+          : hideAlbums // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -118,7 +154,11 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_User implements _User {
-  const _$_User({this.name = '', this.imgUrls = ''});
+  const _$_User(
+      {this.name = '',
+      this.imgUrls = '',
+      this.blockUsers = const <String>[],
+      this.hideAlbums = const <String>[]});
 
   factory _$_User.fromJson(Map<String, dynamic> json) => _$$_UserFromJson(json);
 
@@ -128,10 +168,16 @@ class _$_User implements _User {
   @JsonKey()
   @override
   final String imgUrls;
+  @JsonKey()
+  @override
+  final List<String> blockUsers;
+  @JsonKey()
+  @override
+  final List<String> hideAlbums;
 
   @override
   String toString() {
-    return 'User(name: $name, imgUrls: $imgUrls)';
+    return 'User(name: $name, imgUrls: $imgUrls, blockUsers: $blockUsers, hideAlbums: $hideAlbums)';
   }
 
   @override
@@ -140,14 +186,20 @@ class _$_User implements _User {
         (other.runtimeType == runtimeType &&
             other is _User &&
             const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.imgUrls, imgUrls));
+            const DeepCollectionEquality().equals(other.imgUrls, imgUrls) &&
+            const DeepCollectionEquality()
+                .equals(other.blockUsers, blockUsers) &&
+            const DeepCollectionEquality()
+                .equals(other.hideAlbums, hideAlbums));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(imgUrls));
+      const DeepCollectionEquality().hash(imgUrls),
+      const DeepCollectionEquality().hash(blockUsers),
+      const DeepCollectionEquality().hash(hideAlbums));
 
   @JsonKey(ignore: true)
   @override
@@ -161,7 +213,11 @@ class _$_User implements _User {
 }
 
 abstract class _User implements User {
-  const factory _User({String name, String imgUrls}) = _$_User;
+  const factory _User(
+      {String name,
+      String imgUrls,
+      List<String> blockUsers,
+      List<String> hideAlbums}) = _$_User;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
 
@@ -169,6 +225,10 @@ abstract class _User implements User {
   String get name;
   @override
   String get imgUrls;
+  @override
+  List<String> get blockUsers;
+  @override
+  List<String> get hideAlbums;
   @override
   @JsonKey(ignore: true)
   _$UserCopyWith<_User> get copyWith => throw _privateConstructorUsedError;

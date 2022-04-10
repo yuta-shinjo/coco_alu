@@ -91,6 +91,18 @@ class FireUsersService {
     });
   }
 
+  Future<User?> fetchPrivateList() async {
+    final snapshot = await _fireStore
+        .collection('users')
+        .doc(_auth.currentUser?.uid)
+        .collection('private')
+        .doc(_auth.currentUser?.uid)
+        .get();
+    final data = snapshot.data();
+    final user = data != null ? User.fromJson(data) : null;
+    return user;
+  }
+
   Future<User?> fetchUserProfile() async {
     final snapshot = await _fireStore
         .collection('users')
