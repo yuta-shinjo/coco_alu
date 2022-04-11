@@ -10,6 +10,7 @@ import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/components.dart';
 import 'package:my_collection/ui/components/src/universal.dart';
 import 'package:my_collection/ui/pages/album_list_page/src/alert_dialog.dart';
+import 'package:my_collection/utiles.dart';
 
 class AlbumListPageBody extends ConsumerWidget {
   const AlbumListPageBody({Key? key}) : super(key: key);
@@ -105,12 +106,17 @@ class AlbumListPageBody extends ConsumerWidget {
           content: "削除してもよろしいですか？",
           onPressed: () async {
             try {
-              ref.read(albumListPageProvider.notifier).deleteAlbum(album, i);
-              ref.read(albumListPageProvider.notifier).deleteStorage(album.id);
+              await ref
+                  .read(albumListPageProvider.notifier)
+                  .deleteAlbum(album, i);
+              await ref
+                  .read(albumListPageProvider.notifier)
+                  .deleteStorage(album.id);
+              Navigator.pop(context);
+              deleteAlbumMassage();
             } catch (e) {
               print(e);
             } finally {
-              Navigator.pop(context);
               // albumを削除時にhomePageのリストを更新するため
               await ref.read(myListPageProvider.notifier).fetchAlbumList();
               await ref.read(homePageProvider.notifier).fetchPublicAlbumList();

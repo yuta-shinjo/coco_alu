@@ -24,7 +24,6 @@ dependencies:
   firebase_core: ^1.10.2
   firebase_storage: ^10.2.4
   fluttertoast: ^8.0.8
-  flutter_easyloading: ^3.0.3
   flutter_hooks: ^0.18.0
   flutter_native_splash: ^2.0.5
   flutter_slidable: ^0.6.0

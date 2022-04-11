@@ -9,7 +9,12 @@ import 'package:my_collection/models/src/user.dart';
 import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/src/theme_text.dart';
 import 'package:my_collection/ui/components/src/universal.dart';
+import 'package:my_collection/ui/pages/home_page/src/public_album_delete_dialog.dart';
+import 'package:my_collection/ui/pages/home_page/src/public_album_hide_dialog.dart';
+import 'package:my_collection/ui/pages/home_page/src/public_album_report_dialog.dart';
+import 'package:my_collection/ui/pages/home_page/src/user_block_dialog.dart';
 import 'package:my_collection/ui/pages/profile_page/profile_page.dart';
+import 'package:my_collection/ui/projects/public_detail_closed_button.dart';
 
 class PublicAlbumDetailPage extends ConsumerStatefulWidget {
   const PublicAlbumDetailPage({
@@ -44,7 +49,7 @@ class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
       backgroundColor: AppColors.scaffoldColor,
       appBar: AppBar(
         backgroundColor: AppColors.barColor,
-        leading: const CloseButton(),
+        leading: const PublicDetailClosedButton(),
       ),
       body: _albumDetailPageBody(context),
     );
@@ -122,15 +127,85 @@ class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
   }
 
   Widget _profileDisplay(User profile) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 5, top: 10, bottom: 10),
-      child: Row(
-        children: [
-          imgUser(profile.imgUrls, album.createdUser),
-          infoUser(context, profile.name),
-        ],
-      ),
-    );
+    return Consumer(builder: (context, ref, _) {
+      final userId = ref.watch(homePageProvider.notifier).auth.currentUser!.uid;
+      return Padding(
+        padding: const EdgeInsets.only(left: 5, top: 10, bottom: 10),
+        child: Row(
+          children: [
+            imgUser(profile.imgUrls, album.createdUser),
+            infoUser(context, profile.name),
+            const Spacer(),
+            PopupMenuButton(
+              color: AppColors.scaffoldColor,
+              icon: const Icon(Icons.more_horiz, color: AppColors.iconBlack),
+              itemBuilder: album.createdUser == userId
+                  ? (context) => [
+                        PopupMenuItem(
+                          value: '削除',
+                          child: Row(
+                            children: const [
+                              Subtitle2Text('投稿を削除'),
+                              Spacer(),
+                              Icon(Icons.delete, color: AppColors.red),
+                            ],
+                          ),
+                        ),
+                      ]
+                  : (context) => [
+                        PopupMenuItem(
+                          value: '報告',
+                          child: Row(
+                            children: const [
+                              Subtitle2Text('この投稿を報告する'),
+                              Spacer(),
+                              Icon(Icons.announcement, color: AppColors.red),
+                            ],
+                          ),
+                        ),
+                        PopupMenuItem(
+                          value: '非表示',
+                          child: Row(
+                            children: const [
+                              Subtitle2Text('この投稿を非表示にする'),
+                              Spacer(),
+                              Icon(Icons.visibility_off,
+                                  color: AppColors.iconBlack),
+                            ],
+                          ),
+                        ),
+                        PopupMenuItem(
+                          value: 'ブロック',
+                          child: Row(
+                            children: const [
+                              Subtitle2Text('ブロックする'),
+                              Spacer(),
+                              Icon(Icons.person_off,
+                                  color: AppColors.iconBlack),
+                            ],
+                          ),
+                        ),
+                      ],
+              onSelected: (value) async {
+                await showDialog<String>(
+                    context: context,
+                    builder: (_) {
+                      if (value.toString() == '削除') {
+                        return PublicDeleteDialog(album: album);
+                      } else if (value.toString() == '報告') {
+                        return PublicAlbumReportDialog(album: album);
+                      } else if (value.toString() == '非表示') {
+                        return PublicAlbumHideDialog(album: album);
+                      } else {
+                        return UserBlockDialog(album: album);
+                      }
+                    });
+              },
+            ),
+          ],
+        ),
+      );
+    });
   }
 
   Widget imgUser(String imgUrls, String createdUserId) {

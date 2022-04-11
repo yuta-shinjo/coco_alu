@@ -49,6 +49,14 @@ void createAlbumSuccessMassage() {
   );
 }
 
+void deleteAlbumMassage() {
+  Fluttertoast.showToast(
+    msg: '削除しました',
+    toastLength: Toast.LENGTH_LONG,
+    gravity: ToastGravity.CENTER,
+  );
+}
+
 void errorMassage(RoundedLoadingButtonController controller, Object e) {
   loadingError(controller);
   Fluttertoast.showToast(
@@ -106,6 +114,37 @@ void pictureErrorMassage(RoundedLoadingButtonController controller) {
 void notAddChip() {
   Fluttertoast.showToast(
     msg: '同じタグがあるため追加できません',
+    toastLength: Toast.LENGTH_LONG,
+    gravity: ToastGravity.CENTER,
+  );
+}
+
+void reportMassage() {
+  Fluttertoast.showToast(
+    msg: '報告が完了しました',
+    toastLength: Toast.LENGTH_LONG,
+    gravity: ToastGravity.CENTER,
+  );
+}
+
+void blockUserMassage() {
+  Fluttertoast.showToast(
+    msg: 'ユーザーをブロックしました',
+    toastLength: Toast.LENGTH_LONG,
+    gravity: ToastGravity.CENTER,
+  );
+}
+
+void hideAlbumMassage() {
+  Fluttertoast.showToast(
+    msg: 'この投稿を非表示にしました',
+    toastLength: Toast.LENGTH_LONG,
+    gravity: ToastGravity.CENTER,
+  );
+}
+void deletePublicAlbumMassage() {
+  Fluttertoast.showToast(
+    msg: 'この投稿を削除しました',
     toastLength: Toast.LENGTH_LONG,
     gravity: ToastGravity.CENTER,
   );

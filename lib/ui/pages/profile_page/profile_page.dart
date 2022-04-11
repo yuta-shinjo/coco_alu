@@ -6,6 +6,7 @@ import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/components.dart';
 import 'package:my_collection/ui/pages/profile_page/src/profile_map_page.dart';
 import 'package:my_collection/ui/pages/profile_page/src/profile_page_body.dart';
+import 'package:my_collection/ui/projects/closed_button.dart';
 
 class ProfilePage extends ConsumerWidget {
   const ProfilePage({Key? key, required this.profile}) : super(key: key);
@@ -25,7 +26,7 @@ class ProfilePage extends ConsumerWidget {
     return Scaffold(
       backgroundColor: AppColors.scaffoldColor,
       appBar: AppBar(
-        leading: const CloseButton(),
+        leading: const ClosedButton(),
         backgroundColor: AppColors.barColor,
         title: const AppBarText('プロフィール'),
       ),
