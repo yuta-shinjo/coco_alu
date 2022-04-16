@@ -203,7 +203,7 @@ class AddAlbumPgeBody extends ConsumerWidget {
           onPressed: () async {
             if (imgFile != null) {
               try {
-                if (!pictureLocation) {
+                if (public && !pictureLocation) {
                   ref.read(addAlbumPageProvider.notifier).pictureLocationOff();
                 }
                 await ref.read(addAlbumPageProvider.notifier).createAlbum(tags);
