@@ -28,6 +28,8 @@ class _$HomePageStateTearOff {
       bool isViewAlbums = false,
       User createdUserProfile = const User(),
       List<Album> userAlbumList = const <Album>[],
+      List<String> blockList = const <String>[],
+      List<String> hideAlbumList = const <String>[],
       List<Album>? albums}) {
     return _HomePageState(
       id: id,
@@ -39,6 +41,8 @@ class _$HomePageStateTearOff {
       isViewAlbums: isViewAlbums,
       createdUserProfile: createdUserProfile,
       userAlbumList: userAlbumList,
+      blockList: blockList,
+      hideAlbumList: hideAlbumList,
       albums: albums,
     );
   }
@@ -58,6 +62,8 @@ mixin _$HomePageState {
   bool get isViewAlbums => throw _privateConstructorUsedError;
   User get createdUserProfile => throw _privateConstructorUsedError;
   List<Album> get userAlbumList => throw _privateConstructorUsedError;
+  List<String> get blockList => throw _privateConstructorUsedError;
+  List<String> get hideAlbumList => throw _privateConstructorUsedError;
   List<Album>? get albums => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -80,6 +86,8 @@ abstract class $HomePageStateCopyWith<$Res> {
       bool isViewAlbums,
       User createdUserProfile,
       List<Album> userAlbumList,
+      List<String> blockList,
+      List<String> hideAlbumList,
       List<Album>? albums});
 
   $UserCopyWith<$Res> get createdUserProfile;
@@ -105,6 +113,8 @@ class _$HomePageStateCopyWithImpl<$Res>
     Object? isViewAlbums = freezed,
     Object? createdUserProfile = freezed,
     Object? userAlbumList = freezed,
+    Object? blockList = freezed,
+    Object? hideAlbumList = freezed,
     Object? albums = freezed,
   }) {
     return _then(_value.copyWith(
@@ -144,6 +154,14 @@ class _$HomePageStateCopyWithImpl<$Res>
           ? _value.userAlbumList
           : userAlbumList // ignore: cast_nullable_to_non_nullable
               as List<Album>,
+      blockList: blockList == freezed
+          ? _value.blockList
+          : blockList // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      hideAlbumList: hideAlbumList == freezed
+          ? _value.hideAlbumList
+          : hideAlbumList // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       albums: albums == freezed
           ? _value.albums
           : albums // ignore: cast_nullable_to_non_nullable
@@ -176,6 +194,8 @@ abstract class _$HomePageStateCopyWith<$Res>
       bool isViewAlbums,
       User createdUserProfile,
       List<Album> userAlbumList,
+      List<String> blockList,
+      List<String> hideAlbumList,
       List<Album>? albums});
 
   @override
@@ -204,6 +224,8 @@ class __$HomePageStateCopyWithImpl<$Res>
     Object? isViewAlbums = freezed,
     Object? createdUserProfile = freezed,
     Object? userAlbumList = freezed,
+    Object? blockList = freezed,
+    Object? hideAlbumList = freezed,
     Object? albums = freezed,
   }) {
     return _then(_HomePageState(
@@ -243,6 +265,14 @@ class __$HomePageStateCopyWithImpl<$Res>
           ? _value.userAlbumList
           : userAlbumList // ignore: cast_nullable_to_non_nullable
               as List<Album>,
+      blockList: blockList == freezed
+          ? _value.blockList
+          : blockList // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      hideAlbumList: hideAlbumList == freezed
+          ? _value.hideAlbumList
+          : hideAlbumList // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       albums: albums == freezed
           ? _value.albums
           : albums // ignore: cast_nullable_to_non_nullable
@@ -264,6 +294,8 @@ class _$_HomePageState implements _HomePageState {
       this.isViewAlbums = false,
       this.createdUserProfile = const User(),
       this.userAlbumList = const <Album>[],
+      this.blockList = const <String>[],
+      this.hideAlbumList = const <String>[],
       this.albums});
 
   @JsonKey()
@@ -293,12 +325,18 @@ class _$_HomePageState implements _HomePageState {
   @JsonKey()
   @override
   final List<Album> userAlbumList;
+  @JsonKey()
+  @override
+  final List<String> blockList;
+  @JsonKey()
+  @override
+  final List<String> hideAlbumList;
   @override
   final List<Album>? albums;
 
   @override
   String toString() {
-    return 'HomePageState(id: $id, content: $content, imgUrls: $imgUrls, currentPage: $currentPage, activeAlbumIndex: $activeAlbumIndex, viewContent: $viewContent, isViewAlbums: $isViewAlbums, createdUserProfile: $createdUserProfile, userAlbumList: $userAlbumList, albums: $albums)';
+    return 'HomePageState(id: $id, content: $content, imgUrls: $imgUrls, currentPage: $currentPage, activeAlbumIndex: $activeAlbumIndex, viewContent: $viewContent, isViewAlbums: $isViewAlbums, createdUserProfile: $createdUserProfile, userAlbumList: $userAlbumList, blockList: $blockList, hideAlbumList: $hideAlbumList, albums: $albums)';
   }
 
   @override
@@ -321,6 +359,9 @@ class _$_HomePageState implements _HomePageState {
                 .equals(other.createdUserProfile, createdUserProfile) &&
             const DeepCollectionEquality()
                 .equals(other.userAlbumList, userAlbumList) &&
+            const DeepCollectionEquality().equals(other.blockList, blockList) &&
+            const DeepCollectionEquality()
+                .equals(other.hideAlbumList, hideAlbumList) &&
             const DeepCollectionEquality().equals(other.albums, albums));
   }
 
@@ -336,6 +377,8 @@ class _$_HomePageState implements _HomePageState {
       const DeepCollectionEquality().hash(isViewAlbums),
       const DeepCollectionEquality().hash(createdUserProfile),
       const DeepCollectionEquality().hash(userAlbumList),
+      const DeepCollectionEquality().hash(blockList),
+      const DeepCollectionEquality().hash(hideAlbumList),
       const DeepCollectionEquality().hash(albums));
 
   @JsonKey(ignore: true)
@@ -355,6 +398,8 @@ abstract class _HomePageState implements HomePageState {
       bool isViewAlbums,
       User createdUserProfile,
       List<Album> userAlbumList,
+      List<String> blockList,
+      List<String> hideAlbumList,
       List<Album>? albums}) = _$_HomePageState;
 
   @override
@@ -375,6 +420,10 @@ abstract class _HomePageState implements HomePageState {
   User get createdUserProfile;
   @override
   List<Album> get userAlbumList;
+  @override
+  List<String> get blockList;
+  @override
+  List<String> get hideAlbumList;
   @override
   List<Album>? get albums;
   @override

@@ -9,8 +9,11 @@ class FirePublicService {
   final _fireStore = FirebaseFirestore.instance;
   final auth = firebase.FirebaseAuth.instance;
 
-  Future fetchPublicAlbumList(
-      {required Function(List<Album>) onValueChanged}) async {
+  Future fetchPublicAlbumList({
+    required Function(List<Album>) onValueChanged,
+    required List<String>? blockUsers,
+    required List<String>? hideAlbums,
+  }) async {
     final usersPublicStadiumsCollectionRef =
         _fireStore.collection('public').doc('v1').collection('albums');
     final snapShot = await usersPublicStadiumsCollectionRef.get();
@@ -18,6 +21,15 @@ class FirePublicService {
         snapShot.docs.map((e) => Album.fromJson(e.data())).toList();
     if (albums == null) {
       return;
+    }
+    if (blockUsers != null && hideAlbums != null) {
+      final filterAlbums = albums
+          .where((album) => !blockUsers.contains(album.createdUser))
+          .toList();
+      final enabledAlbums = filterAlbums
+          .where((album) => !hideAlbums.contains(album.id))
+          .toList();
+          return onValueChanged(enabledAlbums);
     }
     return onValueChanged(albums);
   }
