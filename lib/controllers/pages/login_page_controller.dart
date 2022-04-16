@@ -12,6 +12,7 @@ class LoginPageState with _$LoginPageState {
     @Default('') String loginEmail,
     @Default('') String loginPassword,
     @Default('') String infoText,
+    @Default(false) bool isAgree,
   }) = _LoginPageState;
 }
 
@@ -42,4 +43,8 @@ class LoginPageController extends StateNotifier<LoginPageState> {
   Future<UserCredential> googleLogin() async => _fireUsersService.googleLogin();
 
   final btnController = RoundedLoadingButtonController();
+
+  void isToggleButton(bool value) {
+    state = state.copyWith(isAgree: value);
+  }
 }
