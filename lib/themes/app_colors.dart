@@ -10,6 +10,7 @@ class AppColors {
   static const Color accentColor = Color(0xffba7acc);
   static const Color mapButton = Color(0xff616161);
   static const Color grey = Colors.grey;
+  static const Color buttonDisable = Color(0xffc0c0c0);
   static const Color lightGrey = Color(0xffE6E6E6);
   static const Color scaffoldColor = Color(0xfff7f6f5);
   static const Color barColor = Color(0xfff7f6f5);

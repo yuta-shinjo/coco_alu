@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/src/theme_text.dart';
 
 class PressedButton extends StatelessWidget {
@@ -18,6 +19,28 @@ class PressedButton extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         primary: primaryColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+      ),
+      onPressed: onPressed,
+      child: text,
+    );
+  }
+}
+
+class DisablePressedButton extends StatelessWidget {
+  const DisablePressedButton({Key? key, this.onPressed, required this.text})
+      : super(key: key);
+
+  final VoidCallback? onPressed;
+  final ButtonText text;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        primary: AppColors.buttonDisable,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),

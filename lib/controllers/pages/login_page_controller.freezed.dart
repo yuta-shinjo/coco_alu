@@ -21,11 +21,13 @@ class _$LoginPageStateTearOff {
   _LoginPageState call(
       {String loginEmail = '',
       String loginPassword = '',
-      String infoText = ''}) {
+      String infoText = '',
+      bool isAgree = false}) {
     return _LoginPageState(
       loginEmail: loginEmail,
       loginPassword: loginPassword,
       infoText: infoText,
+      isAgree: isAgree,
     );
   }
 }
@@ -38,6 +40,7 @@ mixin _$LoginPageState {
   String get loginEmail => throw _privateConstructorUsedError;
   String get loginPassword => throw _privateConstructorUsedError;
   String get infoText => throw _privateConstructorUsedError;
+  bool get isAgree => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $LoginPageStateCopyWith<LoginPageState> get copyWith =>
@@ -49,7 +52,8 @@ abstract class $LoginPageStateCopyWith<$Res> {
   factory $LoginPageStateCopyWith(
           LoginPageState value, $Res Function(LoginPageState) then) =
       _$LoginPageStateCopyWithImpl<$Res>;
-  $Res call({String loginEmail, String loginPassword, String infoText});
+  $Res call(
+      {String loginEmail, String loginPassword, String infoText, bool isAgree});
 }
 
 /// @nodoc
@@ -66,6 +70,7 @@ class _$LoginPageStateCopyWithImpl<$Res>
     Object? loginEmail = freezed,
     Object? loginPassword = freezed,
     Object? infoText = freezed,
+    Object? isAgree = freezed,
   }) {
     return _then(_value.copyWith(
       loginEmail: loginEmail == freezed
@@ -80,6 +85,10 @@ class _$LoginPageStateCopyWithImpl<$Res>
           ? _value.infoText
           : infoText // ignore: cast_nullable_to_non_nullable
               as String,
+      isAgree: isAgree == freezed
+          ? _value.isAgree
+          : isAgree // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -91,7 +100,8 @@ abstract class _$LoginPageStateCopyWith<$Res>
           _LoginPageState value, $Res Function(_LoginPageState) then) =
       __$LoginPageStateCopyWithImpl<$Res>;
   @override
-  $Res call({String loginEmail, String loginPassword, String infoText});
+  $Res call(
+      {String loginEmail, String loginPassword, String infoText, bool isAgree});
 }
 
 /// @nodoc
@@ -110,6 +120,7 @@ class __$LoginPageStateCopyWithImpl<$Res>
     Object? loginEmail = freezed,
     Object? loginPassword = freezed,
     Object? infoText = freezed,
+    Object? isAgree = freezed,
   }) {
     return _then(_LoginPageState(
       loginEmail: loginEmail == freezed
@@ -124,6 +135,10 @@ class __$LoginPageStateCopyWithImpl<$Res>
           ? _value.infoText
           : infoText // ignore: cast_nullable_to_non_nullable
               as String,
+      isAgree: isAgree == freezed
+          ? _value.isAgree
+          : isAgree // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -132,7 +147,10 @@ class __$LoginPageStateCopyWithImpl<$Res>
 
 class _$_LoginPageState implements _LoginPageState {
   const _$_LoginPageState(
-      {this.loginEmail = '', this.loginPassword = '', this.infoText = ''});
+      {this.loginEmail = '',
+      this.loginPassword = '',
+      this.infoText = '',
+      this.isAgree = false});
 
   @JsonKey()
   @override
@@ -143,10 +161,13 @@ class _$_LoginPageState implements _LoginPageState {
   @JsonKey()
   @override
   final String infoText;
+  @JsonKey()
+  @override
+  final bool isAgree;
 
   @override
   String toString() {
-    return 'LoginPageState(loginEmail: $loginEmail, loginPassword: $loginPassword, infoText: $infoText)';
+    return 'LoginPageState(loginEmail: $loginEmail, loginPassword: $loginPassword, infoText: $infoText, isAgree: $isAgree)';
   }
 
   @override
@@ -158,7 +179,8 @@ class _$_LoginPageState implements _LoginPageState {
                 .equals(other.loginEmail, loginEmail) &&
             const DeepCollectionEquality()
                 .equals(other.loginPassword, loginPassword) &&
-            const DeepCollectionEquality().equals(other.infoText, infoText));
+            const DeepCollectionEquality().equals(other.infoText, infoText) &&
+            const DeepCollectionEquality().equals(other.isAgree, isAgree));
   }
 
   @override
@@ -166,7 +188,8 @@ class _$_LoginPageState implements _LoginPageState {
       runtimeType,
       const DeepCollectionEquality().hash(loginEmail),
       const DeepCollectionEquality().hash(loginPassword),
-      const DeepCollectionEquality().hash(infoText));
+      const DeepCollectionEquality().hash(infoText),
+      const DeepCollectionEquality().hash(isAgree));
 
   @JsonKey(ignore: true)
   @override
@@ -178,7 +201,8 @@ abstract class _LoginPageState implements LoginPageState {
   const factory _LoginPageState(
       {String loginEmail,
       String loginPassword,
-      String infoText}) = _$_LoginPageState;
+      String infoText,
+      bool isAgree}) = _$_LoginPageState;
 
   @override
   String get loginEmail;
@@ -186,6 +210,8 @@ abstract class _LoginPageState implements LoginPageState {
   String get loginPassword;
   @override
   String get infoText;
+  @override
+  bool get isAgree;
   @override
   @JsonKey(ignore: true)
   _$LoginPageStateCopyWith<_LoginPageState> get copyWith =>
