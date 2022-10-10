@@ -7,7 +7,6 @@ import 'package:my_collection/ui/pages/album_list_page/album_list_page.dart';
 import 'package:my_collection/ui/pages/home_page/home_page.dart';
 
 import 'package:my_collection/ui/pages/map_page/map_page.dart';
-import 'package:my_collection/ui/pages/my_list_page/my_list_page.dart';
 import 'package:page_transition/page_transition.dart';
 
 class RootPage extends ConsumerStatefulWidget {
@@ -38,12 +37,12 @@ class _RootPageState extends ConsumerState<RootPage>
   void initState() {
     super.initState();
     ref.read(rootPageProvider.notifier).checkNeedUpdate(context);
-    WidgetsBinding.instance?.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance?.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
@@ -62,7 +61,6 @@ class _RootPageState extends ConsumerState<RootPage>
 
     final _tabs = [
       const HomePage(),
-      const MyListPage(),
       const EditAlbumPage(),
       const MapPage(),
       const AccountPage(),
@@ -92,10 +90,6 @@ class _RootPageState extends ConsumerState<RootPage>
             BottomNavigationBarItem(
               icon: Icon(Icons.auto_stories),
               label: '一覧',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.edit),
-              label: '追加&編集',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.pin_drop),
