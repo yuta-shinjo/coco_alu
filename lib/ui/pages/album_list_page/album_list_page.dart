@@ -13,7 +13,7 @@ class EditAlbumPage extends StatelessWidget {
       backgroundColor: AppColors.scaffoldColor,
       appBar: AppBar(
         backgroundColor: AppColors.barColor,
-        title: const AppBarText('思い出一覧を編集'),
+        title: const AppBarText('My思い出一覧'),
       ),
       floatingActionButton: FloatingActionButton(
         heroTag: 'edit_album',

@@ -9,6 +9,7 @@ import 'package:my_collection/models/src/album.dart';
 import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/components.dart';
 import 'package:my_collection/ui/components/src/universal.dart';
+import 'package:my_collection/ui/pages/album_detail_page/album_detail_page.dart';
 import 'package:my_collection/ui/pages/album_list_page/src/alert_dialog.dart';
 import 'package:my_collection/utiles.dart';
 
@@ -40,15 +41,38 @@ class AlbumListPageBody extends ConsumerWidget {
       ),
       itemBuilder: (context, index) {
         final album = albums[index];
-        return Slidable(
-          actionPane: const SlidableBehindActionPane(),
-          secondaryActions: [
-            _removeAlbum(context, ref, album, index),
-          ],
-          actionExtentRatio: 1 / 5,
-          child: _detailAlbum(album, context),
+        return GestureDetector(
+          onTap: () => _goToDetail(context, album),
+          child: Slidable(
+            actionPane: const SlidableBehindActionPane(),
+            secondaryActions: [
+              _removeAlbum(context, ref, album, index),
+            ],
+            actionExtentRatio: 1 / 5,
+            child: _detailAlbum(album, context),
+          ),
         );
       },
+    );
+  }
+
+  void _goToDetail(BuildContext context, Album album) {
+    Navigator.of(context).push(
+      PageRouteBuilder<void>(
+        pageBuilder: (BuildContext context, Animation<double> animation,
+            Animation<double> secondaryAnimation) {
+          return AnimatedBuilder(
+            animation: animation,
+            builder: (BuildContext context, Widget? child) {
+              return Opacity(
+                opacity: animation.value,
+                child: AlbumDetailPage(album: album),
+              );
+            },
+          );
+        },
+        transitionDuration: const Duration(milliseconds: 400),
+      ),
     );
   }
 
