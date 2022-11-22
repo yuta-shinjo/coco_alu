@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:my_collection/ui/components/components.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class UpdateDialog extends StatelessWidget {
   const UpdateDialog({Key? key}) : super(key: key);
@@ -32,10 +32,10 @@ class UpdateDialog extends StatelessWidget {
           ),
           onTap: () {
             if (Platform.isIOS) {
-              launch(
+              launchUrlString(
                   'https://apps.apple.com/jp/app/%E3%82%B3%E3%82%B3%E3%82%A2%E3%83%AB/id1611178182');
             } else {
-              launch('storeAndroidUrl');
+              launchUrlString('storeAndroidUrl');
             }
           },
         ),

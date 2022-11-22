@@ -11,18 +11,14 @@ class AlbumDetailPage extends ConsumerStatefulWidget {
   final Album album;
 
   @override
-  _TestAlbumDetailPageState createState() =>
-      _TestAlbumDetailPageState(album: album);
+  _TestAlbumDetailPageState createState() => _TestAlbumDetailPageState();
 }
 
 class _TestAlbumDetailPageState extends ConsumerState<AlbumDetailPage>
     with AutomaticKeepAliveClientMixin {
-  _TestAlbumDetailPageState({required this.album}) : super();
-
   @override
   bool get wantKeepAlive => true;
   bool dragFlg = false;
-  final Album album;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +29,7 @@ class _TestAlbumDetailPageState extends ConsumerState<AlbumDetailPage>
         backgroundColor: AppColors.barColor,
         leading: const ClosedButton(),
       ),
-      body: AlbumDetailPageBody(album: album),
+      body: AlbumDetailPageBody(album: widget.album),
     );
   }
 }
