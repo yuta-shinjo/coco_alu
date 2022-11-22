@@ -27,20 +27,14 @@ class PublicAlbumDetailPage extends ConsumerStatefulWidget {
   final User profile;
 
   @override
-  _TestAlbumDetailPageState createState() =>
-      _TestAlbumDetailPageState(album: album, profile: profile);
+  _TestAlbumDetailPageState createState() => _TestAlbumDetailPageState();
 }
 
 class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
     with AutomaticKeepAliveClientMixin {
-  _TestAlbumDetailPageState({required this.album, required this.profile})
-      : super();
-
   @override
   bool get wantKeepAlive => true;
   bool dragFlg = false;
-  final Album album;
-  final User profile;
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +55,7 @@ class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
         children: [
           SizedBox(
             height: 60,
-            child: _profileDisplay(profile),
+            child: _profileDisplay(widget.profile),
           ),
           _displayImage(context),
           const SizedBox(height: 20),
@@ -71,8 +65,8 @@ class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Row(
                 children: [
-                  for (int i = 0; i < album.tags.length; i++)
-                    _tagChip(album, i),
+                  for (int i = 0; i < widget.album.tags.length; i++)
+                    _tagChip(widget.album, i),
                 ],
               ),
             ),
@@ -90,7 +84,7 @@ class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
               SizedBox(
                 height: MediaQuery.of(context).size.height / 3.5,
                 child: FutureBuilder(
-                  future: _getAlbumPosition(album),
+                  future: _getAlbumPosition(widget.album),
                   builder: (context, AsyncSnapshot<LatLng> snapshot) {
                     if (snapshot.hasData) {
                       return Consumer(
@@ -133,13 +127,13 @@ class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
         padding: const EdgeInsets.only(left: 5, top: 10, bottom: 10),
         child: Row(
           children: [
-            imgUser(profile.imgUrls, album.createdUser),
+            imgUser(profile.imgUrls, widget.album.createdUser),
             infoUser(context, profile.name),
             const Spacer(),
             PopupMenuButton(
               color: AppColors.scaffoldColor,
               icon: const Icon(Icons.more_horiz, color: AppColors.iconBlack),
-              itemBuilder: album.createdUser == userId
+              itemBuilder: widget.album.createdUser == userId
                   ? (context) => [
                         PopupMenuItem(
                           value: '削除',
@@ -191,13 +185,13 @@ class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
                     context: context,
                     builder: (_) {
                       if (value.toString() == '削除') {
-                        return PublicDeleteDialog(album: album);
+                        return PublicDeleteDialog(album: widget.album);
                       } else if (value.toString() == '報告') {
-                        return PublicAlbumReportDialog(album: album);
+                        return PublicAlbumReportDialog(album: widget.album);
                       } else if (value.toString() == '非表示') {
-                        return PublicAlbumHideDialog(album: album);
+                        return PublicAlbumHideDialog(album: widget.album);
                       } else {
-                        return UserBlockDialog(album: album);
+                        return UserBlockDialog(album: widget.album);
                       }
                     });
               },
@@ -212,7 +206,7 @@ class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
     return Consumer(builder: (context, ref, _) {
       return GestureDetector(
         onTap: () {
-          Navigator.push(context, ProfilePage.route(profile: profile));
+          Navigator.push(context, ProfilePage.route(profile: widget.profile));
           ref.read(homePageProvider.notifier).fetchUserAlbumList(createdUserId);
         },
         child: Container(
@@ -251,7 +245,7 @@ class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
     return SizedBox(
       height: MediaQuery.of(context).size.height / 3,
       width: double.infinity,
-      child: UniversalImage(album.imgUrls, fit: BoxFit.cover),
+      child: UniversalImage(widget.album.imgUrls, fit: BoxFit.cover),
     );
   }
 
@@ -279,12 +273,12 @@ class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
   Widget _albumContent(WidgetRef ref) {
     final viewContent =
         ref.watch(homePageProvider.select((s) => s.viewContent));
-    if (album.content.isNotEmpty && album.content.length < 4) {
+    if (widget.album.content.isNotEmpty && widget.album.content.length < 4) {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Subtitle2Text(album.content),
+        child: Subtitle2Text(widget.album.content),
       );
-    } else if (album.content.isEmpty) {
+    } else if (widget.album.content.isEmpty) {
       return Container();
     }
     return Padding(
@@ -293,7 +287,7 @@ class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
           ? Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Subtitle2Text(album.content.substring(0, 4) + '...'),
+                Subtitle2Text(widget.album.content.substring(0, 4) + '...'),
                 const SizedBox(width: 4),
                 GestureDetector(
                   onTap: () =>
@@ -307,7 +301,7 @@ class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
             )
           : Column(
               children: [
-                Subtitle2Text(album.content),
+                Subtitle2Text(widget.album.content),
                 GestureDetector(
                   onTap: () =>
                       ref.read(homePageProvider.notifier).viewContent(),
@@ -335,7 +329,7 @@ class _TestAlbumDetailPageState extends ConsumerState<PublicAlbumDetailPage>
 
   Widget _mapPart(AsyncSnapshot<LatLng> snapshot) {
     return GoogleMap(
-      markers: _markers(album),
+      markers: _markers(widget.album),
       initialCameraPosition: CameraPosition(
         target: LatLng(snapshot.data!.latitude, snapshot.data!.longitude),
         zoom: 14.5,

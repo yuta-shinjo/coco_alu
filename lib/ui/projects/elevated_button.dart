@@ -18,7 +18,7 @@ class PressedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        primary: primaryColor,
+        backgroundColor: primaryColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),
@@ -40,7 +40,7 @@ class DisablePressedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        primary: AppColors.buttonDisable,
+        backgroundColor: AppColors.buttonDisable,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),

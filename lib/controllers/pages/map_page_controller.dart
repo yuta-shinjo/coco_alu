@@ -62,10 +62,6 @@ class MapPageController extends StateNotifier<MapPageState> {
     state = state.copyWith(isViewAlbums: !state.isViewAlbums);
   }
 
-  // TODO toggleボタンを押した時に最初の写真に戻らないようにしたい
-  //そうすれば、currentPageを0にしなくても良い気がする
-  // albumを表示する時にactive(これによってpaddingの値が変わる)がnullになってしまって
-  // 一瞬だけpaddingがついてしまって小さくなってしまうのを改善
   void initializedPage() {
     state = state.copyWith(currentPage: 0);
   }

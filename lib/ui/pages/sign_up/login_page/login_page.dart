@@ -8,7 +8,7 @@ import 'package:my_collection/ui/pages/sign_up/login_page/src/login_page_body.da
 import 'package:my_collection/ui/pages/sign_up/register_page/register_page.dart';
 import 'package:my_collection/ui/projects/elevated_button.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -145,7 +145,7 @@ class LoginPage extends StatelessWidget {
         ),
       ),
       onTap: () {
-        launch(
+        launchUrlString(
             'https://guiltless-payment-922.notion.site/4511ecee65a94909804315bc0dd6f787');
       },
     );

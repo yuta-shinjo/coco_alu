@@ -133,7 +133,7 @@ class AccountPageBody extends ConsumerWidget {
       children: [
         editProfile(context),
         const Divider(color: AppColors.grey),
-        emailAdless(email, context),
+        emailAddress(email, context),
         const Divider(color: AppColors.grey),
         // blockList(email, context),
         // const Divider(color: AppColors.grey),
@@ -160,7 +160,7 @@ class AccountPageBody extends ConsumerWidget {
     );
   }
 
-  ListTile emailAdless(String? email, BuildContext context) {
+  ListTile emailAddress(String? email, BuildContext context) {
     return ListTile(
       title: const Subtitle2Text('メールアドレス'),
       trailing: email != null
