@@ -6,7 +6,7 @@ import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/src/theme_text.dart';
 import 'package:my_collection/ui/pages/root_page/root_page.dart';
 import 'package:my_collection/ui/projects/rounded_loading_button.dart';
-import 'package:my_collection/utiles.dart';
+import 'package:my_collection/utilities.dart';
 
 class LoginPageBody extends StatelessWidget {
   const LoginPageBody({Key? key}) : super(key: key);
@@ -28,43 +28,47 @@ class LoginPageBody extends StatelessWidget {
   }
 
   Widget _email() {
-    return Consumer(builder: (context, ref, _) {
-      final controller = ref.watch(loginPageProvider.notifier).btnController;
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: TextFormField(
-          textInputAction: TextInputAction.next,
-          onTap: () => controller.reset(),
-          keyboardType: TextInputType.emailAddress,
-          decoration: const InputDecoration(labelText: "メールアドレス"),
-          onChanged: (String value) {
-            ref.read(loginPageProvider.notifier).inputEmail(value);
-            controller.reset();
-          },
-        ),
-      );
-    });
+    return Consumer(
+      builder: (context, ref, _) {
+        final controller = ref.watch(loginPageProvider.notifier).btnController;
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: TextFormField(
+            textInputAction: TextInputAction.next,
+            onTap: () => controller.reset(),
+            keyboardType: TextInputType.emailAddress,
+            decoration: const InputDecoration(labelText: "メールアドレス"),
+            onChanged: (String value) {
+              ref.read(loginPageProvider.notifier).inputEmail(value);
+              controller.reset();
+            },
+          ),
+        );
+      },
+    );
   }
 
   Widget _password() {
-    return Consumer(builder: (context, ref, _) {
-      final controller = ref.watch(loginPageProvider.notifier).btnController;
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: TextFormField(
-          textInputAction: TextInputAction.next,
-          onTap: () => controller.reset(),
-          maxLengthEnforcement: MaxLengthEnforcement.none,
-          decoration: const InputDecoration(labelText: "パスワード（8～20文字）"),
-          obscureText: true,
-          maxLength: 20,
-          onChanged: (String value) {
-            ref.read(loginPageProvider.notifier).inputPassword(value);
-            controller.reset();
-          },
-        ),
-      );
-    });
+    return Consumer(
+      builder: (context, ref, _) {
+        final controller = ref.watch(loginPageProvider.notifier).btnController;
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: TextFormField(
+            textInputAction: TextInputAction.next,
+            onTap: () => controller.reset(),
+            maxLengthEnforcement: MaxLengthEnforcement.none,
+            decoration: const InputDecoration(labelText: "パスワード（8～20文字）"),
+            obscureText: true,
+            maxLength: 20,
+            onChanged: (String value) {
+              ref.read(loginPageProvider.notifier).inputPassword(value);
+              controller.reset();
+            },
+          ),
+        );
+      },
+    );
   }
 
   Widget _loginButton() {

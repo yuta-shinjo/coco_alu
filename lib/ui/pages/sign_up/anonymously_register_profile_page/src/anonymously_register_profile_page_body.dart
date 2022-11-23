@@ -7,7 +7,7 @@ import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/src/theme_text.dart';
 import 'package:my_collection/ui/pages/introduction_page/introduction_page.dart';
 import 'package:my_collection/ui/projects/rounded_loading_button.dart';
-import 'package:my_collection/utiles.dart';
+import 'package:my_collection/utilities.dart';
 
 class AnonymouslyRegisterProfilePageBody extends StatelessWidget {
   const AnonymouslyRegisterProfilePageBody({Key? key}) : super(key: key);
@@ -60,22 +60,26 @@ class AnonymouslyRegisterProfilePageBody extends StatelessWidget {
   }
 
   Widget _effectButton(String profileImageUrl) {
-    return Consumer(builder: (context, ref, _) {
-      final controller =
-          ref.watch(anonymouslyRegisterPageProvider.notifier).btnController;
-      return RawMaterialButton(
-        onPressed: () async {
-          await ref.read(anonymouslyRegisterPageProvider.notifier).pickImage();
-          controller.reset();
-        },
-        child: const SizedBox(
-          width: 240,
-          height: 240,
-        ),
-        shape: const CircleBorder(),
-        elevation: 0,
-      );
-    });
+    return Consumer(
+      builder: (context, ref, _) {
+        final controller =
+            ref.watch(anonymouslyRegisterPageProvider.notifier).btnController;
+        return RawMaterialButton(
+          onPressed: () async {
+            await ref
+                .read(anonymouslyRegisterPageProvider.notifier)
+                .pickImage();
+            controller.reset();
+          },
+          child: const SizedBox(
+            width: 240,
+            height: 240,
+          ),
+          shape: const CircleBorder(),
+          elevation: 0,
+        );
+      },
+    );
   }
 
   Widget _registerName() {

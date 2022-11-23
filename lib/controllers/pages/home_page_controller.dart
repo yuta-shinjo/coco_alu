@@ -92,7 +92,7 @@ class HomePageController extends StateNotifier<HomePageState> {
   void toggleViewAlbums() {
     state = state.copyWith(isViewAlbums: !state.isViewAlbums);
   }
-  
+
   void initializedPage() {
     state = state.copyWith(currentPage: 0);
   }
@@ -101,11 +101,9 @@ class HomePageController extends StateNotifier<HomePageState> {
     state = state.copyWith(activeAlbumIndex: activeAlbumIndex);
   }
 
-  void createdUserProfile() {}
-
   Future<void> deleteAlbum(Album album) async {
     final albums = [...?state.albums];
-    albums.remove(album.id);
+    albums.remove(album);
     await _fireUsersService.deleteMyAlbum(album);
     if (album.public) await _firePublicService.deletePublicAlbum(album);
 

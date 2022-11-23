@@ -7,7 +7,7 @@ import 'package:my_collection/ui/components/src/theme_text.dart';
 import 'package:my_collection/ui/pages/sign_up/register_profile_page/register_profile_page.dart';
 import 'package:my_collection/ui/projects/rounded_loading_button.dart';
 
-import 'package:my_collection/utiles.dart';
+import 'package:my_collection/utilities.dart';
 
 class RegisterPageBody extends StatelessWidget {
   const RegisterPageBody({Key? key}) : super(key: key);

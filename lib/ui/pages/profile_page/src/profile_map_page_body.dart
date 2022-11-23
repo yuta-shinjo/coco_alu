@@ -8,7 +8,6 @@ import 'package:my_collection/controllers/pages/profile_map_page_controller.dart
 import 'package:my_collection/models/model.dart';
 import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/components.dart';
-import 'package:my_collection/ui/components/src/universal.dart';
 import 'package:my_collection/ui/pages/album_detail_page/album_detail_page.dart';
 
 class ProfileMapPageBody extends StatelessWidget {
@@ -48,20 +47,22 @@ class ProfileMapPageBody extends StatelessWidget {
                         .select((s) => s.activeAlbumIndex));
                     // 画像を移動することでマーカーの照準を変更する
                     if (isViewAlbums == true) {
-                      mapController.future
-                          .then((GoogleMapController googleMap) {
-                        final latitude = exitAlbums[activeAlbumIndex].latitude;
-                        final longitude =
-                            exitAlbums[activeAlbumIndex].longitude;
-                        googleMap.animateCamera(
-                          CameraUpdate.newLatLng(
-                            LatLng(
-                              double.parse(latitude.toString()),
-                              double.parse(longitude.toString()),
+                      mapController.future.then(
+                        (GoogleMapController googleMap) {
+                          final latitude =
+                              exitAlbums[activeAlbumIndex].latitude;
+                          final longitude =
+                              exitAlbums[activeAlbumIndex].longitude;
+                          googleMap.animateCamera(
+                            CameraUpdate.newLatLng(
+                              LatLng(
+                                double.parse(latitude.toString()),
+                                double.parse(longitude.toString()),
+                              ),
                             ),
-                          ),
-                        );
-                      });
+                          );
+                        },
+                      );
                     }
                     final viewAlbums = ref.watch(
                         profileMapPageProvider.select((s) => s.isViewAlbums));
@@ -168,35 +169,37 @@ class ProfileMapPageBody extends StatelessWidget {
   }
 
   Widget _viewImageParts(List<Album>? albums) {
-    return Consumer(builder: (context, ref, _) {
-      final controller = ref.watch(profileMapPageProvider.notifier).controller;
-      final currentPage =
-          ref.watch(profileMapPageProvider.select((s) => s.currentPage));
-      final album = albums![currentPage];
-      return Align(
-        alignment: const Alignment(0, 0.92),
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height / 3.8,
-          width: MediaQuery.of(context).size.width / 1.5,
-          child: PageView.builder(
-            controller: controller,
-            itemCount: _displayImg(context, ref).length,
-            itemBuilder: (context, int currentIndex) {
-              bool active = currentIndex == currentPage;
-              return _createCardAnimate(
-                context,
-                _displayImg(context, ref)[currentIndex],
-                active,
-                album,
-              );
-            },
-            onPageChanged: (page) {
-              ref.read(profileMapPageProvider.notifier).selectedAlbum(page);
-            },
+    return Consumer(
+      builder: (context, ref, _) {
+        final controller =
+            ref.watch(profileMapPageProvider.notifier).controller;
+        final currentPage =
+            ref.watch(profileMapPageProvider.select((s) => s.currentPage));
+        final album = albums![currentPage];
+        return Align(
+          alignment: const Alignment(0, 0.92),
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height / 3.8,
+            width: MediaQuery.of(context).size.width / 1.5,
+            child: PageView.builder(
+              controller: controller,
+              itemCount: _displayImg(context, ref).length,
+              itemBuilder: (context, int currentIndex) {
+                bool active = currentIndex == currentPage;
+                return _createCardAnimate(
+                  context,
+                  _displayImg(context, ref)[currentIndex],
+                  active,
+                  album,
+                );
+              },
+              onPageChanged: (page) =>
+                  ref.read(profileMapPageProvider.notifier).selectedAlbum(page),
+            ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 
   // 地図にあるピンの画像を表示
@@ -260,37 +263,41 @@ class ProfileMapPageBody extends StatelessWidget {
   }
 
   Widget _toggleViewParts(bool viewAlbums) {
-    return Consumer(builder: (context, ref, _) {
-      return Positioned(
-        right: MediaQuery.of(context).size.width / 40,
-        bottom: MediaQuery.of(context).size.height / 7.5,
-        child: viewAlbums == true
-            ? FloatingActionButton(
-                heroTag: 'profile_map1',
-                backgroundColor: AppColors.white,
-                child: const Icon(
-                  Icons.collections,
-                  size: 30,
-                  color: AppColors.primary,
+    return Consumer(
+      builder: (context, ref, _) {
+        return Positioned(
+          right: MediaQuery.of(context).size.width / 40,
+          bottom: MediaQuery.of(context).size.height / 7.5,
+          child: viewAlbums == true
+              ? FloatingActionButton(
+                  heroTag: 'profile_map1',
+                  backgroundColor: AppColors.white,
+                  child: const Icon(
+                    Icons.collections,
+                    size: 30,
+                    color: AppColors.primary,
+                  ),
+                  onPressed: () => ref
+                      .read(profileMapPageProvider.notifier)
+                      .toggleViewAlbums(),
+                )
+              : FloatingActionButton(
+                  heroTag: 'profile_map2',
+                  backgroundColor: AppColors.white,
+                  child: const Icon(
+                    Icons.collections,
+                    size: 30,
+                    color: AppColors.mapButton,
+                  ),
+                  onPressed: () {
+                    ref
+                        .read(profileMapPageProvider.notifier)
+                        .toggleViewAlbums();
+                    ref.read(profileMapPageProvider.notifier).initializedPage();
+                  },
                 ),
-                onPressed: () {
-                  ref.read(profileMapPageProvider.notifier).toggleViewAlbums();
-                },
-              )
-            : FloatingActionButton(
-                heroTag: 'profile_map2',
-                backgroundColor: AppColors.white,
-                child: const Icon(
-                  Icons.collections,
-                  size: 30,
-                  color: AppColors.mapButton,
-                ),
-                onPressed: () {
-                  ref.read(profileMapPageProvider.notifier).toggleViewAlbums();
-                  ref.read(profileMapPageProvider.notifier).initializedPage();
-                },
-              ),
-      );
-    });
+        );
+      },
+    );
   }
 }

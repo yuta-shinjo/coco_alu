@@ -4,9 +4,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_collection/controllers/pages/account_page_controller.dart';
 import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/components.dart';
-import 'package:my_collection/ui/components/src/universal.dart';
 import 'package:my_collection/ui/projects/rounded_loading_button.dart';
-import 'package:my_collection/utiles.dart';
+import 'package:my_collection/utilities.dart';
 
 class EditProfilePageBody extends StatelessWidget {
   const EditProfilePageBody({Key? key}) : super(key: key);

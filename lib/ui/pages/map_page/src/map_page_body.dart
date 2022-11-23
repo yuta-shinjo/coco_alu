@@ -8,7 +8,6 @@ import 'package:my_collection/controllers/pages/map_page_controller.dart';
 import 'package:my_collection/models/model.dart';
 import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/components.dart';
-import 'package:my_collection/ui/components/src/universal.dart';
 import 'package:my_collection/ui/pages/album_detail_page/album_detail_page.dart';
 
 class MapPageBody extends ConsumerWidget {
@@ -27,28 +26,7 @@ class MapPageBody extends ConsumerWidget {
     return exitAlbums.isEmpty
         ? Center(
             child: SingleChildScrollView(
-              child: Column(
-                children: const [
-                  UniversalImage('assets/images/lost.jpg'),
-                  SizedBox(height: 20),
-                  Subtitle1Text('位置情報のある思い出が無いようです'),
-                  Subtitle1Text('⚙設定＞✋プライバシー'),
-                  Subtitle1Text('➤位置情報サービス＞📷カメラ '),
-                  SizedBox(height: 15),
-                  Subtitle1Text('位置情報をオン'),
-                  Subtitle1Text('↓'),
-                  Subtitle1Text('撮った写真で思い出を作成しましょう！'),
-                  SizedBox(height: 20),
-                  Text(
-                    '※カメラの位置情報を許可した後に',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    '撮った写真のみ位置情報が登録されます',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
+              child: _settingText(),
             ),
           )
         : FutureBuilder(
@@ -63,20 +41,22 @@ class MapPageBody extends ConsumerWidget {
                         mapPageProvider.select((s) => s.activeAlbumIndex));
                     // 画像を移動することでマーカーの照準を変更する
                     if (isViewAlbums == true) {
-                      mapController.future
-                          .then((GoogleMapController googleMap) {
-                        final latitude = exitAlbums[activeAlbumIndex].latitude;
-                        final longitude =
-                            exitAlbums[activeAlbumIndex].longitude;
-                        googleMap.animateCamera(
-                          CameraUpdate.newLatLng(
-                            LatLng(
-                              double.parse(latitude.toString()),
-                              double.parse(longitude.toString()),
+                      mapController.future.then(
+                        (GoogleMapController googleMap) {
+                          final latitude =
+                              exitAlbums[activeAlbumIndex].latitude;
+                          final longitude =
+                              exitAlbums[activeAlbumIndex].longitude;
+                          googleMap.animateCamera(
+                            CameraUpdate.newLatLng(
+                              LatLng(
+                                double.parse(latitude.toString()),
+                                double.parse(longitude.toString()),
+                              ),
                             ),
-                          ),
-                        );
-                      });
+                          );
+                        },
+                      );
                     }
                     final viewAlbums = ref
                         .watch(mapPageProvider.select((s) => s.isViewAlbums));
@@ -101,6 +81,31 @@ class MapPageBody extends ConsumerWidget {
               }
             },
           );
+  }
+
+  Widget _settingText() {
+    return Column(
+      children: const [
+        UniversalImage('assets/images/lost.jpg'),
+        SizedBox(height: 20),
+        Subtitle1Text('位置情報のある思い出が無いようです'),
+        Subtitle1Text('⚙設定＞✋プライバシー'),
+        Subtitle1Text('➤位置情報サービス＞📷カメラ '),
+        SizedBox(height: 15),
+        Subtitle1Text('位置情報をオン'),
+        Subtitle1Text('↓'),
+        Subtitle1Text('撮った写真で思い出を作成しましょう！'),
+        SizedBox(height: 20),
+        Text(
+          '※カメラの位置情報を許可した後に',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        Text(
+          '撮った写真のみ位置情報が登録されます',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+      ],
+    );
   }
 
   // 位置情報を取得する
@@ -138,17 +143,19 @@ class MapPageBody extends ConsumerWidget {
   }
 
   Widget _mapPart(AsyncSnapshot<LatLng> snapshot) {
-    return Consumer(builder: (context, ref, _) {
-      return GoogleMap(
-        markers: _markers(context, ref),
-        initialCameraPosition: CameraPosition(
-          target: LatLng(snapshot.data!.latitude, snapshot.data!.longitude),
-          zoom: 14,
-        ),
-        onMapCreated: (controller) => mapController.complete(controller),
-        myLocationEnabled: true,
-      );
-    });
+    return Consumer(
+      builder: (context, ref, _) {
+        return GoogleMap(
+          markers: _markers(context, ref),
+          initialCameraPosition: CameraPosition(
+            target: LatLng(snapshot.data!.latitude, snapshot.data!.longitude),
+            zoom: 14,
+          ),
+          onMapCreated: (controller) => mapController.complete(controller),
+          myLocationEnabled: true,
+        );
+      },
+    );
   }
 
   Set<Marker> _markers(BuildContext context, WidgetRef ref) {
@@ -184,35 +191,36 @@ class MapPageBody extends ConsumerWidget {
   }
 
   Widget _viewImageParts(List<Album>? albums) {
-    return Consumer(builder: (context, ref, _) {
-      final controller = ref.watch(mapPageProvider.notifier).controller;
-      final currentPage =
-          ref.watch(mapPageProvider.select((s) => s.currentPage));
-      final album = albums![currentPage];
-      return Align(
-        alignment: const Alignment(0, 0.92),
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height / 3.8,
-          width: MediaQuery.of(context).size.width / 1.5,
-          child: PageView.builder(
-            controller: controller,
-            itemCount: _displayImg(context, ref).length,
-            itemBuilder: (context, int currentIndex) {
-              bool active = currentIndex == currentPage;
-              return _createCardAnimate(
-                context,
-                _displayImg(context, ref)[currentIndex],
-                active,
-                album,
-              );
-            },
-            onPageChanged: (page) {
-              ref.read(mapPageProvider.notifier).selectedAlbum(page);
-            },
+    return Consumer(
+      builder: (context, ref, _) {
+        final controller = ref.watch(mapPageProvider.notifier).controller;
+        final currentPage =
+            ref.watch(mapPageProvider.select((s) => s.currentPage));
+        final album = albums![currentPage];
+        return Align(
+          alignment: const Alignment(0, 0.92),
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height / 3.8,
+            width: MediaQuery.of(context).size.width / 1.5,
+            child: PageView.builder(
+              controller: controller,
+              itemCount: _displayImg(context, ref).length,
+              itemBuilder: (context, int currentIndex) {
+                bool active = currentIndex == currentPage;
+                return _createCardAnimate(
+                  context,
+                  _displayImg(context, ref)[currentIndex],
+                  active,
+                  album,
+                );
+              },
+              onPageChanged: (page) =>
+                  ref.read(mapPageProvider.notifier).selectedAlbum(page),
+            ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 
   // 地図にあるピンの画像を表示
@@ -278,37 +286,38 @@ class MapPageBody extends ConsumerWidget {
   }
 
   Widget _toggleViewParts(bool viewAlbums) {
-    return Consumer(builder: (context, ref, _) {
-      return Positioned(
-        right: MediaQuery.of(context).size.width / 40,
-        bottom: MediaQuery.of(context).size.height / 10,
-        child: viewAlbums == true
-            ? FloatingActionButton(
-                heroTag: 'personal_map1',
-                backgroundColor: AppColors.white,
-                child: const Icon(
-                  Icons.collections,
-                  size: 30,
-                  color: AppColors.primary,
+    return Consumer(
+      builder: (context, ref, _) {
+        return Positioned(
+          right: MediaQuery.of(context).size.width / 40,
+          bottom: MediaQuery.of(context).size.height / 10,
+          child: viewAlbums == true
+              ? FloatingActionButton(
+                  heroTag: 'personal_map1',
+                  backgroundColor: AppColors.white,
+                  child: const Icon(
+                    Icons.collections,
+                    size: 30,
+                    color: AppColors.primary,
+                  ),
+                  onPressed: () =>
+                      ref.read(mapPageProvider.notifier).toggleViewAlbums(),
+                )
+              : FloatingActionButton(
+                  heroTag: 'personal_map2',
+                  backgroundColor: AppColors.white,
+                  child: const Icon(
+                    Icons.collections,
+                    size: 30,
+                    color: AppColors.mapButton,
+                  ),
+                  onPressed: () {
+                    ref.read(mapPageProvider.notifier).toggleViewAlbums();
+                    ref.read(mapPageProvider.notifier).initializedPage();
+                  },
                 ),
-                onPressed: () {
-                  ref.read(mapPageProvider.notifier).toggleViewAlbums();
-                },
-              )
-            : FloatingActionButton(
-                heroTag: 'personal_map2',
-                backgroundColor: AppColors.white,
-                child: const Icon(
-                  Icons.collections,
-                  size: 30,
-                  color: AppColors.mapButton,
-                ),
-                onPressed: () {
-                  ref.read(mapPageProvider.notifier).toggleViewAlbums();
-                  ref.read(mapPageProvider.notifier).initializedPage();
-                },
-              ),
-      );
-    });
+        );
+      },
+    );
   }
 }

@@ -6,7 +6,7 @@ import 'package:my_collection/controllers/pages/map_page_controller.dart';
 import 'package:my_collection/controllers/pages/my_list_page_controller.dart';
 import 'package:my_collection/models/model.dart';
 import 'package:my_collection/ui/pages/home_page/src/selectable_alert_dialog.dart';
-import 'package:my_collection/utiles.dart';
+import 'package:my_collection/utilities.dart';
 
 class PublicDeleteDialog extends StatelessWidget {
   const PublicDeleteDialog({

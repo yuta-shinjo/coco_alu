@@ -6,7 +6,6 @@ import 'package:my_collection/controllers/pages/album_list_page_controller.dart'
 import 'package:my_collection/models/src/album.dart';
 import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/components.dart';
-import 'package:my_collection/ui/components/src/universal.dart';
 import 'package:my_collection/ui/pages/account_page/src/edit_profile_page.dart';
 import 'package:my_collection/ui/pages/album_list_page/src/alert_dialog.dart';
 import 'package:my_collection/ui/pages/link_account_page/link_account_page.dart';
@@ -160,7 +159,7 @@ class AccountPageBody extends ConsumerWidget {
     );
   }
 
-  ListTile emailAddress(String? email, BuildContext context) {
+  Widget emailAddress(String? email, BuildContext context) {
     return ListTile(
       title: const Subtitle2Text('メールアドレス'),
       trailing: email != null

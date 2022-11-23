@@ -142,6 +142,7 @@ void hideAlbumMassage() {
     gravity: ToastGravity.CENTER,
   );
 }
+
 void deletePublicAlbumMassage() {
   Fluttertoast.showToast(
     msg: 'この投稿を削除しました',
