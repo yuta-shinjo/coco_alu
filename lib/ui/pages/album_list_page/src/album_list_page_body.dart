@@ -8,10 +8,9 @@ import 'package:my_collection/controllers/pages/my_list_page_controller.dart';
 import 'package:my_collection/models/src/album.dart';
 import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/components.dart';
-import 'package:my_collection/ui/components/src/universal.dart';
 import 'package:my_collection/ui/pages/album_detail_page/album_detail_page.dart';
 import 'package:my_collection/ui/pages/album_list_page/src/alert_dialog.dart';
-import 'package:my_collection/utiles.dart';
+import 'package:my_collection/utilities.dart';
 
 class AlbumListPageBody extends ConsumerWidget {
   const AlbumListPageBody({Key? key}) : super(key: key);

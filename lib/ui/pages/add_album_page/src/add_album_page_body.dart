@@ -11,7 +11,7 @@ import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/components.dart';
 import 'package:my_collection/ui/pages/add_album_page/src/tag_chips_page.dart';
 import 'package:my_collection/ui/projects/rounded_loading_button.dart';
-import 'package:my_collection/utiles.dart';
+import 'package:my_collection/utilities.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class AddAlbumPgeBody extends ConsumerWidget {

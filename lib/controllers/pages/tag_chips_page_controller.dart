@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:my_collection/utiles.dart';
+import 'package:my_collection/utilities.dart';
 
 part 'tag_chips_page_controller.freezed.dart';
 

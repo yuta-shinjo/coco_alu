@@ -23,34 +23,33 @@ class SelectableAlertDialogBody extends StatelessWidget {
       titlePadding: EdgeInsets.zero,
       buttonPadding: EdgeInsets.zero,
       actions: [
-        Builder(builder: (context) {
-          return GestureDetector(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
-              margin: const EdgeInsets.only(right: 4, bottom: 8),
-              child: TextButton(
-                onPressed: () {
-                  onAction();
-                },
-                child: Text(
-                  action,
-                  style: const TextStyle(
-                    fontSize: 15,
-                    color: AppColors.red,
-                    fontWeight: FontWeight.bold,
+        Builder(
+          builder: (context) {
+            return GestureDetector(
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+                margin: const EdgeInsets.only(right: 4, bottom: 8),
+                child: TextButton(
+                  onPressed: () => onAction(),
+                  child: Text(
+                    action,
+                    style: const TextStyle(
+                      fontSize: 15,
+                      color: AppColors.red,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
-            ),
-          );
-        }),
+            );
+          },
+        ),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
           margin: const EdgeInsets.only(bottom: 8),
           child: TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
+            onPressed: () => Navigator.of(context).pop(),
             child: const Text(
               'キャンセル',
               style: TextStyle(fontSize: 15),

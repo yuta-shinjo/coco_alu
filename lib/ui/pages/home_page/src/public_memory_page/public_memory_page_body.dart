@@ -28,9 +28,8 @@ class PublicMemoryPageBody extends ConsumerWidget {
   Widget _albumList(List<Album> albums, BuildContext context) {
     return GridView.builder(
       padding: const EdgeInsets.only(left: 20, top: 20, right: 20),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-      ),
+      gridDelegate:
+          const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
       itemCount: albums.length,
       itemBuilder: (BuildContext context, int index) {
         final album = albums[index];

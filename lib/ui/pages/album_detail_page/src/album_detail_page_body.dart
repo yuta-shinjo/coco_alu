@@ -7,7 +7,6 @@ import 'package:my_collection/controllers/pages/album_detail_page_controller.dar
 import 'package:my_collection/models/model.dart';
 import 'package:my_collection/themes/app_colors.dart';
 import 'package:my_collection/ui/components/components.dart';
-import 'package:my_collection/ui/components/src/universal.dart';
 
 class AlbumDetailPageBody extends ConsumerWidget {
   const AlbumDetailPageBody({Key? key, required this.album}) : super(key: key);

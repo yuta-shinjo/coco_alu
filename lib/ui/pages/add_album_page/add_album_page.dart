@@ -18,12 +18,13 @@ class AddAlbumPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.scaffoldColor,
       appBar: AppBar(
-          backgroundColor: AppColors.barColor,
-          title: const AppBarText('新規作成'),
-          leading: IconButton(
-            onPressed: (() => Navigator.pop(context)),
-            icon: const Icon(Icons.close),
-          )),
+        backgroundColor: AppColors.barColor,
+        title: const AppBarText('新規作成'),
+        leading: IconButton(
+          onPressed: (() => Navigator.pop(context)),
+          icon: const Icon(Icons.close),
+        ),
+      ),
       body: const AddAlbumPgeBody(),
     );
   }
